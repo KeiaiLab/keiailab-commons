@@ -29,15 +29,17 @@ func TestNewServiceMonitor_RequiredFields(t *testing.T) {
 func TestNewServiceMonitor_AllOptional(t *testing.T) {
 	t.Parallel()
 	sm := NewServiceMonitor(ServiceMonitorParams{
-		Name:        "vk-metrics",
-		Namespace:   "data",
-		Labels:      map[string]string{"team": "data"},
-		Selector:    map[string]string{"app.kubernetes.io/name": "valkey"},
-		Port:        "metrics",
-		Path:        "/custom-metrics",
-		Interval:    "15s",
-		Scheme:      "https",
-		HonorLabels: true,
+		Name:              "vk-metrics",
+		Namespace:         "data",
+		Labels:            map[string]string{"team": "data"},
+		Selector:          map[string]string{"app.kubernetes.io/name": "valkey"},
+		NamespaceSelector: []string{"data", "data-staging"},
+		Port:              "metrics",
+		Path:              "/custom-metrics",
+		Interval:          "15s",
+		ScrapeTimeout:     "10s",
+		Scheme:            "https",
+		HonorLabels:       true,
 	})
 	if got := sm.GetLabels()["team"]; got != "data" {
 		t.Errorf("custom label not set: %v", sm.GetLabels())
@@ -56,11 +58,20 @@ func TestNewServiceMonitor_AllOptional(t *testing.T) {
 	if first["interval"] != "15s" {
 		t.Errorf("interval missing")
 	}
+	if first["scrapeTimeout"] != "10s" {
+		t.Errorf("scrapeTimeout missing")
+	}
 	if first["scheme"] != "https" {
 		t.Errorf("scheme missing")
 	}
 	if first["honorLabels"] != true {
 		t.Errorf("honorLabels missing")
+	}
+	// NamespaceSelector 검증
+	nsField, _, _ := unstructuredField(sm.Object, "spec", "namespaceSelector")
+	matchNames := nsField.(map[string]any)["matchNames"].([]any)
+	if len(matchNames) != 2 || matchNames[0] != "data" || matchNames[1] != "data-staging" {
+		t.Errorf("namespaceSelector.matchNames mismatch: %v", matchNames)
 	}
 }
 
@@ -73,13 +84,17 @@ func TestNewServiceMonitor_OptionalDefaults(t *testing.T) {
 	})
 	endpoints, _, _ := unstructuredField(sm.Object, "spec", "endpoints")
 	first := endpoints.([]any)[0].(map[string]any)
-	for _, key := range []string{"path", "interval", "scheme", "honorLabels"} {
+	for _, key := range []string{"path", "interval", "scrapeTimeout", "scheme", "honorLabels"} {
 		if _, ok := first[key]; ok {
 			t.Errorf("optional %q should be absent when zero-value", key)
 		}
 	}
 	if sm.GetLabels() != nil && len(sm.GetLabels()) > 0 {
 		t.Errorf("labels should be nil/empty when not specified, got %v", sm.GetLabels())
+	}
+	// NamespaceSelector 미지정 시 spec 에 나타나면 안됨.
+	if _, ok, _ := unstructuredField(sm.Object, "spec", "namespaceSelector"); ok {
+		t.Error("namespaceSelector should be absent when slice is empty/nil")
 	}
 }
 

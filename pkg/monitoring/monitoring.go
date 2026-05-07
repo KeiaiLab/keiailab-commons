@@ -30,12 +30,17 @@ type ServiceMonitorParams struct {
 	Labels map[string]string
 	// Selector — spec.selector.matchLabels (Service 가 가진 label 매칭).
 	Selector map[string]string
+	// NamespaceSelector — spec.namespaceSelector.matchNames (target Service 의
+	// namespace 제한). 빈 슬라이스 시 미적용 (Prometheus default = 모든 namespace).
+	NamespaceSelector []string
 	// Port — spec.endpoints[0].port (Service의 port name).
 	Port string
 	// Path — spec.endpoints[0].path (default /metrics).
 	Path string
 	// Interval — spec.endpoints[0].interval (default 30s).
 	Interval string
+	// ScrapeTimeout — spec.endpoints[0].scrapeTimeout. 빈 문자열 = Prometheus default.
+	ScrapeTimeout string
 	// Scheme — http | https (default http).
 	Scheme string
 	// HonorLabels — spec.endpoints[0].honorLabels.
@@ -56,6 +61,9 @@ func NewServiceMonitor(p ServiceMonitorParams) *unstructured.Unstructured {
 	if p.Interval != "" {
 		endpoint["interval"] = p.Interval
 	}
+	if p.ScrapeTimeout != "" {
+		endpoint["scrapeTimeout"] = p.ScrapeTimeout
+	}
 	if p.Scheme != "" {
 		endpoint["scheme"] = p.Scheme
 	}
@@ -75,6 +83,13 @@ func NewServiceMonitor(p ServiceMonitorParams) *unstructured.Unstructured {
 	spec := map[string]any{
 		"selector":  map[string]any{"matchLabels": stringMapToAny(p.Selector)},
 		"endpoints": []any{endpoint},
+	}
+	if len(p.NamespaceSelector) > 0 {
+		ns := make([]any, len(p.NamespaceSelector))
+		for i, n := range p.NamespaceSelector {
+			ns[i] = n
+		}
+		spec["namespaceSelector"] = map[string]any{"matchNames": ns}
 	}
 	_ = unstructured.SetNestedMap(obj.Object, spec, "spec")
 	return obj
