@@ -1,6 +1,6 @@
 module github.com/keiailab/operator-commons
 
-go 1.26.2
+go 1.25.0
 
 require (
 	k8s.io/api v0.35.0
