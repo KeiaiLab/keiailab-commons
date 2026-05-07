@@ -1,0 +1,89 @@
+// Package monitoring — Prometheus Operator ServiceMonitor builder.
+//
+// 3 keiailab operator 가 동일 convention 으로 ServiceMonitor 생성:
+//
+//	sm := monitoring.NewServiceMonitor(monitoring.ServiceMonitorParams{
+//	    Name:      "mongodb-metrics",
+//	    Namespace: ns,
+//	    Selector:  labels.New("mongodb", instance, "metrics", "", "mongodb-operator").Selector(),
+//	    Port:      "metrics",
+//	    Interval:  "30s",
+//	    Scheme:    "https",
+//	})
+//
+// CRD 종속 회피: ServiceMonitor 는 monitoring.coreos.com/v1 (Prometheus Operator)
+// 의 typed API. 본 패키지는 *unstructured.Unstructured* 반환 — 호출자가 client
+// 로 apply. 이는 Prometheus Operator 미설치 환경에서도 코드 컴파일 가능.
+package monitoring
+
+import (
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+)
+
+// ServiceMonitorParams — ServiceMonitor 생성 매개변수.
+type ServiceMonitorParams struct {
+	// Name — ServiceMonitor metadata.name.
+	Name string
+	// Namespace — ServiceMonitor metadata.namespace.
+	Namespace string
+	// Labels — ServiceMonitor metadata.labels (기존 labels 패키지 .All() 등).
+	Labels map[string]string
+	// Selector — spec.selector.matchLabels (Service 가 가진 label 매칭).
+	Selector map[string]string
+	// Port — spec.endpoints[0].port (Service의 port name).
+	Port string
+	// Path — spec.endpoints[0].path (default /metrics).
+	Path string
+	// Interval — spec.endpoints[0].interval (default 30s).
+	Interval string
+	// Scheme — http | https (default http).
+	Scheme string
+	// HonorLabels — spec.endpoints[0].honorLabels.
+	HonorLabels bool
+}
+
+// NewServiceMonitor — Prometheus Operator ServiceMonitor (monitoring.coreos.com/v1)
+// 의 unstructured 표현. 호출자가 controller-runtime client 로 Apply.
+//
+// 빈 필드는 적용 안 됨 (Prometheus Operator 의 default 적용).
+func NewServiceMonitor(p ServiceMonitorParams) *unstructured.Unstructured {
+	endpoint := map[string]any{
+		"port": p.Port,
+	}
+	if p.Path != "" {
+		endpoint["path"] = p.Path
+	}
+	if p.Interval != "" {
+		endpoint["interval"] = p.Interval
+	}
+	if p.Scheme != "" {
+		endpoint["scheme"] = p.Scheme
+	}
+	if p.HonorLabels {
+		endpoint["honorLabels"] = true
+	}
+
+	obj := &unstructured.Unstructured{}
+	obj.SetAPIVersion("monitoring.coreos.com/v1")
+	obj.SetKind("ServiceMonitor")
+	obj.SetName(p.Name)
+	obj.SetNamespace(p.Namespace)
+	if len(p.Labels) > 0 {
+		obj.SetLabels(p.Labels)
+	}
+
+	spec := map[string]any{
+		"selector":  map[string]any{"matchLabels": stringMapToAny(p.Selector)},
+		"endpoints": []any{endpoint},
+	}
+	_ = unstructured.SetNestedMap(obj.Object, spec, "spec")
+	return obj
+}
+
+func stringMapToAny(in map[string]string) map[string]any {
+	out := make(map[string]any, len(in))
+	for k, v := range in {
+		out[k] = v
+	}
+	return out
+}
