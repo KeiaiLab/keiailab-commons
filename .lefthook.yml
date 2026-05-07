@@ -1,0 +1,54 @@
+# lefthook.yml — operator-commons (라이브러리 minimal hook).
+#
+# 4-repo SSoT (RFC 0002 §1 + standards/enforcement.md §1.1) 정합:
+#   - L1 pre-commit: 빠른 린트 (gofmt / govet / golangci-lint).
+#   - L2 pre-push:   무거운 검사 (test / govulncheck / gitleaks / go-mod-tidy drift).
+
+pre-commit:
+  parallel: true
+  commands:
+    gofmt:
+      glob: "*.go"
+      run: gofmt -l -w {staged_files}
+    govet:
+      run: go vet ./...
+    golangci-lint:
+      # 라이브러리는 작은 codebase — full lint 가 빠름.
+      run: command -v golangci-lint >/dev/null 2>&1 && golangci-lint run ./... || echo "[warn] golangci-lint 미설치"
+
+pre-push:
+  parallel: false
+  commands:
+    unit-test:
+      run: go test -count=1 -timeout=120s ./...
+    govulncheck:
+      # Go module CVE — call graph 기반. 라이브러리 다운스트림 (3 operator) 보호.
+      # 설치: go install golang.org/x/vuln/cmd/govulncheck@latest
+      run: command -v govulncheck >/dev/null 2>&1 && govulncheck ./... || echo "[warn] govulncheck 미설치 — go install golang.org/x/vuln/cmd/govulncheck@latest 권장"
+    gitleaks:
+      run: command -v gitleaks >/dev/null 2>&1 && gitleaks protect --staged --no-banner || echo "[warn] gitleaks 미설치 (brew install gitleaks)"
+    go-mod-tidy:
+      # go.mod / go.sum drift 차단.
+      run: |
+        cp go.mod /tmp/.go.mod.commons.bak
+        cp go.sum /tmp/.go.sum.commons.bak
+        go mod tidy
+        if ! diff -q go.mod /tmp/.go.mod.commons.bak >/dev/null 2>&1 || ! diff -q go.sum /tmp/.go.sum.commons.bak >/dev/null 2>&1; then
+          cp /tmp/.go.mod.commons.bak go.mod
+          cp /tmp/.go.sum.commons.bak go.sum
+          rm -f /tmp/.go.mod.commons.bak /tmp/.go.sum.commons.bak
+          echo "❌ go.mod / go.sum drift — 'go mod tidy' 후 commit 필요"
+          exit 1
+        fi
+        rm -f /tmp/.go.mod.commons.bak /tmp/.go.sum.commons.bak
+
+commit-msg:
+  commands:
+    conventional:
+      # Conventional Commits 강제 (feat/fix/docs/refactor/test/chore/build/ci/perf/revert).
+      run: |
+        if ! grep -qE "^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\(.+\))?!?: .+" "{1}"; then
+          echo "❌ Conventional Commits 위반 — 형식: <type>(<scope>): <subject>"
+          echo "   types: feat / fix / docs / style / refactor / test / chore / build / ci / perf / revert"
+          exit 1
+        fi
