@@ -12,7 +12,7 @@ restricted contexts, version allowlists, NetworkPolicy templates, ServiceMonitor
 builders). Maintenance drift between repos was already producing inconsistencies
 — this library is the single source of truth.
 
-## Packages (v0.2.0)
+## Packages (v0.3.0)
 
 | Package | Purpose |
 |---|---|
@@ -20,8 +20,9 @@ builders). Maintenance drift between repos was already producing inconsistencies
 | `pkg/security` | PodSecurity *restricted* SecurityContext builder with functional options. |
 | `pkg/labels` | Recommended Kubernetes labels (`app.kubernetes.io/*`) builder — `Set`, `All()`, `Selector()` (version-aware split). |
 | `pkg/monitoring` | Prometheus Operator `ServiceMonitor` builder (unstructured — CRD-soft). |
+| `pkg/networkpolicy` | NetworkPolicy builder — deny-by-default + functional options (`WithSelfIngress`, `WithIngressFromPeers`, `WithDenyEgress`, `WithEgressToPeers`). |
 
-Planned (v0.3.0+): `pkg/networkpolicy`, `pkg/webhook` (admission helpers).
+Planned (v0.4.0+): `pkg/webhook` (admission validation helpers — `field.NotSupported` wrapper, `IsSupportedVersion` 패턴 통합).
 
 ## Usage
 
