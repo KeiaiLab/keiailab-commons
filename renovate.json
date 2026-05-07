@@ -1,0 +1,72 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":maintainLockFilesWeekly",
+    "group:linters",
+    "group:test",
+    ":separateMultipleMajorReleases",
+    ":enableVulnerabilityAlertsWithLabel(security)"
+  ],
+  "labels": ["dependencies"],
+  "commitMessagePrefix": "deps:",
+  "prHourlyLimit": 4,
+  "prConcurrentLimit": 6,
+  "rangeStrategy": "bump",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 06:00 on monday"],
+    "automerge": false
+  },
+  "vulnerabilityAlerts": {
+    "labels": ["security", "priority:p0"],
+    "assignees": ["@keiailab/maintainers"],
+    "minimumReleaseAge": null
+  },
+  "packageRules": [
+    {
+      "description": "Go indirect dependencies — minor+patch 자동 PR (audit gate 가 검증).",
+      "matchManagers": ["gomod"],
+      "matchDepTypes": ["indirect"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": false,
+      "prPriority": 1
+    },
+    {
+      "description": "Go direct dependencies — major 는 별 PR + manual review.",
+      "matchManagers": ["gomod"],
+      "matchDepTypes": ["direct"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "prPriority": 5,
+      "labels": ["dependencies", "major"]
+    },
+    {
+      "description": "k8s.io/* + sigs.k8s.io/* — group 단위로 (이전 마이너 버전 깨짐 방지).",
+      "matchPackagePrefixes": ["k8s.io/", "sigs.k8s.io/"],
+      "groupName": "kubernetes",
+      "schedule": ["before 06:00 on monday"]
+    },
+    {
+      "description": "OpenTelemetry — 같은 vendor group.",
+      "matchPackagePrefixes": ["go.opentelemetry.io/"],
+      "groupName": "opentelemetry"
+    },
+    {
+      "description": "Go runtime — 라이브러리이지만 향후 Dockerfile (e.g. CI runner) 추가 시 일관 처리.",
+      "matchManagers": ["dockerfile"],
+      "matchDepNames": ["golang"],
+      "automerge": false,
+      "prPriority": 3
+    }
+  ],
+  "ignorePaths": [
+    "**/vendor/**",
+    "**/bin/**",
+    "**/dist/**"
+  ],
+  "go": {
+    "postUpdateOptions": ["gomodTidy"]
+  }
+}
