@@ -1,5 +1,10 @@
 # operator-commons
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Go Version](https://img.shields.io/badge/Go-1.25+-00ADD8?logo=go)](https://golang.org/)
+[![Go Reference](https://pkg.go.dev/badge/github.com/keiailab/operator-commons.svg)](https://pkg.go.dev/github.com/keiailab/operator-commons)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/keiailab/operator-commons/badge)](https://scorecard.dev/viewer/?uri=github.com/keiailab/operator-commons)
+
 Shared Go library for **keiailab** Kubernetes operators (`mongodb-operator`,
 `valkey-operator`, `postgresql-operator`).
 
