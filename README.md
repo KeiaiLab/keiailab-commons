@@ -23,7 +23,28 @@ builders). Maintenance drift between repos was already producing inconsistencies
 | `pkg/networkpolicy` | NetworkPolicy builder — deny-by-default + functional options (`WithSelfIngress`, `WithIngressFromPeers`, `WithDenyEgress`, `WithEgressToPeers`). |
 | `pkg/webhook` | Admission validation helpers — `ValidateAllowedVersion` (exact match), `ValidateWithPredicate` (caller-supplied matcher e.g. semver-prefix). |
 
-**6/6 패키지 모두 100% line coverage.** Planned (v0.5.0+): `pkg/conditions` (status conditions builder), `pkg/finalizer` (cascade-delete avoidance pattern).
+**6/6 패키지 모두 100% line coverage.** Planned (v0.5.0+): `pkg/finalizer` (cascade-delete avoidance pattern). `pkg/conditions` 는 *upstream `k8s.io/apimachinery/pkg/api/meta.SetStatusCondition` 활용 권장* (commons 미추가 결정 — boundary 분석 결과, 자세히는 mongodb-operator HANDOFF iteration 32 참조).
+
+## Adoption Matrix (3 operator)
+
+| Operator | sec | ver | lab | mon | np | wh | 채택률 |
+|---|---|---|---|---|---|---|---|
+| [mongodb-operator](https://github.com/keiailab/mongodb-operator) | ✅ | ✅ | ✅ | ⏳ | ✅ | ⏳ | **4/6 (67%)** |
+| [valkey-operator](https://github.com/keiailab/valkey-operator) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **6/6 (100%)** 🎉 |
+| [postgres-operator](https://github.com/keiailab/postgres-operator) | ✅ | ⏳ | ✅ | ⏳ | ⏳ | ✅ | **3/6 (50%)** |
+
+valkey 가 *first 100% 채택* — 다른 operator 의 carbon-copy reference 역할. 적용
+사례 commits:
+- `pkg/security`: it8 (3 operator cross-cut) — `23fd3da` mongodb / `a0be4cf` valkey / `ac2e647` postgres
+- `pkg/version`: mongodb it9 `a8db040`, valkey it8
+- `pkg/labels`: mongodb it27 `ebc5803`, postgres it28 `c68b451`, valkey it29 `e8428b1`
+- `pkg/monitoring`: valkey it23 `1765b54`
+- `pkg/networkpolicy`: valkey it25 `97162b5`, mongodb it26 `ca0ec27`
+- `pkg/webhook`: valkey it31 `14be0db`, postgres it34 `1d8fa17`
+
+⏳ 영역은 *기능 추가 동반* (예: mongodb webhook server / ServiceMonitor reconciler)
+또는 *별 추상화 적합* (postgres version matrix.go의 Combo struct 가 commons.MustList
+보다 풍부 — 위임 부적합) 으로 *deepening 보류* 상태.
 
 ## Usage
 
