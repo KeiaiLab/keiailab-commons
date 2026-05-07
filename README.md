@@ -4,6 +4,7 @@
 [![Go Version](https://img.shields.io/badge/Go-1.25+-00ADD8?logo=go)](https://golang.org/)
 [![Go Reference](https://pkg.go.dev/badge/github.com/keiailab/operator-commons.svg)](https://pkg.go.dev/github.com/keiailab/operator-commons)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/keiailab/operator-commons/badge)](https://scorecard.dev/viewer/?uri=github.com/keiailab/operator-commons)
+[![GitHub Discussions](https://img.shields.io/github/discussions/keiailab/operator-commons?label=discussions&logo=github)](https://github.com/keiailab/operator-commons/discussions)
 
 Shared Go library for **keiailab** Kubernetes operators (`mongodb-operator`,
 `valkey-operator`, `postgresql-operator`).
@@ -76,6 +77,13 @@ func buildContainerSecurityContext() *corev1.SecurityContext {
 - Each consuming operator pins via `go.mod` `require` — `replace` directive
   is acceptable during local development across this repo + the 3 operators.
 - v1.0 onwards: Semantic Versioning. Breaking changes require RFC.
+
+## Community
+
+- **Discussions**: [GitHub Discussions](https://github.com/keiailab/operator-commons/discussions) — pkg API 질문, integration 사례, 새 helper 제안
+- **Issues**: [GitHub Issues](https://github.com/keiailab/operator-commons/issues) — 버그 / API 요청
+- **Downstream**: 3 operator (mongodb-operator / postgres-operator / valkey-operator) — `go.mod replace` 또는 직접 `require` 로 사용
+- **Stability matrix**: `pkg/labels`, `pkg/security`, `pkg/version`, `pkg/webhook` (stable v0.5+) / `pkg/networkpolicy`, `pkg/monitoring` (experimental)
 
 ## License
 
