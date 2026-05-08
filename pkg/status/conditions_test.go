@@ -12,9 +12,10 @@ import (
 // 그리고 동일 type 호출 시 *덮어쓰기* (replace) 되는지 검증한다.
 //
 // AAA 형식:
-//   Arrange — 빈 conditions 슬라이스
-//   Act — SetReady(True, Available) → SetReady(False, ReconcileError)
-//   Assert — 마지막 호출만 남고, status/reason 은 두 번째 값
+//
+//	Arrange — 빈 conditions 슬라이스
+//	Act — SetReady(True, Available) → SetReady(False, ReconcileError)
+//	Assert — 마지막 호출만 남고, status/reason 은 두 번째 값
 func TestSetReady_AddsAndReplaces(t *testing.T) {
 	var conds []metav1.Condition
 

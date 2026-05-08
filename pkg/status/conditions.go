@@ -59,7 +59,12 @@ const (
 //
 //	status.SetReady(&cluster.Status.Conditions, metav1.ConditionTrue,
 //	    status.ReasonAvailable, "all members healthy", cluster.Generation)
-func SetReady(conditions *[]metav1.Condition, s metav1.ConditionStatus, reason, message string, observedGeneration int64) {
+func SetReady(
+	conditions *[]metav1.Condition,
+	s metav1.ConditionStatus,
+	reason, message string,
+	observedGeneration int64,
+) {
 	meta.SetStatusCondition(conditions, metav1.Condition{
 		Type:               TypeReady,
 		Status:             s,
