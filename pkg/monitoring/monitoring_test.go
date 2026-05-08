@@ -44,9 +44,9 @@ func TestNewServiceMonitor_AllOptional(t *testing.T) {
 	if got := sm.GetLabels()["team"]; got != "data" {
 		t.Errorf("custom label not set: %v", sm.GetLabels())
 	}
-	endpoints, found, err := unstructuredField(sm.Object, "spec", "endpoints")
-	if err != nil || !found {
-		t.Fatalf("spec.endpoints not found: %v / %v", found, err)
+	endpoints, found := unstructuredField(sm.Object, "spec", "endpoints")
+	if !found {
+		t.Fatalf("spec.endpoints not found")
 	}
 	first := endpoints.([]any)[0].(map[string]any)
 	if first["port"] != "metrics" {
@@ -68,7 +68,7 @@ func TestNewServiceMonitor_AllOptional(t *testing.T) {
 		t.Errorf("honorLabels missing")
 	}
 	// NamespaceSelector 검증
-	nsField, _, _ := unstructuredField(sm.Object, "spec", "namespaceSelector")
+	nsField, _ := unstructuredField(sm.Object, "spec", "namespaceSelector")
 	matchNames := nsField.(map[string]any)["matchNames"].([]any)
 	if len(matchNames) != 2 || matchNames[0] != "data" || matchNames[1] != "data-staging" {
 		t.Errorf("namespaceSelector.matchNames mismatch: %v", matchNames)
@@ -82,7 +82,7 @@ func TestNewServiceMonitor_OptionalDefaults(t *testing.T) {
 		Selector: map[string]string{"k": "v"},
 		Port:     "p",
 	})
-	endpoints, _, _ := unstructuredField(sm.Object, "spec", "endpoints")
+	endpoints, _ := unstructuredField(sm.Object, "spec", "endpoints")
 	first := endpoints.([]any)[0].(map[string]any)
 	for _, key := range []string{"path", "interval", "scrapeTimeout", "scheme", "honorLabels"} {
 		if _, ok := first[key]; ok {
@@ -93,23 +93,24 @@ func TestNewServiceMonitor_OptionalDefaults(t *testing.T) {
 		t.Errorf("labels should be nil/empty when not specified, got %v", sm.GetLabels())
 	}
 	// NamespaceSelector 미지정 시 spec 에 나타나면 안됨.
-	if _, ok, _ := unstructuredField(sm.Object, "spec", "namespaceSelector"); ok {
+	if _, ok := unstructuredField(sm.Object, "spec", "namespaceSelector"); ok {
 		t.Error("namespaceSelector should be absent when slice is empty/nil")
 	}
 }
 
-// unstructuredField — 작은 helper, depth 2 path 만.
-func unstructuredField(obj map[string]any, path ...string) (any, bool, error) {
+// unstructuredField — 작은 helper, depth 2 path 만. error 반환은 unparam 으로
+// 제거 (path traversal 자체에 발생할 error 없음).
+func unstructuredField(obj map[string]any, path ...string) (any, bool) {
 	cur := any(obj)
 	for _, p := range path {
 		m, ok := cur.(map[string]any)
 		if !ok {
-			return nil, false, nil
+			return nil, false
 		}
 		cur, ok = m[p]
 		if !ok {
-			return nil, false, nil
+			return nil, false
 		}
 	}
-	return cur, true, nil
+	return cur, true
 }

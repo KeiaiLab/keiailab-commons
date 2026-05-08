@@ -21,7 +21,6 @@ func TestValidateAllowedVersion_Allowed(t *testing.T) {
 	t.Parallel()
 	list := version.MustList("8.0.9", "9.0.4")
 	for _, v := range []string{"8.0.9", "9.0.4"} {
-		v := v
 		t.Run(v, func(t *testing.T) {
 			t.Parallel()
 			if err := ValidateAllowedVersion(field.NewPath("spec", "v"), v, list); err != nil {
@@ -70,7 +69,6 @@ func TestValidateWithPredicate_Allowed(t *testing.T) {
 		return strings.HasPrefix(v, "8.3")
 	}
 	for _, v := range []string{"8.3", "8.3.0", "8.3.5"} {
-		v := v
 		t.Run(v, func(t *testing.T) {
 			t.Parallel()
 			err := ValidateWithPredicate(field.NewPath("v"), v, majorMinor, []string{"8.3"})

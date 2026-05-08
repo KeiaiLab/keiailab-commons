@@ -57,14 +57,14 @@ func ValidateAllowedVersion(path *field.Path, value string, list version.List) *
 //
 // 예 (mongodb):
 //
-//	commonswebhook.ValidateWithPredicate(path, value,
-//	    IsSupportedMongoDBVersion, // major.minor 추출 후 matching
-//	    SupportedMongoDBVersions,  // 외부 노출 슬라이스
-//	)
+//		commonswebhook.ValidateWithPredicate(path, value,
+//		    IsSupportedMongoDBVersion, // major.minor 추출 후 matching
+//		    SupportedMongoDBVersions,  // 외부 노출 슬라이스
+//		)
 //
-//   - 빈 문자열 → nil.
-//   - predicate(value) == true → nil.
-//   - false → *field.NotSupported.
+//	  - 빈 문자열 → nil.
+//	  - predicate(value) == true → nil.
+//	  - false → *field.NotSupported.
 func ValidateWithPredicate(
 	path *field.Path,
 	value string,

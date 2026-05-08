@@ -16,6 +16,8 @@
 //   - MustList 는 빈 리스트 또는 빈 문자열 포함 시 panic — init time 가드.
 package version
 
+import "slices"
+
 // List — 지원 버전 화이트리스트의 immutable 표현.
 type List struct {
 	versions []string
@@ -39,12 +41,7 @@ func MustList(versions ...string) List {
 
 // IsSupported — v 가 화이트리스트에 정확 매칭하는지 검사. semver range 가 아닌 string equality.
 func (l List) IsSupported(v string) bool {
-	for _, sv := range l.versions {
-		if sv == v {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(l.versions, v)
 }
 
 // Strings — webhook 의 field.NotSupported 에 전달할 슬라이스 (방어 복사).
