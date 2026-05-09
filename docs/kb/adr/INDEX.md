@@ -9,6 +9,7 @@
 | [0005](0005-rfc-0019-library-chart-adoption.md) | RFC-0019 §3.1 채택 — keiailab-commons Helm library chart 신설 (commonLabels + ServiceMonitor, PR-B2 first cut) | Accepted | 2026-05-09 |
 | [0006](0006-rfc-0019-networkpolicy-partials.md) | RFC-0019 §3.2 채택 — keiailab.networkpolicy.{dataplane,controlplane} partials (chart v0.2.0, PR-B6) | Accepted | 2026-05-09 |
 | [0007](0007-rfc-0019-rbac-partials.md) | RFC-0019 §3.5 채택 — keiailab.rbac.{serviceAccount,controllerBase,workloadBase} partials (chart v0.3.0, PR-C1) | Accepted | 2026-05-09 |
+| [0008](0008-rfc-0019-security-partials.md) | RFC-0019 §3.4 채택 — keiailab.security.{podSecurityContext,containerSecurityContext} partials (chart v0.4.0, PR-B5 — RFC-0019 implementation 완결) | Accepted | 2026-05-09 |
 
 ## 작성 규약
 
