@@ -6,6 +6,7 @@
 | [0002](0002-rfc-0017-tooling-unification-adoption.md) | RFC-0017 operator tooling unification 채택 (.golangci.yml + Makefile 신규) | Proposed | 2026-05-09 |
 | [0003](0003-rfc-0018-pkg-status-finalizer-adoption.md) | RFC-0018 채택 — pkg/status 슈가 (SetAvailable + SetReadyFalse) 추가, pkg/finalizer 변경 없음 | Accepted | 2026-05-09 |
 | [0004](0004-pkg-version-generic-matrix.md) | pkg/version Generic Matrix[E] 추가 (postgres PR-B3 prerequisite, Plan §2 D12) | Accepted | 2026-05-09 |
+| [0005](0005-rfc-0019-library-chart-adoption.md) | RFC-0019 §3.1 채택 — keiailab-commons Helm library chart 신설 (commonLabels + ServiceMonitor, PR-B2 first cut) | Accepted | 2026-05-09 |
 
 ## 작성 규약
 
