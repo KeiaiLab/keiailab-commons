@@ -4,6 +4,7 @@
 |----|-------|--------|------|
 | [0001](0001-charter.md) | operator-commons charter | Accepted | 2026-05-07 |
 | [0002](0002-rfc-0017-tooling-unification-adoption.md) | RFC-0017 operator tooling unification 채택 (.golangci.yml + Makefile 신규) | Proposed | 2026-05-09 |
+| [0003](0003-rfc-0018-pkg-status-finalizer-adoption.md) | RFC-0018 채택 — pkg/status 슈가 (SetAvailable + SetReadyFalse) 추가, pkg/finalizer 변경 없음 | Accepted | 2026-05-09 |
 
 ## 작성 규약
 
