@@ -4,6 +4,93 @@
 > 차단점 / 근거 링크 / 의사결정 기록) 을 따른다. 다음 세션 진입 시 가장
 > 먼저 읽는다.
 
+## 2026-05-09 Sprint A/B/C 누적 진행 (Ralph iter 1~16, 23 PR 머지)
+
+> Plan: `~/.claude/plans/1-https-artifacthub-io-packages-helm-clo-synthetic-gem.md`
+
+### 머지 PR 표
+
+| repo | PR | 내용 | tag/version |
+|---|---|---|---|
+| operator-commons | #1 | RFC-0018 + ADR-0003 (status sugars) | v0.6.0 |
+| operator-commons | #2 | pkg/version Generic Matrix[E] (ADR-0004) | v0.7.0 |
+| operator-commons | #3 | library chart 신설 (RFC-0019, ADR-0005) | chart v0.1.0 |
+| operator-commons | #4 | NetworkPolicy partials (ADR-0006) | chart v0.2.0 |
+| operator-commons | #5 | RBAC partials (ADR-0007) | chart v0.3.0 |
+| operator-commons | #6 | PSS Restricted partials (ADR-0008) — RFC-0019 §3 완결 | chart v0.4.0 |
+| valkey-operator | #5 | cosign + SLSA L2 (ADR-0033) | — |
+| valkey-operator | #6 | v1alpha2 + AuthSpec.Required (ADR-0034) | — |
+| valkey-operator | #7 | commons v0.6.0 bump | — |
+| valkey-operator | #8 | pkg/finalizer migration (ADR-0038) | — |
+| valkey-operator | #9 | NetworkPolicy.AutoCreate (ADR-0035) | — |
+| valkey-operator | #10 | PodSecurityRestricted (ADR-0036) | — |
+| valkey-operator | #11 | Sentinel migration runbook (PR-C7) | — |
+| valkey-operator | #12 | AuthSpec.RotationPolicy enum (ADR-0031) | — |
+| valkey-operator | #13 | ADR-0018 정식 (Cluster Auto-Resharding) | — |
+| valkey-operator | #14 | ValkeySpec.Modules (ADR-0032) | — |
+| mongodb-operator | #116 | Sprint A HANDOFF entry | — |
+| mongodb-operator | #117 | commons v0.6.0 bump | — |
+| mongodb-operator | #118 | pkg/finalizer migration (ADR-0021) | — |
+| postgres-operator | #19 | Sprint A HANDOFF entry | — |
+| postgres-operator | #20 | commons v0.6.0 bump | — |
+| postgres-operator | #21 | pkg/status partial adoption (ADR-0011) | — |
+| postgres-operator | #22 | matrix.go → commons Matrix[Combo] (ADR-0012) | — |
+
+### Plan §1 Phase 1 갭 해소 현황
+
+| Gap | 상태 | PR |
+|---|---|---|
+| A: Sentinel 미지원 | 거부 보존 + 운영 runbook | valkey #11 |
+| B: Password Rotation | type 추가, controller 후속 | valkey #12 (PR-B7.2 후속) |
+| C: HPA | ADR-0027 deferred 보존 | PR-C5 후속 |
+| D: Custom Modules | type 추가, controller 후속 | valkey #14 (PR-C6.2 후속) |
+| E: 공급망 보증 | cosign + SLSA L2 채택 | valkey #5 |
+| F: Cluster Auto-Resharding | ADR-0018 정식, controller 후속 | valkey #13 (PR-B8.2 후속) |
+
+### 사용자 결정 1 (보안 3종 옵션화) 완료
+
+- ADR-0034 Auth Optional / ADR-0035 NetworkPolicy.AutoCreate / ADR-0036
+  PSS Restricted Optional — 모두 v1alpha2 type module 에 default=true
+  유지로 secure-by-default 보존.
+- D4 v1alpha2 + conversion webhook: type module 완료, hub 전환 controller
+  분기는 PR-A2.2 후속.
+
+### RFC-0019 implementation 완결
+
+§3.1 (commonLabels + ServiceMonitor) + §3.2 (NetworkPolicy partials) +
+§3.4 (PSS partials) + §3.5 (RBAC partials) — commons library chart
+v0.4.0 implementation. consumer chart 의 partial include 후속 (commons
+OCI publish PR-B2.2 의존).
+
+### 잔여 *대형 controller 작업* (다음 세션 진입점)
+
+모두 valkey PR-A2.2 (v1alpha2 hub 전환) 의존:
+
+1. **PR-A2.2** — valkey hub 전환: 5 CRD × 2 conversion 함수 + 4 controller
+   import 변경 + cmd/main.go SchemeBuilder + ensureAuthSecret Required
+   분기 + controller-gen 재실행. T3 단일 세션 dedicated.
+2. **PR-B7.2** — Password Rotation reconcile: Secret resourceVersion
+   watch + rotatePassword helper + replication 의 replica → primary
+   순서 강제.
+3. **PR-B8.2** — Cluster Resharding reconcile: vk.ClusterMigrateSlots
+   helper (16384 slot 256-batch + ASKING) + reconcileResharding phase +
+   ReshardingProgress status field + e2e 3→5 shard.
+4. **PR-B9** — OperatorHub.io: bundle/manifests + ClusterServiceVersion
+   + community-operators repo PR. 외부 visibility.
+5. **PR-C5** — HPA reconcile: ValkeySpec.Autoscaling + HPA reconcile +
+   ScalePolicy.Deliberate webhook validation.
+6. **PR-C6.2** — Custom Modules: statefulset.go init container mount +
+   emptyDir + valkey container --loadmodule arg + webhook allow-list +
+   e2e (valkey-search FT.SEARCH).
+
+### consumer chart partial include (별도 후속)
+
+mongodb / postgres / valkey 의 ServiceMonitor / NetworkPolicy / RBAC /
+Security yaml 이 commons library chart partial include 로 교체. commons
+OCI publish (PR-B2.2 별 PR) 의존.
+
+---
+
 ## 현재 상태
 
 - 마지막 main commit: `fb7c8c6` chore(audit): .codecov.yml 신규 (4-repo target 70% 절대 floor 통일)
