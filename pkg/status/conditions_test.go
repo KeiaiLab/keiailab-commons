@@ -87,6 +87,55 @@ func TestSetProgressing_Coexists(t *testing.T) {
 	}
 }
 
+// TestSetAvailable — Available condition 별도 type 으로 추가.
+//
+// Available 은 Ready 와 *공존* 가능 (서로 다른 type). reconcile 진입 시
+// Ready=False/Progressing 만 변경하고 Available 은 유지하는 4-repo 패턴
+// 검증.
+func TestSetAvailable_CoexistsWithReady(t *testing.T) {
+	var conds []metav1.Condition
+
+	status.SetReady(&conds, metav1.ConditionTrue, status.ReasonAvailable, "ok", 1)
+	status.SetAvailable(&conds, metav1.ConditionTrue, status.ReasonAvailable, "endpoint up", 1)
+
+	if len(conds) != 2 {
+		t.Fatalf("expected 2 conditions (Ready + Available), got %d", len(conds))
+	}
+	if status.FindCondition(conds, status.TypeAvailable) == nil {
+		t.Error("expected Available condition to exist")
+	}
+
+	// reconcile 재진입: Ready=False 로 변경하되 Available 은 유지.
+	status.SetReady(&conds, metav1.ConditionFalse, status.ReasonReconciling, "scaling up", 2)
+	if len(conds) != 2 {
+		t.Fatalf("expected still 2 conditions, got %d", len(conds))
+	}
+	avail := status.FindCondition(conds, status.TypeAvailable)
+	if avail == nil || avail.Status != metav1.ConditionTrue {
+		t.Errorf("expected Available=True preserved, got %v", avail)
+	}
+}
+
+// TestSetReadyFalse — SetReady(_, ConditionFalse, _) 와 동일 동작 슈가.
+func TestSetReadyFalse_EquivalentToSetReady(t *testing.T) {
+	var a, b []metav1.Condition
+
+	status.SetReadyFalse(&a, status.ReasonReconcileError, "boom", 7)
+	status.SetReady(&b, metav1.ConditionFalse, status.ReasonReconcileError, "boom", 7)
+
+	if len(a) != 1 || len(b) != 1 {
+		t.Fatalf("expected 1 condition each, got a=%d b=%d", len(a), len(b))
+	}
+	// LastTransitionTime 은 호출 시점에 따라 다를 수 있으므로 비교 제외.
+	if a[0].Type != b[0].Type ||
+		a[0].Status != b[0].Status ||
+		a[0].Reason != b[0].Reason ||
+		a[0].Message != b[0].Message ||
+		a[0].ObservedGeneration != b[0].ObservedGeneration {
+		t.Errorf("SetReadyFalse not equivalent to SetReady(False): a=%+v b=%+v", a[0], b[0])
+	}
+}
+
 // TestRemoveCondition — 명시 제거.
 func TestRemoveCondition(t *testing.T) {
 	conds := []metav1.Condition{

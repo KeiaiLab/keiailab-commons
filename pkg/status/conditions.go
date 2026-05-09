@@ -98,6 +98,40 @@ func SetDegraded(conditions *[]metav1.Condition, reason, message string, observe
 	})
 }
 
+// SetAvailable — Available condition 갱신. Endpoint 보유 + readiness probe
+// 통과 후 호출. Ready 보다 약한 신호 (operator 의 reconcile 완료 vs 외부
+// 호출 가능).
+//
+// 4-repo 정합 패턴: SetReady=True 직후 SetAvailable=True 호출. reconcile
+// 진입 시점에는 SetReady=False/Progressing 만 호출하고 Available 은 변경
+// 안 함 (외부 client 의 기존 연결 유지).
+func SetAvailable(
+	conditions *[]metav1.Condition,
+	s metav1.ConditionStatus,
+	reason, message string,
+	observedGeneration int64,
+) {
+	meta.SetStatusCondition(conditions, metav1.Condition{
+		Type:               TypeAvailable,
+		Status:             s,
+		Reason:             reason,
+		Message:            message,
+		ObservedGeneration: observedGeneration,
+	})
+}
+
+// SetReadyFalse — SetReady 의 False 케이스 슈가.
+//
+// reconcile 실패 가장 빈번한 호출 패턴 (`SetReady(_, ConditionFalse, …)`)
+// 의 가독성 향상용 슈가. 동작은 SetReady(ConditionFalse) 와 동일.
+func SetReadyFalse(
+	conditions *[]metav1.Condition,
+	reason, message string,
+	observedGeneration int64,
+) {
+	SetReady(conditions, metav1.ConditionFalse, reason, message, observedGeneration)
+}
+
 // IsReady 는 Ready=True 인지 확인. False / 부재 시 false 반환.
 func IsReady(conditions []metav1.Condition) bool {
 	return meta.IsStatusConditionTrue(conditions, TypeReady)
