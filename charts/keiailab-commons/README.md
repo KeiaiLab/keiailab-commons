@@ -35,12 +35,12 @@ metadata:
 | `keiailab.rbac.serviceAccount` | ServiceAccount + ImagePullSecrets + automountToken | §3.5 | v0.3.0 |
 | `keiailab.rbac.controllerBase` | controller-runtime base (leader-election + events + service) | §3.5 | v0.3.0 |
 | `keiailab.rbac.workloadBase` | managed workload (StatefulSet/Deployment + Service/ConfigMap/Secret/PVC/Pod) | §3.5 | v0.3.0 |
+| `keiailab.security.podSecurityContext` | PSS Restricted Pod SecurityContext (runAsNonRoot + seccompProfile) | §3.4 | v0.4.0 |
+| `keiailab.security.containerSecurityContext` | PSS Restricted Container SecurityContext (capabilities.drop=ALL + readOnlyRootFilesystem) | §3.4 | v0.4.0 |
 
-### 후속 PR 의 partial (별 PR)
+### RFC-0019 implementation 완결 (v0.4.0 시점)
 
-| Helper | RFC-0019 | PR |
-|---|---|---|
-| `keiailab.security.podSecurityRestricted` | §3.4 | PR-B5 |
+§3.1 / §3.2 / §3.4 / §3.5 모두 implementation 완료. consumer chart (mongodb / postgres / valkey operator) 의 partial include 작업 후속.
 
 ## License
 
