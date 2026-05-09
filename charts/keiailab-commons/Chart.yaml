@@ -6,8 +6,8 @@ description: |
   공유하는 partial helper (commonLabels / observability.serviceMonitor 등)
   를 제공한다. type: library — consumer chart 가 dependency 로 import.
 type: library
-version: 0.2.0
-appVersion: "0.2.0"
+version: 0.3.0
+appVersion: "0.3.0"
 kubeVersion: ">=1.25.0-0"
 home: https://github.com/keiailab/operator-commons
 sources:

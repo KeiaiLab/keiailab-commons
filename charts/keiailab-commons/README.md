@@ -32,15 +32,15 @@ metadata:
 | `keiailab.observability.serviceMonitor` | Prometheus Operator ServiceMonitor 공통 spec | §3.1 | v0.1.0 |
 | `keiailab.networkpolicy.dataplane` | managed dataplane workload 보호 (default-deny + allow-internal-instance) | §3.2 | v0.2.0 |
 | `keiailab.networkpolicy.controlplane` | operator manager pod 자체 보호 (metrics/webhook ingress + API/DNS egress) | §3.2 | v0.2.0 |
+| `keiailab.rbac.serviceAccount` | ServiceAccount + ImagePullSecrets + automountToken | §3.5 | v0.3.0 |
+| `keiailab.rbac.controllerBase` | controller-runtime base (leader-election + events + service) | §3.5 | v0.3.0 |
+| `keiailab.rbac.workloadBase` | managed workload (StatefulSet/Deployment + Service/ConfigMap/Secret/PVC/Pod) | §3.5 | v0.3.0 |
 
 ### 후속 PR 의 partial (별 PR)
 
 | Helper | RFC-0019 | PR |
 |---|---|---|
 | `keiailab.security.podSecurityRestricted` | §3.4 | PR-B5 |
-| `keiailab.rbac.serviceAccount` | §3.5 | PR-C1 |
-| `keiailab.rbac.controllerBase` | §3.5 | PR-C1 |
-| `keiailab.rbac.workloadBase` | §3.5 | PR-C1 |
 
 ## License
 
