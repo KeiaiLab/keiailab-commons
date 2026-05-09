@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+title: operator-commons
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - name: "Keiailab"
+    website: "https://github.com/keiailab"
+repository-code: "https://github.com/keiailab/operator-commons"
+url: "https://github.com/keiailab/operator-commons"
+abstract: >-
+  Shared Go library + Helm library chart for Keiailab Kubernetes operators
+  (mongodb-operator, postgres-operator, valkey-operator). Provides
+  controller-runtime independent finalizer/status helpers, version Matrix
+  generic, and common partial templates (RBAC, NetworkPolicy, PSS, ServiceMonitor).
+keywords:
+  - kubernetes
+  - operator
+  - controller-runtime
+  - helm-library-chart
+  - golang
+license: Apache-2.0
+version: v0.7.0
