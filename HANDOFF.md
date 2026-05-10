@@ -4,6 +4,41 @@
 > 차단점 / 근거 링크 / 의사결정 기록) 을 따른다. 다음 세션 진입 시 가장
 > 먼저 읽는다.
 
+## 2026-05-10 cross-repo 세션 결과 (operator-commons 영향)
+
+본 세션 (Ralph loop, 2026-05-10) 의 operator-commons 직접 변경:
+
+| 영역 | PR | 결과 |
+|---|---|---|
+| HANDOFF Sprint A/B/C 누적 progress 표 | #8 | merged |
+| OSS hygiene (CITATION.cff + GH PR/Issue templates) | #9 | merged |
+
+3 operator (valkey + mongodb + postgres) 모두 commons v0.6.0 (pkg/finalizer +
+pkg/status sugar) 채택 완료 — `mongodb-operator#119/#120 ADR-0021/0022`,
+`postgres-operator#21 ADR-0011`, `valkey-operator#18 ADR-0038` 통해 production
+배포 도달.
+
+3 operator 운영 latest version 동기:
+- `valkey-operator` v1.0.10 (INC-0001 영구 fix + ADR-0039 self-heal active)
+- `mongodb-operator` v1.4.20 (ShardDraining 백오프 regression fix + ADR-0022)
+- `postgres-operator` v0.3.0-alpha.16 (OperatorHub bundle scaffold + ADR-0013)
+
+OperatorHub.io 등록 신청 (multi-day review): community-operators PRs
+[#8091](https://github.com/k8s-operatorhub/community-operators/pull/8091)
+(valkey 1.0.10), [#8092](https://github.com/k8s-operatorhub/community-operators/pull/8092)
+(keiailab-mongodb 1.4.20), [#8093](https://github.com/k8s-operatorhub/community-operators/pull/8093)
+(keiailab-postgres 0.3.0-alpha.16). 3 PR 모두 orange/Deploy k8s CI PASS.
+
+### 후속 (commons 자체 작업)
+
+1. consumer chart partial include — mongodb / postgres / valkey 의 ServiceMonitor
+   / NetworkPolicy / RBAC / Security yaml 이 commons library chart partial include
+   로 교체. commons OCI publish (PR-B2.2 별 PR) 의존.
+2. v0.7.0 → v0.8.0 — 본 세션의 cumulative consumer 패턴 실측 후 *commons API 표면
+   안정화* 결정.
+
+---
+
 ## 2026-05-09 Sprint A/B/C 누적 진행 (Ralph iter 1~16, 23 PR 머지)
 
 > Plan: `~/.claude/plans/1-https-artifacthub-io-packages-helm-clo-synthetic-gem.md`
