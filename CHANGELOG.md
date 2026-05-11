@@ -53,7 +53,7 @@
 - `pkg/finalizer` lint fix: 수동 for+== → `slices.Contains`/`slices.Index`/`slices.Delete` (modernize linter, 201816f / cdf524c).
 - `pkg/status/conditions.go` SetReady 함수 시그니처 multi-line (lll 통과, cdf524c).
 
-## [v0.4.0] - 2026-05-07
+## [0.4.0] - 2026-05-07
 
 (이전 버전 history 는 git tag log 또는 release notes 참조 — 본 CHANGELOG.md 는 audit 시점에 신설)
 
