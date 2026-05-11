@@ -18,18 +18,20 @@ restricted contexts, version allowlists, NetworkPolicy templates, ServiceMonitor
 builders). Maintenance drift between repos was already producing inconsistencies
 — this library is the single source of truth.
 
-## Packages (v0.4.0)
+## Packages (v0.7.0)
 
 | Package | Purpose |
 |---|---|
-| `pkg/version` | Supported DB version allowlist convention (`MustList`, `IsSupported`, `Strings`, `Default`). |
+| `pkg/version` | Supported DB version allowlist convention (`MustList`, `IsSupported`, `Strings`, `Default`) + generic `Matrix[E MatrixEntry]`. |
 | `pkg/security` | PodSecurity *restricted* SecurityContext builder with functional options. |
 | `pkg/labels` | Recommended Kubernetes labels (`app.kubernetes.io/*`) builder — `Set`, `All()`, `Selector()` (version-aware split). |
 | `pkg/monitoring` | Prometheus Operator `ServiceMonitor` builder (unstructured — CRD-soft). |
 | `pkg/networkpolicy` | NetworkPolicy builder — deny-by-default + functional options (`WithSelfIngress`, `WithIngressFromPeers`, `WithDenyEgress`, `WithEgressToPeers`). |
 | `pkg/webhook` | Admission validation helpers — `ValidateAllowedVersion` (exact match), `ValidateWithPredicate` (caller-supplied matcher e.g. semver-prefix). |
+| `pkg/finalizer` | Finalizer helpers — `Add`/`Remove`/`Has` (controller-runtime 의존 회피, std `slices` 만 사용). |
+| `pkg/status` | 4 표준 Condition Type + 6 Reason 카탈로그 + 헬퍼 (`SetReady`, `SetAvailable`, `SetReadyFalse`). |
 
-**6/6 패키지 모두 100% line coverage.** Planned (v0.5.0+): `pkg/finalizer` (cascade-delete avoidance pattern). `pkg/conditions` 는 *upstream `k8s.io/apimachinery/pkg/api/meta.SetStatusCondition` 활용 권장* (commons 미추가 결정 — boundary 분석 결과, 자세히는 mongodb-operator HANDOFF iteration 32 참조).
+`pkg/conditions` 는 *upstream `k8s.io/apimachinery/pkg/api/meta.SetStatusCondition` 활용 권장* (commons 미추가 결정 — boundary 분석 결과, 자세히는 mongodb-operator HANDOFF iteration 32 참조).
 
 ## Adoption Matrix (3 operator)
 
