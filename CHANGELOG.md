@@ -8,6 +8,20 @@
 
 ## [Unreleased]
 
+### Added (v1.0.0 graduation track — P-B 다중 sub-task)
+
+- `scripts/godoc-coverage.sh` — per-package + total godoc coverage 계산. v1.0 80% threshold 검증 (PR #12, B.1.1).
+- `docs/STABILITY.md` — 3-tier API stability promise + 11 graduation criteria + breaking change policy + caller responsibilities (PR #12, B.1.2).
+- `pkg/status/REASONS.md` — 6-Reason × Type × Status 사용 매트릭스 + 4 reconcile 흐름 + cross-repo 정합 게이트 (PR #13, B.5.1).
+- `pkg/finalizer.EnsureOrder` — 다중 finalizer 순서 보장 helper (RFC-0018 후속). desiredOrder 안정 정렬 + 미지정 finalizer 후미 유지. 6 unit test (PR #14, B.3.1).
+- `pkg/labels.AllV2` + `V2` struct — K8s 1.30+ Recommended labels v2 매핑 (createdBy/tier/owner). 3 unit test (PR #14, B.4.1).
+- `pkg/version.AsMap` + `MarshalJSON` — Matrix[E] 시리얼라이저. JSON/YAML 호환, key 정렬 stable output (PR #15, B.6.2).
+- `pkg/version/api_stability_test.go` — public API surface 가드. 3-repo 호출 패턴 모방 (PR #15, B.6.1).
+- `pkg/networkpolicy.ComboPeer` + `WithComboIngressFromPeers` — CIDR + NamespaceSelector + PodSelector 조합 helper. 3 unit test (PR #16, B.8.2).
+- `pkg/security.RestrictedPodSecurityContext` + `WithPodFSGroup/WithPodRunAsUser/WithPodRunAsGroup` — Pod-level restricted SecurityContext. 3 unit test (PR #16, B.9.2).
+- `pkg/security.RuntimeDefaultSeccompProfile` + `LocalhostSeccompProfile` + `UnconfinedSeccompProfile` — 3 seccomp profile pointer helpers (PR #16, B.9.3).
+
+
 ## [0.7.0] - 2026-05-09
 
 ### Added
