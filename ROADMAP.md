@@ -63,7 +63,7 @@
 - [x] Condition reason 표준 카탈로그 문서화 — `pkg/status/REASONS.md` (PR #13)
 - Verify: `kubectl get <kind> -o yaml` 의 `.status.conditions` 동등성 (3 repo)
 
-### pkg/version (Beta)
+### pkg/version (Stable — promoted v1.0.0-rc, PR #19)
 - [x] `Matrix[E]` generic 도입 (v0.7.0) — `pkg/version/matrix.go`
 - [x] `SetAvailable` 헬퍼 (v0.6.0)
 - [x] 버전 호환성 비교 (semver) — `pkg/version/version.go`
@@ -75,7 +75,7 @@
 ### pkg/monitoring (Beta)
 - [x] Prometheus ServiceMonitor 빌더 — `pkg/monitoring/monitoring.go`
 - [x] unit test
-- [ ] PrometheusRule 빌더 (alert/recording rules 공통화)
+- [x] PrometheusRule 빌더 (alert/recording rules 공통화) — `pkg/monitoring/rule.go` `NewPrometheusRule` + `AlertRule` + `RecordingRule` + `RuleGroup` (PR #18)
 - [ ] **3-repo 동등성 e2e** — 같은 입력 → 같은 ServiceMonitor 출력
 - [ ] OpenTelemetry exporter helper (선택, 호출자 요구 시)
 - [ ] **Tier 격상** → Stable
@@ -85,7 +85,7 @@
 - [x] NetworkPolicy 빌더 — `pkg/networkpolicy/networkpolicy.go`
 - [x] default-deny + 명시 규칙 helper
 - [x] unit test
-- [ ] **4-direction 검증** — ingress/egress × TCP/UDP
+- [x] **4-direction 검증** — ingress/egress × TCP/UDP — `pkg/networkpolicy/four_dir_test.go` (PR #19)
 - [x] CIDR + namespace selector + pod selector 조합 helper — `pkg/networkpolicy/combo.go` `ComboPeer` + `WithComboIngressFromPeers` (PR #16)
 - [ ] **Tier 격상** → Stable
 - Verify: kind 환경에서 NetworkPolicy 적용 후 차단/허용 경로 측정
@@ -94,7 +94,7 @@
 - [x] SecurityContext helper (restricted PSA 호환) — `pkg/security/security.go`
 - [x] RBAC helper
 - [x] unit test
-- [ ] **restricted PSA 3-repo 회귀 가드** — 동일 helper 가 3 repo 에서 동작 검증
+- [x] **restricted PSA 3-repo 회귀 가드** — `pkg/security/psa_guard_test.go` (PR #19)
 - [x] Pod / Container SecurityContext 분리 helper — `pkg/security/split.go` `RestrictedPodSecurityContext` (PR #16)
 - [x] seccompProfile 기본값 helper — `pkg/security/seccomp.go` `RuntimeDefaultSeccompProfile` + `LocalhostSeccompProfile` + `UnconfinedSeccompProfile` (PR #16)
 - [ ] **Tier 격상** → Stable
@@ -103,7 +103,7 @@
 ### pkg/webhook (Experimental)
 - [x] Webhook 유틸 기초 — `pkg/webhook/webhook.go`
 - [x] unit test
-- [ ] **Conversion webhook helper** — v1alpha1 ↔ v1alpha2 패턴 추출
+- [x] **Conversion webhook helper** — v1alpha1 ↔ v1alpha2 패턴 추출 — `pkg/webhook/conversion.go` `ConversionRegistry` (PR #18)
 - [ ] Validation webhook 공통 패턴 (RBD storageClass, topology spread, replicaCount lower bound)
 - [ ] **다중 repo 사용** — 현재 1 repo (valkey) 만, 다른 repo 도입 후 안정화
 - [ ] **Tier 격상** → Beta → Stable
