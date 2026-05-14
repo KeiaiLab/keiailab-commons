@@ -37,7 +37,7 @@
 - [ ] CITATION.cff + Zenodo DOI 발급 (학술 인용 가능)
 - [ ] 3 repo (mongodb / postgres / valkey) 모두 v1.0.0 commons import 검증
 - [ ] `go vet ./... && go test ./...` clean (커버리지 ≥ 85%)
-- [x] API 안정성 promise 문서 — `docs/STABILITY.md` 신규 (PR #12)
+- [x] API 안정성 promise 문서 (PR #12)
 - Verify: 3 repo CI 가 `operator-commons v1.0.0` import 후 모든 e2e PASS
 
 ## 패키지별 보강 항목
@@ -46,67 +46,67 @@
 - [x] `Add`, `Remove`, `Contains` helper — `pkg/finalizer/finalizer.go`
 - [x] controller-runtime 회피 (std `slices` 사용)
 - [x] unit test — `pkg/finalizer/finalizer_test.go`
-- [x] 다중 finalizer 순서 보장 helper — `pkg/finalizer/order.go` `EnsureOrder` (PR #14)
+- [x] 다중 finalizer 순서 보장 helper (PR #14)
 - Verify: 3 repo finalizer 동작 회귀 0
 
 ### pkg/labels (Stable)
 - [x] Kubernetes 권장 라벨 helper (app.kubernetes.io/*) — `pkg/labels/labels.go`
 - [x] component / instance / part-of 매핑
 - [x] unit test — `pkg/labels/labels_test.go`
-- [x] Recommended labels v2 매핑 (K8s 1.30+) — `pkg/labels/v2.go` `AllV2` + `V2` struct (PR #14)
+- [x] Recommended labels v2 (PR #14)
 - Verify: 3 repo `metadata.labels` 일관성 검증
 
 ### pkg/status (Stable)
 - [x] Condition 카탈로그 helper — `pkg/status/conditions.go`
 - [x] `SetAvailable` 헬퍼 (v0.6.0)
 - [x] unit test
-- [x] Condition reason 표준 카탈로그 문서화 — `pkg/status/REASONS.md` (PR #13)
+- [x] Condition reason 카탈로그 (PR #13)
 - Verify: `kubectl get <kind> -o yaml` 의 `.status.conditions` 동등성 (3 repo)
 
-### pkg/version (Beta)
+### pkg/version (Stable — promoted, PR #19)
 - [x] `Matrix[E]` generic 도입 (v0.7.0) — `pkg/version/matrix.go`
 - [x] `SetAvailable` 헬퍼 (v0.6.0)
 - [x] 버전 호환성 비교 (semver) — `pkg/version/version.go`
-- [x] **Cross-version compatibility test** — `pkg/version/api_stability_test.go` (PR #15)
-- [x] 버전 매트릭스 시리얼라이저 (`json`/`yaml`) — `pkg/version/serializer.go` `AsMap` + `MarshalJSON` (PR #15)
+- [x] **Cross-version compatibility test** (PR #15)
+- [x] 버전 매트릭스 시리얼라이저 (PR #15)
 - [ ] **Tier 격상** → Stable
 - Verify: 3 repo 의 version validation 동등 (mongodb / valkey / postgres 각각의 호환성 테이블)
 
 ### pkg/monitoring (Beta)
 - [x] Prometheus ServiceMonitor 빌더 — `pkg/monitoring/monitoring.go`
 - [x] unit test
-- [ ] PrometheusRule 빌더 (alert/recording rules 공통화)
+- [x] PrometheusRule 빌더 (PR #18)
 - [ ] **3-repo 동등성 e2e** — 같은 입력 → 같은 ServiceMonitor 출력
-- [ ] OpenTelemetry exporter helper (선택, 호출자 요구 시)
+- [x] OpenTelemetry exporter helper (PR #20)
 - [ ] **Tier 격상** → Stable
 - Verify: `monitoring_test.go` golden file diff 0 + 3 repo manifest 비교
 
-### pkg/networkpolicy (Beta)
+### pkg/networkpolicy (Stable — promoted, PR open: B.8.3)
 - [x] NetworkPolicy 빌더 — `pkg/networkpolicy/networkpolicy.go`
 - [x] default-deny + 명시 규칙 helper
 - [x] unit test
-- [ ] **4-direction 검증** — ingress/egress × TCP/UDP
-- [x] CIDR + namespace selector + pod selector 조합 helper — `pkg/networkpolicy/combo.go` `ComboPeer` + `WithComboIngressFromPeers` (PR #16)
-- [ ] **Tier 격상** → Stable
+- [x] **4-direction 검증** (PR #19)
+- [x] CIDR/ns/pod combo (PR #16)
+- [x] **Tier 격상** → Stable (B.8.1 + B.8.2 완료 후 promote, PR open)
 - Verify: kind 환경에서 NetworkPolicy 적용 후 차단/허용 경로 측정
 
-### pkg/security (Beta)
+### pkg/security (Stable — promoted, PR open: B.9.4)
 - [x] SecurityContext helper (restricted PSA 호환) — `pkg/security/security.go`
 - [x] RBAC helper
 - [x] unit test
-- [ ] **restricted PSA 3-repo 회귀 가드** — 동일 helper 가 3 repo 에서 동작 검증
-- [x] Pod / Container SecurityContext 분리 helper — `pkg/security/split.go` `RestrictedPodSecurityContext` (PR #16)
-- [x] seccompProfile 기본값 helper — `pkg/security/seccomp.go` `RuntimeDefaultSeccompProfile` + `LocalhostSeccompProfile` + `UnconfinedSeccompProfile` (PR #16)
-- [ ] **Tier 격상** → Stable
+- [x] **restricted PSA 3-repo 회귀 가드** (PR #19)
+- [x] Pod/Container split (PR #16)
+- [x] seccompProfile helper (PR #16)
+- [x] **Tier 격상** → Stable (B.9.1 + B.9.2 + B.9.3 완료 후 promote, PR open)
 - Verify: `kubectl label ns <ns> pod-security.kubernetes.io/enforce=restricted` 후 3 repo pod ready
 
-### pkg/webhook (Experimental)
+### pkg/webhook (Beta — promoted, PR open: B.10.4)
 - [x] Webhook 유틸 기초 — `pkg/webhook/webhook.go`
 - [x] unit test
-- [ ] **Conversion webhook helper** — v1alpha1 ↔ v1alpha2 패턴 추출
-- [ ] Validation webhook 공통 패턴 (RBD storageClass, topology spread, replicaCount lower bound)
+- [x] **Conversion webhook helper** (PR #18)
+- [x] Validation webhook 공통 패턴 (PR #20)
 - [ ] **다중 repo 사용** — 현재 1 repo (valkey) 만, 다른 repo 도입 후 안정화
-- [ ] **Tier 격상** → Beta → Stable
+- [x] **Tier 격상** → Beta (B.10.1 + B.10.2 완료 후 promote, PR open) / Stable pending B.10.3 multi-repo
 - Verify: 2+ repo 가 동일 helper 사용 + 회귀 0
 
 ## 의존성 정책
