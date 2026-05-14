@@ -36,7 +36,7 @@
 - [ ] CHANGELOG.md 의 v0.x 진화 history 정리 + v1.0.0 release notes
 - [ ] CITATION.cff + Zenodo DOI 발급 (학술 인용 가능)
 - [ ] 3 repo (mongodb / postgres / valkey) 모두 v1.0.0 commons import 검증
-- [ ] `go vet ./... && go test ./...` clean (커버리지 ≥ 85%)
+- [x] `go vet ./... && go test ./...` clean (커버리지 96.3% > 85% threshold, 2026-05-14 측정)
 - [x] API 안정성 promise 문서 — `docs/STABILITY.md` 신규 (PR #12)
 - Verify: 3 repo CI 가 `operator-commons v1.0.0` import 후 모든 e2e PASS
 
