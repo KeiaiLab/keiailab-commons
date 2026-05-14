@@ -77,11 +77,11 @@
 - [x] unit test
 - [x] PrometheusRule 빌더 (alert/recording rules 공통화) — `pkg/monitoring/rule.go` `NewPrometheusRule` + `AlertRule` + `RecordingRule` + `RuleGroup` (PR #18)
 - [ ] **3-repo 동등성 e2e** — 같은 입력 → 같은 ServiceMonitor 출력
-- [ ] OpenTelemetry exporter helper (선택, 호출자 요구 시)
+- [x] OpenTelemetry exporter helper — pkg/monitoring/otel.go (P-B.7.3)
 - [ ] **Tier 격상** → Stable
 - Verify: `monitoring_test.go` golden file diff 0 + 3 repo manifest 비교
 
-### pkg/networkpolicy (Beta)
+### pkg/networkpolicy (Stable — promoted: B.8.3)
 - [x] NetworkPolicy 빌더 — `pkg/networkpolicy/networkpolicy.go`
 - [x] default-deny + 명시 규칙 helper
 - [x] unit test
@@ -90,7 +90,7 @@
 - [ ] **Tier 격상** → Stable
 - Verify: kind 환경에서 NetworkPolicy 적용 후 차단/허용 경로 측정
 
-### pkg/security (Beta)
+### pkg/security (Stable — promoted: B.9.4)
 - [x] SecurityContext helper (restricted PSA 호환) — `pkg/security/security.go`
 - [x] RBAC helper
 - [x] unit test
@@ -100,11 +100,11 @@
 - [ ] **Tier 격상** → Stable
 - Verify: `kubectl label ns <ns> pod-security.kubernetes.io/enforce=restricted` 후 3 repo pod ready
 
-### pkg/webhook (Experimental)
+### pkg/webhook (Beta — promoted: B.10.4)
 - [x] Webhook 유틸 기초 — `pkg/webhook/webhook.go`
 - [x] unit test
 - [x] **Conversion webhook helper** — v1alpha1 ↔ v1alpha2 패턴 추출 — `pkg/webhook/conversion.go` `ConversionRegistry` (PR #18)
-- [ ] Validation webhook 공통 패턴 (RBD storageClass, topology spread, replicaCount lower bound)
+- [x] Validation webhook 공통 패턴 — pkg/webhook/validation_patterns.go (P-B.10.2)
 - [ ] **다중 repo 사용** — 현재 1 repo (valkey) 만, 다른 repo 도입 후 안정화
 - [ ] **Tier 격상** → Beta → Stable
 - Verify: 2+ repo 가 동일 helper 사용 + 회귀 0
