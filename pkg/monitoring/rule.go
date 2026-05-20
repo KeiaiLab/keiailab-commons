@@ -30,8 +30,8 @@ type RecordingRule struct {
 
 // RuleGroup — Prometheus RuleGroup (name + interval + rules).
 type RuleGroup struct {
-	Name     string  `json:"name"`
-	Interval string  `json:"interval,omitempty"`
+	Name     string `json:"name"`
+	Interval string `json:"interval,omitempty"`
 	Alerts   []AlertRule
 	Records  []RecordingRule
 }
@@ -58,7 +58,8 @@ type RuleGroup struct {
 //	)
 //
 // Refs: ROADMAP.md 'PrometheusRule 빌더 (alert/recording rules 공통화)'
-//       (P-B.7.1)
+//
+//	(P-B.7.1)
 func NewPrometheusRule(name, namespace string, labels map[string]string, groups ...RuleGroup) *unstructured.Unstructured {
 	obj := &unstructured.Unstructured{}
 	obj.SetGroupVersionKind(schema.GroupVersionKind{
