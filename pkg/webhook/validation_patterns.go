@@ -14,7 +14,7 @@ func ValidateStorageClassDNS1123(name string) error {
 		return fmt.Errorf("storageClassName length %d > 253", len(name))
 	}
 	for _, c := range name {
-		if !((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '-' || c == '.') {
+		if (c < 'a' || c > 'z') && (c < '0' || c > '9') && c != '-' && c != '.' {
 			return fmt.Errorf("storageClassName invalid char %q", c)
 		}
 	}
