@@ -3,7 +3,10 @@ package webhook
 import "testing"
 
 func TestValidateStorageClassDNS1123(t *testing.T) {
-	cases := []struct{ in string; wantErr bool }{
+	cases := []struct {
+		in      string
+		wantErr bool
+	}{
 		{"", false}, {"fast-ssd", false}, {"Fast-SSD", true}, {"-x", true}, {"x_y", true},
 	}
 	for _, c := range cases {

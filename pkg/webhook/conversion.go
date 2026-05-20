@@ -20,7 +20,8 @@ type ConvertFunc func(src any) (dst any, err error)
 // 로직을 위임. caller 는 별도 admission webhook server 에서 호출.
 //
 // Refs: ROADMAP.md 'Conversion webhook helper — v1alpha1 ↔ v1alpha2 패턴 추출'
-//       (P-B.10.1)
+//
+//	(P-B.10.1)
 type ConversionRegistry struct {
 	convs map[string]ConvertFunc
 }

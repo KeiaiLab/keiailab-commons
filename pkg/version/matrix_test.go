@@ -55,8 +55,9 @@ func TestMustMatrix_NotFound(t *testing.T) {
 
 // TestMustMatrix_KeysAndEntriesAndLen — 외부 노출 helper.
 func TestMustMatrix_KeysAndEntriesAndLen(t *testing.T) {
+	const v10 = "1.0"
 	m := version.MustMatrix(
-		testEntry{Version: "1.0"},
+		testEntry{Version: v10},
 		testEntry{Version: "2.0"},
 		testEntry{Version: "3.0"},
 	)
@@ -65,7 +66,7 @@ func TestMustMatrix_KeysAndEntriesAndLen(t *testing.T) {
 		t.Errorf("Len() = %d, want 3", got)
 	}
 	keys := m.Keys()
-	if len(keys) != 3 || keys[0] != "1.0" || keys[2] != "3.0" {
+	if len(keys) != 3 || keys[0] != v10 || keys[2] != "3.0" {
 		t.Errorf("Keys() = %v, want [1.0 2.0 3.0]", keys)
 	}
 	entries := m.Entries()
@@ -74,7 +75,7 @@ func TestMustMatrix_KeysAndEntriesAndLen(t *testing.T) {
 	}
 	// 방어 복사 확인 — 호출자 mutation 이 내부 영향 없음.
 	entries[0] = testEntry{Version: "MUTATED"}
-	if e, _ := m.Find("1.0"); e.Version != "1.0" {
+	if e, _ := m.Find(v10); e.Version != v10 {
 		t.Errorf("내부 mutation 노출 — Entries 가 방어 복사 미실행: %+v", e)
 	}
 }
