@@ -309,6 +309,38 @@ commit-msg:
         - rebase
         - merge
 
+    # ─── operator-commons 자체 SSoT commit-msg (.lefthook.yml legacy union, PR5 2026-05-20) ──
+    # main 의 .lefthook.yml priority 충돌 fix — 본 file 의 PR1 ai-dev SSOT cp 가 lefthook
+    # priority 우선 → main 의 .lefthook.yml hook 4종 (conventional/dco-signoff/unit-test/
+    # govulncheck/go-mod-tidy-drift) 작동 X 위험. union 으로 영구 봉인 + .lefthook.yml 삭제.
+    conventional:
+      # Conventional Commits 강제 (feat/fix/docs/refactor/test/chore/build/ci/perf/revert/style).
+      # ai-dev SSOT 의 commitlint hook (package.json skip) 대체 — Go repo 에 필수.
+      run: |
+        if ! grep -qE "^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\(.+\))?!?: .+" "{1}"; then
+          echo "ERROR: Conventional Commits 위반 — 형식: <type>(<scope>): <subject>"
+          echo "       types: feat / fix / docs / style / refactor / test / chore / build / ci / perf / revert"
+          exit 1
+        fi
+      skip:
+        - rebase
+        - merge
+    dco-signoff:
+      # A-P0-5: DCO Signed-off-by enforce by default. DCO_STRICT=0 으로 일시 우회.
+      # operator-commons Apache-2.0 contribution 요건 — git commit -s 의무.
+      run: |
+        if ! grep -qE '^Signed-off-by: .+ <.+@.+>' "{1}"; then
+          if [ "${DCO_STRICT:-1}" = "1" ]; then
+            echo "ERROR: DCO Signed-off-by trailer missing — use 'git commit -s'"
+            exit 1
+          else
+            echo "[warn] DCO Signed-off-by trailer missing (set DCO_STRICT=1 to enforce)"
+          fi
+        fi
+      skip:
+        - rebase
+        - merge
+
 pre-push:
   parallel: true
   commands:
@@ -393,6 +425,35 @@ pre-push:
         else
           echo "golangci-lint not installed — graceful degrade skip"
         fi
+
+    # ─── operator-commons 자체 SSoT pre-push (.lefthook.yml legacy union, PR5 2026-05-20) ──
+    # main 의 .lefthook.yml priority 충돌 fix sister — pre-push 3 hook union.
+    unit-test:
+      # 전체 unit test 실행 (count=1 으로 cache 회피, race 부재 — go-test sister 와 차이).
+      run: |
+        cd "$(git rev-parse --show-toplevel)"
+        go test -count=1 -timeout=120s ./...
+    govulncheck:
+      # Go module CVE — call graph 기반. 라이브러리 다운스트림 (3 operator) 보호.
+      # 설치: go install golang.org/x/vuln/cmd/govulncheck@latest
+      run: |
+        cd "$(git rev-parse --show-toplevel)"
+        command -v govulncheck >/dev/null 2>&1 && govulncheck ./... || echo "[warn] govulncheck 미설치 — go install golang.org/x/vuln/cmd/govulncheck@latest 권장"
+    go-mod-tidy-drift:
+      # go.mod / go.sum drift 차단. 'go mod tidy' 후 commit 안 한 경우 push 차단.
+      run: |
+        cd "$(git rev-parse --show-toplevel)"
+        cp go.mod /tmp/.go.mod.commons.bak
+        cp go.sum /tmp/.go.sum.commons.bak
+        go mod tidy
+        if ! diff -q go.mod /tmp/.go.mod.commons.bak >/dev/null 2>&1 || ! diff -q go.sum /tmp/.go.sum.commons.bak >/dev/null 2>&1; then
+          cp /tmp/.go.mod.commons.bak go.mod
+          cp /tmp/.go.sum.commons.bak go.sum
+          rm -f /tmp/.go.mod.commons.bak /tmp/.go.sum.commons.bak
+          echo "ERROR: go.mod / go.sum drift — 'go mod tidy' 후 commit 필요"
+          exit 1
+        fi
+        rm -f /tmp/.go.mod.commons.bak /tmp/.go.sum.commons.bak
 
 post-merge:
   commands:
