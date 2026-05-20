@@ -32,6 +32,17 @@ GitHub team `@keiailab/maintainers` 가 본 라이브러리의 모든 영역에 
 
 본 라이브러리의 *공개 API breaking change* 는 3 consumer operator 메인테이너 (각 repo에서 1명 이상) 의 LGTM 이 동시에 필요합니다 — RFC 로 명시.
 
+## 다중언어 문서 책임자 (i18n owner)
+
+PR2 (`docs/readme-i18n-ko`, 2026-05-20) — RFC-0045 §2.5 Codex challenge #3 drift control codify.
+
+| 언어 | 책임자 | 담당 파일 | 책임 |
+|---|---|---|---|
+| English (canonical) | [@keiailab/maintainers](https://github.com/orgs/keiailab/teams/maintainers) | `README.md` | 진본 (single source of truth) |
+| 한국어 (Korean) | TaeHwan Park ([@eightynine01](https://github.com/eightynine01)) | `README.ko.md` | EN canonical sync + 번역 검수 |
+
+**drift 검증**: `bash scripts/check-readme-sync.sh` — 양 file 존재 + section header 수 일치 + line count ±15% + 양방향 cross-link. lefthook pre-commit `readme-i18n-sync` hook 가 README.md staged 시 README.ko.md 미staged 경고 (warn-on-drift, `README_I18N_SYNC_OK=1` 우회).
+
 ## Emeritus
 
 (아직 없음)
