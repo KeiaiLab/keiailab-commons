@@ -239,6 +239,25 @@ pre-commit:
           exit 1
         fi
 
+    # ─── README i18n drift control (PR2, 2026-05-20) ──────────────────────────
+    # RFC-0045 §2.5 Codex challenge #3 fix — README.md staged 시 README.ko.md
+    # 도 staged 인지 검사 (warn-on-drift). 진본 sync verify = scripts/check-readme-sync.sh.
+    # 우회: README_I18N_SYNC_OK=1 env (의도적 EN-only update 시).
+    readme-i18n-sync:
+      glob: "README.md"
+      run: |
+        if [ "${README_I18N_SYNC_OK:-0}" = "1" ]; then exit 0; fi
+        staged_list=$(git diff --cached --name-only)
+        if echo "$staged_list" | grep -qE '(^|/)README\.md$'; then
+          if ! echo "$staged_list" | grep -qE '(^|/)README\.ko\.md$'; then
+            echo "::WARNING:: README.md staged but README.ko.md not staged."
+            echo "  → multi-language drift 위험."
+            echo "  fix: scripts/check-readme-sync.sh 실행 + README.ko.md 갱신"
+            echo "  우회: README_I18N_SYNC_OK=1 git commit (의도적 EN-only)"
+          fi
+        fi
+        exit 0
+
 commit-msg:
   commands:
     commitlint:
