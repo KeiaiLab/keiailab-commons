@@ -122,8 +122,13 @@ check_P1_13_md_link() {
 # P2 (Governance)
 check_P2_2_gha_block_hook() {
   local repo=$1
+  # 케이스 1: lefthook 의 gha-block hook 또는 RFC-0002 강제 hook 존재 → ✅
   for f in "$PARENT/$repo/.lefthook.yml" "$PARENT/$repo/lefthook.yml" "$PARENT/$repo/.husky/pre-commit"; do
     [[ -f $f ]] && grep -q "gha-block\|workflows.*forbid\|RFC-0002\|github_actions" "$f" && { echo "✅"; return; }
+  done
+  # 케이스 2: ADR 의 의도적 미적용 인정 — gha-retention 또는 audit-augmentation 패턴 ADR + 본문에 P2-2 또는 gha-block 키워드 포함 시 ✅
+  for adr in $(find "$PARENT/$repo/docs/kb/adr/" -type f \( -name "*gha-retention*" -o -name "*audit-augmentation*" \) 2>/dev/null); do
+    grep -qE "P2-2|gha-block|RFC-0002|dual-track" "$adr" 2>/dev/null && { echo "✅"; return; }
   done
   echo "❌"
 }
