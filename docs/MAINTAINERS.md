@@ -1,62 +1,68 @@
 # Maintainers
 
-본 문서는 `keiailab/operator-commons` 의 의사결정 권한을 가진 메인테이너
-명단을 관리합니다.
+> **English** | [한국어](MAINTAINERS.ko.md)
 
-## 현재 메인테이너
+This document records the maintainers with decision-making authority
+for `keiailab/operator-commons`.
 
-| 이름 / 팀 | GitHub | 역할 | 담당 영역 |
+## Current maintainers
+
+| Name / team | GitHub | Role | Scope |
 |---|---|---|---|
-| keiailab maintainers | [@keiailab/maintainers](https://github.com/orgs/keiailab/teams/maintainers) | Lead | 전체 |
+| keiailab maintainers | [@keiailab/maintainers](https://github.com/orgs/keiailab/teams/maintainers) | Lead | All |
 
-GitHub team `@keiailab/maintainers` 가 본 라이브러리의 모든 영역에 대한 머지 ·
-릴리스 태그 권한을 보유합니다.
+The GitHub team `@keiailab/maintainers` holds the merge and release-tag
+authority for every area of the library.
 
-## 메인테이너 자격
+## Maintainer qualifications
 
-downstream consumer operator 의 메인테이너이거나, 다음 조건을 6 개월 이상
-만족한 contributor:
+Either a maintainer of a downstream consumer operator, *or* a
+contributor who has met the following criteria for at least six months:
 
-- 머지된 PR ≥ 10 건 (라이브러리 특성상 PR 빈도가 낮으므로 일반 operator 의
-  절반 기준).
-- 리뷰한 PR ≥ 20 건 (downstream consumer 측 PR 포함 가능).
-- `pkg/` 하위 패키지 중 하나 이상의 영역 (security / labels / webhook /
-  monitoring / networkpolicy / version / status / finalizer / storageclass /
-  events / probes / pvc / topology) 에 대한 깊은 이해.
+- ≥ 10 merged PRs (library PR cadence is lower than a typical operator,
+  so the bar is roughly half of that).
+- ≥ 20 reviewed PRs (downstream consumer PRs may count).
+- Deep familiarity with at least one `pkg/` area (security, labels,
+  webhook, monitoring, networkpolicy, version, status, finalizer,
+  storageclass, events, probes, pvc, topology).
 
-## 추가 절차
+## Addition procedure
 
-1. 기존 메인테이너 또는 candidate 본인이 Issue 또는 ADR 로 제안.
-2. `@keiailab/maintainers` 팀의 lazy consensus (7일 코멘트 윈도우).
-3. 반대 없으면 GitHub team 에 추가 + 본 파일 PR 갱신.
+1. An existing maintainer (or the candidate themselves) opens an issue
+   or ADR.
+2. The `@keiailab/maintainers` team applies lazy consensus (7-day
+   comment window).
+3. With no dissent, the candidate is added to the GitHub team and this
+   file is updated via PR.
 
-## 비활성 메인테이너
+## Inactive maintainers
 
-연속 6 개월간 활동이 없는 메인테이너는 emeritus 로 이동합니다 (권한 회수,
-명예 명단 유지).
+A maintainer who has not been active for six consecutive months is
+moved to emeritus (rights revoked, name retained on the honorary roll).
 
-## Cross-repo 합의
+## Cross-repo agreement
 
-본 라이브러리의 *공개 API breaking change* 는 downstream consumer
-메인테이너의 LGTM 이 ADR 단계에서 동반되어야 합니다 — [GOVERNANCE.md](GOVERNANCE.md)
-참조.
+A *public-API breaking change* requires LGTM from a downstream consumer
+maintainer at the ADR stage — see [GOVERNANCE.md](GOVERNANCE.md).
 
-## 다국어 문서 책임자 (i18n owner)
+## i18n document owners
 
-| 언어 | 책임자 | 담당 파일 | 책임 |
+| Language | Owner | Files | Responsibility |
 |---|---|---|---|
-| English (canonical) | [@keiailab/maintainers](https://github.com/orgs/keiailab/teams/maintainers) | `README.md` 외 canonical 문서 | 진본 (single source of truth) |
-| 한국어 (Korean) | TaeHwan Park ([@eightynine01](https://github.com/eightynine01)) | `README.ko.md` 외 ko 번역 | EN canonical sync + 번역 검수 |
-| 日本語 (Japanese) | (모집 중 — Issue 로 자원) | `*.ja.md` | AI 번역 native review |
-| 中文 (Chinese) | (모집 중 — Issue 로 자원) | `*.zh.md` | AI 번역 native review |
+| English (canonical) | [@keiailab/maintainers](https://github.com/orgs/keiailab/teams/maintainers) | `README.md` and canonical docs | Source of truth |
+| Korean | TaeHwan Park ([@eightynine01](https://github.com/eightynine01)) | `README.ko.md` and `*.ko.md` | EN canonical sync + translation review |
+| Japanese | (recruiting — volunteer via an issue) | `*.ja.md` | AI translation + native review |
+| Chinese | (recruiting — volunteer via an issue) | `*.zh.md` | AI translation + native review |
 
-**drift 검증**: `bash scripts/check-readme-sync.sh` — 양 file 존재 + section
-header 수 일치 + line count ±15 % + 양방향 cross-link. lefthook pre-push
-`readme-i18n-sync` hook 가 자동 강제합니다.
+**Drift verification**: `bash scripts/check-readme-sync.sh` — checks
+that the file exists, the section header count matches, line counts
+differ by less than the per-language threshold, and cross-links are
+bidirectional. The lefthook `pre-push` hook `readme-i18n-sync` enforces
+this automatically.
 
 ## Emeritus
 
-(아직 없음)
+(none yet)
 
 ---
 
