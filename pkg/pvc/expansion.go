@@ -19,7 +19,7 @@ import (
 // controller 는 각 replica 별로 `<vct-name>-<sts-name>-<ordinal>` 형태로 PVC 를
 // 명명하므로, 본 상수 + STS 이름 + ordinal 로 PVC 이름이 재구성된다.
 //
-// 3 operator (mongodb / postgres / valkey) 모두 STS VCT 이름을 "data" 로 통일.
+// downstream operator (mongodb / postgres / valkey) 모두 STS VCT 이름을 "data" 로 통일.
 const DefaultVCTName = "data"
 
 // ErrEmptyVCTName 은 옵션으로 빈 VCT 이름이 주어졌을 때 반환한다.
@@ -44,7 +44,7 @@ func newConfig(opts ...Option) (*config, error) {
 }
 
 // WithVCTName 은 STS volumeClaimTemplate 이름을 변경한다. 기본값은
-// DefaultVCTName ("data"). 3 operator 모두 "data" 이므로 별도 지정 불요.
+// DefaultVCTName ("data"). downstream operator 모두 "data" 이므로 별도 지정 불요.
 func WithVCTName(name string) Option {
 	return func(c *config) { c.vctName = name }
 }

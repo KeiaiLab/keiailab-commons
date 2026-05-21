@@ -1,11 +1,11 @@
 // Package monitoring — Prometheus Operator ServiceMonitor builder.
 //
-// 3 keiailab operator 가 동일 convention 으로 ServiceMonitor 생성:
+// downstream operator 가 동일 convention 으로 ServiceMonitor 생성:
 //
 //	sm := monitoring.NewServiceMonitor(monitoring.ServiceMonitorParams{
 //	    Name:      "mongodb-metrics",
 //	    Namespace: ns,
-//	    Selector:  labels.New("mongodb", instance, "metrics", "", "mongodb-operator").Selector(),
+//	    Selector:  labels.New("example-app", instance, "metrics", "", "downstream-operator").Selector(),
 //	    Port:      "metrics",
 //	    Interval:  "30s",
 //	    Scheme:    "https",

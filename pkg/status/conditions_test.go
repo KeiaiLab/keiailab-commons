@@ -90,7 +90,7 @@ func TestSetProgressing_Coexists(t *testing.T) {
 // TestSetAvailable — Available condition 별도 type 으로 추가.
 //
 // Available 은 Ready 와 *공존* 가능 (서로 다른 type). reconcile 진입 시
-// Ready=False/Progressing 만 변경하고 Available 은 유지하는 4-repo 패턴
+// Ready=False/Progressing 만 변경하고 Available 은 유지하는 downstream consumer 패턴
 // 검증.
 func TestSetAvailable_CoexistsWithReady(t *testing.T) {
 	var conds []metav1.Condition

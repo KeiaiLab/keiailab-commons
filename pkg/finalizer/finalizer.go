@@ -1,4 +1,4 @@
-// Package finalizer 는 4-repo keiailab operator 공통 Finalizer 헬퍼를
+// Package finalizer 는 downstream consumer keiailab operator 공통 Finalizer 헬퍼를
 // 제공한다.
 //
 // 본 패키지는 pkg/status + pkg/finalizer 표준 spec 을 구현한다. downstream operator

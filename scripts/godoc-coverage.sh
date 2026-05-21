@@ -7,7 +7,6 @@
 # Used by: v1.0.0 graduation criterion (≥80%) per docs/STABILITY.md.
 #
 # Refs: ROADMAP.md 'v1.0.0 졸업 조건' #3
-#       ~/.claude/plans/2026-05-14-4-operators-100pct/P-B.md §B.1.1
 
 set -euo pipefail
 

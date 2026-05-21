@@ -1,7 +1,7 @@
 {{/*
-keiailab-commons — NetworkPolicy partials (RFC-0019 §3.2).
+keiailab-commons — NetworkPolicy partials (library chart partial 표준).
 
-Plan §2 D13 / commons-ADR-0006.
+기반: commons-ADR-0006.
 
 두 패턴 추출:
   - keiailab.networkpolicy.dataplane    — managed workload 보호 (postgres 패턴).
@@ -19,7 +19,7 @@ caller 인자 (dict):
   - ctx:        helm context (.)
   - fullname:   caller chart 의 fullname (NetworkPolicy name prefix)
   - labels:     caller chart 의 labels
-  - managedBy:  managed-by label 값 (예: "keiailab-postgres-operator")
+  - managedBy:  managed-by label 값 (예: "keiailab-downstream-operator")
   - port:       dataplane port (예: 5432 / 27017 / 6379)
 
 사용 예 (consumer chart 의 templates/networkpolicy.yaml):
@@ -27,9 +27,9 @@ caller 인자 (dict):
   {{- if .Values.networkPolicies.enabled -}}
   {{ include "keiailab.networkpolicy.dataplane" (dict
       "ctx" .
-      "fullname" (include "postgres-operator.fullname" .)
-      "labels" (include "postgres-operator.labels" .)
-      "managedBy" "keiailab-postgres-operator"
+      "fullname" (include "downstream-operator.fullname" .)
+      "labels" (include "downstream-operator.labels" .)
+      "managedBy" "keiailab-downstream-operator"
       "port" 5432) }}
   {{- end }}
 */}}
@@ -103,9 +103,9 @@ caller 인자 (dict):
   {{- if .Values.networkPolicy.enabled }}
   {{ include "keiailab.networkpolicy.controlplane" (dict
       "ctx" .
-      "fullname" (include "valkey-operator.fullname" .)
-      "labels" (include "valkey-operator.labels" .)
-      "selectorLabels" (include "valkey-operator.selectorLabels" .)
+      "fullname" (include "downstream-operator.fullname" .)
+      "labels" (include "downstream-operator.labels" .)
+      "selectorLabels" (include "downstream-operator.selectorLabels" .)
       "metricsPort" .Values.service.metricsPort
       "webhookEnabled" .Values.webhook.enabled
       "webhookPort" .Values.webhook.port

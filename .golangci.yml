@@ -1,4 +1,4 @@
-# RFC-0017 §3.2 표준 — postgres-operator/.golangci.yml 패턴을 라이브러리 특성에
+# 라이브러리 특성에 맞춘 golangci-lint 설정 —
 # 맞게 단순화 (ginkgolinter / depguard SDK 규칙 제외, dupl 완화).
 version: "2"
 run:

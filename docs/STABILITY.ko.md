@@ -23,17 +23,17 @@ operator-commons 는 3-tier 안정성을 사용합니다:
 | `pkg/finalizer` | Stable | (v1 진입 — 추가 작업 없음) |
 | `pkg/labels` | Stable | (v1 진입) |
 | `pkg/status` | Stable | (v1 진입) |
-| `pkg/version` | Beta | Generic `Matrix[E]` 3-repo verify |
-| `pkg/monitoring` | Beta | ServiceMonitor 3-repo e2e |
+| `pkg/version` | Beta | Generic `Matrix[E]` downstream verify |
+| `pkg/monitoring` | Beta | ServiceMonitor downstream e2e |
 | `pkg/networkpolicy` | Beta | 4-direction TCP/UDP verify |
-| `pkg/security` | Beta | restricted PSA 3-repo guard |
+| `pkg/security` | Beta | restricted PSA downstream guard |
 | `pkg/webhook` | Experimental | Multi-repo adoption + stabilize |
 
 ## 격상 절차
 
 1. Sub-task PR 가 격상 제안과 함께 열림 (예: `feat(pkg/X): promote to Stable`)
 2. 격상 기준 (ROADMAP 기준) 이 CI 로 검증:
-   - Cross-repo import 통과 (3 operator)
+   - Cross-repo import 통과 (downstream operator)
    - 패키지 godoc coverage ≥80%
    - Unit + integration test coverage ≥85%
    - exported API 에 `// TODO` / `// FIXME` 없음
@@ -68,7 +68,7 @@ operator-commons 는 3-tier 안정성을 사용합니다:
 2. 6+ 연속 minor release (v0.8 → v0.13) 동안 BREAKING CHANGE 0
 3. godoc coverage ≥80% (본 문서 + per-package — `scripts/godoc-coverage.sh` 로 검증)
 4. CITATION.cff + Zenodo DOI
-5. `v1.0.0-rc.N` 의 3-repo import e2e 검증
+5. `v1.0.0-rc.N` 의 downstream import e2e 검증
 6. `go vet ./... && go test ./...` clean + coverage ≥85%
 7. CHANGELOG.md v0.x evolution history + v1.0.0 release notes
 8. 본 `docs/STABILITY.md` (현재 파일)

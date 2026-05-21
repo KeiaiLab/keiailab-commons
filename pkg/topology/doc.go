@@ -6,8 +6,8 @@
 //
 // Stability: Beta.
 //
-// 본 패키지는 Sprint 1 (2026-05-21) 에서 3 operator 의 *defaultedTopologySpread*
-// 중복 코드 (~135 LOC) 를 추출하여 신규 도입되었다. 3 consumer 동시 적용 회귀
+// 본 패키지는 Sprint 1 (2026-05-21) 에서 downstream operator 의 *defaultedTopologySpread*
+// 중복 코드 (~135 LOC) 를 추출하여 신규 도입되었다. downstream consumer 동시 적용 회귀
 // 통과 후 Stable Tier 격상 예정 (docs/ROADMAP.md §API Stability Tier).
 //
 // # 설계 원칙

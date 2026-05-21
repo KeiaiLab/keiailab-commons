@@ -2,7 +2,7 @@
 // nil-pointer normalization for K8s StorageClass name fields.
 //
 // Replaces the duplicated storageClassPtr() pattern across keiailab
-// postgres-operator, mongodb-operator, and valkey-operator builders.
+// downstream operator, downstream operator, and downstream operator builders.
 package storageclass
 
 import (

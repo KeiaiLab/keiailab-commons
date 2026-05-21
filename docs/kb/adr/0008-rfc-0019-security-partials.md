@@ -18,7 +18,7 @@ K8s Pod Security Standards (PSS) "restricted" profile 표준
 - Container-level: capabilities.drop=ALL + readOnlyRootFilesystem +
   allowPrivilegeEscalation=false.
 
-4-repo 의 manager Deployment / DB workload StatefulSet 이 동일 표준
+downstream consumer 의 manager Deployment / DB workload StatefulSet 이 동일 표준
 적용 — 본 partial 로 single source.
 
 ## Decision
@@ -50,7 +50,7 @@ K8s Pod Security Standards (PSS) "restricted" profile 표준
 
 ### Positive
 
-- 4-repo manager pod 의 PSS Restricted 표준화 — `kubectl describe`
+- downstream consumer manager pod 의 PSS Restricted 표준화 — `kubectl describe`
   + Pod Security Admission label 검증 정합.
 - override 인자로 v1alpha2 의 PodSecurityRestricted=false 시나리오
   (valkey ADR-0036) 와 정합.
@@ -92,5 +92,5 @@ K8s Pod Security Standards (PSS) "restricted" profile 표준
 - ADR-0005/0006/0007: §3.1/§3.2/§3.5 implementation 선행.
 - downstream operator ADR-0036 (PodSecurityRestricted Optional Toggle): 본
   partial 의 override 시나리오 부모.
-- Plan §2 D14 (Sprint B PR-B5).
+- 구현 결정.
 - K8s PSS: <https://kubernetes.io/docs/concepts/security/pod-security-standards/>

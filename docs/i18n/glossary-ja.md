@@ -71,7 +71,7 @@
 | InitContainer | 初期化コンテナ (InitContainer) |
 | Sidecar Container | サイドカーコンテナ |
 
-## §3 operator-commons ライブラリ用語
+## §downstream operator-commons ライブラリ用語
 
 | English (canonical) | 日本語 |
 |---|---|

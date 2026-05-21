@@ -10,7 +10,7 @@ import (
 // RestrictedContainer helper 가 충족하는지 검증.
 //
 // 3 repo (mongodb / valkey / postgres) 가 본 helper 를 직접 사용하므로
-// regression 가드 = 3-repo 정합 가드.
+// regression 가드 = downstream 정합 가드.
 //
 // PSA restricted container-level 의무 (K8s 1.25+):
 //   - capabilities.drop = ["ALL"]
@@ -20,7 +20,7 @@ import (
 //
 // (Pod-level 가드는 batch-5 의 split.go + seccomp.go 머지 후 별 PR 추가)
 //
-// Refs: docs/ROADMAP.md 'restricted PSA 3-repo 회귀 가드'
+// Refs: docs/ROADMAP.md 'restricted PSA downstream 회귀 가드'
 func TestRestrictedPSACompliance(t *testing.T) {
 	t.Run("container restricted defaults", func(t *testing.T) {
 		sc := RestrictedContainer()

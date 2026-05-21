@@ -1,11 +1,11 @@
-# 디렉토리/파일별 자동 리뷰어 매핑 (4-repo 통일 — 라이브러리 minimal)
+# 디렉토리 / 파일별 자동 리뷰어 매핑 (라이브러리 minimal).
 # 형식: <pattern> <owner>
 # 참고: https://docs.github.com/en/repositories/managing-your-repositories-settings-and-features/customizing-your-repository/about-code-owners
 
-# 전체 기본 소유자 (team-based — RFC 0008 governance template propagation 정합)
+# 전체 기본 소유자 (team-based).
 * @keiailab/maintainers
 
-# 핵심 라이브러리 패키지 (downstream 3 operator 가 의존)
+# 핵심 라이브러리 패키지 (downstream consumer 가 의존).
 /pkg/labels/                @keiailab/maintainers
 /pkg/security/              @keiailab/maintainers
 /pkg/version/               @keiailab/maintainers

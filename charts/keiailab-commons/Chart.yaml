@@ -2,7 +2,7 @@ apiVersion: v2
 name: keiailab-commons
 description: |
   keiailab operator-commons Helm library chart.
-  4-repo (mongodb-operator / postgres-operator / valkey-operator) 가
+  downstream consumer 가
   공유하는 partial helper (commonLabels / observability.serviceMonitor 등)
   를 제공한다. type: library — consumer chart 가 dependency 로 import.
 type: library

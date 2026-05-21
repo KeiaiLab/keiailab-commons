@@ -5,8 +5,8 @@
 //
 // Stability: Beta.
 //
-// 본 패키지는 Sprint 1 (2026-05-21) 에서 3 operator 의 *pvc_resize.go* 중복
-// 코드 (~360 LOC) 를 추출하여 신규 도입되었다. 3 consumer 동시 적용 회귀 통과
+// 본 패키지는 Sprint 1 (2026-05-21) 에서 downstream operator 의 *pvc_resize.go* 중복
+// 코드 (~360 LOC) 를 추출하여 신규 도입되었다. downstream consumer 동시 적용 회귀 통과
 // 후 Stable Tier 격상 예정 (자세한 격상 조건은 docs/ROADMAP.md §API Stability Tier).
 //
 // # 의존성 정책
@@ -17,7 +17,7 @@
 //
 //   - List + Patch + Get 의 3-step 워크플로우 — 호출자가 imperative 한
 //     라이프사이클을 직접 관리하는 monitoring / security 와 다름.
-//   - controller-runtime client.Client 는 3 operator 가 이미 보유한 표준
+//   - controller-runtime client.Client 는 downstream operator 가 이미 보유한 표준
 //     의존이므로 신규 의존 부담은 0.
 //
 // # 설계 원칙

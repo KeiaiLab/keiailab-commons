@@ -69,7 +69,7 @@
 | InitContainer | 초기화 컨테이너 (InitContainer) |
 | Sidecar Container | 사이드카 컨테이너 |
 
-## §3 operator-commons 라이브러리 용어
+## §downstream operator-commons 라이브러리 용어
 
 | English (canonical) | 한국어 |
 |---|---|

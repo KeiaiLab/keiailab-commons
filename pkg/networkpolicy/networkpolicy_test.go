@@ -165,7 +165,7 @@ func TestWithEgressToPeers_EmptySkipped(t *testing.T) {
 func TestCombination_FullPolicy(t *testing.T) {
 	t.Parallel()
 	np := New("vk-cluster", "data", map[string]string{"app": "valkey"},
-		WithLabels(map[string]string{"managed-by": "valkey-operator"}),
+		WithLabels(map[string]string{"managed-by": "downstream-operator"}),
 		WithSelfIngress([]int32{6379, 16379}),
 		WithIngressFromPeers(
 			[]Peer{{NamespaceSelector: map[string]string{"kubernetes.io/metadata.name": "observability"}}},
@@ -181,7 +181,7 @@ func TestCombination_FullPolicy(t *testing.T) {
 		t.Errorf("expected 2 PolicyTypes, got %v", np.Spec.PolicyTypes)
 	}
 	// labels.
-	if np.Labels["managed-by"] != "valkey-operator" {
+	if np.Labels["managed-by"] != "downstream-operator" {
 		t.Errorf("labels missing")
 	}
 }

@@ -1,5 +1,5 @@
 {{- /*
-keiailab 4-repo 공통 ServiceMonitor partial — RFC-0019 §3.1.
+라이브러리 공통 ServiceMonitor partial — library chart partial 표준.
 
 본 partial 은 controller-runtime 의 metrics endpoint (port=metrics, path=/metrics)
 를 prometheus-operator 의 ServiceMonitor CR 로 노출하는 *generic* 자산이다.

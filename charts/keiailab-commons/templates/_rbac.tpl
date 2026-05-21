@@ -1,7 +1,7 @@
 {{/*
-keiailab-commons — RBAC partials (RFC-0019 §3.5).
+keiailab-commons — RBAC partials (library chart partial 표준).
 
-Plan §2 D15 / commons-ADR-0007.
+기반: commons-ADR-0007.
 
 세 partial 추출:
   - keiailab.rbac.serviceAccount    — ServiceAccount + ImagePullSecrets + 자동 token 비활성.
@@ -27,8 +27,8 @@ caller 인자 (dict):
 
   {{ include "keiailab.rbac.serviceAccount" (dict
       "ctx" .
-      "name" (include "valkey-operator.fullname" .)
-      "labels" (include "valkey-operator.labels" .)
+      "name" (include "downstream-operator.fullname" .)
+      "labels" (include "downstream-operator.labels" .)
       "imagePullSecrets" .Values.imagePullSecrets) }}
 */}}
 {{- define "keiailab.rbac.serviceAccount" -}}
@@ -71,7 +71,7 @@ Role 의 rules: 아래에 nindent 호출.
   apiVersion: rbac.authorization.k8s.io/v1
   kind: ClusterRole
   metadata:
-    name: {{ include "valkey-operator.fullname" . }}-manager-role
+    name: {{ include "downstream-operator.fullname" . }}-manager-role
   rules:
     {{ include "keiailab.rbac.controllerBase" . | nindent 4 }}
     # delta CRD-specific rules:
