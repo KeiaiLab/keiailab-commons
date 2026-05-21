@@ -1,6 +1,6 @@
 # Contributing to operator-commons
 
-> [English](CONTRIBUTING.md) | [한국어](CONTRIBUTING.ko.md) | **日本語**
+> [English](CONTRIBUTING.md) | [한국어](CONTRIBUTING.ko.md) | **日本語** | [中文](CONTRIBUTING.zh.md)
 
 > ⚠️ This translation is AI-generated and pending native review.
 

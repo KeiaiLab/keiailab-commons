@@ -1,6 +1,6 @@
 # ROADMAP — operator-commons
 
-> [English](ROADMAP.md) | [한국어](ROADMAP.ko.md) | **日本語**
+> [English](ROADMAP.md) | [한국어](ROADMAP.ko.md) | **日本語** | [中文](ROADMAP.zh.md)
 
 > ⚠️ This translation is AI-generated and pending native review.
 

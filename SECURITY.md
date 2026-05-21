@@ -1,6 +1,6 @@
 # Security Policy
 
-> **English** | [한국어](SECURITY.ko.md) | [日本語](SECURITY.ja.md)
+> **English** | [한국어](SECURITY.ko.md) | [日本語](SECURITY.ja.md) | [中文](SECURITY.zh.md)
 
 `keiailab/operator-commons` is imported by downstream Kubernetes
 operators. A vulnerability in this library can directly affect the

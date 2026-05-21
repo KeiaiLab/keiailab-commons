@@ -1,6 +1,6 @@
 # Maintainers
 
-> [English](MAINTAINERS.md) | [한국어](MAINTAINERS.ko.md) | **日本語**
+> [English](MAINTAINERS.md) | [한국어](MAINTAINERS.ko.md) | **日本語** | [中文](MAINTAINERS.zh.md)
 
 > ⚠️ This translation is AI-generated and pending native review.
 

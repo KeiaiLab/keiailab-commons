@@ -1,6 +1,6 @@
 # Security Policy
 
-> [English](SECURITY.md) | **한국어** | [日本語](SECURITY.ja.md)
+> [English](SECURITY.md) | **한국어** | [日本語](SECURITY.ja.md) | [中文](SECURITY.zh.md)
 
 `keiailab/operator-commons` 는 downstream Kubernetes operator 가 import 하는
 라이브러리이므로, 본 라이브러리의 취약점은 *downstream operator 의 운영

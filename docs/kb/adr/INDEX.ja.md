@@ -1,6 +1,6 @@
 # ADR Index — operator-commons
 
-> [English](INDEX.md) | [한국어](INDEX.ko.md) | **日本語**
+> [English](INDEX.md) | [한국어](INDEX.ko.md) | **日本語** | [中文](INDEX.zh.md)
 
 > ⚠️ This translation is AI-generated and pending native review.
 

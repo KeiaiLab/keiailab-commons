@@ -1,6 +1,6 @@
 # Governance
 
-> [English](GOVERNANCE.md) | **한국어** | [日本語](GOVERNANCE.ja.md)
+> [English](GOVERNANCE.md) | **한국어** | [日本語](GOVERNANCE.ja.md) | [中文](GOVERNANCE.zh.md)
 
 본 문서는 `keiailab/operator-commons` 라이브러리의 의사결정 절차를 정의합니다.
 본 라이브러리는 downstream consumer operator 들이 공통으로 import 하므로,

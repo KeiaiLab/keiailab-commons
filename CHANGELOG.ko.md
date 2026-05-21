@@ -1,6 +1,6 @@
 # Changelog
 
-> [English](CHANGELOG.md) | **한국어** | [日本語](CHANGELOG.ja.md)
+> [English](CHANGELOG.md) | **한국어** | [日本語](CHANGELOG.ja.md) | [中文](CHANGELOG.zh.md)
 
 본 라이브러리의 모든 주요 변경은 본 파일에 기록한다.
 형식: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).

@@ -1,6 +1,6 @@
 # Upgrading operator-commons
 
-> [English](UPGRADING.md) | [한국어](UPGRADING.ko.md) | **日本語**
+> [English](UPGRADING.md) | [한국어](UPGRADING.ko.md) | **日本語** | [中文](UPGRADING.zh.md)
 
 > ⚠️ This translation is AI-generated and pending native review.
 
