@@ -1,74 +1,82 @@
 # Security Policy
 
-`keiailab/operator-commons` 는 downstream Kubernetes operator 가 import 하는
-라이브러리이므로, 본 라이브러리의 취약점은 *downstream operator 의 운영
-보안* 에 직접 영향을 줄 수 있습니다.
+> **English** | [한국어](SECURITY.ko.md)
 
-## 취약점 보고
+`keiailab/operator-commons` is imported by downstream Kubernetes
+operators. A vulnerability in this library can directly affect the
+operational security of those downstream consumers.
 
-**공개 issue 로 보고하지 마세요.**
+## Reporting a vulnerability
 
-### 보고 경로
+**Do not file a public issue.**
 
-다음 중 하나로 비공개 보고:
+### Channels
 
-1. **GitHub Security Advisory** (권장):
+Use one of the following private channels:
+
+1. **GitHub Security Advisory** (preferred):
    `https://github.com/keiailab/operator-commons/security/advisories/new`
-2. **이메일**: `security@keiailab.com` (PGP 옵션):
-   - PGP fingerprint: `89A4 0947 6828 CB99 2338  C378 651E 51AF 520B CB78`.
+2. **Email**: `security@keiailab.com` (PGP optional):
+   - PGP fingerprint:
+     `89A4 0947 6828 CB99 2338  C378 651E 51AF 520B CB78`.
 
-### 포함 정보
+### What to include
 
-- 영향받는 버전 (release tag 또는 commit SHA).
-- 영향받는 패키지 (`pkg/security`, `pkg/webhook` 등).
-- 재현 단계 (가능한 한 minimal repro; downstream 환경 의존 시 명시).
-- 영향 평가 — downstream consumer 에 미치는 영향 범위.
-- CVSS 자체 평가 시 포함.
+- Affected version (release tag or commit SHA).
+- Affected package (`pkg/security`, `pkg/webhook`, etc.).
+- Reproduction steps (a minimal repro if possible; declare it when the
+  reproduction depends on a downstream environment).
+- Impact assessment — the scope of downstream consumer impact.
+- A self-assessed CVSS score, if available.
 
-## 응답 SLA
+## Response SLAs
 
-| 단계 | 시간 |
+| Stage | Time |
 |---|---|
-| 초기 응답 (수신 확인) | 72시간 이내 |
-| 심각도 평가 | 7일 이내 |
-| 패치 release | severity 따라 (Critical: 14일, High: 30일, Medium: 60일) |
-| 공개 disclosure | 패치 release 후 14일 (downstream consumer 동시 fix release 가능 시점) |
+| Initial response (acknowledgement) | within 72 hours |
+| Severity assessment | within 7 days |
+| Patch release | severity-dependent (Critical: 14 days, High: 30, Medium: 60) |
+| Public disclosure | 14 days after the patch (or the earliest point at which downstream consumers can release a fix) |
 
-## Embargo 처리
+## Embargo handling
 
-공개 API 가 영향받는 취약점은 downstream consumer 측에 동시 fix release
-가능 시점까지 embargo. consumer 측 메인테이너에게 비공개 advisory 사전 공유.
+Vulnerabilities that affect the public API are embargoed until
+downstream consumers can release fixes concurrently. Maintainers share a
+private advisory with downstream maintainers ahead of disclosure.
 
-## 지원 버전
+## Supported versions
 
 | Version | Supported |
 |---------|-----------|
-| 0.x (alpha) | ✅ 최신 minor 만 |
-| 1.0+ (stable) | TBD — 첫 stable release 후 갱신 |
+| 0.x (alpha) | ✅ latest minor only |
+| 1.0+ (stable) | TBD — updated after the first stable release |
 
-현재 v0.x 단계. *공개 API breaking 가능* — 보안 패치는 *최신* minor 에만
-적용됩니다.
+The library is currently in v0.x. Public APIs may break; security
+patches are released only against the latest minor.
 
-## 의존성 보안
+## Dependency security
 
-본 라이브러리 의존성 추가 / 업그레이드 시 라이선스 검증 + CVE 검토 결과를
-PR 본문에 인용합니다. Dependabot / Renovate 자동 업데이트 PR 은 우선 review.
+When a dependency is added or upgraded, the PR body cites the license
+and CVE review. Dependabot / Renovate automatic-update PRs are
+prioritised for review.
 
-## 라이선스 / 공급망
+## License / supply chain
 
-본 라이브러리는 **Apache-2.0 only** 정책 — *AGPL / BUSL transitive 의존성 0건*
-목표 (charter ADR-0001). 매 minor release 시 license 감사.
+This library is **Apache-2.0 only**, with a charter goal of zero AGPL /
+BUSL transitive dependencies (`docs/kb/adr/0001-charter.md`). A license
+audit runs at every minor release.
 
-## 보안 모범 사례 (downstream consumer 측)
+## Best practices for downstream consumers
 
-본 라이브러리를 import 하는 operator 는 다음을 보장해야 합니다:
+Operators that import this library should:
 
-1. **`pkg/security` 사용** — PodSecurity restricted SecurityContext 빌더
-   직접 호출 (자체 구현 금지).
-2. **`pkg/webhook` 사용** — 버전 validation 직접 구현 금지.
-3. **`pkg/networkpolicy` 사용** — deny-by-default NetworkPolicy 빌더 활용.
-4. 의존성 버전 동기화 — `go.mod` 의 `github.com/keiailab/operator-commons`
-   는 *최신 patch* 항상 추적 (Renovate 자동 PR).
+1. **Use `pkg/security`** — call the restricted PodSecurity
+   SecurityContext builder rather than rolling your own.
+2. **Use `pkg/webhook`** — do not re-implement version validation.
+3. **Use `pkg/networkpolicy`** — deny-by-default NetworkPolicy builder.
+4. Track the latest patch of
+   `github.com/keiailab/operator-commons` in `go.mod` (Renovate
+   automatic PRs).
 
 ---
 
