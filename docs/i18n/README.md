@@ -1,132 +1,145 @@
-# i18n — operator-commons 다국어 정책
+# i18n — operator-commons multilingual policy
 
-본 문서는 `operator-commons` 다국어 문서 운영 정책을 정의합니다. English
-canonical + 한국어 / 日本語 / 中文 의 4-lang 골격을 유지합니다.
+> **English** | [한국어](README.ko.md)
 
-## §1 정책
+This document defines how `operator-commons` documentation is
+maintained in multiple languages. The project keeps an English canonical
+plus Korean / Japanese / Chinese translations.
 
-### 1.1 기본 원칙
+## §1 Policy
 
-- **canonical 언어**: 영어 (모든 source 의 ground-truth)
-- **번역 대상 언어 (3개 추가)**: 한국어 (`ko`), 日本語 (`ja`), 中文 (`zh`, 简体)
-- **4-lang 골격**: `README.md` (EN) + `README.ko.md` + `README.ja.md` + `README.zh.md`
-- **상위 4 언어 외 추가 불가** — 별 ADR 후에만 (es / fr / de 등 OOS)
+### 1.1 Core principles
 
-### 1.2 번역 대상 vs 비대상
+- **Canonical language**: English (ground truth for every source).
+- **Translated languages (three additional)**: Korean (`ko`), Japanese
+  (`ja`), Chinese (`zh`, Simplified).
+- **Four-language skeleton**: `README.md` (English) + `README.ko.md` +
+  `README.ja.md` + `README.zh.md`.
+- **No language beyond these four** — adding `es` / `fr` / `de` / …
+  requires a separate ADR.
 
-**번역 대상** (사용자 / 외부 가시 문서):
+### 1.2 In scope vs. out of scope
 
-- `README.{md,ko,ja,zh}.md`
-- 거버넌스 / 브랜딩 캐논: `docs/BRANDING.md`, `docs/STABILITY.md`,
-  `docs/coverage-report.md` 등의 4-lang 매트릭스
-- `docs/i18n/glossary-{ko,ja,zh}.md` (본 SSOT)
+**In scope** (user-facing or external documents):
 
-**번역 비대상** (내부 / 거버넌스 / 법적):
+- `README.{md, ko, ja, zh}.md`
+- Top-level governance / branding: `BRANDING.md`, `STABILITY.md`,
+  `coverage-report.md` and similar four-language matrices.
+- `docs/i18n/glossary-{ko, ja, zh}.md` (this SSOT).
 
-- `docs/kb/adr/*.md` (결정 추적 — 영문 canonical only)
-- `docs/kb/deps/*.md` (의존성 audit — 자동 생성)
-- `LICENSE`, `NOTICE`, `CITATION.cff`, `.gitignore` (legal / config)
-- `MAINTAINERS.md`, `GOVERNANCE.md`, `CHANGELOG.md` (한국어 canonical 정합)
+**Out of scope** (internal, governance, or legal):
 
-## §2 용어 사전 (Glossary)
+- `docs/kb/adr/*.md` (decision records — English canonical only).
+- `docs/kb/deps/*.md` (dependency audit — generated).
+- `LICENSE`, `NOTICE`, `CITATION.cff`, `.gitignore` (legal or config).
 
-### 2.1 위치
+## §2 Glossary
+
+### 2.1 Location
 
 SSOT: [`glossary-ko.md`](glossary-ko.md) / [`glossary-ja.md`](glossary-ja.md)
 / [`glossary-zh.md`](glossary-zh.md).
 
-### 2.2 우선순위
+### 2.2 Priority
 
-1. glossary 의 정의 (최우선).
-2. Kubernetes 공식 한국어 / 일본어 / 중문 가이드.
-3. 일반 사전.
-4. **코드 식별자는 영문 그대로** (절대 번역 금지) — `pkg/probes`,
-   `Reconciler`, `kubectl` 등.
+1. Glossary definitions take priority.
+2. The official Kubernetes Korean / Japanese / Chinese guides.
+3. General dictionaries.
+4. **Code identifiers stay in English** (no translation) — `pkg/probes`,
+   `Reconciler`, `kubectl`, etc.
 
-### 2.3 일관성 규칙 (4-lang 공통)
+### 2.3 Consistency rules (all four languages)
 
-- 격식체 / 평어 혼용 금지 (한 문서 내 일관).
-- 외부 사용자 가시 문서 = 격식체.
-- 내부 문서 (AGENTS) = 평어 또는 자유.
-- 첫 등장 시 영문 원어 + 괄호 번역, 이후 번역 단독 가능.
+- Do not mix formal and informal register inside a single document.
+- User-facing documents use formal register.
+- Internal documents (AGENTS) may use informal register.
+- On first occurrence, include the English original plus the
+  parenthesised translation; subsequent occurrences may use the
+  translation alone.
 
-## §3 자동 번역 SOP
+## §3 Automated translation SOP
 
-### 3.1 엔진
+### 3.1 Engine
 
-**선택**: Claude direct (AI subagent 가 source 를 읽고 직접 번역).
+**Default**: Claude direct (an AI subagent reads the source and
+translates).
 
-근거: 한국어 품질, prompt caching 으로 비용 절감. `ja` / `zh` 는 후속 native
-reviewer 검수를 가정합니다.
+Rationale: Korean quality and prompt caching cost. Japanese and
+Chinese translations are followed by native review.
 
-### 3.2 명령
+### 3.2 Commands
 
 ```bash
-# 1 파일 번역 (수동)
-# subagent 가 source 읽고 직접 번역 → 출력 파일 + warning 배너 강제 삽입
+# Manual single-file translation
+# The subagent reads the source, translates, and writes the output
+# with the AI-translation warning banner.
 
-# 자동화 (스크립트)
+# Automation (scripted)
 ./scripts/i18n-translate.sh <source.md> --lang all --engine claude
 
-# dry-run
+# Dry run
 ./scripts/i18n-translate.sh README.md --dry-run
 ```
 
-### 3.3 결과 marker
+### 3.3 Result marker
 
-모든 자동 번역 파일은 다음 warning 배너 삽입:
+Every AI-translated file must include the warning banner:
 
 ```markdown
 > ⚠️ This translation is AI-generated and pending native review.
 ```
 
-추가 마킹: `[검토 필요]` (검수 필요), `[검토 완료]` (native reviewer 검수 후
-PR 로 승격).
+Additional markers: `[needs review]` (review pending), `[reviewed]`
+(promoted by a native reviewer through a PR).
 
-## §4 Native Review SOP
+## §4 Native review SOP
 
-### 4.1 검수자 확보
+### 4.1 Reviewer recruitment
 
-기본 정책: Claude 자동 번역 + `[검토 필요]` 마킹 + warning 배너. native
-reviewer 가 확보될 때까지 placeholder 유지.
+Default policy: AI translation + `[needs review]` marker + warning
+banner. The placeholder remains until a native reviewer is recruited.
 
-### 4.2 승격 기준
+### 4.2 Promotion criteria
 
-`[검토 필요]` → `[검토 완료]` 승격 시 native reviewer 가 확인해야 할 사항:
+When promoting `[needs review]` → `[reviewed]`, the native reviewer
+confirms:
 
-1. **의역 vs 직역 균형** — 자연스러움 우선, 단 기술 용어 정확성 보존.
-2. **용어 일관성** — glossary 적용 확인.
-3. **격식체 / 평어 일관** — 한 문서 내 통일.
-4. **링크 정합** — cross-link 의 lang 별 정확.
-5. **코드 식별자 보존** — 절대 번역 안 됨 확인.
+1. **Idiomatic vs. literal balance** — natural reading first, but
+   technical terminology stays precise.
+2. **Glossary consistency** — every glossary term is applied
+   identically.
+3. **Register consistency** — formal / informal register is unified
+   within a document.
+4. **Link integrity** — cross-links resolve per language.
+5. **Code identifiers untranslated**.
 
-### 4.3 승격 PR 양식
+### 4.3 Promotion PR format
 
 ```
-title: docs(i18n): <lang> <doc> native reviewer 승격
+title: docs(i18n): <lang> <doc> native reviewer promotion
 body:
-  ## 검수자
+  ## Reviewer
   - <name / handle>
 
-  ## 검수 범위
+  ## Scope reviewed
   - <file path>
 
-  ## 변경 사항
-  - [검토 필요] → [검토 완료] marker 변경
-  - warning 배너 제거 (또는 partial 유지)
-  - <기타 의역 수정>
+  ## Changes
+  - [needs review] → [reviewed] marker change
+  - Warning banner removed (or kept as partial)
+  - <other idiomatic edits>
 
-  ## 검증
-  - [x] glossary 일관성
-  - [x] 격식체 / 평어 통일
-  - [x] cross-link 정합
+  ## Verification
+  - [x] Glossary consistency
+  - [x] Register consistency
+  - [x] Cross-link integrity
 ```
 
-## §5 Drift Control
+## §5 Drift control
 
 ### 5.1 lefthook hook
 
-`lefthook.yml` 의 pre-push 에 `readme-i18n-sync` hook 이 강제됩니다:
+`lefthook.yml` enforces `readme-i18n-sync` at pre-push:
 
 ```yaml
 readme-i18n-sync:
@@ -134,29 +147,30 @@ readme-i18n-sync:
   run: bash scripts/check-readme-sync.sh
 ```
 
-`pre-push` 위치 — `pre-commit` 보다 작업 흐름 마찰이 적습니다.
+The pre-push position keeps work-flow friction low.
 
-### 5.2 임계값
+### 5.2 Thresholds
 
-| lang | line diff 임계값 | 근거 |
+| Lang | Line-diff threshold | Reason |
 |---|---|---|
-| ko | ≤ 15 % | 한국어 LOC 는 EN 와 유사 |
-| ja | ≤ 25 % | 일본어는 가나 + 한자 혼용 — EN 대비 ~15-20 % 짧음 |
-| zh | ≤ 30 % | 중문은 한자 100 % — EN 대비 ~25 % 짧음 |
+| ko | ≤ 15 % | Korean is roughly the same LOC as English. |
+| ja | ≤ 25 % | Japanese mixes kana and kanji — ~15–20 % shorter than English. |
+| zh | ≤ 30 % | Chinese is fully Hanzi — ~25 % shorter than English. |
 
-상위 값은 권장값이며, 실제 측정 후 조정 가능합니다.
+These are recommendations; adjust after empirical measurement.
 
-### 5.3 4-lang 매트릭스
+### 5.3 4-lang matrix
 
-`scripts/check-readme-sync.sh` 가 4-lang 매트릭스 (EN ↔ {ko, ja, zh}) 자동
-검사:
+`scripts/check-readme-sync.sh` automatically checks the four-language
+matrix (EN ↔ {ko, ja, zh}):
 
-- target lang file 부재 시 skip (4-lang 골격 미완료 시 대응).
-- per-lang 우회 가능 (`SKIP_CHECK_README_SYNC_JA=1` 등).
+- Target-language file absent → skip (handles partial skeletons).
+- Per-language bypass available
+  (`SKIP_CHECK_README_SYNC_JA=1` and similar).
 
-## §6 참조
+## §6 References
 
-- glossary 3종: [`glossary-ko.md`](glossary-ko.md) /
+- Glossaries: [`glossary-ko.md`](glossary-ko.md) /
   [`glossary-ja.md`](glossary-ja.md) / [`glossary-zh.md`](glossary-zh.md).
-- check script: [`../../scripts/check-readme-sync.sh`](../../scripts/check-readme-sync.sh).
-- translate script: [`../../scripts/i18n-translate.sh`](../../scripts/i18n-translate.sh).
+- Check script: [`../../scripts/check-readme-sync.sh`](../../scripts/check-readme-sync.sh).
+- Translation script: [`../../scripts/i18n-translate.sh`](../../scripts/i18n-translate.sh).

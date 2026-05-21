@@ -1,57 +1,59 @@
 # Upgrading operator-commons
 
-본 문서는 `github.com/keiailab/operator-commons` Go 모듈의 minor / major
-버전 업그레이드 시 필요한 마이그레이션 작업을 정리합니다. downstream
-consumer 가 본 라이브러리를 import 할 때의 *공통 진입점* 입니다.
+> **English** | [한국어](UPGRADING.ko.md)
 
-## 0. 버전 정책 (semver)
+This document collects the migration steps needed when bumping a minor
+or major version of the `github.com/keiailab/operator-commons` Go
+module. It is the common entry point for downstream consumers.
 
-| 변경 유형 | semver bump | 예시 |
+## 0. Version policy (SemVer)
+
+| Change type | SemVer bump | Example |
 |---|---|---|
-| 신규 패키지 추가 | minor (v0.X → v0.X+1) | `pkg/events`, `pkg/storageclass` 신설 |
-| 기존 API 시그니처 변경 (breaking) | major (v0.X → v1.0 / v1.X → v2.0) | `pkg/status.SetReady()` 시그니처 변경 |
-| 패키지 *내부* 동작 변경 (non-breaking) | patch (v0.X.Y → v0.X.Y+1) | bug fix |
-| ADR 일탈 결정 | major + Deprecated 안내 | API stability tier 변경 |
+| New package added | minor (v0.X → v0.X+1) | `pkg/events`, `pkg/storageclass` introduced |
+| Existing API signature change (breaking) | major (v0.X → v1.0 / v1.X → v2.0) | `pkg/status.SetReady()` signature change |
+| Package-internal behaviour change (non-breaking) | patch (v0.X.Y → v0.X.Y+1) | bug fix |
+| ADR deviation | major + Deprecated notice | API stability tier change |
 
-API stability tier (`pkg/<name>/doc.go` 의 marker):
+API stability tier (`pkg/<name>/doc.go` marker):
 
-- **Stable** — minor 범위 backward-compat 보장.
-- **Beta** — 다음 minor 에서 변경 가능.
-- **Experimental** — 언제든 변경 (위험 부담은 호출자).
+- **Stable** — backwards-compatible across a minor release.
+- **Beta** — may change in the next minor.
+- **Experimental** — may change at any time.
 
 ## 1. v0.7.x → v0.8.x
 
-### Helm library chart 사용자
+### Helm library chart consumers
 
 ```bash
 helm dep update charts/<your-operator>
 helm template <your-operator> charts/<your-operator>
 ```
 
-`keiailab-commons` chart v0.8.0 의 `_servicemonitor.tpl` / `_rbac.tpl` /
-`_networkpolicy.tpl` partial 사용 시 추가 작업이 필요하지 않습니다.
+The `keiailab-commons` chart v0.8.0 partials (`_servicemonitor.tpl`,
+`_rbac.tpl`, `_networkpolicy.tpl`) require no additional work.
 
-### Go 모듈 사용자
+### Go module consumers
 
 ```bash
 go get github.com/keiailab/operator-commons@v0.8.0
 go mod tidy
 ```
 
-추가 작업 없음 — backward-compatible.
+No additional work — backwards-compatible.
 
 ## 2. v0.8.x → v0.9.x
 
-### 신규 패키지 추가 (minor bump)
+### New packages (minor bump)
 
-| 패키지 | 목적 | Tier |
+| Package | Purpose | Tier |
 |---|---|---|
-| `pkg/pvc` | PVC 헬퍼 (확장, in-place patch) | Beta |
+| `pkg/pvc` | PVC expansion helpers | Beta |
 | `pkg/topology` | PVC topology spread + zone-aware affinity | Beta |
 
 ### Migration
 
-downstream operator 의 import path 추가:
+Add the imports in your downstream operator:
 
 ```go
 import (
@@ -60,65 +62,71 @@ import (
 )
 ```
 
-### Backward-compat
+### Backwards compatibility
 
-- 기존 패키지 (`pkg/status`, `pkg/finalizer`, `pkg/networkpolicy`,
+- Existing packages (`pkg/status`, `pkg/finalizer`, `pkg/networkpolicy`,
   `pkg/monitoring`, `pkg/probes`, `pkg/labels`, `pkg/storageclass`,
-  `pkg/webhook`, `pkg/events`, `pkg/security`, `pkg/version`) 시그니처
-  변경 없음.
-- Helm library chart `keiailab-commons` 의 `_security.tpl` /
-  `_servicemonitor.tpl` 추가 사용은 *opt-in* — 기존 인라인 정의를 그대로
-  두어도 영향 없음.
+  `pkg/webhook`, `pkg/events`, `pkg/security`, `pkg/version`) keep
+  their signatures.
+- The `keiailab-commons` chart's `_security.tpl` and
+  `_servicemonitor.tpl` partials are *opt-in*; leaving the existing
+  inline definitions alone has no effect.
 
-### 권장 마이그레이션 절차
+### Recommended migration procedure
 
 ```bash
-# 1. 의존 bump
+# 1. bump the dependency
 go get github.com/keiailab/operator-commons@v0.9.0
 go mod tidy
 
-# 2. 검증
+# 2. verify
 make verify  # lint + test + build
 
 # 3. e2e (kind)
 kind create cluster
 helm install <operator> charts/<operator>
 kubectl apply -f config/samples/
-kubectl get <CR> -A  # reconcile 결과 확인
+kubectl get <CR> -A  # observe reconciliation
 ```
 
 ## 3. v0.9.x → v1.0.0
 
-v1.0.0 졸업 조건 충족 시점에 진행합니다 ([STABILITY.md](STABILITY.md) "v1.0.0
-graduation" 참조).
+Proceeds when the v1.0.0 graduation criteria (see
+[STABILITY.md](STABILITY.md) "v1.0.0 graduation") are satisfied:
 
-- 모든 패키지가 Stable tier 로 격상.
-- v0.x → v1.0 은 *명명만* 변경, semantic 동일 (breaking change 없음).
+- All packages reach Stable tier.
+- v0.x → v1.0 is a *naming* change — semantics are unchanged (no
+  breaking change).
 
-## 4. 일반 마이그레이션 체크리스트
+## 4. General migration checklist
 
-업그레이드 전:
+Before upgrade:
 
-- [ ] `go mod tidy` 후 `go.mod` 변경 없음 (drift 차단).
-- [ ] `make audit` 통과 (govulncheck CVE 0).
-- [ ] 기존 e2e 스위트 PASS.
+- [ ] `go mod tidy` produces no change (drift = 0).
+- [ ] `make audit` passes (govulncheck CVE = 0).
+- [ ] Existing e2e suite passes.
 
-업그레이드 후:
+After upgrade:
 
-- [ ] downstream operator 의 import path 변경 (`go get -u` 또는 명시 버전).
-- [ ] `make verify` 통과.
-- [ ] e2e PASS.
-- [ ] Helm chart `charts/<operator>` 의 `dependencies:` 갱신.
+- [ ] Downstream import path updated (`go get -u` or pinned version).
+- [ ] `make verify` passes.
+- [ ] e2e passes.
+- [ ] Helm chart `charts/<operator>` `dependencies:` updated.
 
-## 5. 비호환 변경 안내 정책
+## 5. Breaking-change notice policy
 
-- **Deprecation**: 신규 minor 에서 `// Deprecated:` 주석 + 2 minor 후 제거.
-- **Breaking**: major bump + 본 UPGRADING.md 의 별 섹션 + ADR 작성.
-- **사후 통보 안 함**: 모든 breaking 변경은 *최소 1 minor* 사전 deprecation
-  거침.
+- **Deprecation**: add `// Deprecated:` comment in the new minor; remove
+  two minors later.
+- **Breaking**: major bump + dedicated section in this file + ADR.
+- **No silent breaking changes**: every breaking change carries at least
+  one minor of prior deprecation.
 
-## 참고
+## References
 
-- ADR 목록: [`docs/kb/adr/INDEX.md`](kb/adr/INDEX.md).
-- API stability: `pkg/<name>/doc.go` 의 Tier marker.
-- i18n: [`docs/i18n/README.md`](i18n/README.md) (다국어 정책).
+- ADR index: [`docs/kb/adr/INDEX.md`](kb/adr/INDEX.md).
+- API stability: `pkg/<name>/doc.go` tier marker.
+- i18n: [`docs/i18n/README.md`](i18n/README.md) (multilingual policy).
+
+---
+
+<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>

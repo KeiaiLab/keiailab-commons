@@ -1,205 +1,235 @@
 # ROADMAP — operator-commons
 
-본 ROADMAP 은 라이브러리의 진화 방향을 *API stability tier* + *v1.0.0 졸업
-조건* + *패키지별 보강 항목* 으로 추적합니다. 분기 / 날짜 기반 마감일은 두지
-않으며 (시간 기반 로드맵 금지), 라이브러리 특성상 *downstream consumer 의
-요구* 가 진화 방향을 결정합니다.
+> **English** | [한국어](ROADMAP.ko.md)
 
-## 체크박스 의미
+This ROADMAP tracks the library's evolution along three axes: *API
+stability tier*, *v1.0.0 graduation criteria*, and *per-package
+follow-up items*. The project does not maintain time-based deadlines —
+the library evolves according to the needs of its downstream consumers.
 
-| 마커 | 의미 |
+## Checkbox meaning
+
+| Marker | Meaning |
 |---|---|
-| `[x]` | 코드 + 테스트 양쪽 존재. downstream import 가능. |
-| `[~]` | 부분 구현 (helper 존재, 검증 미완). |
-| `[ ]` | 미시작. |
+| `[x]` | Code + tests both present. Downstream import works. |
+| `[~]` | Partial implementation (helper present, verification still open). |
+| `[ ]` | Not started. |
 
-## API Stability Tier (현행 v0.9.x candidate)
+## API stability tier (current v0.9.x candidate)
 
-| 패키지 | Tier | Tier 격상 조건 |
+| Package | Tier | Promotion criterion |
 |---|---|---|
-| `pkg/finalizer` | **Stable** | v1 진입 (별도 작업 없음). |
-| `pkg/labels` | **Stable** | v1 진입 (별도 작업 없음). |
-| `pkg/status` | **Stable** | v1 진입 (별도 작업 없음). |
-| `pkg/storageclass` | **Stable** | trivial validation surface (regex + nil check) — 즉시 Stable. |
-| `pkg/version` (incl. `Matrix`) | Beta | generic `Matrix[E]` 의 cross-repo 검증 완료. |
-| `pkg/monitoring` | Beta | `ServiceMonitor` 의 downstream 동등성 e2e. |
-| `pkg/networkpolicy` | Beta | 4-direction (ingress / egress × TCP / UDP) 검증. |
-| `pkg/security` | Beta | restricted PSA 회귀 가드 downstream. |
-| `pkg/events` | Beta | downstream 라이브 적용 + reconciliation 회귀 0. |
-| `pkg/pvc` | Beta | PVC expansion downstream 라이브 적용. |
-| `pkg/topology` | Beta | topology spread downstream 라이브 적용. |
-| `pkg/webhook` | **Experimental** | 다중 downstream 사용 후 안정화. |
-| `pkg/probes` | **Experimental** | 2+ downstream 라이브 적용 후 Beta. |
+| `pkg/finalizer` | **Stable** | v1 entry (no additional work). |
+| `pkg/labels` | **Stable** | v1 entry (no additional work). |
+| `pkg/status` | **Stable** | v1 entry (no additional work). |
+| `pkg/storageclass` | **Stable** | Trivial validation surface (regex + nil check). |
+| `pkg/version` (incl. `Matrix`) | Beta | Generic `Matrix[E]` cross-repo verify. |
+| `pkg/monitoring` | Beta | `ServiceMonitor` cross-downstream equivalence e2e. |
+| `pkg/networkpolicy` | Beta | 4-direction (ingress / egress × TCP / UDP) verify. |
+| `pkg/security` | Beta | Restricted PSA guard across downstream. |
+| `pkg/events` | Beta | Downstream live adoption + reconciliation regression 0. |
+| `pkg/pvc` | Beta | Downstream PVC expansion live adoption. |
+| `pkg/topology` | Beta | Downstream topology spread live adoption. |
+| `pkg/webhook` | **Experimental** | Multi-downstream adoption + stabilization. |
+| `pkg/probes` | **Experimental** | 2+ downstream adoption → Beta. |
 
-**Tier 의미**:
+**Tier semantics**:
 
-- **Stable** — semver patch / minor 범위 BREAKING CHANGE 금지. deprecated
-  표기 + 2 minor 유예 후 제거.
-- **Beta** — minor 범위 BREAKING CHANGE 가능 (CHANGELOG 명시). API 형태 거의
-  확정.
-- **Experimental** — patch 범위에서도 변경 가능. 호출자가 위험을 부담합니다.
+- **Stable** — no BREAKING CHANGE in patch / minor releases. Use
+  deprecation: mark, keep for 2 minor releases, then remove.
+- **Beta** — BREAKING CHANGE allowed in minor releases (must appear in
+  CHANGELOG). API shape is mostly settled.
+- **Experimental** — BREAKING CHANGE possible at any release. Callers
+  bear the risk.
 
-## v1.0.0 졸업 조건 (체크리스트)
+## v1.0.0 graduation criteria (checklist)
 
-- [ ] 모든 패키지 **Stable** tier 도달.
-- [ ] BREAKING CHANGE 0 건 / 연속 minor 릴리스 6 회 이상.
-- [ ] godoc coverage ≥ 80 % (`go doc -all ./...` 기준).
-- [ ] CHANGELOG.md 의 v0.x 진화 history 정리 + v1.0.0 release notes.
-- [ ] CITATION.cff + Zenodo DOI 발급 (학술 인용 가능).
-- [ ] downstream consumer 가 v1.0.0 commons import 후 회귀 0.
-- [x] `go vet ./... && go test ./...` clean (커버리지 96.3 % > 85 % threshold).
-- [x] API 안정성 promise 문서 — [STABILITY.md](STABILITY.md).
-- Verify: downstream consumer CI 가 `operator-commons v1.0.0` import 후 모든
-  e2e PASS.
+- [ ] All packages reach **Stable** tier.
+- [ ] Zero BREAKING CHANGE across six or more consecutive minor releases.
+- [ ] godoc coverage ≥ 80 % (`go doc -all ./...` basis).
+- [ ] CHANGELOG.md v0.x evolution history + v1.0.0 release notes.
+- [ ] CITATION.cff + DOI (academic citation).
+- [ ] Downstream consumers import v1.0.0 commons with regression 0.
+- [x] `go vet ./... && go test ./...` clean (coverage 96.3 % > 85 %
+  threshold).
+- [x] API stability promise document — [STABILITY.md](STABILITY.md).
+- Verify: downstream consumer CI passes all e2e tests against
+  `operator-commons v1.0.0`.
 
-## 패키지별 보강 항목
+## Per-package follow-up
 
 ### pkg/finalizer (Stable)
 
-- [x] `Add`, `Remove`, `Contains` helper — `pkg/finalizer/finalizer.go`.
-- [x] controller-runtime 회피 (stdlib `slices` 사용).
-- [x] unit test — `pkg/finalizer/finalizer_test.go`.
-- [x] 다중 finalizer 순서 보장 helper — `pkg/finalizer/order.go` `EnsureOrder`.
-- Verify: downstream finalizer 동작 회귀 0.
+- [x] `Add`, `Remove`, `Contains` helpers — `pkg/finalizer/finalizer.go`.
+- [x] Avoids controller-runtime (stdlib `slices` only).
+- [x] Unit tests — `pkg/finalizer/finalizer_test.go`.
+- [x] Multi-finalizer ordering helper — `pkg/finalizer/order.go`
+  `EnsureOrder`.
+- Verify: downstream finalizer regression 0.
 
 ### pkg/labels (Stable)
 
-- [x] Kubernetes 권장 라벨 helper (`app.kubernetes.io/*`) — `pkg/labels/labels.go`.
-- [x] component / instance / part-of 매핑.
-- [x] unit test — `pkg/labels/labels_test.go`.
-- [x] Recommended labels v2 매핑 (K8s 1.30+) — `pkg/labels/v2.go` `AllV2`.
-- Verify: downstream `metadata.labels` 일관성.
+- [x] Recommended Kubernetes labels (`app.kubernetes.io/*`) —
+  `pkg/labels/labels.go`.
+- [x] Component / instance / part-of mapping.
+- [x] Unit tests — `pkg/labels/labels_test.go`.
+- [x] Recommended labels v2 (K8s 1.30+) — `pkg/labels/v2.go` `AllV2`.
+- Verify: downstream `metadata.labels` consistency.
 
 ### pkg/status (Stable)
 
-- [x] Condition 카탈로그 helper — `pkg/status/conditions.go`.
-- [x] `SetAvailable` 헬퍼.
-- [x] unit test.
-- [x] Condition reason 표준 카탈로그 문서화 — `pkg/status/REASONS.md`.
-- Verify: `kubectl get <kind> -o yaml` 의 `.status.conditions` downstream 동등성.
+- [x] Condition catalog helper — `pkg/status/conditions.go`.
+- [x] `SetAvailable` sugar.
+- [x] Unit tests.
+- [x] Condition reason catalog documentation —
+  `pkg/status/REASONS.md`.
+- Verify: downstream `kubectl get <kind> -o yaml`
+  `.status.conditions` parity.
 
 ### pkg/version (Beta)
 
-- [x] `Matrix[E]` generic 도입 — `pkg/version/matrix.go`.
-- [x] `SetAvailable` 헬퍼.
-- [x] 버전 호환성 비교 (semver) — `pkg/version/version.go`.
-- [x] cross-version compatibility test — `pkg/version/api_stability_test.go`.
-- [x] 버전 매트릭스 시리얼라이저 (`json` / `yaml`) — `pkg/version/serializer.go`.
-- [ ] **Tier 격상** → Stable.
-- Verify: downstream version validation 동등성.
+- [x] `Matrix[E]` generic — `pkg/version/matrix.go`.
+- [x] `SetAvailable` sugar.
+- [x] semver-aware version compare — `pkg/version/version.go`.
+- [x] Cross-version compatibility test —
+  `pkg/version/api_stability_test.go`.
+- [x] `Matrix[E]` serializer (JSON / YAML) —
+  `pkg/version/serializer.go`.
+- [ ] **Tier promotion** → Stable.
+- Verify: downstream version validation parity.
 
 ### pkg/monitoring (Beta)
 
-- [x] Prometheus ServiceMonitor 빌더 — `pkg/monitoring/monitoring.go`.
-- [x] unit test.
-- [x] PrometheusRule 빌더 (alert / recording 규칙 공통화) — `pkg/monitoring/rule.go`.
+- [x] Prometheus ServiceMonitor builder — `pkg/monitoring/monitoring.go`.
+- [x] Unit tests.
+- [x] PrometheusRule builder (alert / recording shared) —
+  `pkg/monitoring/rule.go`.
 - [x] OpenTelemetry exporter helper — `pkg/monitoring/otel.go`.
-- [ ] downstream 동등성 e2e — 같은 입력 → 같은 manifest 출력.
-- [ ] **Tier 격상** → Stable.
-- Verify: `monitoring_test.go` golden file diff 0.
+- [ ] Downstream equivalence e2e — same input → same manifest output.
+- [ ] **Tier promotion** → Stable.
+- Verify: `monitoring_test.go` golden file diff = 0.
 
 ### pkg/networkpolicy (Beta)
 
-- [x] NetworkPolicy 빌더 — `pkg/networkpolicy/networkpolicy.go`.
-- [x] default-deny + 명시 규칙 helper.
-- [x] unit test.
-- [x] 4-direction 검증 — `pkg/networkpolicy/four_dir_test.go`.
-- [x] CIDR + namespace selector + pod selector 조합 helper — `pkg/networkpolicy/combo.go`.
-- [ ] **Tier 격상** → Stable.
-- Verify: kind 환경에서 NetworkPolicy 적용 후 차단 / 허용 경로 측정.
+- [x] NetworkPolicy builder — `pkg/networkpolicy/networkpolicy.go`.
+- [x] Default-deny + explicit rule helper.
+- [x] Unit tests.
+- [x] 4-direction verification —
+  `pkg/networkpolicy/four_dir_test.go`.
+- [x] CIDR + namespace + pod selector combo —
+  `pkg/networkpolicy/combo.go`.
+- [ ] **Tier promotion** → Stable.
+- Verify: a kind cluster applies the NetworkPolicy and observed deny /
+  allow paths match the expectation.
 
 ### pkg/security (Beta)
 
-- [x] SecurityContext helper (restricted PSA 호환) — `pkg/security/security.go`.
+- [x] SecurityContext helper (restricted PSA-compliant) —
+  `pkg/security/security.go`.
 - [x] RBAC helper.
-- [x] unit test.
-- [x] restricted PSA 회귀 가드 — `pkg/security/psa_guard_test.go`.
-- [x] Pod / Container SecurityContext 분리 helper — `pkg/security/split.go`.
-- [x] seccompProfile 기본값 helper — `pkg/security/seccomp.go`.
-- [ ] **Tier 격상** → Stable.
-- Verify: `kubectl label ns <ns> pod-security.kubernetes.io/enforce=restricted`
-  적용 후 downstream pod ready.
+- [x] Unit tests.
+- [x] Restricted PSA regression guard —
+  `pkg/security/psa_guard_test.go`.
+- [x] Pod / Container SecurityContext split —
+  `pkg/security/split.go`.
+- [x] seccompProfile default helper — `pkg/security/seccomp.go`.
+- [ ] **Tier promotion** → Stable.
+- Verify: after `kubectl label ns <ns>
+  pod-security.kubernetes.io/enforce=restricted`, downstream pods reach
+  Ready.
 
 ### pkg/webhook (Experimental)
 
-- [x] Webhook 유틸 기초 — `pkg/webhook/webhook.go`.
-- [x] unit test.
+- [x] Webhook utility base — `pkg/webhook/webhook.go`.
+- [x] Unit tests.
 - [x] Conversion webhook helper — `pkg/webhook/conversion.go`.
-- [x] Validation webhook 공통 패턴 — `pkg/webhook/validation_patterns.go`.
-- [ ] 다중 downstream 라이브 적용 후 안정화.
-- [ ] **Tier 격상** → Beta → Stable.
-- Verify: 2 이상의 downstream 이 동일 helper 사용 + 회귀 0.
+- [x] Validation webhook patterns —
+  `pkg/webhook/validation_patterns.go`.
+- [ ] Multi-downstream live adoption → stabilization.
+- [ ] **Tier promotion** → Beta → Stable.
+- Verify: 2 or more downstream consumers use the same helper with
+  regression 0.
 
 ### pkg/storageclass (Stable)
 
-- [x] DNS-1123 subdomain validation — `pkg/storageclass/validator.go`.
-- [x] Normalize / MustNormalize — empty → nil (cluster default) + trim +
-  pointer return.
-- [x] unit test 12 cases — `pkg/storageclass/validator_test.go` (100 % coverage).
-- [ ] downstream 라이브 적용 + 회귀 0.
+- [x] DNS-1123 subdomain validation —
+  `pkg/storageclass/validator.go`.
+- [x] Normalize / MustNormalize — empty → nil (cluster default) + trim
+  + pointer return.
+- [x] 12 unit tests (100 % coverage) —
+  `pkg/storageclass/validator_test.go`.
+- [ ] Downstream live adoption + regression 0.
 
 ### pkg/events (Beta)
 
-- [x] Recorder interface — client-go `record.EventRecorder` 구조 정합
-  (client-go 의존 회피).
-- [x] 9 Reason constants (Created / Updated / Deleted / Reconciled /
-  ReconcileError / Provisioning / Ready / Degraded / Failed).
-- [x] Emit / Emitf / EmitWarning / EmitWarningf / WrappedError — nil-safe.
-- [x] unit test — `pkg/events/events_test.go` (100 % coverage).
-- [ ] downstream 라이브 적용 후 reconciliation Event reason 통일.
-- [ ] **Tier 격상** → Stable.
-- Verify: downstream Reconcile path 의 Event reason 이 commons constants 사용 +
-  회귀 0.
+- [x] Recorder interface — compatible with `client-go`
+  `record.EventRecorder` without importing it.
+- [x] Nine Reason constants.
+- [x] Emit / Emitf / EmitWarning / EmitWarningf / WrappedError — all
+  nil-safe.
+- [x] Unit tests (100 % coverage) — `pkg/events/events_test.go`.
+- [ ] Downstream live adoption — Event reasons unified across
+  reconcile path.
+- [ ] **Tier promotion** → Stable.
+- Verify: downstream Reconcile path uses commons reason constants with
+  regression 0.
 
 ### pkg/probes (Experimental)
 
-- [x] Builder fluent API — HTTP / HTTPS / TCP / Exec 4 handlers.
-- [x] kubelet default (Period=10 s / Timeout=1 s / SuccessThreshold=1 /
-  FailureThreshold=3).
-- [x] InitialDelay / Period / Timeout 음수 → 0 clamp.
-- [x] Build() handler 미설정 시 panic (fail-fast contract).
-- [x] unit test — `pkg/probes/builder_test.go` (100 % coverage).
-- [ ] 2+ downstream 라이브 적용 (Beta 격상 조건).
-- [ ] **Tier 격상** → Beta → Stable.
+- [x] Fluent builder — HTTP / HTTPS / TCP / Exec handlers.
+- [x] kubelet defaults (Period = 10 s / Timeout = 1 s /
+  SuccessThreshold = 1 / FailureThreshold = 3).
+- [x] InitialDelay / Period / Timeout negative-clamp to 0.
+- [x] `Build()` panics when no handler is set (fail-fast contract).
+- [x] Unit tests (100 % coverage) — `pkg/probes/builder_test.go`.
+- [ ] 2+ downstream live adoption (Beta criterion).
+- [ ] **Tier promotion** → Beta → Stable.
 
 ### pkg/pvc (Beta)
 
 - [x] PVC expansion helper — `pkg/pvc/expansion.go`.
-- [x] unit test — `pkg/pvc/expansion_test.go`.
-- [ ] downstream 라이브 적용 후 PVC resize 회귀 0.
-- [ ] **Tier 격상** → Stable.
+- [x] Unit tests — `pkg/pvc/expansion_test.go`.
+- [ ] Downstream live adoption with PVC resize regression 0.
+- [ ] **Tier promotion** → Stable.
 
 ### pkg/topology (Beta)
 
 - [x] PVC topology spread helper — `pkg/topology/spread.go`.
-- [x] unit test — `pkg/topology/spread_test.go`.
-- [ ] downstream 라이브 적용 후 spread constraint 검증.
-- [ ] **Tier 격상** → Stable.
+- [x] Unit tests — `pkg/topology/spread_test.go`.
+- [ ] Downstream live adoption with spread constraint verification.
+- [ ] **Tier promotion** → Stable.
 
-## 의존성 정책
+## Dependency policy
 
-- **Kubernetes API 만** — `k8s.io/api`, `k8s.io/apimachinery`, `k8s.io/utils`.
-  controller-runtime 의존 *추가 금지*.
-- **Apache-2.0 호환 라이선스만** — 의존성 추가 시 ADR 작성.
-- **godoc 완비** — 신규 public API 는 godoc 의무.
+- **Kubernetes API only** — `k8s.io/api`, `k8s.io/apimachinery`,
+  `k8s.io/utils`. controller-runtime dependency *must not be added at
+  leaf packages*.
+- **Apache-2.0-compatible licenses only** — every dependency addition
+  requires an ADR.
+- **Complete godoc** — every new public API requires godoc.
 
-## 거버넌스 / 추적
+## Governance / tracking
 
-- **CHANGELOG.md** — git-cliff 자동 생성. semantic versioning 엄수.
-- **CITATION.cff** — 학술 인용 가능. DOI 는 v1.0.0 시점 발급.
-- **ADR** — `docs/kb/adr/` 가 설계 결정을 추적.
-- **AGENTS.md** — AI 협업 가이드.
+- **CHANGELOG.md** — auto-generated by `git-cliff`. Strict semantic
+  versioning.
+- **CITATION.cff** — academic citation. DOI issued at v1.0.0.
+- **ADR** — `docs/kb/adr/` tracks every design decision.
+- **AGENTS.md** — AI-collaboration runbook.
 
-## Non-Goals (의식적 비대상)
+## Non-Goals (deliberately out of scope)
 
-- ❌ **controller-runtime 의존 추가** — leaf 패키지의 회피 설계를 유지.
-- ❌ **downstream-specific 로직 흡수** — operator-specific 코드는 호출자
-  repo 에 둡니다. 라이브러리는 *공통 헬퍼만*.
-- ❌ **분기 / 날짜 기반 로드맵** — 기능 체크리스트 + 진행률.
-- ❌ **GitHub Actions 필수 release gate** — 로컬 4 계층 위임.
-- ❌ **Plugin / extension SDK 포지셔닝** — 라이브러리이지 framework 가
-  아닙니다.
-- ❌ **v1.0.0 조기 선언** — 졸업 조건 미충족 시 v0.x 유지.
+- ❌ **controller-runtime dependency** — leaf packages must remain
+  controller-runtime free.
+- ❌ **downstream-specific logic** — operator-specific code lives in
+  the caller's repository. The library ships only *shared* helpers.
+- ❌ **Time-based roadmap** — use a feature checklist plus completion
+  percentages.
+- ❌ **GitHub Actions release gates** — delegate to the local four
+  layers.
+- ❌ **Plugin / extension SDK positioning** — this is a library, not a
+  framework.
+- ❌ **Premature v1.0.0** — stay in v0.x until the graduation
+  criteria are met.
 
 ---
 
