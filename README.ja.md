@@ -6,7 +6,7 @@
 
 > **keiailab オペレーター群が共有する Go ライブラリ — finalizer / labels / status / version / security / monitoring partials**
 >
-> [English](README.md) | [한국어](README.ko.md) | **日本語** | [中文](README.zh.md) (placeholder)
+> [English](README.md) | [한국어](README.ko.md) | **日本語** | [中文](README.zh.md)
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
