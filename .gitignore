@@ -5,3 +5,7 @@ coverage.html
 *.prof
 .idea/
 .vscode/
+
+# Claude Code session artifacts (per Codex Major #6 정합)
+.claude/
+.claude-flow/
