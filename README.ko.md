@@ -1,6 +1,6 @@
 # operator-commons
 
-> English README: [README.md](README.md) — canonical / 정본
+> [English](README.md) | **한국어** | [日本語](README.ja.md) (placeholder) | [中文](README.zh.md) (placeholder)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Go Version](https://img.shields.io/badge/Go-1.25+-00ADD8?logo=go)](https://golang.org/)
@@ -83,3 +83,16 @@ func buildContainerSecurityContext() *corev1.SecurityContext {
 ## License (라이선스)
 
 Apache-2.0 — [LICENSE](./LICENSE) 참조. minor 릴리스마다 감사하는 AGPL/BUSL 전이 의존성 제로 목표를 유지합니다.
+
+---
+
+<p align="center">
+  <b>keiailab operator family</b><br/>
+  <a href="https://github.com/keiailab/operator-commons">operator-commons</a> ·
+  <a href="https://github.com/keiailab/postgres-operator">postgres-operator</a> ·
+  <a href="https://github.com/keiailab/mongodb-operator">mongodb-operator</a> ·
+  <a href="https://github.com/keiailab/valkey-operator">valkey-operator</a> ·
+  <a href="https://github.com/keiailab/forgewise">forgewise</a>
+</p>
+
+<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
