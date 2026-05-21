@@ -4,11 +4,13 @@
 
 ## Direct consumers (in-org)
 
-| Operator | 사용 패키지 | 시작 버전 | 현재 버전 | 등재 일자 |
-|---|---|---|---|---|
-| `keiailab/mongodb-operator` | labels, security, webhook, version, networkpolicy, monitoring | v0.1.0 | v0.4.0 | 2026-05-07 |
-| `keiailab/postgres-operator` | labels, security, webhook, monitoring | v0.1.0 | v0.4.0 | 2026-05-07 |
-| `keiailab/valkey-operator` | labels, security, webhook, monitoring | v0.1.0 | v0.4.0 | 2026-05-07 |
+| Operator | 사용 패키지 | 시작 버전 | 현재 버전 | 최근 commit | 갱신 일자 |
+|---|---|---|---|---|---|
+| `keiailab/mongodb-operator` | labels, security, webhook, version, finalizer, networkpolicy | v0.1.0 | **v0.7.0** | `97140db` | 2026-05-20 |
+| `keiailab/postgres-operator` | labels, security, webhook, status, version | v0.1.0 | **v0.7.0** | `8c9db39` | 2026-05-20 |
+| `keiailab/valkey-operator` | labels, security, webhook, monitoring, finalizer, networkpolicy | v0.1.0 | **v0.6.0** ⚠️ (1 minor lag, I09 upgrade 예정) | `e878420` | 2026-05-20 |
+
+> **라이브 evidence (2026-05-20)**: 본 표는 각 operator 의 `go.mod` 라이브 `require github.com/keiailab/operator-commons <ver>` + `grep -rn "github.com/keiailab/operator-commons" --include="*.go"` import 결과 기반. Codex challenge #1 (Plan Adversarial Review RFC-0045 §2.5) 정합 — valkey 가 v0.6.0 에 머물러 있어 v0.7.0 신규 export 미수용 (I09 별 PR 진행 예정).
 
 ## External adopters
 
