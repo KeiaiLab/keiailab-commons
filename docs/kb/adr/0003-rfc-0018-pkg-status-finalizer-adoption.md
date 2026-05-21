@@ -1,9 +1,9 @@
-# ADR-0003: RFC-0018 채택 — pkg/status 슈가 추가 + pkg/finalizer 변경 없음
+# ADR-0003: pkg/status + pkg/finalizer 표준 채택 — pkg/status 슈가 추가 + pkg/finalizer 변경 없음
 
 - Date: 2026-05-09
 - Status: Accepted
 - Authors: @eightynine01
-- Refs: RFC-0018 (`docs/kb/rfc/0018-status-finalizer-standard.md`)
+- Refs: pkg/status + pkg/finalizer 표준 (`docs/kb/rfc/0018-status-finalizer-standard.md`)
 
 ## Context
 
@@ -11,7 +11,7 @@ operator-commons v0.5.0 시점에 `pkg/finalizer` 와 `pkg/status` 채택률이
 0% 임이 측정됨. 3 consuming operator (mongodb / valkey / postgres) 가
 각자 finalizer slice 직접 조작 + ConditionType/Reason 분기 구현.
 
-본 ADR 은 RFC-0018 의 commons-side implementation 결정을 보존한다.
+본 ADR 은 pkg/status + pkg/finalizer 표준 의 commons-side implementation 결정을 보존한다.
 Consumer migration 자체는 각 repo 별 신규 ADR 에서 추적 (mongodb/valkey
 신규, postgres ADR-0008 갱신).
 
@@ -24,7 +24,7 @@ Consumer migration 자체는 각 repo 별 신규 ADR 에서 추적 (mongodb/valk
      `SetReady(_, ConditionFalse, _, _, _)` 의 가독성 슈가.
 
 2. **`pkg/finalizer` 는 *변경 없음*** —
-   기존 `Add/Remove/Has` + `Prefix` 만 RFC-0018 §3.2 의 표준 API 로 *명시*.
+   기존 `Add/Remove/Has` + `Prefix` 만 pkg/status + pkg/finalizer 표준 §3.2 의 표준 API 로 *명시*.
    Consumer migration 은 controller-runtime 의 `controllerutil.AddFinalizer`
    에서 본 패키지 `Add` 로 import path 만 교체하는 형태.
 
@@ -59,7 +59,7 @@ Consumer migration 자체는 각 repo 별 신규 ADR 에서 추적 (mongodb/valk
 - *commons API 추가 최소화* (본 ADR) vs *호출자 편의 극대화* (`EnsureRemoval`
   추가, 거부됨) — `pkg/finalizer` 의 zero-dep 원칙이 4-repo cross-cut
   무게에서 우위.
-- *generic 4종 ConditionType 만 표준화* (RFC-0018 §3.3) vs *전체
+- *generic 4종 ConditionType 만 표준화* (pkg/status + pkg/finalizer 표준 §3.3) vs *전체
   도메인 ConditionType 표준화* — 후자는 무관 type 의 strawman 노출.
 
 ## Alternatives Considered
@@ -75,7 +75,5 @@ Consumer migration 자체는 각 repo 별 신규 ADR 에서 추적 (mongodb/valk
 
 ## Refs
 
-- RFC-0018: `docs/kb/rfc/0018-status-finalizer-standard.md`
+- pkg/status + pkg/finalizer 표준: `docs/kb/rfc/0018-status-finalizer-standard.md`
 - 사례: `pkg/status/conditions.go` (변경 후), `pkg/finalizer/finalizer.go` (변경 없음).
-- 글로벌 표준: `standards/adr.md §3` (Nygard 5섹션).
-- Plan: `~/.claude/plans/1-https-artifacthub-io-packages-helm-clo-synthetic-gem.md` §2 D10/D11.

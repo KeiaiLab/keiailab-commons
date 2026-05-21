@@ -6,19 +6,19 @@
 | Date | 2026-05-21 |
 | Author | keiailab |
 | Supersedes | (none) |
-| Related | RFC-0002 (GHA 영구 금지), ADR-0011 (lefthook 통합), ADR-0013 (audit SSOT) |
+| Related | GitHub Actions 차단 정책 (GHA 영구 금지), ADR-0011 (lefthook 통합), ADR-0013 (audit SSOT) |
 
 ## Context
 
 audit P2/OP 의 OP-1 (release.sh script) 가 operator-commons 에서 ❌. 다른 4 repo:
-- postgres-operator, mongodb-operator, valkey-operator: 본 ADR 시점 ✅ (S7 + valkey ralph-loop 결과로 이미 보유)
-- forgewise: ❌ (Python 패키지, 별 release 양식)
+- downstream operator, downstream operator, downstream operator: 본 ADR 시점 ✅ (S7 + valkey ralph-loop 결과로 이미 보유)
+- downstream component: ❌ (Python 패키지, 별 release 양식)
 
 operator-commons 는 *Go module 라이브러리* + *Helm library chart* 의 dual deliverable:
 - Go module: tag (`vX.Y.Z`) 만으로 release (`go get` 자동)
 - Helm library chart: `charts/keiailab-commons/Chart.yaml` 의 version + 별 package + publish
 
-기존 `make tag` target 은 *사용법 안내* 만 — 실 pipeline 부재. 본 ADR 은 *수동 release pipeline* 정합 — RFC-0002 (GHA 영구 금지) 준수.
+기존 `make tag` target 은 *사용법 안내* 만 — 실 pipeline 부재. 본 ADR 은 *수동 release pipeline* 정합 — GitHub Actions 차단 정책 (GHA 영구 금지) 준수.
 
 ## Decision
 
@@ -40,7 +40,7 @@ operator-commons 는 *Go module 라이브러리* + *Helm library chart* 의 dual
 ## Consequences
 
 - ✅ audit OP-1 ✅ 해소
-- ✅ 모든 release pipeline 로컬화 — RFC-0002 정합
+- ✅ 모든 release pipeline 로컬화 — GitHub Actions 차단 정책 정합
 - ✅ Go module + Helm chart dual deliverable 통합
 - ⚠️ `scripts/helm-publish.sh` 가 commons 에서 *아직 없음* — 후속 sub-cycle 작성 필요 (단 commons 는 chart "library" 라 publish 가 다른 양식)
 - ⚠️ git-cliff 가용 시 자동, 아니면 사람 prompt — 부분 자동화

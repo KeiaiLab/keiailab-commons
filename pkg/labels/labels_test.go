@@ -7,28 +7,28 @@ import (
 
 func TestNew_Defaults(t *testing.T) {
 	t.Parallel()
-	s := New("mongodb", "primary", "controller-manager", "1.4.6", "mongodb-operator")
-	if s.Name != "mongodb" || s.Instance != "primary" || s.Component != "controller-manager" {
+	s := New("example-app", "primary", "controller-manager", "1.4.6", "downstream-component")
+	if s.Name != "example-app" || s.Instance != "primary" || s.Component != "controller-manager" {
 		t.Errorf("unexpected: %+v", s)
 	}
-	if s.Version != "1.4.6" || s.ManagedBy != "mongodb-operator" {
+	if s.Version != "1.4.6" || s.ManagedBy != "downstream-component" {
 		t.Errorf("unexpected version/managedBy: %+v", s)
 	}
-	if s.PartOf != "mongodb-operator" {
+	if s.PartOf != "downstream-component" {
 		t.Errorf("PartOf default = ManagedBy expected, got %q", s.PartOf)
 	}
 }
 
 func TestSet_All_AllFields(t *testing.T) {
 	t.Parallel()
-	s := New("mongodb", "primary", "controller-manager", "1.4.6", "mongodb-operator")
+	s := New("example-app", "primary", "controller-manager", "1.4.6", "downstream-component")
 	want := map[string]string{
-		"app.kubernetes.io/name":       "mongodb",
+		"app.kubernetes.io/name":       "example-app",
 		"app.kubernetes.io/instance":   "primary",
 		"app.kubernetes.io/component":  "controller-manager",
 		"app.kubernetes.io/version":    "1.4.6",
-		"app.kubernetes.io/managed-by": "mongodb-operator",
-		"app.kubernetes.io/part-of":    "mongodb-operator",
+		"app.kubernetes.io/managed-by": "downstream-component",
+		"app.kubernetes.io/part-of":    "downstream-component",
 	}
 	got := s.All()
 	if !reflect.DeepEqual(got, want) {
@@ -41,7 +41,7 @@ func TestSet_All_OptionalEmpty(t *testing.T) {
 	s := Set{
 		Name:      "valkey",
 		Instance:  "cache",
-		ManagedBy: "valkey-operator",
+		ManagedBy: "downstream operator",
 		// Component/Version/PartOf 미지정.
 	}
 	got := s.All()
@@ -61,10 +61,10 @@ func TestSet_All_OptionalEmpty(t *testing.T) {
 
 func TestSet_Selector_VersionExcluded(t *testing.T) {
 	t.Parallel()
-	s := New("mongodb", "primary", "controller-manager", "1.4.6", "mongodb-operator")
+	s := New("example-app", "primary", "controller-manager", "1.4.6", "downstream-component")
 	got := s.Selector()
 	want := map[string]string{
-		"app.kubernetes.io/name":      "mongodb",
+		"app.kubernetes.io/name":      "example-app",
 		"app.kubernetes.io/instance":  "primary",
 		"app.kubernetes.io/component": "controller-manager",
 	}

@@ -19,7 +19,7 @@ func (s stableTestEntry) PrimaryKey() string { return s.Key }
 //
 // 본 테스트는 3-repo (mongodb / valkey / postgres) 의 호출 패턴을 모방한
 // *cross-version compatibility 표면 가드*. ROADMAP §"Cross-version
-// compatibility test — 3 repo CI 통합" (P-B.6.1) 의 first slice.
+// compatibility test — 3 repo CI 통합" 의 first slice.
 //
 // 호출자가 의존하는 표면 (List / IsSupported / Strings / Default) +
 // Matrix[E] (MustMatrix / IsSupported / Find / Entries / Keys / Len) +

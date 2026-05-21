@@ -58,8 +58,6 @@ type RuleGroup struct {
 //	)
 //
 // Refs: docs/ROADMAP.md 'PrometheusRule 빌더 (alert/recording rules 공통화)'
-//
-//	(P-B.7.1)
 func NewPrometheusRule(
 	name, namespace string,
 	labels map[string]string,

@@ -9,7 +9,7 @@ type ConvertFunc func(src any) (dst any, err error)
 
 // ConversionRegistry — version pair → ConvertFunc 매핑.
 //
-// 사용 예 (valkey-operator):
+// 사용 예 (downstream operator):
 //
 //	reg := webhook.NewConversionRegistry()
 //	reg.Register("valkey.io/v1alpha1", "valkey.io/v1alpha2", convertV1A1ToV1A2)
@@ -20,8 +20,6 @@ type ConvertFunc func(src any) (dst any, err error)
 // 로직을 위임. caller 는 별도 admission webhook server 에서 호출.
 //
 // Refs: docs/ROADMAP.md 'Conversion webhook helper — v1alpha1 ↔ v1alpha2 패턴 추출'
-//
-//	(P-B.10.1)
 type ConversionRegistry struct {
 	convs map[string]ConvertFunc
 }

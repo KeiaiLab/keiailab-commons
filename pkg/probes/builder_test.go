@@ -171,7 +171,7 @@ func TestBuild_panicsWhenNoHandler(t *testing.T) {
 func TestPostgresOperatorReadinessPattern(t *testing.T) {
 	t.Parallel()
 
-	// Replaces: postgres-operator/internal/controller/builders.go L986-991
+	// Replaces: downstream operator builders source
 	got := probes.New().
 		HTTP("/readyz", 8080).
 		InitialDelay(5 * time.Second).
@@ -186,7 +186,7 @@ func TestPostgresOperatorReadinessPattern(t *testing.T) {
 func TestMongoDBOperatorLivenessExecPattern(t *testing.T) {
 	t.Parallel()
 
-	// Replaces: mongodb-operator/internal/resources/builder.go L613-619
+	// Replaces: downstream operator builders source
 	got := probes.New().
 		Exec("mongosh", "--quiet", "--eval", "db.adminCommand('ping')").
 		InitialDelay(30 * time.Second).
@@ -201,7 +201,7 @@ func TestMongoDBOperatorLivenessExecPattern(t *testing.T) {
 func TestValkeyOperatorReadinessExecPattern(t *testing.T) {
 	t.Parallel()
 
-	// Replaces: valkey-operator/internal/resources/statefulset.go L133-139
+	// Replaces: downstream operator builders source
 	got := probes.New().
 		Exec("valkey-cli", "-a", "$(VALKEY_PASSWORD)", "ping").
 		InitialDelay(5 * time.Second).

@@ -4,7 +4,7 @@
 
 # operator-commons
 
-> **keiailab Operator 系列共享的 Go 库 — finalizer / labels / status / version / security / monitoring partials**
+> **用于 Kubernetes operator 通用 scaffolding 的 Go 共享库 — finalizer / labels / status / version / security / monitoring partials.**
 >
 > [English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | **中文**
 
@@ -14,8 +14,6 @@
   <a href="https://pkg.go.dev/github.com/keiailab/operator-commons"><img src="https://pkg.go.dev/badge/github.com/keiailab/operator-commons.svg" alt="Go Reference"/></a>
   <a href="https://scorecard.dev/viewer/?uri=github.com/keiailab/operator-commons"><img src="https://api.scorecard.dev/projects/github.com/keiailab/operator-commons/badge" alt="OpenSSF Scorecard"/></a>
   <a href="https://github.com/keiailab/operator-commons/discussions"><img src="https://img.shields.io/github/discussions/keiailab/operator-commons?label=discussions&logo=github" alt="GitHub Discussions"/></a>
-  <a href="https://github.com/keiailab/operator-commons/blob/main/docs/quality/audit-history.md"><img src="https://img.shields.io/badge/keiailab-v3.x--stable-success?style=flat-square" alt="keiailab v3.x-stable"/></a>
-  <a href="https://github.com/keiailab/operator-commons/blob/main/scripts/audit-production-grade.sh"><img src="https://img.shields.io/badge/audit-100%25-success?style=flat-square" alt="audit"/></a>
 </p>
 
 <p align="center">
@@ -25,61 +23,55 @@
   <b>中文</b>
 </p>
 
+> ⚠️ This translation is AI-generated and pending native review.
+
 ---
 
-> **注意 (Notice)**: 本中文 README 由机器翻译生成,处于 *partial* (RFC-0025 `[~]`) 状态。技术内容以 [README.md](README.md) (英文) 为准。母语审阅者的完整审定计划在后续周期进行。
+可复用的 Go 库,用于消除 Kubernetes operator 代码库中的 scaffolding 漂移 ——
+PodSecurity restricted context、支持版本 allowlist、NetworkPolicy 模板、
+ServiceMonitor 构建器、finalizer / status 帮助函数,以及 Helm library chart
+partial,封装在一个小而稳定的 API 表面之后。
 
-**keiailab** Kubernetes Operator (`mongodb-operator`、`valkey-operator`、`postgresql-operator`) 共享的 Go 库。
+> 状态: **v0.x — API 可能变更.** v1.0 起遵循 SemVer stable.
 
-> 状态: **v0.x — API 可能发生破坏性变更**。v1.0 之后将采用 SemVer (语义化版本) 保持稳定。
+## Why
 
-## 为什么 (Why)
+Operator 作者反复实现相同的 scaffolding —— restricted PodSecurity context、
+支持版本矩阵、default-deny NetworkPolicy、ServiceMonitor 构建器、finalizer
+帮助函数、status condition 目录。各自独立重新实现会在相似 reconciler 之间产生
+隐性不一致,并随着 minor 修订逐渐分叉。`operator-commons` 是该 scaffolding 的
+单一来源 —— 导入帮助函数,获得 canonical 实现,无需在每个仓库重新发明。
 
-3 个 Operator 各自独立地实现了相同的脚手架代码 (PodSecurity restricted 安全上下文、版本 allowlist、NetworkPolicy 模板、ServiceMonitor 构建器)。仓库之间的维护漂移已经开始产生不一致 — 本库即唯一可信来源 (single source of truth)。
+## 包
 
-## 软件包列表 (Packages, v0.8.0)
+| 包 | Tier | 用途 |
+|---|---|---|
+| `pkg/finalizer` | Stable | Finalizer 帮助 — `Add` / `Remove` / `Has` / `EnsureOrder` (仅 stdlib `slices`,无 controller-runtime 依赖)。 |
+| `pkg/labels` | Stable | Kubernetes 推荐标签 (`app.kubernetes.io/*`) 构建器 — `Set`、`All()`、`Selector()`,以及 v2 映射 (`AllV2`)。 |
+| `pkg/status` | Stable | 4 个标准 Condition Type + 6 个 Reason 目录 + 帮助函数 (`SetReady`、`SetAvailable`、`SetReadyFalse`)。 |
+| `pkg/storageclass` | Stable | DNS-1123 storageClass 验证器 + `Normalize` / `MustNormalize` (empty → cluster default 指针)。 |
+| `pkg/version` | Beta | 版本 allowlist 约定 (`MustList`、`IsSupported`、`Strings`、`Default`) + 泛型 `Matrix[E MatrixEntry]` + 序列化器。 |
+| `pkg/monitoring` | Beta | Prometheus Operator `ServiceMonitor` 与 `PrometheusRule` 构建器 (unstructured — CRD-soft)。 |
+| `pkg/networkpolicy` | Beta | Deny-by-default NetworkPolicy 构建器 + functional options (`WithSelfIngress`、`WithIngressFromPeers`、`WithDenyEgress`、`WithEgressToPeers`、`ComboPeer`)。 |
+| `pkg/security` | Beta | PodSecurity *restricted* SecurityContext 构建器 + Pod / Container 分离 + seccomp profile 指针。 |
+| `pkg/events` | Beta | 最小 `Recorder` 接口 + 9 个标准 `Reason` 常量 + `Emit` / `EmitWarning` / `WrappedError` (nil-safe)。 |
+| `pkg/probes` | Experimental | `corev1.Probe` fluent 构建器 — HTTP / HTTPS / TCP / Exec,kubelet 默认值 + clamp。 |
+| `pkg/webhook` | Experimental | Admission validation 帮助 — `ValidateAllowedVersion`、`ValidateWithPredicate`、conversion registry。 |
 
-| 软件包 | 用途 |
-|---|---|
-| `pkg/version` | 支持的 DB 版本 allowlist 规约 (`MustList`、`IsSupported`、`Strings`、`Default`) + 泛型 `Matrix[E MatrixEntry]`。 |
-| `pkg/security` | 带 functional option 的 PodSecurity *restricted* SecurityContext 构建器。 |
-| `pkg/labels` | 推荐 Kubernetes 标签 (`app.kubernetes.io/*`) 构建器 — `Set`、`All()`、`Selector()` (版本感知分支)。 |
-| `pkg/monitoring` | Prometheus Operator `ServiceMonitor` 构建器 (unstructured — CRD-soft)。 |
-| `pkg/networkpolicy` | NetworkPolicy 构建器 — deny-by-default + functional option (`WithSelfIngress`、`WithIngressFromPeers`、`WithDenyEgress`、`WithEgressToPeers`)。 |
-| `pkg/webhook` | Admission 验证助手 — `ValidateAllowedVersion` (精确匹配)、`ValidateWithPredicate` (调用方提供的 matcher,例如 semver-prefix)。 |
-| `pkg/finalizer` | Finalizer 助手 — `Add` / `Remove` / `Has` (避免依赖 controller-runtime,仅使用标准库 `slices`)。 |
-| `pkg/status` | 4 个标准 Condition Type + 6 个 Reason 目录 + 助手函数 (`SetReady`、`SetAvailable`、`SetReadyFalse`)。 |
+[docs/STABILITY.md](docs/STABILITY.md) 定义 tier 承诺。
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) 涵盖包表面与设计不变量。
+[docs/ROADMAP.md](docs/ROADMAP.md) 跟踪 tier 晋升标准与 v1.0 毕业清单。
 
-`pkg/conditions` *推荐使用上游 `k8s.io/apimachinery/pkg/api/meta.SetStatusCondition`* (commons 不添加的决定 — 经过 boundary 分析得出。详见 mongodb-operator HANDOFF iteration 32)。
-
-## 采用矩阵 (Adoption Matrix, 3 个 Operator)
-
-| Operator | sec | ver | lab | mon | np | wh | 采用率 |
-|---|---|---|---|---|---|---|---|
-| [mongodb-operator](https://github.com/keiailab/mongodb-operator) | ✅ | ✅ | ✅ | ⏳ | ✅ | ⏳ | **4/6 (67%)** |
-| [valkey-operator](https://github.com/keiailab/valkey-operator) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **6/6 (100%)** 🎉 |
-| [postgres-operator](https://github.com/keiailab/postgres-operator) | ✅ | ⏳ | ✅ | ⏳ | ⏳ | ✅ | **3/6 (50%)** |
-
-valkey 是 *首个达成 100% 采用* 的 Operator — 承担其他 Operator 的 carbon-copy 参考职责。应用案例 commit:
-
-- `pkg/security`: it8 (3 个 Operator cross-cut) — `23fd3da` mongodb / `a0be4cf` valkey / `ac2e647` postgres
-- `pkg/version`: mongodb it9 `a8db040`、valkey it8
-- `pkg/labels`: mongodb it27 `ebc5803`、postgres it28 `c68b451`、valkey it29 `e8428b1`
-- `pkg/monitoring`: valkey it23 `1765b54`
-- `pkg/networkpolicy`: valkey it25 `97162b5`、mongodb it26 `ca0ec27`
-- `pkg/webhook`: valkey it31 `14be0db`、postgres it34 `1d8fa17`
-
-⏳ 区域处于 *推迟深入* (deepening 保留) 状态 — 要么 *伴随功能新增* (例如 mongodb webhook server / ServiceMonitor reconciler),要么 *其他抽象更合适* (postgres `version matrix.go` 中的 `Combo` struct 比 `commons.MustList` 更丰富,不适合委托)。
-
-## 使用方法 (Usage)
+## 使用
 
 ```go
 import (
     "github.com/keiailab/operator-commons/pkg/security"
     "github.com/keiailab/operator-commons/pkg/version"
+    corev1 "k8s.io/api/core/v1"
 )
 
-var SupportedMongoDBVersions = version.MustList("8.0", "8.2", "8.3")
+var supportedVersions = version.MustList("1.0", "1.1", "1.2")
 
 func buildContainerSecurityContext() *corev1.SecurityContext {
     return security.RestrictedContainer(
@@ -89,39 +81,29 @@ func buildContainerSecurityContext() *corev1.SecurityContext {
 }
 ```
 
-## 版本管理与发布 (Versioning + Release)
+每个包的示例位于对应的 `pkg/<name>/doc.go` 包文档中
+(`go doc github.com/keiailab/operator-commons/pkg/<name>`)。
 
-- v0.x: 允许 API 的破坏性变更。每个 tag (`v0.N.M`) 表示软件包、公开 API、或重要行为之一发生 bump。
-- 每个 consumer Operator 通过 `go.mod` 的 `require` 进行版本固定 — 在本仓库与 3 个 Operator 之间进行本地开发时,也允许使用 `replace` 指令。
-- v1.0 之后: 语义化版本 (Semantic Versioning)。破坏性变更必须经过 RFC 流程。
+## 版本与发布
 
-## 社区 (Community)
+- **v0.x**: 允许 API breaking。每个 tag (`v0.N.M`) 会改变某个包的公开 API
+  或具有意义的行为。消费者通过 `go.mod` 固定特定版本。
+- **v1.0 起**: Semantic Versioning。Breaking change 需要 ADR (`docs/kb/adr/`)。
+- 本地 `replace` 指令在 cross-repo 开发中可接受; 发布 tag 始终保留 canonical
+  module path。
 
-- **Discussions**: [GitHub Discussions](https://github.com/keiailab/operator-commons/discussions) — pkg API 的疑问、集成案例、新助手函数提案
-- **Issues**: [GitHub Issues](https://github.com/keiailab/operator-commons/issues) — bug 报告 / API 请求
-- **Downstream**: 3 个 Operator (mongodb-operator / postgres-operator / valkey-operator) — 通过 `go.mod replace` 或直接 `require` 使用
-- **稳定性矩阵**: `pkg/labels`、`pkg/security`、`pkg/version`、`pkg/webhook` (自 v0.5+ stable) / `pkg/networkpolicy`、`pkg/monitoring` (experimental)
+## 社区
 
-## 许可证 (License)
+- **Discussions**: [GitHub Discussions](https://github.com/keiailab/operator-commons/discussions) — 包 API 提问、integration 案例、新 helper 提案。
+- **Issues**: [GitHub Issues](https://github.com/keiailab/operator-commons/issues) — bug 与具体特性请求。
+- **Security**: 私密上报流程见 [SECURITY.md](SECURITY.md)。
+- **Contributing**: 开发流程见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
-Apache-2.0 — 详见 [LICENSE](./LICENSE)。以零 AGPL/BUSL 传递依赖为目标,每个 minor 版本进行审计。
+## 许可证
 
-## 参考 (References)
-
-- [English README](README.md) — canonical SSOT (规范正本)
-- [한국어 README](README.ko.md) — 韩文版
-- [日本語 README](README.ja.md) — 日文版
-- [中文术语表](docs/i18n/glossary-zh.md) — 标准术语表 (本仓库)
+Apache-2.0 — 见 [LICENSE](LICENSE)。AGPL / BUSL transitive 依赖 0 件目标
+(每个 minor 发布审计一次)。
 
 ---
-
-<p align="center">
-  <b>keiailab operator family</b><br/>
-  <a href="https://github.com/keiailab/operator-commons">operator-commons</a> ·
-  <a href="https://github.com/keiailab/postgres-operator">postgres-operator</a> ·
-  <a href="https://github.com/keiailab/mongodb-operator">mongodb-operator</a> ·
-  <a href="https://github.com/keiailab/valkey-operator">valkey-operator</a> ·
-  <a href="https://github.com/keiailab/forgewise">forgewise</a>
-</p>
 
 <p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>

@@ -1,17 +1,17 @@
-# ADR-0005: RFC-0019 §3.1 채택 — keiailab-commons Helm library chart 신설
+# ADR-0005: Helm library chart 정책 §3.1 채택 — keiailab-commons Helm library chart 신설
 
 - Date: 2026-05-09
 - Status: Accepted (PR-B2 — §3.1 commonLabels + ServiceMonitor)
 - Authors: @eightynine01
-- Refs: RFC-0019 (`docs/kb/rfc/0019-helm-partials-library.md`), Plan §2 D14
+- Refs: Helm library chart 정책 (`docs/kb/rfc/0019-helm-partials-library.md`)
 
 ## Context
 
 4-repo (mongodb / postgres / valkey operator) Helm chart 의 *공통 partial*
-중복 (~230 LOC, RFC-0019 §Motivation). Helm library chart 패키징 표준으로
+중복 (~230 LOC, Helm library chart 정책 §Motivation). Helm library chart 패키징 표준으로
 *single source* 로 통합.
 
-본 ADR 은 RFC-0019 §3.1 (commonLabels + ServiceMonitor) implementation
+본 ADR 은 Helm library chart 정책 §3.1 (commonLabels + ServiceMonitor) implementation
 을 보존한다. §3.2 (NetworkPolicy) / §3.4 (PSS) / §3.5 (RBAC) 는 후속 PR.
 
 ## Decision
@@ -67,7 +67,7 @@
      type 이 정확.
 
 2. **각 chart 의 _helpers.tpl 에 cp 유지** — 거부.
-   - 4-repo drift 위험. RFC-0017 §3.3 lint 위반.
+   - 4-repo drift 위험. tooling unification 정책 §3.3 lint 위반.
 
 3. **public Helm repo (Bitnami chart-base 등) 사용** — 거부.
    - keiailab 도메인 표준 (commonLabels 의 prefix 등) 외부 chart 와
@@ -75,7 +75,7 @@
 
 ## Refs
 
-- RFC-0019 §3.1: commonLabels + ServiceMonitor partial 표준.
+- Helm library chart 정책 §3.1: commonLabels + ServiceMonitor partial 표준.
 - Plan §2 D14 (Sprint B PR-B2).
 - 후속 OCI publish: PR-B2.2 (별 PR).
 - Helm library chart: <https://helm.sh/docs/topics/library_charts/>

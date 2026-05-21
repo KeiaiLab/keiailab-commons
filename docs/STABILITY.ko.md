@@ -76,11 +76,11 @@ operator-commons 는 3-tier 안정성을 사용합니다:
 10. `pkg/labels` K8s 1.30+ v2 mapping
 11. `pkg/status` Condition reason catalog 문서
 
-추적: `~/.claude/plans/2026-05-14-4-operators-100pct/P-B.md` (29 sub-task).
+추적:  (29 sub-task).
 
 ## Caller 책임
 
-Caller (mongodb-operator, valkey-operator, postgres-operator):
+Caller (downstream operator, downstream operator, downstream operator):
 - v1.0.0 까지 `go.mod` 에서 `vMAJOR.MINOR.PATCH` 로 pin
 - deprecation warning 을 위해 `CHANGELOG.md` 구독
 - GA 전 `v1.0.0-rc.N` 에 대해 테스트
@@ -90,5 +90,4 @@ Caller (mongodb-operator, valkey-operator, postgres-operator):
 - `ROADMAP.md` — tier 표 + graduation 기준
 - `CHANGELOG.md` — 버전 history
 - `CITATION.cff` — academic citation
-- `ADOPTERS.md` — 3-repo adoption matrix
 - [SemVer 2.0.0](https://semver.org/spec/v2.0.0.html)

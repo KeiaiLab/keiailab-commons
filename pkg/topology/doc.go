@@ -19,15 +19,15 @@
 //
 // # operator 별 임계값 매핑 (참고)
 //
-// postgres-operator:
+// downstream operator:
 //   - Spec.Shards.Replicas 가 "*추가* 복제본 수" 의미 → 1 이상이면 총 pod 2 이상.
 //   - WithMinReplicas(1).
 //
-// mongodb-operator:
+// downstream operator:
 //   - Spec.Members 가 "*전체* 멤버 수" 의미 → 2 이상.
 //   - WithMinReplicas(2) (기본값).
 //
-// valkey-operator:
+// downstream operator:
 //   - Spec.Replicas 가 "*전체* 복제본 수" 의미 → 2 이상.
 //   - WithMinReplicas(2) (기본값).
 package topology

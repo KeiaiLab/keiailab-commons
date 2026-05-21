@@ -76,11 +76,11 @@ operator-commons 使用 3-tier 稳定性:
 10. `pkg/labels` K8s 1.30+ v2 mapping
 11. `pkg/status` Condition reason catalog 文档
 
-跟踪: `~/.claude/plans/2026-05-14-4-operators-100pct/P-B.md` (29 sub-task).
+跟踪:  (29 sub-task).
 
 ## Caller 责任
 
-Caller (mongodb-operator, valkey-operator, postgres-operator):
+Caller (downstream operator, downstream operator, downstream operator):
 - 在 v1.0.0 之前在 `go.mod` 中以 `vMAJOR.MINOR.PATCH` pin
 - 订阅 `CHANGELOG.md` 以获取 deprecation warning
 - 在 GA 之前对 `v1.0.0-rc.N` 进行测试
@@ -90,5 +90,4 @@ Caller (mongodb-operator, valkey-operator, postgres-operator):
 - `ROADMAP.md` — tier 表 + graduation 标准
 - `CHANGELOG.md` — version history
 - `CITATION.cff` — academic citation
-- `ADOPTERS.md` — 3-repo adoption matrix
 - [SemVer 2.0.0](https://semver.org/spec/v2.0.0.html)

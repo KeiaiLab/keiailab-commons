@@ -12,7 +12,7 @@ import "slices"
 //	desired := []string{"order-1.example.com", "order-2.example.com"}
 //	obj.Finalizers = finalizer.EnsureOrder(obj.Finalizers, desired)
 //
-// 본 helper 는 RFC-0018 후속 ROADMAP "다중 finalizer 순서 보장" (P-B.3.1)
+// 본 helper 는 pkg/status + pkg/finalizer 표준 후속 ROADMAP "다중 finalizer 순서 보장" ()
 // 의 표준 구현.
 func EnsureOrder(finalizers []string, desiredOrder []string) []string {
 	if len(finalizers) == 0 || len(desiredOrder) == 0 {

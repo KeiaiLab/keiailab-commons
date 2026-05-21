@@ -1,8 +1,8 @@
 // Package probes provides a fluent builder for corev1.Probe.
 //
 // Replaces 9 duplicated probe construction sites across keiailab
-// postgres-operator (2 HTTP sites), mongodb-operator (2 Exec sites),
-// and valkey-operator (2 Exec sites) plus 3 cross-cutting patterns.
+// downstream operator (2 HTTP sites), downstream operator (2 Exec sites),
+// and downstream operator (2 Exec sites) plus 3 cross-cutting patterns.
 package probes
 
 import (

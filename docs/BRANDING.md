@@ -1,43 +1,47 @@
 # Branding Guide — `operator-commons`
 
-> Visual identity, voice, and tone for the keiailab operator family.
+> Visual identity, voice, and tone for the `operator-commons` library.
 
-This document is the canonical reference for `operator-commons` branding decisions. It applies to the README, release notes, marketing material, and any third-party communication that represents the project.
+This document is the canonical reference for `operator-commons` branding
+decisions. It applies to the README, release notes, and any external
+communication about the project.
 
 ## 1. Identity
 
-**Organization**: [keiailab](https://keiailab.com) — Kubernetes-native data platform operators (Apache-2.0, license-clean, vanilla-upstream compatible).
+**Organization**: [keiailab](https://keiailab.com).
 
-**Project**: `operator-commons` — Shared Go library for keiailab operators — finalizer / labels / status / version / security / monitoring partials.
+**Project**: `operator-commons` — a shared Go library for Kubernetes operator
+scaffolding (finalizer / labels / status / version / security / monitoring
+partials).
 
-**Family**: One of four sister operators sharing the [`operator-commons`](https://github.com/keiailab/operator-commons) shared library:
+The library is published as a Go module at
+`github.com/keiailab/operator-commons` and as a Helm library chart
+(`charts/keiailab-commons`). It is consumed by downstream operator
+implementations via standard Go module import — no specific consumer is
+named or endorsed here.
 
-| Project | Database | Repository |
-|---|---|---|
-| `postgres-operator` | PostgreSQL 18+ | https://github.com/keiailab/postgres-operator |
-| `mongodb-operator` | MongoDB 7.0+ | https://github.com/keiailab/mongodb-operator |
-| `valkey-operator` | Valkey 8.0+ (Redis fork, BSD-3) | https://github.com/keiailab/valkey-operator |
-| `operator-commons` | Shared Go library | https://github.com/keiailab/operator-commons |
-
-## 2. Logo & Visual Assets
+## 2. Logo and visual assets
 
 | Asset | URL | Usage |
 |---|---|---|
-| Primary logo (SVG) | `https://keiailab.com/assets/logo.svg` | README header, slides |
+| Primary logo (SVG) | `https://keiailab.com/assets/logo.svg` | README header, slide decks |
 | Mono mark | `https://keiailab.com/assets/mark.svg` | Favicon, social cards |
 | Wordmark | `https://keiailab.com/assets/wordmark.svg` | Footer, dark backgrounds |
 
-**Logo placement**: Top-center of README, width 120px. Always link to https://keiailab.com.
+**Logo placement**: Top-center of README, width 120 px. Always link to
+`https://keiailab.com`.
 
-**Clear space**: Minimum padding around logo = 25% of logo width.
+**Clear space**: Minimum padding around the logo equals 25 % of the logo
+width.
 
 **Do not**:
+
 - Recolor the logo
 - Add drop shadows or filters
-- Place on backgrounds with insufficient contrast
+- Place the logo on backgrounds with insufficient contrast
 - Combine with other logos without keiailab brand approval
 
-## 3. Color Palette
+## 3. Color palette
 
 | Role | Hex | Usage |
 |---|---|---|
@@ -46,36 +50,44 @@ This document is the canonical reference for `operator-commons` branding decisio
 | Accent (warm amber) | `#F59E0B` | Highlights, badge accents |
 | Neutral grey | `#64748B` | Body text on light backgrounds |
 | Background light | `#F8FAFC` | Documentation page background |
-| Background dark | `#020617` | Code editor theme, dark mode |
+| Background dark | `#020617` | Dark-mode code editor theme |
 
-GitHub README 의 shield.io badge 는 위 hex 사용 권장.
+GitHub README shield.io badges should use the same hex values.
 
 ## 4. Typography
 
-- **Headings**: System default (GitHub 의 default `-apple-system, BlinkMacSystemFont, Segoe UI, ...`)
-- **Body**: 동일 (GitHub-native 정합)
-- **Code**: `ui-monospace, SFMono-Regular, Consolas, ...` (GitHub 의 default monospace)
+- **Headings**: System default (GitHub default: `-apple-system, BlinkMacSystemFont, Segoe UI, ...`)
+- **Body**: System default (GitHub-native consistency)
+- **Code**: `ui-monospace, SFMono-Regular, Consolas, ...` (GitHub default monospace)
 
-별도 webfont 사용 안 함 (GitHub README rendering 정합).
+No external web font is used — keep rendering identical to native GitHub.
 
-## 5. Voice & Tone
+## 5. Voice and tone
 
-**Audience**: Kubernetes platform engineers / DBAs / SRE / Go library consumers.
+**Audience**: Kubernetes platform engineers, DBAs, SREs, and Go library
+consumers.
 
 **Voice principles**:
-- **Direct** — bullet-point over paragraph where possible
-- **Evidence-based** — claims include benchmark / SLA / link
-- **Library-focused** — `operator-commons` 는 *라이브러리* 다 — controller-runtime / CRD / reconciler 는 *consumer operator 의 책임*
-- **License-aware** — Apache-2.0 only, AGPL/BUSL transitive 의존성 0건 목표 (ADR-0001 charter)
+
+- **Direct** — prefer bullet points over paragraphs where possible.
+- **Evidence-based** — claims include a benchmark, an SLA, or a link.
+- **Library-focused** — `operator-commons` is a *library*. Controller-runtime,
+  CRDs, and reconcilers are the responsibility of the downstream consumer,
+  not of this library.
+- **License-aware** — Apache-2.0 only. The charter goal is zero AGPL / BUSL
+  transitive dependencies (see `docs/kb/adr/0001-charter.md`).
 
 **Avoid**:
-- Marketing superlatives ("blazing fast", "revolutionary", "best-in-class")
-- Vague comparisons ("X-class quality")  — *qualify with specific metric or benchmark*
-- Time-based deadlines in roadmap (use `standards/roadmap.md §1.1` — feature checklist instead)
 
-## 6. README Header Standard
+- Marketing superlatives ("blazing fast", "revolutionary", "best-in-class").
+- Vague comparisons ("enterprise-grade quality") — qualify each claim with a
+  specific metric or benchmark.
+- Time-based deadlines in the roadmap — use the feature checklist in
+  [ROADMAP.md](ROADMAP.md).
 
-모든 README 의 첫 문단은 다음 형식 (Wave 3 표준):
+## 6. README header standard
+
+Every README's first block follows this layout:
 
 ```markdown
 <p align="center">
@@ -84,11 +96,11 @@ GitHub README 의 shield.io badge 는 위 hex 사용 권장.
 
 # operator-commons
 
-> **Shared Go library for keiailab operators — finalizer / labels / status / version / security / monitoring partials**
+> **Shared Go library for Kubernetes operator scaffolding — finalizer / labels / status / version / security / monitoring partials.**
 
 <p align="center">
-  <a href="../LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
-  <!-- 기존 shield.io badges 유지 + 정합 -->
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
+  <!-- additional shield.io badges -->
 </p>
 
 <p align="center">
@@ -99,29 +111,22 @@ GitHub README 의 shield.io badge 는 위 hex 사용 권장.
 </p>
 ```
 
-## 7. README Footer Standard
+## 7. README footer standard
 
-모든 README + root-level .md 파일의 마지막에 다음 footer 부착 (Wave 3 표준):
+Every README and root-level `.md` file ends with a single attribution line:
 
 ```markdown
 ---
 
-<p align="center">
-  <b>keiailab operator family</b><br/>
-  <a href="https://github.com/keiailab/postgres-operator">postgres-operator</a> ·
-  <a href="https://github.com/keiailab/mongodb-operator">mongodb-operator</a> ·
-  <a href="https://github.com/keiailab/valkey-operator">valkey-operator</a> ·
-  <a href="https://github.com/keiailab/operator-commons">operator-commons</a>
-</p>
-
-<p align="center">
-  © 2026 keiailab · <a href="../LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
-</p>
+<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
 ```
 
-## 8. Badges 표준 순서
+No additional cross-link block. Keep the footer minimal so the document
+remains self-contained.
 
-README 의 shield.io badge 순서 (좌→우):
+## 8. Badge order
+
+The shield.io badges in the README appear in this order (left → right):
 
 1. License (Apache-2.0)
 2. Go Version (1.25+)
@@ -129,36 +134,28 @@ README 의 shield.io badge 순서 (좌→우):
 4. OpenSSF Scorecard
 5. GitHub Discussions
 
-> **Note**: `operator-commons` 는 *라이브러리* 라 Kubernetes / Container Image / Helm Chart badge 는 *consumer operator 측 README 에 위치*. 본 라이브러리는 `pkg.go.dev` + `OpenSSF Scorecard` 중심.
+> **Note**: `operator-commons` is a *library*, so container image, Helm
+> chart, or Kubernetes deployment badges do not belong here — they belong on
+> the README of a downstream operator that ships an image or chart.
 
-## 9. Discussions / Issues / PR Templates
+## 9. Discussions, issues, PR templates
 
-- **Discussions**: `https://github.com/keiailab/operator-commons/discussions` — pkg API 질문, integration 사례, 새 helper 제안
-- **Issues**: bug reports + concrete feature requests with use case (consumer operator 측 영향 명시 권장)
-- **PR template**: `.github/PULL_REQUEST_TEMPLATE.md` 표준 (사용자 시나리오 + 검증 명령 인용 의무, `standards/checklist.md §3`)
+- **Discussions**: `https://github.com/keiailab/operator-commons/discussions` — package API questions, integration patterns, new helper proposals.
+- **Issues**: bug reports plus concrete feature requests; include the use case and downstream consumer impact when relevant.
+- **PR template**: `.github/PULL_REQUEST_TEMPLATE.md` — Conventional Commits + user-facing scenario + verification command output.
 
-## 10. Social & External
+## 10. Social and external
 
-- **Website**: https://keiailab.com
-- **GitHub Org**: https://github.com/keiailab
-- **pkg.go.dev**: https://pkg.go.dev/github.com/keiailab/operator-commons
+- **Website**: <https://keiailab.com>
+- **GitHub Org**: <https://github.com/keiailab>
+- **pkg.go.dev**: <https://pkg.go.dev/github.com/keiailab/operator-commons>
 
-## 11. License & Attribution
+## 11. License and attribution
 
 - License: [Apache-2.0](../LICENSE)
 - Copyright: © 2026 keiailab contributors
-- Third-party attributions: see [NOTICE](../NOTICE) (if applicable)
+- Third-party attributions: see [NOTICE](../NOTICE)
 
 ---
 
-<p align="center">
-  <b>keiailab operator family</b><br/>
-  <a href="https://github.com/keiailab/postgres-operator">postgres-operator</a> ·
-  <a href="https://github.com/keiailab/mongodb-operator">mongodb-operator</a> ·
-  <a href="https://github.com/keiailab/valkey-operator">valkey-operator</a> ·
-  <a href="https://github.com/keiailab/operator-commons">operator-commons</a>
-</p>
-
-<p align="center">
-  © 2026 keiailab · <a href="../LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
-</p>
+<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>

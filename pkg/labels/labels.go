@@ -2,14 +2,14 @@
 //
 // 3 keiailab operator 가 동일 convention 으로 label 부여:
 //
-//	commonsabels.New("mongodb", instance, "controller-manager", "1.4.6", "mongodb-operator")
+//	commonsabels.New("mongodb", instance, "controller-manager", "1.4.6", "downstream operator")
 //	→ {
 //	    "app.kubernetes.io/name":       "mongodb",
 //	    "app.kubernetes.io/instance":   instance,
 //	    "app.kubernetes.io/component":  "controller-manager",
 //	    "app.kubernetes.io/version":    "1.4.6",
-//	    "app.kubernetes.io/managed-by": "mongodb-operator",
-//	    "app.kubernetes.io/part-of":    "mongodb-operator",
+//	    "app.kubernetes.io/managed-by": "downstream operator",
+//	    "app.kubernetes.io/part-of":    "downstream operator",
 //	}
 //
 // SelectorLabels — Deployment / Service selector 용 *최소 부분* (immutable

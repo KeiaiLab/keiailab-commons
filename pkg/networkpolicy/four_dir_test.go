@@ -9,7 +9,7 @@ import (
 // TestFourDirection — ingress/egress × TCP (UDP는 caller customize via Peer 확장)
 // 모든 조합이 deny-by-default 위에 명시 허용 rule 로 추가되는지 검증.
 //
-// Refs: docs/ROADMAP.md '4-direction 검증 — ingress/egress × TCP/UDP' (P-B.8.1)
+// Refs: docs/ROADMAP.md '4-direction 검증 — ingress/egress × TCP/UDP'
 func TestFourDirection(t *testing.T) {
 	podSel := map[string]string{"app": "test"}
 	peers := []Peer{{PodSelector: map[string]string{"role": "client"}}}

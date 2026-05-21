@@ -17,8 +17,6 @@ import (
 //	}
 //
 // Refs: docs/ROADMAP.md 'CIDR + namespace selector + pod selector 조합 helper'
-//
-//	(P-B.8.2)
 type ComboPeer struct {
 	CIDR              string
 	Except            []string

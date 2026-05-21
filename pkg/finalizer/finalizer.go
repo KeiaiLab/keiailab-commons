@@ -1,7 +1,7 @@
 // Package finalizer 는 4-repo keiailab operator 공통 Finalizer 헬퍼를
 // 제공한다.
 //
-// 본 패키지는 RFC-0018 §3.2 spec 을 구현한다. mongodb-operator
+// 본 패키지는 pkg/status + pkg/finalizer 표준 spec 을 구현한다. downstream operator
 // api/v1alpha1/finalizers.go 패턴 (상수 + Add/Remove 헬퍼) 을 표준화.
 //
 // 의존성: k8s.io/apimachinery + std slices 만. controller-runtime 의

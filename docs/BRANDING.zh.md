@@ -1,83 +1,87 @@
 # 品牌指南 — `operator-commons`
 
-> ⚠️ This translation is AI-generated and pending native review. — 本翻译为 Claude 机器翻译结果。
+> ⚠️ This translation is AI-generated and pending native review.
+>
+> `operator-commons` 库的 visual identity、voice、tone。
 
-> keiailab 操作器家族的 visual identity, voice, tone.
-
-本文档是 `operator-commons` 品牌决策的 canonical reference. 适用于 README, release note, 营销材料和任何代表项目的第三方沟通。
+本文档是 `operator-commons` 品牌决策的 canonical reference。适用于 README、
+发布说明、以及关于本项目的外部沟通。
 
 ## 1. Identity
 
-**Organization**: [keiailab](https://keiailab.com) — Kubernetes-native 数据平台操作器 (Apache-2.0, license-clean, vanilla-upstream 兼容).
+**Organization**: [keiailab](https://keiailab.com)。
 
-**Project**: `operator-commons` — keiailab 操作器的共享 Go 库 — finalizer / labels / status / version / security / monitoring partial.
+**Project**: `operator-commons` —— 用于 Kubernetes operator 通用 scaffolding
+(finalizer / labels / status / version / security / monitoring partial) 的
+Go 库。
 
-**Family**: 共享 [`operator-commons`](https://github.com/keiailab/operator-commons) 共享库的 4 个姊妹操作器之一:
+本库以 Go 模块 `github.com/keiailab/operator-commons` 与 Helm library chart
+(`charts/keiailab-commons`) 形式发布。downstream operator 通过标准 Go module
+import 使用 —— 这里不指名或背书任何具体 consumer。
 
-| 项目 | 数据库 | 仓库 |
-|---|---|---|
-| `postgres-operator` | PostgreSQL 18+ | https://github.com/keiailab/postgres-operator |
-| `mongodb-operator` | MongoDB 7.0+ | https://github.com/keiailab/mongodb-operator |
-| `valkey-operator` | Valkey 8.0+ (Redis fork, BSD-3) | https://github.com/keiailab/valkey-operator |
-| `operator-commons` | 共享 Go 库 | https://github.com/keiailab/operator-commons |
-
-## 2. 标志 & 视觉资源
+## 2. 标志与视觉资源
 
 | 资源 | URL | 用途 |
 |---|---|---|
-| Primary 标志 (SVG) | `https://keiailab.com/assets/logo.svg` | README header, 幻灯片 |
-| Mono mark | `https://keiailab.com/assets/mark.svg` | Favicon, social card |
-| Wordmark | `https://keiailab.com/assets/wordmark.svg` | Footer, dark background |
+| Primary 标志 (SVG) | `https://keiailab.com/assets/logo.svg` | README header、幻灯片 |
+| Mono mark | `https://keiailab.com/assets/mark.svg` | Favicon、social card |
+| Wordmark | `https://keiailab.com/assets/wordmark.svg` | Footer、深色背景 |
 
-**标志放置**: README 顶部中央, width 120px. 始终链接到 https://keiailab.com.
+**标志位置**: README 顶部居中,width 120 px。始终链接到
+`https://keiailab.com`。
 
-**Clear space**: 标志周围最小 padding = 标志 width 的 25%.
+**Clear space**: 标志周围的最小 padding 等于标志 width 的 25 %。
 
 **禁止**:
-- 标志颜色变更
+
+- 修改标志颜色
 - 添加 drop shadow / filter
-- 放置在对比度不足的背景
+- 放置在对比度不足的背景上
 - 未经 keiailab 品牌批准与其他标志组合
 
 ## 3. 色彩调色板
 
 | 角色 | Hex | 用途 |
 |---|---|---|
-| Primary (keiailab teal) | `#0EA5A8` | 标题, primary action, 链接 |
-| Secondary (deep navy) | `#0F172A` | dark 背景, 代码块 |
-| Accent (warm amber) | `#F59E0B` | 强调, 徽章 accent |
-| Neutral grey | `#64748B` | light 背景的 body text |
+| Primary (keiailab teal) | `#0EA5A8` | 标题、primary action、链接 |
+| Secondary (deep navy) | `#0F172A` | 深色背景、代码块 |
+| Accent (warm amber) | `#F59E0B` | 强调、徽章 accent |
+| Neutral grey | `#64748B` | 浅色背景上的 body text |
 | Background light | `#F8FAFC` | 文档页面背景 |
-| Background dark | `#020617` | 代码编辑器主题, dark mode |
+| Background dark | `#020617` | 深色模式代码编辑器主题 |
 
-GitHub README 的 shield.io badge 推荐使用上述 hex.
+GitHub README shield.io 徽章使用相同的 hex 值。
 
 ## 4. 字体
 
-- **Heading**: 系统默认 (GitHub 的 default `-apple-system, BlinkMacSystemFont, Segoe UI, ...`)
-- **Body**: 相同 (GitHub-native 一致)
-- **Code**: `ui-monospace, SFMono-Regular, Consolas, ...`
+- **Heading**: 系统默认 (GitHub 默认 `-apple-system, BlinkMacSystemFont, Segoe UI, ...`)
+- **Body**: 系统默认 (GitHub-native 一致)
+- **Code**: `ui-monospace, SFMono-Regular, Consolas, ...` (GitHub 默认 monospace)
 
-不使用单独 webfont (GitHub README rendering 一致)。
+不使用外部 web 字体 —— 保持与 GitHub 原生 rendering 完全一致。
 
-## 5. Voice & Tone
+## 5. Voice and Tone
 
-**Audience**: Kubernetes 平台工程师 / DBA / SRE / Go 库 consumer.
+**Audience**: Kubernetes 平台工程师、DBA、SRE、Go 库 consumer。
 
 **Voice 原则**:
-- **Direct** — 可能时使用 bullet point 替代段落
-- **Evidence-based** — claim 包含 benchmark / SLA / link
-- **Library-focused** — `operator-commons` 是*库* — controller-runtime / CRD / reconciler 是 *consumer operator 的责任*
-- **License-aware** — 仅 Apache-2.0, AGPL/BUSL transitive 依赖 0 件目标 (ADR-0001 charter)
+
+- **Direct** — 尽可能使用 bullet point 而非段落。
+- **Evidence-based** — claim 包含 benchmark、SLA 或 link。
+- **Library-focused** — `operator-commons` 是 *库*。controller-runtime、CRD、
+  reconciler 是 downstream consumer 的责任,而非本库的责任。
+- **License-aware** — 仅 Apache-2.0。charter 目标为 AGPL / BUSL transitive
+  依赖 0 件 (`docs/kb/adr/0001-charter.md`)。
 
 **Avoid**:
-- 营销最高级 ("blazing fast", "revolutionary", "best-in-class")
-- 模糊比较 ("X-class quality") — *用具体的 metric 或 benchmark 限定*
-- 路线图中基于时间的截止日期 (`standards/roadmap.md §1.1` — 用功能清单替代)
+
+- 营销最高级 ("blazing fast"、"revolutionary"、"best-in-class")。
+- 模糊比较 ("enterprise-grade quality") —— 用具体的 metric 或 benchmark 限定。
+- 路线图中基于时间的截止日期 —— 使用 [ROADMAP.md](ROADMAP.md) 的功能清单。
 
 ## 6. README Header 标准
 
-所有 README 的第一段使用以下格式 (Wave 3 标准):
+每个 README 的第一块遵循以下格式:
 
 ```markdown
 <p align="center">
@@ -86,14 +90,15 @@ GitHub README 的 shield.io badge 推荐使用上述 hex.
 
 # operator-commons
 
-> **keiailab 操作器的共享 Go 库 — finalizer / labels / status / version / security / monitoring partial**
+> **用于 Kubernetes operator 通用 scaffolding 的 Go 共享库 — finalizer / labels / status / version / security / monitoring partials.**
 
 <p align="center">
-  <a href="../LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
+  <!-- 其他 shield.io 徽章 -->
 </p>
 
 <p align="center">
-  <a href="../README.md">English</a> |
+  <a href="README.md">English</a> |
   <a href="README.ko.md">한국어</a> |
   <a href="README.ja.md">日本語</a> |
   <b>中文</b>
@@ -102,27 +107,19 @@ GitHub README 的 shield.io badge 推荐使用上述 hex.
 
 ## 7. README Footer 标准
 
-所有 README + root-level .md 文件末尾附加以下 footer (Wave 3 标准):
+每个 README 与根级 `.md` 文件以单行 attribution 结尾:
 
 ```markdown
 ---
 
-<p align="center">
-  <b>keiailab 操作器家族</b><br/>
-  <a href="https://github.com/keiailab/postgres-operator">postgres-operator</a> ·
-  <a href="https://github.com/keiailab/mongodb-operator">mongodb-operator</a> ·
-  <a href="https://github.com/keiailab/valkey-operator">valkey-operator</a> ·
-  <a href="https://github.com/keiailab/operator-commons">operator-commons</a>
-</p>
-
-<p align="center">
-  © 2026 keiailab · <a href="../LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
-</p>
+<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
 ```
 
-## 8. Badge 标准顺序
+不添加额外 cross-link 区块。footer 保持最小化,使文档 self-contained。
 
-README 的 shield.io badge 顺序 (左→右):
+## 8. 徽章顺序
+
+README 的 shield.io 徽章按以下顺序 (左→右):
 
 1. License (Apache-2.0)
 2. Go Version (1.25+)
@@ -130,36 +127,28 @@ README 的 shield.io badge 顺序 (左→右):
 4. OpenSSF Scorecard
 5. GitHub Discussions
 
-> **Note**: `operator-commons` 是*库*, 所以 Kubernetes / Container Image / Helm Chart badge 放在 *consumer operator README 中*. 本库以 `pkg.go.dev` + `OpenSSF Scorecard` 为中心.
+> **Note**: `operator-commons` 是 *库*,因此 container image、Helm chart、
+> Kubernetes deployment 徽章不放在本库 —— 放在出货 image 或 chart 的
+> downstream operator README 上。
 
-## 9. Discussions / Issues / PR 模板
+## 9. Discussions / Issues / PR Template
 
-- **Discussions**: `https://github.com/keiailab/operator-commons/discussions` — pkg API 提问, integration 案例, 新 helper 提案
-- **Issues**: bug report + 有 use case 的具体 feature request (推荐明示对 consumer operator 端的影响)
-- **PR template**: `.github/PULL_REQUEST_TEMPLATE.md` 标准 (用户场景 + 验证命令引用义务, `standards/checklist.md §3`)
+- **Discussions**: `https://github.com/keiailab/operator-commons/discussions` — 包 API 提问、integration 案例、新 helper 提案。
+- **Issues**: bug 报告与包含 use case 的具体 feature request。相关时明示 downstream consumer 影响。
+- **PR template**: `.github/PULL_REQUEST_TEMPLATE.md` — Conventional Commits + 用户场景 + 验证命令输出引用。
 
-## 10. Social & External
+## 10. Social and External
 
-- **Website**: https://keiailab.com
-- **GitHub Org**: https://github.com/keiailab
-- **pkg.go.dev**: https://pkg.go.dev/github.com/keiailab/operator-commons
+- **Website**: <https://keiailab.com>
+- **GitHub Org**: <https://github.com/keiailab>
+- **pkg.go.dev**: <https://pkg.go.dev/github.com/keiailab/operator-commons>
 
-## 11. License & Attribution
+## 11. License and Attribution
 
 - License: [Apache-2.0](../LICENSE)
 - Copyright: © 2026 keiailab contributors
-- Third-party attribution: 参见 [NOTICE](../NOTICE) (如适用)
+- Third-party attribution: 参见 [NOTICE](../NOTICE)
 
 ---
 
-<p align="center">
-  <b>keiailab 操作器家族</b><br/>
-  <a href="https://github.com/keiailab/postgres-operator">postgres-operator</a> ·
-  <a href="https://github.com/keiailab/mongodb-operator">mongodb-operator</a> ·
-  <a href="https://github.com/keiailab/valkey-operator">valkey-operator</a> ·
-  <a href="https://github.com/keiailab/operator-commons">operator-commons</a>
-</p>
-
-<p align="center">
-  © 2026 keiailab · <a href="../LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
-</p>
+<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>

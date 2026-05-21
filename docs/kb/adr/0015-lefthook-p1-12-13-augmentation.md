@@ -48,7 +48,7 @@ markdown-link-check:
 ## Consequences
 
 - ✅ audit P1-12 + P1-13 commons ✅ 적용
-- ✅ operator family 3 operator + commons 일관성 (forgewise 는 Python — go-licenses N/A)
+- ✅ operator family 3 operator + commons 일관성 (downstream component 는 Python — go-licenses N/A)
 - ⚠️ go-licenses + markdown-link-check 미설치 시 *skip* — 실 차단 아님 (경고만)
   - 개발자 워크플로 마찰 회피
   - CI (현재 GHA 영구 금지로 부재) 부재 대체로 충분치 않음 — 후속 cycle 에서 install 강제 검토
@@ -68,6 +68,6 @@ lefthook run pre-push
 
 ## Migration
 
-- 4 repo (postgres / mongodb / valkey / forgewise) 의 lefthook 에 동일 패턴
-- forgewise 는 go-licenses N/A (Python — pyproject.toml 의 license-file 검사 또는 pip-licenses 별 hook)
+- 4 repo (postgres / mongodb / valkey / downstream component) 의 lefthook 에 동일 패턴
+- downstream component 는 go-licenses N/A (Python — pyproject.toml 의 license-file 검사 또는 pip-licenses 별 hook)
 - valkey 는 ralph-loop 관리 → 본 ADR 의 검토 후 ralph-loop 가 반영

@@ -2,7 +2,7 @@
 
 > [English](../../README.md) | [한국어](glossary-ko.md) | **日本語** | [中文](glossary-zh.md)
 >
-> 本用語集は keiailab operator family 4 リポジトリ (operator-commons + postgres-operator + mongodb-operator + valkey-operator) の日本語翻訳時に*必ず参照*する標準用語集です。
+> 本用語集は keiailab operator family 4 リポジトリ (operator-commons + downstream operator + downstream operator + downstream operator) の日本語翻訳時に*必ず参照*する標準用語集です。
 >
 > ⚠️ **This translation is AI-generated and pending native review.** — Claude による機械翻訳。母語話者 (native reviewer) による品質検証後 `[x]` 完了状態へ昇格します。本ファイルの全項目は `[検証必要]` 状態として扱ってください。
 
@@ -193,8 +193,6 @@
 
 ## §9 参照
 
-- ユーザー supercycle plan: `~/.claude/plans/2026-05-21-keiailab-operator-supercycle.md` §6 Wave 4 §4.4 「各言語別の *glossary* 1 ファイル」
-- deep-petting-cookie plan: `~/.claude/plans/deep-petting-cookie.md` §Phase 0.8 (i18n-glossary 新規)
 - Kubernetes 日本語翻訳ガイド: <https://kubernetes.io/ja/docs/contribute/localization_ja/>
 - 本ライブラリ ROADMAP §API Stability Tier: `../ROADMAP.md`
 - Korean SSOT: [`glossary-ko.md`](glossary-ko.md) (10 sections × ~120 terms 完全版)

@@ -9,18 +9,24 @@ Licensed under the Apache License, Version 2.0.
 PURPOSE
 ================================================================================
 
-operator-commons is a shared library for keiailab Kubernetes operators
-(mongodb-operator, postgres-operator, valkey-operator). It provides
-reusable abstractions for:
+operator-commons is a shared Go library for Kubernetes operator scaffolding.
+It provides reusable abstractions for:
 
-- pkg/labels        — common label selector + StandardLabels builder
-- pkg/security      — restricted-PSP-compliant SecurityContext helpers
-- pkg/networkpolicy — opinionated NetworkPolicy builders (deny-by-default)
-- pkg/monitoring    — ServiceMonitor / PrometheusRule helpers (CRD-soft)
-- pkg/version       — semver-aware version matrix helpers
-- pkg/webhook       — admission webhook setup + cert helpers
+- pkg/finalizer    — finalizer helpers (stdlib slices only)
+- pkg/labels       — recommended K8s labels builder + v2 mapping
+- pkg/status       — Condition Type catalog + helpers
+- pkg/storageclass — DNS-1123 storageClass validator + Normalize
+- pkg/version      — semver-aware version matrix helpers
+- pkg/monitoring   — ServiceMonitor / PrometheusRule helpers (CRD-soft)
+- pkg/networkpolicy— opinionated NetworkPolicy builders (deny-by-default)
+- pkg/security     — restricted-PSA SecurityContext helpers
+- pkg/events       — Kubernetes Event recorder + Reason catalog
+- pkg/probes       — corev1.Probe fluent builder
+- pkg/pvc          — PVC expansion helpers
+- pkg/topology     — PVC topology spread helpers
+- pkg/webhook      — admission validation helpers
 
-This is a library — it does NOT distribute container images, binaries, or
+This is a library — it does not distribute container images, binaries, or
 operator manifests on its own.
 
 ================================================================================
@@ -35,30 +41,12 @@ https://github.com/kubernetes/kubernetes
 Copyright The Kubernetes Authors
 --------------------------------------------------------------------------------
 
---------------------------------------------------------------------------------
-controller-runtime (Apache 2.0)
-https://github.com/kubernetes-sigs/controller-runtime
-Copyright 2018 The Kubernetes Authors
---------------------------------------------------------------------------------
-
---------------------------------------------------------------------------------
-client-go (Apache 2.0)
-https://github.com/kubernetes/client-go
-Copyright The Kubernetes Authors
---------------------------------------------------------------------------------
-
---------------------------------------------------------------------------------
-prometheus-operator (Apache 2.0)
-https://github.com/prometheus-operator/prometheus-operator
-Copyright The prometheus-operator Authors
---------------------------------------------------------------------------------
-
 ================================================================================
 DOWNSTREAM ATTRIBUTION
 ================================================================================
 
-When operator-commons is integrated as a dependency, downstream operators
-must propagate the Apache-2.0 attribution chain. The downstream operator's
+When operator-commons is integrated as a dependency, downstream consumers
+must propagate the Apache-2.0 attribution chain. The downstream consumer's
 NOTICE file SHOULD reference operator-commons in its THIRD-PARTY section.
 
 Example downstream NOTICE entry:
