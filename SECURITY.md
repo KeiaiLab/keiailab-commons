@@ -64,3 +64,17 @@ Dependabot / Renovate 자동 업데이트 PR 은 우선 review.
 2. **`pkg/webhook` 사용** — 버전 validation 직접 구현 금지.
 3. **`pkg/networkpolicy` 사용** — deny-by-default NetworkPolicy 빌더 활용.
 4. 의존성 버전 동기화 — go.mod 의 `github.com/keiailab/operator-commons` 는 *최신 patch* 항상 추적 (Renovate 자동 PR).
+
+---
+
+<p align="center">
+  <b>keiailab operator family</b><br/>
+  <a href="https://github.com/keiailab/postgres-operator">postgres-operator</a> ·
+  <a href="https://github.com/keiailab/mongodb-operator">mongodb-operator</a> ·
+  <a href="https://github.com/keiailab/valkey-operator">valkey-operator</a> ·
+  <a href="https://github.com/keiailab/operator-commons">operator-commons</a>
+</p>
+
+<p align="center">
+  © 2026 keiailab · <a href="LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
+</p>

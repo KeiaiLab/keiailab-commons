@@ -1,12 +1,29 @@
+<p align="center">
+  <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
+</p>
+
 # operator-commons
 
+> **keiailab operator 가 공유하는 Go 라이브러리 — finalizer / labels / status / version / security / monitoring partials**
+>
 > [English](README.md) | **한국어** | [日本語](README.ja.md) (placeholder) | [中文](README.zh.md) (placeholder)
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Go Version](https://img.shields.io/badge/Go-1.25+-00ADD8?logo=go)](https://golang.org/)
-[![Go Reference](https://pkg.go.dev/badge/github.com/keiailab/operator-commons.svg)](https://pkg.go.dev/github.com/keiailab/operator-commons)
-[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/keiailab/operator-commons/badge)](https://scorecard.dev/viewer/?uri=github.com/keiailab/operator-commons)
-[![GitHub Discussions](https://img.shields.io/github/discussions/keiailab/operator-commons?label=discussions&logo=github)](https://github.com/keiailab/operator-commons/discussions)
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
+  <a href="https://golang.org/"><img src="https://img.shields.io/badge/Go-1.25+-00ADD8?logo=go" alt="Go Version"/></a>
+  <a href="https://pkg.go.dev/github.com/keiailab/operator-commons"><img src="https://pkg.go.dev/badge/github.com/keiailab/operator-commons.svg" alt="Go Reference"/></a>
+  <a href="https://scorecard.dev/viewer/?uri=github.com/keiailab/operator-commons"><img src="https://api.scorecard.dev/projects/github.com/keiailab/operator-commons/badge" alt="OpenSSF Scorecard"/></a>
+  <a href="https://github.com/keiailab/operator-commons/discussions"><img src="https://img.shields.io/github/discussions/keiailab/operator-commons?label=discussions&logo=github" alt="GitHub Discussions"/></a>
+</p>
+
+<p align="center">
+  <a href="README.md">English</a> |
+  <b>한국어</b> |
+  <a href="README.ja.md">日本語</a> |
+  <a href="README.zh.md">中文</a>
+</p>
+
+---
 
 **keiailab** Kubernetes operator (`mongodb-operator`, `valkey-operator`, `postgresql-operator`) 가 공유하는 Go 라이브러리입니다.
 
