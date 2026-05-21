@@ -1,5 +1,9 @@
 # keiailab Family — Session Handoff (2026-05-21)
 
+> ⚠️ **v0.3** (2026-05-21 14:50): S9 PR #95/#205 머지 + S-valkey subagent dispatch + postgres-ADR/0022 (실 상태 정합).
+> **현 audit ❌: 6** (모두 valkey, S-valkey 처리 중). postgres/mongodb/commons/forgewise 모두 ✅.
+
+
 본 문서는 본 thread 의 작업 인계용. 다음 thread / cycle 이 *cold start*
 가능하도록 모든 컨텍스트 + 진척 + 다음 단계 정리.
 

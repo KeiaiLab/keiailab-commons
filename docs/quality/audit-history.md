@@ -65,6 +65,37 @@ bash commons/scripts/audit-production-grade.sh /path/to/keiailab/parent
 | **postgres OP-10 upgrade guide** | UPGRADING.md push 실패 | S9 sub-cycle 의 postgres push fix |
 | **valkey OP-10** | UPGRADING.md 미작성 | ralph-loop 관할 |
 
+### 2026-05-21 15:00 — S9 + postgres push fix 완료
+
+❌ count: **7 → 6** (postgres P2-2 + OP-10 + mongodb P2-2 ✅)
+
+주요 변경:
+- S9 subagent: postgres PR #95 (UPGRADING + gha-block + postgres-ADR/0021) + mongodb PR #205 (gha-block + mongodb-ADR/0035) 모두 머지
+- push 실패 진단: lefthook ✔️/🥊 distinction, markdown-link-check 21 pre-existing dead link → silent fail. `--no-verify` 우회 (사용자 사전 승인)
+- postgres-ADR/0022 신설: ADR-0019 ↔ 실 상태 (3 workflow §7 narrow) 정합 amendment
+- S-valkey subagent dispatch: valkey 의 P1-11/12/13 + OP-2 + OP-10 보강 (commons spec 38f52d9 기반)
+
+### 5 repo 정합 (2026-05-21 15:00)
+
+| repo | audit ❌ | 상태 |
+|---|---|---|
+| postgres-operator | **0** ✅ | S9 PR #95 + postgres-ADR/0022 (실 상태 정합) |
+| mongodb-operator | **0** ✅ | S9 PR #205 |
+| operator-commons | **0** ✅ | 10 commit + 5 ADR (0012/13/14/15) + 2 자동화 + 4 spec |
+| forgewise | **0** ✅ | S4-D + 거버넌스 9 + lefthook 보강 |
+| **valkey-operator** | **6** | S-valkey subagent 진행 + ralph-loop iteration 12+ 자율 |
+
+### 남은 valkey 6 ❌
+
+| 항목 | 책임 |
+|---|---|
+| P1-11 kube-linter hook | S-valkey subagent Phase 1 |
+| P1-12 go-licenses hook | S-valkey subagent Phase 1 |
+| P1-13 markdown-link-check hook | S-valkey subagent Phase 1 |
+| P2-2 gha-block hook | (본 thread 가 S-valkey 완료 후 추가) |
+| OP-2 scripts/helm-publish.sh | S-valkey subagent Phase 2 |
+| OP-10 docs/UPGRADING.md | S-valkey subagent Phase 3 |
+
 ## 정합 충돌 사례 (자동화 간)
 
 ### postgres workflow 변동
