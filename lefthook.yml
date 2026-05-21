@@ -228,16 +228,11 @@ pre-commit:
 
     # ─── Go stack-specific hook (operator-commons, 2026-05-20) ────────────────
     # standards/linting.md §8 Go matrix: gofmt (pre-commit) + go vet + golangci-lint (pre-push).
+    # S2 Phase 2 (2026-05-21, ADR-0011): 레거시 .lefthook.yml 통합 — write-staged 동작 (auto-fix).
     go-fmt:
       glob: "*.go"
-      run: |
-        unformatted=$(gofmt -l {staged_files} 2>/dev/null)
-        if [ -n "$unformatted" ]; then
-          echo "::ERROR:: gofmt 위반 (operator-commons Go stack):"
-          echo "$unformatted"
-          echo "fix: gofmt -w ."
-          exit 1
-        fi
+      run: gofmt -l -w {staged_files}
+      stage_fixed: true
 
 commit-msg:
   commands:
@@ -285,6 +280,33 @@ commit-msg:
           echo "ERROR: NAMING POLICY — R1/R2 식별 토큰 commit-msg 금지"
           echo "       대신 'R1' / 'R2' / 'reference service' 익명 코드 사용"
           exit 1
+        fi
+      skip:
+        - rebase
+        - merge
+    # S2 Phase 2 (2026-05-21, ADR-0011): 레거시 .lefthook.yml 통합 — Conventional Commits + DCO.
+    # commitlint 는 Node repo 만 (package.json 부재 시 skip) — Go-only repo 정합으로 본 hook 추가.
+    conventional-commits:
+      run: |
+        if ! grep -qE "^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\(.+\))?!?: .+" "{1}"; then
+          echo "ERROR: Conventional Commits 위반 — 형식: <type>(<scope>): <subject>"
+          echo "  types: feat / fix / docs / style / refactor / test / chore / build / ci / perf / revert"
+          exit 1
+        fi
+      skip:
+        - rebase
+        - merge
+    dco-signoff:
+      # S2 Phase 2 (2026-05-21, ADR-0011): 레거시 .lefthook.yml A-P0-5 통합.
+      # DCO Signed-off-by enforce by default. DCO_STRICT=0 으로 일시 우회.
+      run: |
+        if ! grep -qE '^Signed-off-by: .+ <.+@.+>' "{1}"; then
+          if [ "${DCO_STRICT:-1}" = "1" ]; then
+            echo "ERROR: DCO Signed-off-by trailer missing — use git commit -s"
+            exit 1
+          else
+            echo "[warn] DCO Signed-off-by trailer missing (set DCO_STRICT=1 to enforce)"
+          fi
         fi
       skip:
         - rebase
@@ -374,6 +396,34 @@ pre-push:
         else
           echo "golangci-lint not installed — graceful degrade skip"
         fi
+
+    # S2 Phase 2 (2026-05-21, ADR-0011): 레거시 .lefthook.yml 통합 — Go module CVE + drift.
+    govulncheck:
+      # Go module CVE — call graph 기반. library 다운스트림 (3 operator) 보호.
+      # 설치: go install golang.org/x/vuln/cmd/govulncheck@latest
+      run: |
+        if command -v govulncheck >/dev/null 2>&1; then
+          cd "$(git rev-parse --show-toplevel)"
+          govulncheck ./...
+        else
+          echo "[warn] govulncheck 미설치 — go install golang.org/x/vuln/cmd/govulncheck@latest 권장"
+        fi
+
+    go-mod-tidy:
+      # go.mod / go.sum drift 차단 (배포 신뢰성 게이트).
+      run: |
+        cd "$(git rev-parse --show-toplevel)"
+        cp go.mod /tmp/.go.mod.commons.bak
+        cp go.sum /tmp/.go.sum.commons.bak
+        go mod tidy
+        if ! diff -q go.mod /tmp/.go.mod.commons.bak >/dev/null 2>&1 || ! diff -q go.sum /tmp/.go.sum.commons.bak >/dev/null 2>&1; then
+          cp /tmp/.go.mod.commons.bak go.mod
+          cp /tmp/.go.sum.commons.bak go.sum
+          rm -f /tmp/.go.mod.commons.bak /tmp/.go.sum.commons.bak
+          echo "ERROR: go.mod / go.sum drift — 'go mod tidy' 후 commit 필요"
+          exit 1
+        fi
+        rm -f /tmp/.go.mod.commons.bak /tmp/.go.sum.commons.bak
 
 post-merge:
   commands:
