@@ -10,6 +10,16 @@
 | `keiailab/postgres-operator` | labels, security, webhook, status, version | v0.1.0 | **v0.7.0** | `8c9db39` | 2026-05-20 |
 | `keiailab/valkey-operator` | labels, security, webhook, monitoring, finalizer, networkpolicy | v0.1.0 | **v0.6.0** ⚠️ (1 minor lag, I09 upgrade 예정) | `e878420` | 2026-05-20 |
 
+## v0.8.0 candidate — 신규 3 패키지 도입 예정 매트릭스
+
+| Operator | `pkg/probes` (Experimental) | `pkg/storageclass` (Stable) | `pkg/events` (Beta) | 도입 PR target |
+|---|---|---|---|---|
+| `keiailab/postgres-operator` | builders.go L986-998 (2 HTTP probe sites) | builders.go `storageClassPtr()` | RFC-0023 Phase 2 sister (commit `1494ff6` 후속) | 별 PR |
+| `keiailab/mongodb-operator` | resources/builder.go L613-626 (2 Exec probe sites, mongosh) | builder.go sister 패턴 | candidate (RFC-0023 Phase 2 후속) | 별 PR |
+| `keiailab/valkey-operator` | resources/statefulset.go L126-139 (2 Exec probe sites, valkey-cli) | statefulset.go sister 패턴 | candidate (RFC-0023 Phase 2 후속) | 별 PR |
+
+> **AST audit evidence (2026-05-21)**: probes builder 9 sites (postgres 2 + mongo 2 + valkey 2 + 3 cross-cutting) / 50-55 LOC reduction estimate. storageclass / events 는 trivial helper.
+
 > **라이브 evidence (2026-05-20)**: 본 표는 각 operator 의 `go.mod` 라이브 `require github.com/keiailab/operator-commons <ver>` + `grep -rn "github.com/keiailab/operator-commons" --include="*.go"` import 결과 기반. Codex challenge #1 (Plan Adversarial Review RFC-0045 §2.5) 정합 — valkey 가 v0.6.0 에 머물러 있어 v0.7.0 신규 export 미수용 (I09 별 PR 진행 예정).
 
 ## External adopters

@@ -10,7 +10,7 @@
 | `[~]` | 부분 구현 (helper 존재, 검증 미완) |
 | `[ ]` | 미시작 |
 
-## API Stability Tier (현행 v0.7.x)
+## API Stability Tier (현행 v0.8.x candidate)
 
 | 패키지 | Tier | 사용처 | Tier 격상 조건 |
 |---|---|---|---|
@@ -22,6 +22,9 @@
 | `pkg/networkpolicy` | Beta | mongo / pg / valkey | 4-direction (ingress/egress × TCP/UDP) 검증 |
 | `pkg/security` | Beta | mongo / pg / valkey | restricted PSA 회귀 가드 3-repo |
 | `pkg/webhook` | **Experimental** | 1 repo | 다중 repo 사용 후 안정화 |
+| `pkg/storageclass` (v0.8.0 신규) | **Stable** | (도입 예정 — pg / mongo / valkey) | trivial validation surface (regex + nil check), 즉시 Stable |
+| `pkg/events` (v0.8.0 신규) | Beta | (도입 예정 — pg RFC-0023 Phase 2 sister) | postgres 라이브 적용 + 2+ operator 후 Stable |
+| `pkg/probes` (v0.8.0 신규) | **Experimental** | (도입 예정 — pg / mongo / valkey) | 2+ operator 라이브 적용 후 Beta |
 
 **Tier 의미**:
 - **Stable** — semver patch/minor 범위 BREAKING CHANGE 금지. deprecated 표기 + 2 minor 유예 후 제거.
@@ -109,6 +112,35 @@
 - [ ] **Tier 격상** → Beta → Stable
 - Verify: 2+ repo 가 동일 helper 사용 + 회귀 0
 
+### pkg/storageclass (v0.8.0 신규 — Stable 즉시)
+- [x] DNS-1123 subdomain validation — `pkg/storageclass/validator.go` `IsValid` / `Validate` + `ErrInvalidStorageClassName` sentinel
+- [x] Normalize / MustNormalize — empty→nil (cluster default) + trim + pointer return
+- [x] unit test 12 cases — `pkg/storageclass/validator_test.go` (100% coverage)
+- [x] AST audit evidence — postgres `storageClassPtr()` + mongo/valkey sister 패턴
+- [ ] 3 operator 라이브 적용 — postgres / mongodb / valkey 의 storageClassPtr() helper → commons 단일 source
+- Verify: 3 repo 의 PVC builder 가 `storageclass.Normalize()` 사용 + 회귀 0
+
+### pkg/events (v0.8.0 신규 — Beta)
+- [x] Recorder interface — k8s.io/client-go/tools/record.EventRecorder 구조 정합 (client-go 의존 회피)
+- [x] 9 Reason constants (Created/Updated/Deleted/Reconciled/ReconcileError/Provisioning/Ready/Degraded/Failed)
+- [x] Emit / Emitf / EmitWarning / EmitWarningf / WrappedError — nil-safe
+- [x] unit test — `pkg/events/events_test.go` (100% coverage, 9 Reason uniqueness verify)
+- [x] postgres RFC-0023 Phase 2 sister — commit `1494ff6` events.EventRecorder 적용 라이브 evidence
+- [ ] valkey + mongodb 라이브 적용 (sister 진행)
+- [ ] **Tier 격상** → Stable
+- Verify: 3 repo Reconcile path 의 Event reason 가 commons constants 사용 + 회귀 0
+
+### pkg/probes (v0.8.0 신규 — Experimental)
+- [x] Builder fluent API — HTTP / HTTPS / TCP / Exec 4 handlers
+- [x] kubelet default (Period=10s / Timeout=1s / SuccessThreshold=1 / FailureThreshold=3)
+- [x] InitialDelay/Period/Timeout 음수 → 0 clamp
+- [x] Build() handler 미설정 시 panic (fail-fast contract)
+- [x] unit test — `pkg/probes/builder_test.go` (100% coverage, postgres/mongo/valkey 진본 패턴 회귀 가드 3 test)
+- [x] AST audit — 9 sites (postgres 2 HTTP + mongo 2 Exec + valkey 2 Exec + 3 cross-cutting) / 50-55 LOC reduction estimate
+- [ ] 2+ operator 라이브 적용 (Beta 격상 조건)
+- [ ] **Tier 격상** → Beta → Stable
+- Verify: 2+ repo 의 corev1.Probe 구성이 `probes.New()` builder 사용 + 회귀 0
+
 ## 의존성 정책
 
 - **K8s API 만** — `k8s.io/api`, `k8s.io/apimachinery`, `k8s.io/utils`. controller-runtime 의존 *추가 금지*.
@@ -146,6 +178,7 @@
 
 | Date | Change | Refs |
 |---|---|---|
+| 2026-05-21 | v0.8.0 candidate — `pkg/probes` (Experimental) + `pkg/storageclass` (Stable 즉시) + `pkg/events` (Beta) 신규 추가 | deep-petting-cookie plan §Phase 2.1-2.3 + supercycle Wave 0 sister |
 | 2026-05-11 | ROADMAP.md 신설 — API stability tier + v1.0.0 졸업 조건 + 패키지별 sub-task 체크리스트 | parallel-leaping-seal plan |
 | 2026-05-09 | v0.7.0 — generic `Matrix[E]` 추가 | CHANGELOG |
 | 2026-05-09 | v0.6.0 — `SetAvailable` 헬퍼 추가 | CHANGELOG |
