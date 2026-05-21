@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Package pvc 는 keiailab operator (mongodb / postgres / valkey) 의 공통 PVC
 // 처리 헬퍼를 제공한다. 현재 단일 기능: online expansion.
 //

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Package topology 는 keiailab operator (mongodb / postgres / valkey) 의 공통
 // TopologySpreadConstraints 헬퍼를 제공한다. 현재 단일 기능:
 // HA out-of-box default 자동 주입 (zone + node 2-축).

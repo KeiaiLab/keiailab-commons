@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 package security
 
 import corev1 "k8s.io/api/core/v1"

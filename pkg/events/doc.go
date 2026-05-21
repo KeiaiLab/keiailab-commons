@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Stability: Beta.
 //
 // 본 패키지는 Kubernetes Event 생성 helper 를 통일합니다.

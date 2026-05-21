@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Stability: Experimental.
 //
 // 본 패키지는 현재 1 repo (valkey) 채택 상태로, 2+ repo 채택 후

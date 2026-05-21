@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Stability: Beta.
 //
 // 본 패키지는 ServiceMonitor + PrometheusRule builder 검증 진행 중이며,

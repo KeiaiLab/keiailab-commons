@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Package probes provides a fluent builder for corev1.Probe.
 //
 // Replaces 9 duplicated probe construction sites across keiailab

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Stability: Stable.
 //
 // 본 패키지는 Beta → Stable 격상 완료 (PR #19 PSA downstream 회귀 통과).

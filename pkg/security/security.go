@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Package security — PodSecurity "restricted" 정책 충족 SecurityContext builder.
 //
 // PodSecurity restricted (https://kubernetes.io/docs/concepts/security/pod-security-standards/)

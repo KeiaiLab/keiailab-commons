@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Stability: Stable.
 //
 // 본 패키지는 v0.5+ 부터 BREAKING CHANGE 없이 안정 운영 중이며,

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Package monitoring — Prometheus Operator ServiceMonitor builder.
 //
 // downstream operator 가 동일 convention 으로 ServiceMonitor 생성:
