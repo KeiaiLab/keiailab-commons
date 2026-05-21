@@ -1,6 +1,6 @@
 # ADR Index — operator-commons
 
-> [English](INDEX.md) | **한국어** | [日本語](INDEX.ja.md)
+> [English](INDEX.md) | **한국어** | [日本語](INDEX.ja.md) | [中文](INDEX.zh.md)
 
 | ID | Title | Status | Date |
 |----|-------|--------|------|

@@ -1,6 +1,6 @@
 # Maintainers
 
-> [English](MAINTAINERS.md) | **한국어** | [日本語](MAINTAINERS.ja.md)
+> [English](MAINTAINERS.md) | **한국어** | [日本語](MAINTAINERS.ja.md) | [中文](MAINTAINERS.zh.md)
 
 본 문서는 `keiailab/operator-commons` 의 의사결정 권한을 가진 메인테이너
 명단을 관리합니다.

@@ -1,6 +1,6 @@
 # i18n — operator-commons 多言語ポリシー
 
-> [English](README.md) | [한국어](README.ko.md) | **日本語**
+> [English](README.md) | [한국어](README.ko.md) | **日本語** | [中文](README.zh.md)
 
 > ⚠️ This translation is AI-generated and pending native review.
 

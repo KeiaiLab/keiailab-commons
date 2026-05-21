@@ -1,6 +1,6 @@
 # Contributing to operator-commons
 
-> **English** | [한국어](CONTRIBUTING.ko.md) | [日本語](CONTRIBUTING.ja.md)
+> **English** | [한국어](CONTRIBUTING.ko.md) | [日本語](CONTRIBUTING.ja.md) | [中文](CONTRIBUTING.zh.md)
 
 `keiailab/operator-commons` is a Go library imported by downstream
 Kubernetes operators. All contributions follow

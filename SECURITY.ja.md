@@ -1,6 +1,6 @@
 # Security Policy
 
-> [English](SECURITY.md) | [한국어](SECURITY.ko.md) | **日本語**
+> [English](SECURITY.md) | [한국어](SECURITY.ko.md) | **日本語** | [中文](SECURITY.zh.md)
 
 > ⚠️ This translation is AI-generated and pending native review.
 

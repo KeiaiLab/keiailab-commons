@@ -1,6 +1,6 @@
 # i18n — operator-commons multilingual policy
 
-> **English** | [한국어](README.ko.md) | [日本語](README.ja.md)
+> **English** | [한국어](README.ko.md) | [日本語](README.ja.md) | [中文](README.zh.md)
 
 This document defines how `operator-commons` documentation is
 maintained in multiple languages. The project keeps an English canonical

@@ -1,6 +1,6 @@
 # Governance
 
-> [English](GOVERNANCE.md) | [한국어](GOVERNANCE.ko.md) | **日本語**
+> [English](GOVERNANCE.md) | [한국어](GOVERNANCE.ko.md) | **日本語** | [中文](GOVERNANCE.zh.md)
 
 > ⚠️ This translation is AI-generated and pending native review.
 
