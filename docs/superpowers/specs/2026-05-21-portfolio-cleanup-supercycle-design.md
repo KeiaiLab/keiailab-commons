@@ -61,7 +61,7 @@
 
 | ID | 목표 | 사용자 시점 검증 | 측정 |
 |---|---|---|---|
-| G1 | 5 저장소 모두 `.github/workflows/` 디렉토리 부재 | "Settings → Actions 가 비어 있다" | `for r in <5 repos>: test ! -d .github/workflows; done` |
+| G1 | (v2.0 amendment) 5 저장소 GHA workflow 가 *per-repo 정책* 정합 — valkey 는 retention + 로컬 4계층 이중 운영, 다른 4 는 *retention 또는 제거* 사용자 결정 (PR/spec 별) | "각 repo 의 .github/workflows/ 상태 = 의도 일치" | `for r: test 'expected' (retention/removed)`; — per-repo 확인 |
 | G2 | 5 저장소 모두 BRANDING.md + docs/family.md 보유 | "README 클릭 → BRANDING 일관성 확인" | `for r in <5 repos>: test -f BRANDING.md && test -f docs/family.md; done` |
 | G3 | 5 저장소 모두 4-lang README + canonical 11 docs (`en + ko + ja + zh`) | "GitHub 첫 페이지 lang switcher 4개 모두 클릭 가능 + 본문 존재" | `for r in <5 repos>: test -f README.md README.ko.md README.ja.md README.zh.md; done` + CRD description i18n |
 | G4 | 3 operators (postgres/mongo/valkey) `operator-commons v0.8.0` consume | `go.mod` 의 `keiailab/operator-commons` 가 `v0.8.0` | `for r in <3 repos>: grep 'operator-commons v0.8' go.mod; done` |
@@ -87,7 +87,7 @@
 
 | ID | 정책 | 결정 | 출처 |
 |---|---|---|---|
-| D1 | GitHub Actions 처리 | **엄격 적용 — 전부 제거 + 로컬 4계층** (단, dependabot 16건은 *전수 머지 후* 제거) | AskUser Q1 |
+| D1 | GitHub Actions 처리 | **(v2.0 amendment 2026-05-21)** retention + 이중 운영 (per-repo 결정 가능). RFC 0002 의 "GHA 영구 금지" 는 GitLab CE L5 native CI 의 1차 결정 보장 + GitHub 의 OSS 가시성 유지 정책 으로 *재해석* 됨. valkey-operator `docs/specs/2026-05-21-pr-cleanup-and-gha-retention-design.md` 가 reference. 단 dependabot github_actions 자체는 *전수 머지* + 정기 갱신. | AskUser Q1 + valkey ADR-0048 |
 | D2 | Sub-project 우선순위 | operator-commons (이미 v0.8.0 완료) → 3 operators 통합 → forgewise | AskUser Q2 |
 | D3 | Multi-arch 정책 | **CLAUDE.md §2 multi-arch 금지 조항 제거** + PR #157 머지 (`platforms-amd64-guard` 도 제거). RFC 0005 사후 문서화. | AskUser Q3 |
 | D4 | forgewise 라이센스 | Apache-2.0 통일 (LICENSE 파일 이미 Apache-2.0; GitHub detection 만 "Other" — SPDX header 보강) | AskUser Q4 |
