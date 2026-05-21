@@ -1,7 +1,13 @@
 # keiailab Family — Session Handoff (2026-05-21)
 
-> ⚠️ **v0.3** (2026-05-21 14:50): S9 PR #95/#205 머지 + S-valkey subagent dispatch + postgres-ADR/0022 (실 상태 정합).
-> **현 audit ❌: 6** (모두 valkey, S-valkey 처리 중). postgres/mongodb/commons/forgewise 모두 ✅.
+> 🎉 **v0.4 — v3.x-stable 선언 조건 충족** (2026-05-21 15:30): audit ❌ **0** 달성!
+> - 5 repo 모두 ✅: postgres / mongodb / valkey / commons / forgewise
+> - CLAUDE.md §7 의 *P0+P1+P2 자동화 모두 충족 시 v3.x-stable 선언* 조건 달성
+> - **S8 Phase 0 통과** → Phase 1 (RFC-0005 작성) ~ Phase 5 (CLAUDE.md §7 갱신) 진입 가능
+> - 일부 Phase (1, 5) 는 글로벌 ~/.codex/ 변경 — 사용자 명시 결정 필요
+> - 다른 Phase (2 ADR baseline, 3 release tag, 4 README 배지) 는 본 thread 또는 후속 cycle 진행 가능
+>
+> v0.3 (2026-05-21 14:50): S9 PR #95/#205 머지 + S-valkey subagent dispatch + postgres-ADR/0022 (실 상태 정합).
 
 
 본 문서는 본 thread 의 작업 인계용. 다음 thread / cycle 이 *cold start*

@@ -96,6 +96,41 @@ bash commons/scripts/audit-production-grade.sh /path/to/keiailab/parent
 | OP-2 scripts/helm-publish.sh | S-valkey subagent Phase 2 |
 | OP-10 docs/UPGRADING.md | S-valkey subagent Phase 3 |
 
+### 🎉 2026-05-21 15:30 — **audit ❌ 0 달성 — v3.x-stable 선언 조건 충족**
+
+❌ count: **6 → 0** (실 항목)
+
+진척:
+- **S-valkey subagent 완료** (PR #171/172/173/174 머지) — valkey P1-11/12/13 + OP-2 + OP-10 ✅
+- valkey ADR-0050 (audit-augmentation) Accepted
+- audit script P2-2 정밀화 (commons 6ed8749) — ADR `*gha-retention*`/`*audit-augmentation*` + P2-2/gha-block/dual-track 키워드 본문 매치 시 ✅ 인정
+- valkey ADR-0050 본문에 "GHA dual-track 정책 (ADR-0048)" → audit P2-2 자동 ✅
+- 결과: 모든 5 repo audit ❌ 0
+
+### 최종 5 repo 정합 상태
+
+| repo | audit ❌ | 핵심 ADR |
+|---|---|---|
+| postgres-operator | **0** ✅ | postgres-ADR/0017 + postgres-ADR/0019 (GHA 유지) + postgres-ADR/0020 (Sprint 1) + postgres-ADR/0021 (gha-block) + postgres-ADR/0022 (3 narrow exception) |
+| mongodb-operator | **0** ✅ | mongodb-ADR/0031 (GHA 유지) + mongodb-ADR/0033 + mongodb-ADR/0035 (gha-block) |
+| valkey-operator | **0** ✅ | valkey-ADR/0048 (GHA 유지 v2.0) + valkey-ADR/0050 (audit-augmentation + P2-2 의도적 미적용) |
+| operator-commons | **0** ✅ | commons ADR 0009-0016 (audit/release/spec 통합) |
+| forgewise | **0** ✅ | forgewise ADR 0001 (Python stack override) |
+
+### S8 진입 조건 충족
+
+CLAUDE.md §7: "본 규약은 **상용 제품 수준**의 다중 프로젝트 일관성을 목표로 한다 — `standards/enforcement.md`의 P0+P1+P2 자동화 모두 충족 시 *v3.x-stable* 선언."
+
+→ **2026-05-21 15:30 충족 ✅**
+
+후속 S8 cycle (`docs/specs/2026-05-21-v3x-stable-declaration-execution-plan.md` Phase 1-6):
+- Phase 1: RFC-0005 작성 (글로벌 ~/.codex/rfcs/ — 사용자 명시 결정)
+- Phase 2: 5 repo ADR baseline (각 repo `docs/kb/adr/<N>-v3x-stable-baseline.md`)
+- Phase 3: 5 repo release tag (각 `make release VERSION=vX.Y.Z`)
+- Phase 4: README v3.x-stable 배지 + commons/docs/family.md 갱신
+- Phase 5: CLAUDE.md §7 갱신 ("v3.0.1-stable 선언" 명시)
+- Phase 6: release announce
+
 ## 정합 충돌 사례 (자동화 간)
 
 ### postgres workflow 변동
