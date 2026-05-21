@@ -29,7 +29,7 @@ check_P0_1_lefthook() {
 check_P0_2_gitleaks() {
   local repo=$1
   for f in "$PARENT/$repo/.lefthook.yml" "$PARENT/$repo/lefthook.yml"; do
-    [[ -f $f ]] && grep -q gitleaks "$f" && { echo "✅"; return; }
+    [[ -f $f ]] && grep -qE "gitleaks|detect-secrets" "$f" && { echo "✅"; return; }
   done
   echo "❌"
 }
@@ -45,7 +45,7 @@ check_P0_3_dco() {
 check_P0_4_conventional() {
   local repo=$1
   for f in "$PARENT/$repo/.lefthook.yml" "$PARENT/$repo/lefthook.yml"; do
-    [[ -f $f ]] && grep -q "conventional\|^feat\|^fix" "$f" && { echo "✅"; return; }
+    [[ -f $f ]] && grep -qE "conventional|commitlint|^feat|^fix" "$f" && { echo "✅"; return; }
   done
   echo "❌"
 }
@@ -74,7 +74,7 @@ check_P0_8_license() {
 check_P0_9_mod_drift_hook() {
   local repo=$1
   for f in "$PARENT/$repo/.lefthook.yml" "$PARENT/$repo/lefthook.yml"; do
-    [[ -f $f ]] && grep -q "go-mod-tidy\|mod tidy\|uv lock" "$f" && { echo "✅"; return; }
+    [[ -f $f ]] && grep -qE "go-mod-tidy|mod tidy|uv lock|uv-lock-drift|uv sync --check" "$f" && { echo "✅"; return; }
   done
   echo "❌"
 }
