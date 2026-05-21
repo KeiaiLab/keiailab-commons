@@ -16,7 +16,7 @@
 
 完整英文正文请参考 [README.md](README.md)。
 
-## 软件包列表 (Packages, v0.7.0)
+## 软件包列表 (Packages, v0.8.0)
 
 | Package | 用途 |
 |---|---|

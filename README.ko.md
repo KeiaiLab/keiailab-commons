@@ -33,7 +33,7 @@
 
 3개 operator 가 *독립적으로* 동일한 scaffolding 코드 (PodSecurity restricted context, 버전 allowlist, NetworkPolicy template, ServiceMonitor builder) 를 구현해 왔습니다. repo 간 드리프트가 이미 일관성 불일치를 만들고 있어 — 본 라이브러리가 단일 진본 (single source of truth) 입니다.
 
-## Packages (v0.7.0)
+## Packages (v0.8.0)
 
 | Package | Purpose |
 |---|---|
