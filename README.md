@@ -4,7 +4,7 @@
 
 # operator-commons
 
-> **Shared Go library for keiailab operators — finalizer / labels / status / version / security / monitoring partials**
+> **Shared Go library for Kubernetes operator scaffolding — finalizer / labels / status / version / security / monitoring partials.**
 >
 > **English** | [한국어](README.ko.md) | [日本語](README.ja.md) | [中文](README.zh.md)
 
@@ -14,8 +14,6 @@
   <a href="https://pkg.go.dev/github.com/keiailab/operator-commons"><img src="https://pkg.go.dev/badge/github.com/keiailab/operator-commons.svg" alt="Go Reference"/></a>
   <a href="https://scorecard.dev/viewer/?uri=github.com/keiailab/operator-commons"><img src="https://api.scorecard.dev/projects/github.com/keiailab/operator-commons/badge" alt="OpenSSF Scorecard"/></a>
   <a href="https://github.com/keiailab/operator-commons/discussions"><img src="https://img.shields.io/github/discussions/keiailab/operator-commons?label=discussions&logo=github" alt="GitHub Discussions"/></a>
-  <a href="https://github.com/keiailab/operator-commons/blob/main/docs/quality/audit-history.md"><img src="https://img.shields.io/badge/keiailab-v3.x--stable-success?style=flat-square" alt="keiailab v3.x-stable"/></a>
-  <a href="https://github.com/keiailab/operator-commons/blob/main/scripts/audit-production-grade.sh"><img src="https://img.shields.io/badge/audit-100%25-success?style=flat-square" alt="audit"/></a>
 </p>
 
 <p align="center">
@@ -27,53 +25,43 @@
 
 ---
 
-Shared Go library for **keiailab** Kubernetes operators (`mongodb-operator`,
-`valkey-operator`, `postgresql-operator`).
+A reusable Go library that removes scaffolding drift from Kubernetes operator
+codebases — PodSecurity restricted contexts, supported-version allowlists,
+NetworkPolicy templates, ServiceMonitor builders, finalizer / status helpers,
+and Helm library chart partials, packaged behind a small, stable API surface.
 
-> Status: **v0.x — API may break**. v1.0 onwards SemVer stable.
+> Status: **v0.x — API may break.** v1.0 onwards SemVer stable.
 
 ## Why
 
-3 operators independently implemented identical scaffolding (PodSecurity
-restricted contexts, version allowlists, NetworkPolicy templates, ServiceMonitor
-builders). Maintenance drift between repos was already producing inconsistencies
-— this library is the single source of truth.
+Operator authors repeatedly implement identical scaffolding — restricted
+PodSecurity contexts, supported-version matrices, default-deny NetworkPolicies,
+ServiceMonitor builders, finalizer helpers, status condition catalogs.
+Independent re-implementation produces silent inconsistencies between similar
+reconcilers and gradually drifts apart on minor revisions. `operator-commons`
+is the single source of truth for that scaffolding: import the helper, get the
+canonical implementation, and stop re-inventing it in every repository.
 
-## Packages (v0.8.0)
+## Packages
 
-| Package | Purpose |
-|---|---|
-| `pkg/version` | Supported DB version allowlist convention (`MustList`, `IsSupported`, `Strings`, `Default`) + generic `Matrix[E MatrixEntry]`. |
-| `pkg/security` | PodSecurity *restricted* SecurityContext builder with functional options. |
-| `pkg/labels` | Recommended Kubernetes labels (`app.kubernetes.io/*`) builder — `Set`, `All()`, `Selector()` (version-aware split). |
-| `pkg/monitoring` | Prometheus Operator `ServiceMonitor` builder (unstructured — CRD-soft). |
-| `pkg/networkpolicy` | NetworkPolicy builder — deny-by-default + functional options (`WithSelfIngress`, `WithIngressFromPeers`, `WithDenyEgress`, `WithEgressToPeers`). |
-| `pkg/webhook` | Admission validation helpers — `ValidateAllowedVersion` (exact match), `ValidateWithPredicate` (caller-supplied matcher e.g. semver-prefix). |
-| `pkg/finalizer` | Finalizer helpers — `Add`/`Remove`/`Has` (controller-runtime 의존 회피, std `slices` 만 사용). |
-| `pkg/status` | 4 표준 Condition Type + 6 Reason 카탈로그 + 헬퍼 (`SetReady`, `SetAvailable`, `SetReadyFalse`). |
+| Package | Tier | Purpose |
+|---|---|---|
+| `pkg/finalizer` | Stable | Finalizer helpers — `Add` / `Remove` / `Has` / `EnsureOrder` (stdlib `slices` only, no controller-runtime dependency). |
+| `pkg/labels` | Stable | Recommended Kubernetes labels (`app.kubernetes.io/*`) builder — `Set`, `All()`, `Selector()`, plus v2 mapping (`AllV2`). |
+| `pkg/status` | Stable | Four standard Condition Types + six Reason catalog + helpers (`SetReady`, `SetAvailable`, `SetReadyFalse`). |
+| `pkg/storageclass` | Stable | DNS-1123 storageClass validator + `Normalize` / `MustNormalize` (empty → cluster default pointer). |
+| `pkg/version` | Beta | Version allowlist convention (`MustList`, `IsSupported`, `Strings`, `Default`) + generic `Matrix[E MatrixEntry]` + serializer. |
+| `pkg/monitoring` | Beta | Prometheus Operator `ServiceMonitor` and `PrometheusRule` builders (unstructured — CRD-soft). |
+| `pkg/networkpolicy` | Beta | Deny-by-default NetworkPolicy builder + functional options (`WithSelfIngress`, `WithIngressFromPeers`, `WithDenyEgress`, `WithEgressToPeers`, `ComboPeer`). |
+| `pkg/security` | Beta | PodSecurity *restricted* SecurityContext builder + Pod / Container split + seccomp profile pointers. |
+| `pkg/events` | Beta | Minimal `Recorder` interface + nine standard `Reason` constants + `Emit` / `EmitWarning` / `WrappedError` (nil-safe). |
+| `pkg/probes` | Experimental | `corev1.Probe` fluent builder — HTTP / HTTPS / TCP / Exec with kubelet defaults and clamp. |
+| `pkg/webhook` | Experimental | Admission validation helpers — `ValidateAllowedVersion`, `ValidateWithPredicate`, conversion registry. |
 
-`pkg/conditions` 는 *upstream `k8s.io/apimachinery/pkg/api/meta.SetStatusCondition` 활용 권장* (commons 미추가 결정 — boundary 분석 결과, 자세히는 mongodb-operator HANDOFF iteration 32 참조).
-
-## Adoption Matrix (3 operator)
-
-| Operator | sec | ver | lab | mon | np | wh | 채택률 |
-|---|---|---|---|---|---|---|---|
-| [mongodb-operator](https://github.com/keiailab/mongodb-operator) | ✅ | ✅ | ✅ | ⏳ | ✅ | ⏳ | **4/6 (67%)** |
-| [valkey-operator](https://github.com/keiailab/valkey-operator) | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | **6/6 (100%)** 🎉 |
-| [postgres-operator](https://github.com/keiailab/postgres-operator) | ✅ | ⏳ | ✅ | ⏳ | ⏳ | ✅ | **3/6 (50%)** |
-
-valkey 가 *first 100% 채택* — 다른 operator 의 carbon-copy reference 역할. 적용
-사례 commits:
-- `pkg/security`: it8 (3 operator cross-cut) — `23fd3da` mongodb / `a0be4cf` valkey / `ac2e647` postgres
-- `pkg/version`: mongodb it9 `a8db040`, valkey it8
-- `pkg/labels`: mongodb it27 `ebc5803`, postgres it28 `c68b451`, valkey it29 `e8428b1`
-- `pkg/monitoring`: valkey it23 `1765b54`
-- `pkg/networkpolicy`: valkey it25 `97162b5`, mongodb it26 `ca0ec27`
-- `pkg/webhook`: valkey it31 `14be0db`, postgres it34 `1d8fa17`
-
-⏳ 영역은 *기능 추가 동반* (예: mongodb webhook server / ServiceMonitor reconciler)
-또는 *별 추상화 적합* (postgres version matrix.go의 Combo struct 가 commons.MustList
-보다 풍부 — 위임 부적합) 으로 *deepening 보류* 상태.
+[docs/STABILITY.md](docs/STABILITY.md) defines the tier promise.
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) covers the package surface and
+design invariants. [docs/ROADMAP.md](docs/ROADMAP.md) tracks the tier promotion
+criteria and the v1.0 graduation checklist.
 
 ## Usage
 
@@ -81,9 +69,10 @@ valkey 가 *first 100% 채택* — 다른 operator 의 carbon-copy reference 역
 import (
     "github.com/keiailab/operator-commons/pkg/security"
     "github.com/keiailab/operator-commons/pkg/version"
+    corev1 "k8s.io/api/core/v1"
 )
 
-var SupportedMongoDBVersions = version.MustList("8.0", "8.2", "8.3")
+var supportedVersions = version.MustList("1.0", "1.1", "1.2")
 
 func buildContainerSecurityContext() *corev1.SecurityContext {
     return security.RestrictedContainer(
@@ -93,35 +82,31 @@ func buildContainerSecurityContext() *corev1.SecurityContext {
 }
 ```
 
-## Versioning + Release
+Per-package examples live in the corresponding `pkg/<name>/doc.go` package
+documentation (`go doc github.com/keiailab/operator-commons/pkg/<name>`).
 
-- v0.x: API breaking allowed. Each tag (`v0.N.M`) bumps either pkg, public-API, or
-  significant behavior.
-- Each consuming operator pins via `go.mod` `require` — `replace` directive
-  is acceptable during local development across this repo + the 3 operators.
-- v1.0 onwards: Semantic Versioning. Breaking changes require RFC.
+## Versioning and release
+
+- **v0.x**: API breaking changes are allowed. Each tag (`v0.N.M`) bumps either
+  a package's public API or a meaningful behavioural change. Consumers pin a
+  specific version via `go.mod`.
+- **v1.0 onwards**: Semantic Versioning. Breaking changes require an ADR
+  (`docs/kb/adr/`).
+- A local `replace` directive is acceptable for cross-repo development; release
+  tags always carry the canonical module path.
 
 ## Community
 
-- **Discussions**: [GitHub Discussions](https://github.com/keiailab/operator-commons/discussions) — pkg API 질문, integration 사례, 새 helper 제안
-- **Issues**: [GitHub Issues](https://github.com/keiailab/operator-commons/issues) — 버그 / API 요청
-- **Downstream**: 3 operator (mongodb-operator / postgres-operator / valkey-operator) — `go.mod replace` 또는 직접 `require` 로 사용
-- **Stability matrix**: `pkg/labels`, `pkg/security`, `pkg/version`, `pkg/webhook` (stable v0.5+) / `pkg/networkpolicy`, `pkg/monitoring` (experimental)
+- **Discussions**: [GitHub Discussions](https://github.com/keiailab/operator-commons/discussions) — package API questions, integration patterns, new helper proposals.
+- **Issues**: [GitHub Issues](https://github.com/keiailab/operator-commons/issues) — bugs and concrete feature requests.
+- **Security**: see [SECURITY.md](SECURITY.md) for the private disclosure process.
+- **Contributing**: see [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow.
 
 ## License
 
-Apache-2.0 — see [LICENSE](./LICENSE). Zero AGPL/BUSL transitive dependency
+Apache-2.0 — see [LICENSE](LICENSE). Zero AGPL / BUSL transitive dependency
 goal (audited per minor release).
 
 ---
-
-<p align="center">
-  <b>keiailab operator family</b><br/>
-  <a href="https://github.com/keiailab/operator-commons">operator-commons</a> ·
-  <a href="https://github.com/keiailab/postgres-operator">postgres-operator</a> ·
-  <a href="https://github.com/keiailab/mongodb-operator">mongodb-operator</a> ·
-  <a href="https://github.com/keiailab/valkey-operator">valkey-operator</a> ·
-  <a href="https://github.com/keiailab/forgewise">forgewise</a>
-</p>
 
 <p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>

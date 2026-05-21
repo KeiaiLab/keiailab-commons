@@ -2,7 +2,7 @@
 
 > **English** | [한국어](glossary-ko.md) | [日本語](glossary-ja.md) (예정) | [中文](glossary-zh.md) (예정)
 >
-> 본 사전은 keiailab operator family 4 repo (operator-commons + postgres-operator + mongodb-operator + valkey-operator) 의 한국어 번역 시 *반드시 참조* 하는 표준 용어 사전입니다. 사용자 supercycle plan `~/.claude/plans/2026-05-21-keiailab-operator-supercycle.md` §6 Wave 4 §4.4 정합.
+> 본 사전은 본 라이브러리의 한국어 번역 시 *반드시 참조* 하는 표준 용어 사전입니다.
 
 ## §1 일관성 규칙
 
@@ -191,8 +191,6 @@
 
 ## §9 참조
 
-- 사용자 supercycle plan: `~/.claude/plans/2026-05-21-keiailab-operator-supercycle.md` §6 Wave 4 §4.4 "각 언어 별 *glossary* 1 파일"
-- deep-petting-cookie plan: `~/.claude/plans/deep-petting-cookie.md` §Phase 0.8 (i18n-glossary 신규)
 - Kubernetes 한국어 번역 가이드: <https://kubernetes.io/ko/docs/contribute/localization_ko/>
 - 본 라이브러리 ROADMAP §API Stability Tier: `../ROADMAP.md`
 

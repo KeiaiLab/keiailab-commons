@@ -54,7 +54,7 @@ func newConfig(opts ...Option) *config {
 }
 
 // WithMinReplicas 는 default TSC 를 주입하는 최소 replica 임계값을 변경한다.
-// 기본값은 DefaultMinReplicas (2). postgres-operator 처럼 replicas 가 "추가
+// 기본값은 DefaultMinReplicas (2). downstream operator 처럼 replicas 가 "추가
 // 복제본 수" 의미인 경우 WithMinReplicas(1) 사용.
 //
 // replicas < min → 주입 skip (nil 반환).
@@ -105,7 +105,7 @@ func WithWhenUnsatisfiable(a corev1.UnsatisfiableConstraintAction) Option {
 //  2. replicas < minReplicas → nil 반환 (단일 pod 환경 → spread 무의미).
 //  3. 그 외 → topologyKeys 의 각 키에 대해 MaxSkew=1 + ScheduleAnyway TSC 주입.
 //
-// 사용 예 (postgres-operator):
+// 사용 예 (downstream operator):
 //
 //	tsc := topology.Defaulted(
 //	    cluster.Spec.Shards.TopologySpreadConstraints,
@@ -114,7 +114,7 @@ func WithWhenUnsatisfiable(a corev1.UnsatisfiableConstraintAction) Option {
 //	    topology.WithMinReplicas(1), // postgres 는 "additional copies" 의미.
 //	)
 //
-// 사용 예 (mongodb-operator):
+// 사용 예 (downstream operator):
 //
 //	tsc := topology.Defaulted(
 //	    nil, // mongodb 는 user TSC 사용 안 함.
@@ -122,7 +122,7 @@ func WithWhenUnsatisfiable(a corev1.UnsatisfiableConstraintAction) Option {
 //	    labels,
 //	)
 //
-// 사용 예 (valkey-operator):
+// 사용 예 (downstream operator):
 //
 //	tsc := topology.Defaulted(
 //	    pod.TopologySpreadConstraints,

@@ -1,92 +1,108 @@
 # API Stability Promise
 
-> operator-commons API stability tiers and breaking-change policy.
+> `operator-commons` API stability tiers and breaking-change policy.
 
 ## Tiers
 
-operator-commons uses 3-tier stability:
+`operator-commons` uses a three-tier stability model:
 
 | Tier | Compatibility | Breaking change policy |
 |---|---|---|
-| **Stable** | Backwards-compatible across minor releases. Only patch fixes. | Requires major version bump (`v2.0.0`) + 6+ month deprecation notice |
-| **Beta** | Compatible across patch releases. Minor releases may include source-compatible API improvements with at least 1-release deprecation window | Minor version bump permitted with deprecation entry in `CHANGELOG.md` |
-| **Experimental** | No compatibility promise. May break across any release. | Any release — must be flagged in `CHANGELOG.md` "BREAKING" section |
+| **Stable** | Backwards-compatible across minor releases. Only patch fixes. | Requires major version bump (`v2.0.0`) plus a 6-month deprecation notice. |
+| **Beta** | Compatible across patch releases. Minor releases may include source-compatible API improvements with at least one release of deprecation. | Minor version bump permitted with a deprecation entry in `CHANGELOG.md`. |
+| **Experimental** | No compatibility promise. May break across any release. | Any release; must be flagged in `CHANGELOG.md` "BREAKING" section. |
 
 ## Current tier matrix
 
-Per `ROADMAP.md` "API Stability Tier" table:
+The current tier of each package mirrors [ROADMAP.md](ROADMAP.md) "API
+Stability Tier":
 
 | Package | Tier | Promotion criterion |
 |---|---|---|
-| `pkg/finalizer` | Stable | (v1 entry — no additional work) |
-| `pkg/labels` | Stable | (v1 entry) |
-| `pkg/status` | Stable | (v1 entry) |
-| `pkg/version` | Beta | Generic `Matrix[E]` 3-repo verify |
-| `pkg/monitoring` | Beta | ServiceMonitor 3-repo e2e |
-| `pkg/networkpolicy` | Beta | 4-direction TCP/UDP verify |
-| `pkg/security` | Beta | restricted PSA 3-repo guard |
-| `pkg/webhook` | Experimental | Multi-repo adoption + stabilize |
+| `pkg/finalizer` | Stable | (v1 entry — no additional work). |
+| `pkg/labels` | Stable | (v1 entry). |
+| `pkg/status` | Stable | (v1 entry). |
+| `pkg/storageclass` | Stable | Trivial validation surface (regex + nil check). |
+| `pkg/version` | Beta | Generic `Matrix[E]` cross-repo verify. |
+| `pkg/monitoring` | Beta | ServiceMonitor downstream e2e. |
+| `pkg/networkpolicy` | Beta | 4-direction (ingress / egress × TCP / UDP) verify. |
+| `pkg/security` | Beta | Restricted PSA guard across downstream. |
+| `pkg/events` | Beta | Downstream Reconcile path adoption + Event reason consistency. |
+| `pkg/pvc` | Beta | Downstream PVC expansion live adoption. |
+| `pkg/topology` | Beta | Downstream topology spread live adoption. |
+| `pkg/webhook` | Experimental | Multi-downstream adoption + stabilization. |
+| `pkg/probes` | Experimental | 2+ downstream live adoption. |
 
 ## Promotion process
 
-1. Sub-task PR opens with proposed promotion (e.g., `feat(pkg/X): promote to Stable`)
-2. Promotion criterion (per ROADMAP) verified via CI:
-   - Cross-repo import passes (3 operators)
-   - godoc coverage on package ≥80%
-   - Unit + integration test coverage ≥85%
-   - No `// TODO` or `// FIXME` in exported API
-3. ROADMAP.md tier table updated in same PR
-4. `CHANGELOG.md` entry under "Changed"
+1. A PR opens a proposed promotion (e.g. `feat(pkg/X): promote to Stable`).
+2. Promotion criterion (per ROADMAP) is verified via the local quality
+   gates:
+   - Downstream import passes.
+   - godoc coverage on the package ≥ 80 %.
+   - Unit + integration test coverage ≥ 85 %.
+   - No `// TODO` or `// FIXME` in exported API.
+3. [ROADMAP.md](ROADMAP.md) tier table is updated in the same PR.
+4. [CHANGELOG.md](../CHANGELOG.md) gets a "Changed" entry.
 
 ## Breaking-change policy
 
 A **breaking change** is any of:
-- Removed exported identifier (function / type / constant / variable)
-- Changed exported signature (parameters, return types)
-- Removed package
-- Behavior change that requires caller code modification
 
-### For each tier:
+- Removed exported identifier (function, type, constant, variable).
+- Changed exported signature (parameters, return types).
+- Removed package.
+- Behavior change that requires caller code modification.
 
-- **Stable**: forbidden until v2.0.0. Use deprecation: add `// Deprecated: ...` godoc + new alternative, keep old for 6+ months
-- **Beta**: permitted with 1-release deprecation. Must appear in `CHANGELOG.md` "Deprecated" → "Removed" pipeline
-- **Experimental**: permitted any release, must appear in `CHANGELOG.md` "BREAKING" section
+### Per tier
+
+- **Stable**: forbidden until v2.0.0. Use deprecation — add `// Deprecated: …`
+  godoc plus a new alternative; keep the old API for at least 6 months.
+- **Beta**: permitted with at least one release of deprecation. Must appear
+  in the `CHANGELOG.md` "Deprecated" → "Removed" pipeline.
+- **Experimental**: permitted at any release; must appear in the
+  `CHANGELOG.md` "BREAKING" section.
 
 ## Semantic versioning
 
 `vMAJOR.MINOR.PATCH` per [SemVer 2.0.0](https://semver.org/spec/v2.0.0.html):
-- **MAJOR**: breaking changes to Stable tier — requires v2.0.0 graduation review
-- **MINOR**: new features, Beta tier additions, non-breaking Stable improvements
-- **PATCH**: bug fixes only, no API surface change
+
+- **MAJOR**: breaking changes to a Stable tier — requires v2.0.0 graduation
+  review.
+- **MINOR**: new features, Beta tier additions, non-breaking Stable
+  improvements.
+- **PATCH**: bug fixes only, no API surface change.
 
 ## v1.0.0 graduation
 
 Requires *all* of:
-1. 8/8 packages reach Stable tier
-2. 0 BREAKING CHANGE across 6+ consecutive minor releases (v0.8 → v0.13)
-3. godoc coverage ≥80% (this doc + per-package — verified by `scripts/godoc-coverage.sh`)
-4. CITATION.cff + Zenodo DOI
-5. 3-repo import e2e verification on `v1.0.0-rc.N`
-6. `go vet ./... && go test ./...` clean with ≥85% coverage
-7. CHANGELOG.md v0.x evolution history + v1.0.0 release notes
-8. This `docs/STABILITY.md` (you are here)
-9. `pkg/finalizer` multi-finalizer order guarantee
-10. `pkg/labels` K8s 1.30+ v2 mapping
-11. `pkg/status` Condition reason catalog docs
 
-Tracking: `~/.claude/plans/2026-05-14-4-operators-100pct/P-B.md` (29 sub-tasks).
+1. All Stable-candidate packages reach Stable tier.
+2. Zero BREAKING CHANGE across six or more consecutive minor releases (v0.9
+   → v0.14).
+3. godoc coverage ≥ 80 % (this document + per-package) — verified by
+   `scripts/godoc-coverage.sh`.
+4. CITATION.cff + DOI.
+5. Downstream import end-to-end verification on `v1.0.0-rc.N`.
+6. `go vet ./... && go test ./...` clean with ≥ 85 % coverage.
+7. [CHANGELOG.md](../CHANGELOG.md) v0.x evolution history + v1.0.0 release
+   notes.
+8. This `docs/STABILITY.md` (you are here).
+9. `pkg/finalizer` multi-finalizer order guarantee.
+10. `pkg/labels` K8s 1.30+ v2 mapping.
+11. `pkg/status` Condition reason catalog docs.
 
 ## Caller responsibilities
 
-Callers (mongodb-operator, valkey-operator, postgres-operator):
-- Pin to `vMAJOR.MINOR.PATCH` in `go.mod` until v1.0.0
-- Subscribe to `CHANGELOG.md` for deprecation warnings
-- Test against `v1.0.0-rc.N` before GA
+Downstream consumers should:
+
+- Pin to a specific `vMAJOR.MINOR.PATCH` in `go.mod` until v1.0.0.
+- Subscribe to [CHANGELOG.md](../CHANGELOG.md) for deprecation warnings.
+- Test against `v1.0.0-rc.N` releases before GA.
 
 ## References
 
-- `ROADMAP.md` — tier table + graduation criteria
-- `CHANGELOG.md` — version history
-- `CITATION.cff` — academic citation
-- `ADOPTERS.md` — 3-repo adoption matrix
-- [SemVer 2.0.0](https://semver.org/spec/v2.0.0.html)
+- [ROADMAP.md](ROADMAP.md) — tier table + graduation criteria.
+- [CHANGELOG.md](../CHANGELOG.md) — version history.
+- [CITATION.cff](../CITATION.cff) — academic citation.
+- [SemVer 2.0.0](https://semver.org/spec/v2.0.0.html).

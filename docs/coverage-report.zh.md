@@ -36,5 +36,5 @@ go tool cover -func=cover.out | tail -1
 
 ## Refs
 
-- ROADMAP.md "v1.0.0 毕业条件" #7 (P-B.11.3)
+- ROADMAP.md "v1.0.0 毕业条件" #7
 - docs/STABILITY.md graduation criterion #6

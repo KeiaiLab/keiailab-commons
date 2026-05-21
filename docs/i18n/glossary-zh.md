@@ -2,7 +2,7 @@
 
 > [English](../../README.md) | [한국어](glossary-ko.md) | [日本語](glossary-ja.md) | **中文**
 >
-> 本术语表是 keiailab operator family 4 个仓库 (operator-commons + postgres-operator + mongodb-operator + valkey-operator) 的中文翻译时*必须参考*的标准术语表。简体中文 (中国大陆) 表记。
+> 本术语表是 keiailab operator family 4 个仓库 (operator-commons + downstream operator + downstream operator + downstream operator) 的中文翻译时*必须参考*的标准术语表。简体中文 (中国大陆) 表记。
 >
 > ⚠️ **This translation is AI-generated and pending native review.** — 由 Claude 机器翻译生成。母语审阅者 (native reviewer) 质量验证后升级到 `[x]` 完成状态。本文件所有条目按 `[검토 필요]` (待校验) 状态处理。
 
@@ -193,8 +193,6 @@
 
 ## §9 参考
 
-- 用户 supercycle plan: `~/.claude/plans/2026-05-21-keiailab-operator-supercycle.md` §6 Wave 4 §4.4 "各语言 *glossary* 1 文件"
-- deep-petting-cookie plan: `~/.claude/plans/deep-petting-cookie.md` §Phase 0.8 (i18n-glossary 新增)
 - Kubernetes 中文翻译指南: <https://kubernetes.io/zh-cn/docs/contribute/localization_zh/>
 - 本库 ROADMAP §API Stability Tier: `../ROADMAP.md`
 - Korean SSOT: [`glossary-ko.md`](glossary-ko.md) (10 sections × ~120 terms 完整版)

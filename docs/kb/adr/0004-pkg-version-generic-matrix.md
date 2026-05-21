@@ -3,13 +3,13 @@
 - Date: 2026-05-09
 - Status: Accepted
 - Authors: @eightynine01
-- Refs: Plan §2 D12 (`~/.claude/plans/1-https-artifacthub-io-packages-helm-clo-synthetic-gem.md`), postgres-operator 의 `internal/version/matrix.go`
+- Refs: 기존 downstream 의 downstream operator 의 `internal/version/matrix.go`
 
 ## Context
 
 operator-commons v0.5.0 의 `pkg/version` 은 단순 `[]string` 화이트리스트
-(`List` + `MustList` + `IsSupported`) 만 제공. mongodb-operator + valkey-
-operator 가 채택했으나 postgres-operator 는 *rich entry* (Major / Image
+(`List` + `MustList` + `IsSupported`) 만 제공. downstream operator + valkey-
+operator 가 채택했으나 downstream operator 는 *rich entry* (Major / Image
 / Channel / FeatureGate) 가 필요하여 자체 `internal/version/matrix.go`
 를 별도 구현 — *commons 채택률 67%*.
 
@@ -61,7 +61,7 @@ Plan §2 D12 (PR-B3 의 prerequisite): commons 에 generic `Matrix[E]` 추가
 - *generic Matrix[E]* (본 ADR) vs *interface{} + type assertion* —
   후자는 type safety 부재. 본 ADR 의 generic 이 우위.
 - *commons 추가* (본 ADR) vs *postgres 자체 유지* — 후자는 4-repo
-  cross-cut 변경 시 동기화 부담 (RFC-0017 §3.3 lint 위반).
+  cross-cut 변경 시 동기화 부담 (tooling unification 정책 §3.3 lint 위반).
 
 ## Alternatives Considered
 
@@ -81,6 +81,6 @@ Plan §2 D12 (PR-B3 의 prerequisite): commons 에 generic `Matrix[E]` 추가
 ## Refs
 
 - Plan §2 D12 (postgres matrix.go → commons generic Matrix[Combo]).
-- postgres-operator `internal/version/matrix.go` (현 자체 구현).
+- downstream operator `internal/version/matrix.go` (현 자체 구현).
 - 후속 PR-B3 (postgres): matrix.go 가 commons `Matrix[Combo]` 로 위임.
 - commons `pkg/version/version.go` (기존 List API).

@@ -1,16 +1,16 @@
-# ADR-0008: RFC-0019 §3.4 채택 — keiailab.security.{pod,container}SecurityContext partials
+# ADR-0008: Helm library chart 정책 §3.4 채택 — keiailab.security.{pod,container}SecurityContext partials
 
 - Date: 2026-05-09
 - Status: Accepted (PR-B5 — chart v0.4.0)
 - Authors: @eightynine01
-- Refs: RFC-0019 §3.4, ADR-0005/0006/0007 (§3.1/§3.2/§3.5), Plan §2 D14
+- Refs: Helm library chart 정책 §3.4, ADR-0005/0006/0007 (§3.1/§3.2/§3.5)
 
 ## Context
 
 ADR-0005/0006/0007 (PR-B2/B6/C1) 가 commons library chart 의 §3.1
 (commonLabels + ServiceMonitor) + §3.2 (NetworkPolicy) + §3.5 (RBAC)
 구축. 본 ADR 은 *마지막* §3.4 (PodSecurity Restricted) implementation —
-RFC-0019 의 implementation 완결.
+Helm library chart 정책 의 implementation 완결.
 
 K8s Pod Security Standards (PSS) "restricted" profile 표준
 (https://kubernetes.io/docs/concepts/security/pod-security-standards/):
@@ -33,12 +33,12 @@ K8s Pod Security Standards (PSS) "restricted" profile 표준
 2. **`override` 인자 패턴**: caller 가 `override` dict 키로 사용자 정의
    SecurityContext 전달 시 partial 이 *그대로 출력* — v1alpha2
    PodSecurityRestricted=false 시 사용자 override 시나리오 지원
-   (valkey-operator ADR-0036 정합).
+   (downstream operator ADR-0036 정합).
 
 3. **runAsUser/Group default 65532**: distroless nonroot 표준 UID/GID.
    각 operator 의 Dockerfile 와 정합 (`USER 65532:65532`).
 
-4. **chart v0.3.0 → v0.4.0** bump. RFC-0019 implementation 완결.
+4. **chart v0.3.0 → v0.4.0** bump. Helm library chart 정책 implementation 완결.
 
 5. **PR 분할**:
    - **PR-B5** (본 PR): commons partials + chart v0.4.0.
@@ -54,7 +54,7 @@ K8s Pod Security Standards (PSS) "restricted" profile 표준
   + Pod Security Admission label 검증 정합.
 - override 인자로 v1alpha2 의 PodSecurityRestricted=false 시나리오
   (valkey ADR-0036) 와 정합.
-- RFC-0019 §3 implementation 완결 — commons library chart 가 §3.1/
+- Helm library chart 정책 §3 implementation 완결 — commons library chart 가 §3.1/
   §3.2/§3.4/§3.5 모두 보유.
 
 ### Negative
@@ -88,9 +88,9 @@ K8s Pod Security Standards (PSS) "restricted" profile 표준
 
 ## Refs
 
-- RFC-0019 §3.4 (이제 implementation 완료).
+- Helm library chart 정책 §3.4 (이제 implementation 완료).
 - ADR-0005/0006/0007: §3.1/§3.2/§3.5 implementation 선행.
-- valkey-operator ADR-0036 (PodSecurityRestricted Optional Toggle): 본
+- downstream operator ADR-0036 (PodSecurityRestricted Optional Toggle): 본
   partial 의 override 시나리오 부모.
 - Plan §2 D14 (Sprint B PR-B5).
 - K8s PSS: <https://kubernetes.io/docs/concepts/security/pod-security-standards/>

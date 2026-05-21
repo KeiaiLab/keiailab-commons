@@ -1,6 +1,8 @@
 # pkg/status — Condition Reason 카탈로그
 
-> 4-repo (mongodb / valkey / postgres / commons) 공통 Condition Reason 사용 가이드. 본 문서는 `conditions.go` 의 const 선언을 *기계 가독* + *운영 가독* 양쪽으로 사용 가능하도록 표준화.
+> downstream operator 가 공유하는 Condition Reason 사용 가이드. 본 문서는
+> `conditions.go` 의 const 선언을 *기계 가독* + *운영 가독* 양쪽으로 사용
+> 가능하도록 표준화합니다.
 
 ## Reason 별 사용 매트릭스
 
@@ -13,7 +15,7 @@
 | `ExternalDependencyBlocked` | `Ready` | False | 외부 의존 (cert-manager, Secret, ConfigMap, CRD) 미준비로 차단 | `"cert-manager Certificate 'X' not ready: pending issuance"` |
 | `ValidationFailed` | `Ready` / `Degraded` | False | webhook 또는 controller 측 validation 실패 (사용자 spec 오류) | `"spec.replicas must be >= 3 for HA topology"` |
 
-## 사용 흐름 (4-repo 표준)
+## 사용 흐름 (downstream 공통 표준)
 
 ### 정상 Reconcile
 
@@ -77,30 +79,19 @@ kubectl get postgrescluster prod -o jsonpath='{range .status.conditions[*]}{.typ
 # Available=True/Available
 ```
 
-## 4-repo 정합 게이트
-
-본 카탈로그 추가/변경 시 *3 operator 모두* 반영. cross-repo audit:
-
-```bash
-for repo in mongodb-operator valkey-operator postgres-operator; do
-  grep -rE "ReasonReconciling|ReasonAvailable|ReasonReconcileError" \
-    /Users/phil/WorkSpace/public/$repo/internal/ | wc -l
-done
-# 0 = commons import 안 함 / >0 = import 사용 중
-```
-
 ## Reason 추가 정책
 
-신규 Reason 추가는 *cross-repo audit 가 1+* 인 경우만:
-1. PR 본문에 *해당 reason 의 4-repo 사용 사례 1+ 인용*
-2. 본 REASONS.md 매트릭스에 행 추가
-3. CHANGELOG.md `Added` 섹션 entry
-4. `pkg/status/conditions_test.go` 에 reason value 테스트
+신규 Reason 추가는 *downstream 사용 사례 1+* 인 경우만 진행합니다:
+
+1. PR 본문에 해당 reason 의 downstream 사용 사례 1+ 인용.
+2. 본 REASONS.md 매트릭스에 행 추가.
+3. CHANGELOG.md `Added` 섹션 entry.
+4. `pkg/status/conditions_test.go` 에 reason value 테스트 추가.
 
 ## References
 
-- `conditions.go` — Reason / Type const 선언 + helper 함수
-- `conditions_test.go` — unit test
-- RFC-0018 §3.1 — pkg/status 스펙
-- KEP-1623 — Kubernetes Standard Conditions
-- ROADMAP.md "Condition reason 표준 카탈로그 문서화" (P-B.5.1 마감)
+- `conditions.go` — Reason / Type const 선언 + helper 함수.
+- `conditions_test.go` — unit test.
+- KEP-1623 — Kubernetes Standard Conditions.
+- [docs/ROADMAP.md](../../docs/ROADMAP.md) — Condition reason 표준 카탈로그
+  문서화 진행 사항.

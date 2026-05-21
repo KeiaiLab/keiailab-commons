@@ -1,9 +1,9 @@
-# ADR-0006: RFC-0019 §3.2 채택 — keiailab.networkpolicy.{dataplane,controlplane} partials
+# ADR-0006: Helm library chart 정책 §3.2 채택 — keiailab.networkpolicy.{dataplane,controlplane} partials
 
 - Date: 2026-05-09
 - Status: Accepted (PR-B6 — chart v0.2.0)
 - Authors: @eightynine01
-- Refs: RFC-0019 §3.2, ADR-0005 (RFC-0019 §3.1 채택), Plan §2 D13
+- Refs: Helm library chart 정책 §3.2, ADR-0005 (Helm library chart 정책 §3.1 채택)
 
 ## Context
 
@@ -11,13 +11,13 @@ ADR-0005 (PR-B2) 가 `keiailab-commons` library chart 신설 + §3.1
 (commonLabels + ServiceMonitor) implementation 완료. 본 ADR 은 §3.2
 (NetworkPolicy partials) implementation.
 
-postgres-operator 와 valkey-operator 가 *서로 다른 두 NetworkPolicy
+downstream operator 와 downstream operator 가 *서로 다른 두 NetworkPolicy
 패턴* 을 보유:
 
 | 패턴 | 출처 | 용도 |
 |---|---|---|
-| dataplane (default-deny + allow-internal-instance) | postgres-operator/charts/postgres-operator/templates/networkpolicy.yaml | managed workload (DB pod) 자체 보호 |
-| controlplane (manager 자체 + metrics/webhook + API/DNS) | valkey-operator/charts/valkey-operator/templates/networkpolicy.yaml | operator manager pod 자체 보호 |
+| dataplane (default-deny + allow-internal-instance) | downstream operator/charts/downstream operator/templates/networkpolicy.yaml | managed workload (DB pod) 자체 보호 |
+| controlplane (manager 자체 + metrics/webhook + API/DNS) | downstream operator/charts/downstream operator/templates/networkpolicy.yaml | operator manager pod 자체 보호 |
 
 두 패턴이 *서로 다른 추상* — single partial 통합 대신 *two partials*.
 
@@ -71,14 +71,14 @@ postgres-operator 와 valkey-operator 가 *서로 다른 두 NetworkPolicy
    - dict 인자 분기 복잡. 두 partials 가 *명시적*.
 
 2. **partial 미추출, 각 chart 자체 유지** — 거부.
-   - 4-repo cross-cut drift 위험 (RFC-0017 §3.3 lint 위반).
+   - 4-repo cross-cut drift 위험 (tooling unification 정책 §3.3 lint 위반).
    - mongodb chart 의 networkpolicy 부재 차단 path 부재.
 
 ## Refs
 
-- RFC-0019 §3.2.
+- Helm library chart 정책 §3.2.
 - ADR-0005 (commons): §3.1 implementation.
-- postgres-operator/charts/postgres-operator/templates/networkpolicy.yaml (dataplane reference).
-- valkey-operator/charts/valkey-operator/templates/networkpolicy.yaml (controlplane reference).
+- downstream operator/charts/downstream operator/templates/networkpolicy.yaml (dataplane reference).
+- downstream operator/charts/downstream operator/templates/networkpolicy.yaml (controlplane reference).
 - Plan §2 D13 (Sprint B PR-B6).
 - 후속 PR-B7 (mongodb networkpolicy.yaml 신규) / PR-B8 (postgres+valkey 기존 → partial include).

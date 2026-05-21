@@ -1,9 +1,9 @@
-# ADR-0007: RFC-0019 §3.5 채택 — keiailab.rbac.{serviceAccount,controllerBase,workloadBase} partials
+# ADR-0007: Helm library chart 정책 §3.5 채택 — keiailab.rbac.{serviceAccount,controllerBase,workloadBase} partials
 
 - Date: 2026-05-09
 - Status: Accepted (PR-C1 — chart v0.3.0)
 - Authors: @eightynine01
-- Refs: RFC-0019 §3.5, ADR-0005 (§3.1), ADR-0006 (§3.2), Plan §2 D15
+- Refs: Helm library chart 정책 §3.5, ADR-0005 (§3.1), ADR-0006 (§3.2)
 
 ## Context
 
@@ -50,7 +50,7 @@ commonLabels) + §3.2 (NetworkPolicy) 구축. 본 ADR 은 §3.5 (RBAC partials).
 - 4-repo 공통 RBAC ~80 LOC 추출 — single source. duplicate verb 의 사일런
   drift 차단.
 - `controllerBase` 가 *명시적 인텐트* — 새 operator 추가 시 RBAC 표준
-  채택 가능 (RFC-0017 §3.3 lint 위반 방지).
+  채택 가능 (tooling unification 정책 §3.3 lint 위반 방지).
 - chart v0.3.0 backward 호환 (partial 추가만).
 
 ### Negative
@@ -78,7 +78,7 @@ commonLabels) + §3.2 (NetworkPolicy) 구축. 본 ADR 은 §3.5 (RBAC partials).
 
 ## Refs
 
-- RFC-0019 §3.5.
+- Helm library chart 정책 §3.5.
 - ADR-0005 (§3.1), ADR-0006 (§3.2).
 - Plan §2 D15 (Sprint C PR-C1).
 - 후속 PR-C2 (mongodb) / PR-C3 (postgres) / PR-C4 (valkey): RBAC partial 채택.

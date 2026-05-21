@@ -12,7 +12,7 @@ import (
 //
 //	data, _ := json.Marshal(matrix.AsMap())
 //
-// Refs: docs/ROADMAP.md '버전 매트릭스 시리얼라이저 (json/yaml)' (P-B.6.2)
+// Refs: docs/ROADMAP.md '버전 매트릭스 시리얼라이저 (json/yaml)'
 func (m Matrix[E]) AsMap() map[string]E {
 	out := make(map[string]E, len(m.entries))
 	for _, e := range m.entries {
