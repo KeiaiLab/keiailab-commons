@@ -89,11 +89,11 @@ GitHub README 的 shield.io badge 推荐使用上述 hex.
 > **keiailab 操作器的共享 Go 库 — finalizer / labels / status / version / security / monitoring partial**
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
+  <a href="../LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
 </p>
 
 <p align="center">
-  <a href="README.md">English</a> |
+  <a href="../README.md">English</a> |
   <a href="README.ko.md">한국어</a> |
   <a href="README.ja.md">日本語</a> |
   <b>中文</b>
@@ -116,7 +116,7 @@ GitHub README 的 shield.io badge 推荐使用上述 hex.
 </p>
 
 <p align="center">
-  © 2026 keiailab · <a href="LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
+  © 2026 keiailab · <a href="../LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
 </p>
 ```
 
@@ -146,9 +146,9 @@ README 的 shield.io badge 顺序 (左→右):
 
 ## 11. License & Attribution
 
-- License: [Apache-2.0](LICENSE)
+- License: [Apache-2.0](../LICENSE)
 - Copyright: © 2026 keiailab contributors
-- Third-party attribution: 参见 [NOTICE](NOTICE) (如适用)
+- Third-party attribution: 参见 [NOTICE](../NOTICE) (如适用)
 
 ---
 
@@ -161,5 +161,5 @@ README 的 shield.io badge 顺序 (左→右):
 </p>
 
 <p align="center">
-  © 2026 keiailab · <a href="LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
+  © 2026 keiailab · <a href="../LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
 </p>

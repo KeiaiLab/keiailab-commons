@@ -12,7 +12,7 @@ import corev1 "k8s.io/api/core/v1"
 //	pod.Spec.SecurityContext.SeccompProfile = security.RuntimeDefaultSeccompProfile()
 //	container.SecurityContext.SeccompProfile = security.RuntimeDefaultSeccompProfile()
 //
-// Refs: ROADMAP.md 'seccompProfile 기본값 helper' (P-B.9.3)
+// Refs: docs/ROADMAP.md 'seccompProfile 기본값 helper' (P-B.9.3)
 func RuntimeDefaultSeccompProfile() *corev1.SeccompProfile {
 	return &corev1.SeccompProfile{Type: corev1.SeccompProfileTypeRuntimeDefault}
 }

@@ -84,4 +84,4 @@ audit 시계열 기록: [`docs/quality/audit-history.md`](../../quality/audit-hi
 - commons-ADR/0016: Sprint 1 pkg/pvc + pkg/topology 신규 추출
 - commons audit-history (시계열): [docs/quality/audit-history.md](../../quality/audit-history.md)
 - CLAUDE.md §7 (v3.x-stable 정의): https://github.com/keiailab/.codex (글로벌 standards, private)
-- ADOPTERS.md (3 operator 채택 매트릭스): https://github.com/keiailab/operator-commons/blob/main/ADOPTERS.md
+- ADOPTERS.md (3 operator 채택 매트릭스): https://github.com/keiailab/operator-commons/blob/main/docs/ADOPTERS.md

@@ -46,7 +46,7 @@
 
 設計 invariant: **leaf パッケージは stdlib + k8s API 型のみ**. controller-runtime 無し、logr 無し、operator-sdk leak 無し。
 
-詳細なパッケージ surface は [ARCHITECTURE.md](../ARCHITECTURE.md), tier 昇格基準は [ROADMAP.md](../ROADMAP.md) を参照。
+詳細なパッケージ surface は [ARCHITECTURE.md](ARCHITECTURE.md), tier 昇格基準は [ROADMAP.md](ROADMAP.md) を参照。
 
 ## 我々が*しない*こと
 
@@ -61,16 +61,16 @@
 | 作業 | 入口 |
 |---|---|
 | オペレーターで `operator-commons` をインポート | [README.md](../README.md) Usage セクション |
-| アーキテクチャを読む | [ARCHITECTURE.md](../ARCHITECTURE.md) |
+| アーキテクチャを読む | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | イシューや機能要望を提出 | https://github.com/keiailab/operator-commons/issues |
 | 設計やロードマップを議論 | https://github.com/keiailab/operator-commons/discussions |
 | コード貢献 | [CONTRIBUTING.md](../CONTRIBUTING.md) |
 | セキュリティイシュー報告 | [SECURITY.md](../SECURITY.md) |
-| ブランド / ボイス学習 | [BRANDING.md](../BRANDING.md) |
-| アダプター追跡 / 利用者確認 | [ADOPTERS.md](../ADOPTERS.md) |
-| メンテナーを探す | [MAINTAINERS.md](../MAINTAINERS.md) |
-| ガバナンスモデル検討 | [GOVERNANCE.md](../GOVERNANCE.md) |
-| 今後の作業確認 | [ROADMAP.md](../ROADMAP.md) |
+| ブランド / ボイス学習 | [BRANDING.md](BRANDING.md) |
+| アダプター追跡 / 利用者確認 | [ADOPTERS.md](ADOPTERS.md) |
+| メンテナーを探す | [MAINTAINERS.md](MAINTAINERS.md) |
+| ガバナンスモデル検討 | [GOVERNANCE.md](GOVERNANCE.md) |
+| 今後の作業確認 | [ROADMAP.md](ROADMAP.md) |
 | API 安定性の約束を確認 | [docs/STABILITY.md](STABILITY.md) |
 
 ## ファミリー間互換性
@@ -90,7 +90,7 @@ import (
 
 `operator-commons` の breaking change は 3 データベースオペレーターすべてで同期 bump が必要 — supercycle Wave 5 の `make cross-validation` ターゲットで検証。
 
-ライブ consumer matrix (3 operator × 8 package × 採用率 %) は [ADOPTERS.md](../ADOPTERS.md) 参照。
+ライブ consumer matrix (3 operator × 8 package × 採用率 %) は [ADOPTERS.md](ADOPTERS.md) 参照。
 
 ## i18n
 

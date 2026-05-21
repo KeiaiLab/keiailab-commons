@@ -19,7 +19,7 @@ type ConvertFunc func(src any) (dst any, err error)
 // 본 helper 는 controller-runtime 의존을 회피하고 callback 패턴으로 변환
 // 로직을 위임. caller 는 별도 admission webhook server 에서 호출.
 //
-// Refs: ROADMAP.md 'Conversion webhook helper — v1alpha1 ↔ v1alpha2 패턴 추출'
+// Refs: docs/ROADMAP.md 'Conversion webhook helper — v1alpha1 ↔ v1alpha2 패턴 추출'
 //
 //	(P-B.10.1)
 type ConversionRegistry struct {

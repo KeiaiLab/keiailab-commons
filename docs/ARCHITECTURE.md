@@ -137,5 +137,5 @@ Tracking: `~/.claude/plans/2026-05-14-4-operators-100pct/P-B.md` (29 sub-tasks �
 </p>
 
 <p align="center">
-  © 2026 keiailab · <a href="LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
+  © 2026 keiailab · <a href="../LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
 </p>

@@ -7,5 +7,5 @@
 //
 // API surface 가 trivial (regex + nil check) 하므로 Stable Tier 즉시.
 //
-// 자세한 격상 조건 / API 안정성 매트릭스는 ROADMAP.md §API Stability Tier 참조.
+// 자세한 격상 조건 / API 안정성 매트릭스는 docs/ROADMAP.md §API Stability Tier 참조.
 package storageclass

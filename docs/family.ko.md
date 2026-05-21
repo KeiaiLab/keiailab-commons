@@ -46,7 +46,7 @@
 
 설계 invariant: **leaf 패키지는 stdlib + k8s API 타입만**. controller-runtime 없음, logr 없음, operator-sdk leak 없음.
 
-자세한 패키지 surface 는 [ARCHITECTURE.md](../ARCHITECTURE.md), tier 격상 기준은 [ROADMAP.md](../ROADMAP.md) 참조.
+자세한 패키지 surface 는 [ARCHITECTURE.md](ARCHITECTURE.md), tier 격상 기준은 [ROADMAP.md](ROADMAP.md) 참조.
 
 ## 우리가 하지 *않는* 것
 
@@ -61,16 +61,16 @@
 | 작업 | 진입점 |
 |---|---|
 | 오퍼레이터에서 `operator-commons` 가져오기 | [README.md](../README.md) Usage 섹션 |
-| 아키텍처 읽기 | [ARCHITECTURE.md](../ARCHITECTURE.md) |
+| 아키텍처 읽기 | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | 이슈 또는 기능 요청 등록 | https://github.com/keiailab/operator-commons/issues |
 | 설계 또는 로드맵 논의 | https://github.com/keiailab/operator-commons/discussions |
 | 코드 기여 | [CONTRIBUTING.md](../CONTRIBUTING.md) |
 | 보안 이슈 보고 | [SECURITY.md](../SECURITY.md) |
-| 브랜드 / 보이스 학습 | [BRANDING.md](../BRANDING.md) |
-| 도입자 추적 / 사용자 확인 | [ADOPTERS.md](../ADOPTERS.md) |
-| 메인테이너 찾기 | [MAINTAINERS.md](../MAINTAINERS.md) |
-| 거버넌스 모델 검토 | [GOVERNANCE.md](../GOVERNANCE.md) |
-| 진행 예정 작업 확인 | [ROADMAP.md](../ROADMAP.md) |
+| 브랜드 / 보이스 학습 | [BRANDING.md](BRANDING.md) |
+| 도입자 추적 / 사용자 확인 | [ADOPTERS.md](ADOPTERS.md) |
+| 메인테이너 찾기 | [MAINTAINERS.md](MAINTAINERS.md) |
+| 거버넌스 모델 검토 | [GOVERNANCE.md](GOVERNANCE.md) |
+| 진행 예정 작업 확인 | [ROADMAP.md](ROADMAP.md) |
 | API 안정성 약속 검토 | [docs/STABILITY.md](STABILITY.md) |
 
 ## 패밀리 간 호환성
@@ -90,7 +90,7 @@ import (
 
 `operator-commons` 의 breaking change 는 3 데이터베이스 오퍼레이터 모두에서 동기 bump 필요 — supercycle Wave 5 의 `make cross-validation` target 으로 검증.
 
-라이브 consumer matrix (3 operator × 8 package × 도입 %) 는 [ADOPTERS.md](../ADOPTERS.md) 참조.
+라이브 consumer matrix (3 operator × 8 package × 도입 %) 는 [ADOPTERS.md](ADOPTERS.md) 참조.
 
 ## i18n
 
