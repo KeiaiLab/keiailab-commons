@@ -18,6 +18,7 @@
 | [0014](0014-release-script-ssot.md) | operator-commons release.sh — 라이브러리 수동 release pipeline (audit OP-1) | Accepted | 2026-05-21 |
 | [0015](0015-lefthook-p1-12-13-augmentation.md) | lefthook P1-12 + P1-13 보강 — go-licenses + markdown-link-check (audit 정합) | Accepted | 2026-05-21 |
 | [0016](0016-sprint-1-pvc-topology-extraction.md) | Sprint 1 — pkg/pvc + pkg/topology 신규 추출 (3-operator 중복 ~495 LOC 해소) | Accepted | 2026-05-21 |
+| [0017](0017-v3x-stable-baseline.md) | v3.x-stable baseline 인정 (audit ❌ 0 충족, 본 repo = audit SSOT self-reference) | Accepted | 2026-05-21 |
 
 ## 작성 규약
 
