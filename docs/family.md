@@ -15,14 +15,14 @@ You are reading this from the **`operator-commons`** repository. This page is th
 | **`postgres-operator`** | PostgreSQL 18+ | active | https://github.com/keiailab/postgres-operator |
 | **`mongodb-operator`** | MongoDB 7.0+ | active | https://github.com/keiailab/mongodb-operator |
 | **`valkey-operator`** | Valkey 8.0+ (Redis fork, BSD-3) | active | https://github.com/keiailab/valkey-operator |
-| **`operator-commons`** | Shared Go library | **v0.7.0** (you are here) | https://github.com/keiailab/operator-commons |
+| **`operator-commons`** | Shared Go library | **v0.8.0** (you are here) | https://github.com/keiailab/operator-commons |
 
 ## What we share
 
 All four projects converge on the same operational primitives:
 
 - **Apache-2.0** end-to-end — no SSPL, no copyleft on SaaS surface
-- **`operator-commons`** shared Go library (v0.7.0+) — finalizer, labels, status sugars, security context builders, NetworkPolicy / ServiceMonitor partials
+- **`operator-commons`** shared Go library (v0.8.0+) — finalizer, labels, status sugars, security context builders, NetworkPolicy / ServiceMonitor partials
 - **Helm chart skeleton** — RFC-0027 `default` falsy-toggle prevention, RFC-0026 component-keyed values, cycle 26 hardening 6 markers (priorityClassName / lifecycle / SA / minReadySeconds / automount / revisionHistoryLimit)
 - **OLM bundle parity** — scorecard v1alpha3 6-test matrix
 - **i18n** — README + canonical docs in English / 한국어 / 日本語 / 中文 (Wave 4 of cleanup supercycle 2026-05-21)
@@ -73,7 +73,7 @@ See [ARCHITECTURE.md](../ARCHITECTURE.md) for the detailed package surface and [
 
 ## Cross-family compatibility
 
-All three database operators import `github.com/keiailab/operator-commons` at the matching version (currently `v0.7.0+`):
+All three database operators import `github.com/keiailab/operator-commons` at the matching version (currently `v0.8.0+`):
 
 ```go
 import (

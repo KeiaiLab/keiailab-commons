@@ -37,7 +37,7 @@ restricted contexts, version allowlists, NetworkPolicy templates, ServiceMonitor
 builders). Maintenance drift between repos was already producing inconsistencies
 — this library is the single source of truth.
 
-## Packages (v0.7.0)
+## Packages (v0.8.0)
 
 | Package | Purpose |
 |---|---|
