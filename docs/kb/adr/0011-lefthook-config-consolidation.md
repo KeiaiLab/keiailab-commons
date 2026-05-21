@@ -5,7 +5,7 @@
 | Status | Accepted |
 | Date | 2026-05-21 |
 | Supersedes | — |
-| Refs | docs/specs/2026-05-21-stale-branch-cleanup-design.md §4.3 |
+| Refs | (none) |
 
 ## Context
 
@@ -43,11 +43,8 @@ lefthook CLI 는 `lefthook.yml` 을 우선 로드하고 `.lefthook.yml` 은 *fal
 ## Alternatives
 
 - (B) 양 파일 보존 — lefthook fallback 의 anti-pattern. ADR 부재 시 §5 실패.
-- (C) 신규 파일 폐기 + 레거시 유지 — multi-stack 가드 + Helm default-falsy-toggle 정책 (helm) / auto cleanup 정책 (auto-cleanup) / cycle 26 hardening 자산 손실.
+- (C) 신규 파일 폐기 + 레거시 유지 — multi-stack 가드 자산 손실.
 
 ## Cross-link
 
-- spec: docs/specs/2026-05-21-stale-branch-cleanup-design.md §4.3
 - 관련 RFC: GitHub Actions 차단 정책 (GHA 영구 금지 → 로컬 4 계층 일원화)
-- 관련 ADR: ADR-0009 (archive/* 브랜치 cleanup), ADR-0010 (archive tag 명명)
-- 본 cycle: chore/lefthook-config-consolidation-2026-05-21

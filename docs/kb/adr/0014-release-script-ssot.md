@@ -6,7 +6,7 @@
 | Date | 2026-05-21 |
 | Author | keiailab |
 | Supersedes | (none) |
-| Related | GitHub Actions 차단 정책 (GHA 영구 금지), ADR-0011 (lefthook 통합), ADR-0013 (audit SSOT) |
+| Related | GitHub Actions 차단 정책 (GHA 영구 금지), ADR-0011 (lefthook 통합) |
 
 ## Context
 

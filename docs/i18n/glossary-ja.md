@@ -186,7 +186,7 @@
 |---|---|
 | keiailab operator family | keiailab オペレーターファミリー |
 | operator-commons | operator-commons (英文そのまま — Go モジュール名) |
-| supercycle | スーパーサイクル (supercycle) — ユーザー命名 originalsiv |
+| supercycle | スーパーサイクル — 多段階サイクルの非公式用語 |
 | Wave (Wave 0 ~ Wave 5) | Wave (英文そのまま) |
 | Phase | フェーズ (Phase) |
 | Cadence checkpoint | ケイデンスチェックポイント |
@@ -201,5 +201,5 @@
 
 | Date | Change | Refs |
 |---|---|---|
-| 2026-05-21 | 新規 — 日本語標準用語集 placeholder v0.1 (4 sections, ~45 terms) | deep-petting-cookie §Phase 0.8 + supercycle Wave 4 §4.4 sister |
-| 2026-05-21 | S4 Phase 1 — Claude による全 10 sections × ~120 terms 拡充 (機械翻訳、native review 待ち) | docs/specs/2026-05-21-i18n-4lang-master-design.md §4.2.1 |
+| 2026-05-21 | 新規 — 日本語標準用語集 placeholder v0.1 (4 sections, ~45 terms) | 초기 도입 cycle |
+| 2026-05-21 | 初期完訳 (Claude 自動翻訳、native review 待ち)|초기 완역 (Claude 자동 번역, native review 대기) |

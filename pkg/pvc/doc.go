@@ -5,7 +5,7 @@
 //
 // Stability: Beta.
 //
-// 본 패키지는 Sprint 1 (2026-05-21) 에서 downstream operator 의 *pvc_resize.go* 중복
+// 본 패키지는 downstream operator 의 *pvc_resize.go* 중복
 // 코드 (~360 LOC) 를 추출하여 신규 도입되었다. downstream consumer 동시 적용 회귀 통과
 // 후 Stable Tier 격상 예정 (자세한 격상 조건은 docs/ROADMAP.md §API Stability Tier).
 //

@@ -198,4 +198,4 @@
 
 | Date | Change | Refs |
 |---|---|---|
-| 2026-05-21 | 신설 — 한국어 표준 용어 사전 v0.1 (10 categories, ~120 terms) | deep-petting-cookie §Phase 0.8 + supercycle Wave 4 §4.4 sister |
+| 2026-05-21 | 신설 — 한국어 표준 용어 사전 v0.1 (10 categories, ~120 terms) | 초기 도입 cycle |

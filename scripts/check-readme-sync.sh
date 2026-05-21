@@ -2,7 +2,7 @@
 # scripts/check-readme-sync.sh
 # README.md (EN canonical) ↔ README.{ko,ja,zh}.md drift verify (4-lang matrix).
 #
-# S4 Phase 1 (2026-05-21, docs/specs/2026-05-21-i18n-4lang-master-design.md §4.2.2):
+# 4-lang 동기 검사 (KO ≤ 15 % / JA ≤ 25 % / ZH ≤ 30 % line diff threshold):
 #   기존 EN↔KO 한정 → EN↔{KO,JA,ZH} 매트릭스 확장.
 #   언어별 임계값 (한자 압축 반영): KO=15% / JA=25% / ZH=30%.
 #
