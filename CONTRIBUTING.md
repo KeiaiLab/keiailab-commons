@@ -1,69 +1,81 @@
 # Contributing to operator-commons
 
-`keiailab/operator-commons` 는 downstream Kubernetes operator 가 공통으로
-import 하는 Go 라이브러리입니다. 모든 기여는 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
-와 [docs/GOVERNANCE.md](docs/GOVERNANCE.md) 를 따릅니다.
+> **English** | [한국어](CONTRIBUTING.ko.md)
 
-## 기여 흐름
+`keiailab/operator-commons` is a Go library imported by downstream
+Kubernetes operators. All contributions follow
+[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) and
+[docs/GOVERNANCE.md](docs/GOVERNANCE.md).
 
-1. **Issue 또는 ADR 로 의도 공유** (큰 변경의 경우).
-2. **Fork & feature branch** — `feat/<slug>`, `fix/<slug>`, `docs/<slug>`,
-   `refactor/<slug>` 형식.
-3. **로컬 게이트 통과 확인**:
+## Contribution flow
+
+1. **Share intent via an issue or ADR** (for non-trivial changes).
+2. **Fork + feature branch** — use `feat/<slug>`, `fix/<slug>`,
+   `docs/<slug>`, or `refactor/<slug>`.
+3. **Verify the local gates**:
    - `lefthook install --force`
    - `lefthook run pre-commit --all-files`
    - `make lint test`
-4. **PR 작성** — Conventional Commits + 한국어 본문 허용.
-5. **리뷰 SLA**: 메인테이너 24시간 이내 1차 응답.
+4. **Open the PR** — Conventional Commits format; English or Korean body
+   is acceptable.
+5. **Review SLA**: maintainers reply within 24 hours.
 
-## PR 체크리스트 (작성자)
+## PR checklist (author)
 
-- [ ] PR 제목: Conventional Commits 형식 (`feat`, `fix`, `docs`, `refactor`,
-  `test`, `chore`).
-- [ ] PR 본문: 변경 요약 + 검증 명령 + 출력 인용.
-- [ ] 단위 테스트 추가 또는 갱신 (`pkg/<sub>` 변경 시 의무).
-- [ ] 공개 API 변경 시 GoDoc 갱신.
-- [ ] **공개 API breaking** 시 ADR 링크 + downstream consumer 측 영향 분석.
-- [ ] `go.mod` / `go.sum` drift 없음 (`go mod tidy` 후 변경 없음).
-- [ ] 의존성 추가 시 라이선스 검증 인용 + CVE 검토.
+- [ ] PR title: Conventional Commits format (`feat`, `fix`, `docs`,
+  `refactor`, `test`, `chore`).
+- [ ] PR body: change summary + verification commands + cited output.
+- [ ] Unit tests added or updated (mandatory for any change inside
+  `pkg/<sub>`).
+- [ ] godoc updated when the public API changes.
+- [ ] For **public-API breaking changes**: linked ADR plus
+  downstream-consumer impact analysis.
+- [ ] `go.mod` / `go.sum` drift = 0 (running `go mod tidy` produces no
+  change).
+- [ ] New dependencies: cite the license and CVE review in the PR body.
 
-## 로컬 개발 (downstream consumer 와의 동시 변경)
+## Local development (cross-cut work with a downstream consumer)
 
-downstream operator 와 commons 를 동시에 수정해야 하는 *cross-cut* 변경:
+When a change touches both `operator-commons` and a downstream operator:
 
 ```fish
-# 1. consumer operator 의 go.mod 에 replace directive 추가 (커밋 금지, 로컬 한정)
-# go.mod 끝줄에:
+# 1. add a replace directive in the consumer operator's go.mod
+#    (local-only; do not commit it)
+# go.mod tail:
 #   replace github.com/keiailab/operator-commons => ../operator-commons
 
-# 2. 양쪽 동시 수정 + go test ./... 양쪽 모두 PASS
+# 2. edit both sides + run `go test ./...` on each
 
-# 3. PR 분리:
-#    - operator-commons 측 PR 머지 + tag (예: v0.9.0)
-#    - consumer operator 측 PR 에서 require 버전 bump (replace 제거)
+# 3. split the PRs:
+#    - operator-commons side: merge + tag (e.g. v0.9.0)
+#    - consumer side: bump the require directive (remove replace)
 ```
 
-## 새 `pkg/<sub>` 패키지 추가
+## Adding a new `pkg/<sub>` package
 
-[docs/GOVERNANCE.md](docs/GOVERNANCE.md) "중간 변경" 절차 적용:
+Follow the "intermediate change" process in
+[docs/GOVERNANCE.md](docs/GOVERNANCE.md):
 
-1. Issue 또는 ADR 로 제안 — *왜* commons 에 들어가야 하는가, *어떤* downstream
-   consumer 가 사용할 것인가.
-2. 7일 코멘트 윈도우.
-3. 다수 LGTM 후 PR 머지.
+1. Open an issue or ADR explaining *why* it belongs in commons and
+   *which* downstream consumer will use it.
+2. Wait through the 7-day comment window.
+3. Merge after multiple maintainer LGTMs.
 
-## 릴리스
+## Release
 
-- v0.x SemVer: 매 minor 가 *공개 API* 또는 *의미 있는 동작* 변경.
-- 릴리스 절차:
+- v0.x SemVer: every minor bump represents a public-API change or a
+  meaningful behaviour change.
+- Release procedure:
   1. `git tag v0.X.Y` (annotated).
-  2. `git-cliff` 로 CHANGELOG 갱신 PR.
+  2. `git-cliff` regenerates the CHANGELOG PR.
   3. `git push origin v0.X.Y`.
-  4. downstream consumer 측 별도 PR 로 require 버전 bump.
+  4. Open a follow-up PR in each downstream consumer to bump the
+     `require` directive.
 
-## 보안 취약점
+## Security vulnerabilities
 
-[SECURITY.md](SECURITY.md) 절차. 공개 issue 금지.
+Use the private disclosure process in [SECURITY.md](SECURITY.md). Public
+issues are not the right channel.
 
 ---
 
