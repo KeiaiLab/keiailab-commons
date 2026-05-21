@@ -425,6 +425,18 @@ pre-push:
         fi
         rm -f /tmp/.go.mod.commons.bak /tmp/.go.sum.commons.bak
 
+    # S4 Phase 2 (2026-05-21, docs/specs/2026-05-21-i18n-4lang-master-design.md §4.3):
+    # README 4-lang drift check — EN canonical ↔ {ko,ja,zh}. pre-push 위치 (commit 마찰 회피).
+    readme-i18n-sync:
+      glob: "README*.md"
+      run: |
+        cd "$(git rev-parse --show-toplevel)"
+        if [ -x scripts/check-readme-sync.sh ]; then
+          bash scripts/check-readme-sync.sh
+        else
+          echo "[warn] scripts/check-readme-sync.sh 부재 — i18n drift check skip"
+        fi
+
 post-merge:
   commands:
     deps-log:
