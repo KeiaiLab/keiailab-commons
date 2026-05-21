@@ -1,6 +1,6 @@
 # Governance
 
-> **English** | [한국어](GOVERNANCE.ko.md)
+> **English** | [한국어](GOVERNANCE.ko.md) | [日本語](GOVERNANCE.ja.md)
 
 This document defines the decision-making process for the
 `keiailab/operator-commons` library. The library is imported in common

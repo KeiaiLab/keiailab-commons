@@ -1,6 +1,6 @@
 # Upgrading operator-commons
 
-> [English](UPGRADING.md) | **한국어**
+> [English](UPGRADING.md) | **한국어** | [日本語](UPGRADING.ja.md)
 
 본 문서는 `github.com/keiailab/operator-commons` Go 모듈의 minor / major
 버전 업그레이드 시 필요한 마이그레이션 작업을 정리합니다. downstream

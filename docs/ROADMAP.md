@@ -1,6 +1,6 @@
 # ROADMAP — operator-commons
 
-> **English** | [한국어](ROADMAP.ko.md)
+> **English** | [한국어](ROADMAP.ko.md) | [日本語](ROADMAP.ja.md)
 
 This ROADMAP tracks the library's evolution along three axes: *API
 stability tier*, *v1.0.0 graduation criteria*, and *per-package

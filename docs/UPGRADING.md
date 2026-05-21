@@ -1,6 +1,6 @@
 # Upgrading operator-commons
 
-> **English** | [한국어](UPGRADING.ko.md)
+> **English** | [한국어](UPGRADING.ko.md) | [日本語](UPGRADING.ja.md)
 
 This document collects the migration steps needed when bumping a minor
 or major version of the `github.com/keiailab/operator-commons` Go
