@@ -64,3 +64,8 @@ tidy: ## go mod tidy + diff 검사 (drift 차단)
 tag: ## annotated tag 생성 안내 (수동 — v0.X.Y 인자 필요)
 	@echo "사용법: git tag -a v0.X.Y -m 'release v0.X.Y' && git push origin v0.X.Y"
 	@echo "후속: 3 consumer operator 의 go.mod require 버전 bump PR 작성"
+
+.PHONY: release
+release: ## 자동 release pipeline (scripts/release.sh, ADR-0014). 사용: make release VERSION=v0.8.0
+	@[ -n "$(VERSION)" ] || { echo "Usage: make release VERSION=v0.8.0"; exit 1; }
+	bash scripts/release.sh $(VERSION)
