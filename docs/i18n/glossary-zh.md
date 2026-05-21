@@ -71,7 +71,7 @@
 | InitContainer | 初始化容器 (InitContainer) |
 | Sidecar Container | 边车容器 |
 
-## §3 operator-commons 库术语
+## §downstream operator-commons 库术语
 
 | English (canonical) | 中文 |
 |---|---|

@@ -23,7 +23,7 @@
 #   - (선택) git-cliff: brew install git-cliff (CHANGELOG/release body 자동 생성).
 #   - (선택) syft: brew install syft (SBOM 생성).
 #
-# RFC-0002 정합: 본 스크립트는 *수동* 실행. GHA 미사용.
+# 본 스크립트는 *수동* 실행 (GitHub Actions 미사용).
 
 set -euo pipefail
 
@@ -137,7 +137,7 @@ fi
 echo "✅ Release $VERSION complete."
 echo ""
 echo "다음 단계:"
-echo "  1. 3 operator 의 go.mod 에 operator-commons $VERSION 채택"
+echo "  1. downstream operator 의 go.mod 에 operator-commons $VERSION 채택"
 echo "  2. UPGRADING.md 의 v$VERSION_NUMERIC 섹션 검토"
 echo "  3. (Sprint 1 / S5) pkg/* 추출 패키지 변경 시 deprecation 경로 확인"
 

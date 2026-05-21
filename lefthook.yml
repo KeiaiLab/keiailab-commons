@@ -1,7 +1,6 @@
-# lefthook.yml — operator-commons (Go library)
-# Source: ai-dev/templates/lefthook.yml (SSOT, ref: stable) + Go stack-specific append.
+# lefthook.yml — operator-commons (Go library).
+#
 # 우회: 환경변수 LEFTHOOK=0 또는 commit 메시지에 '[skip-hooks]' 포함.
-# RFC-0029 §6.5 sub-repo sync drift seal (cycle 25 P19/P20 RCA): SSOT 본문 그대로 cp + customization.
 
 assert_lefthook_installed: true
 no_tty: true
@@ -9,126 +8,16 @@ no_tty: true
 pre-commit:
   parallel: true
   commands:
-    py-lint:
-      exclude: "templates/plugin/**/*"
-      glob: "*.py"
-      run: uv run ruff check {staged_files}
-      stage_fixed: true
-      skip:
-        - merge
-        - rebase
-    py-format:
-      exclude: "templates/plugin/**/*"
-      glob: "*.py"
-      run: uv run ruff format --check {staged_files}
-    js-lint:
-      exclude: "templates/plugin/**/*"
-      glob: "*.{ts,tsx,js,jsx,json,jsonc}"
-      run: pnpm exec biome check --no-errors-on-unmatched {staged_files}
-      stage_fixed: true
-    rust-clippy:
-      glob: "*.rs"
-      run: cargo clippy --all-targets --no-deps -- -D warnings
-    rust-fmt:
-      glob: "*.rs"
-      run: cargo fmt --check -- {staged_files}
     secrets:
       run: gitleaks protect --staged --no-banner --redact
-    helm-default-falsy-toggle:
-      # RFC-0027 (2026-05-12) — helm `default true` falsy bug 차단.
-      glob: "**/templates/*.yaml"
-      run: |
-        bad=$(grep -lE '\.Values\.[a-zA-Z_]+ \| default true' {staged_files} 2>/dev/null \
-              | grep -v 'collections/ansible_collections/' || true)
-        if [ -n "$bad" ]; then
-          echo "::ERROR:: RFC-0027 helm default falsy toggle anti-pattern 발견:"
-          echo "$bad"
-          echo "fix: '{{- if .Values.enabled | default true }}' → '{{- if ne .Values.enabled false }}'"
-          exit 1
-        fi
-    helm-cycle-26-hardening:
-      # cycle 25 P44 — cycle 26 6 rule presence check (gradual report-only).
-      glob: "**/templates/deployment.yaml,**/templates/statefulset.yaml"
-      run: |
-        for f in {staged_files}; do
-          [ -f "$f" ] || continue
-          missing=""
-          grep -q "priorityClassName" "$f" || missing="$missing priorityClassName(48)"
-          grep -q "lifecycle:" "$f" || missing="$missing lifecycle(66)"
-          grep -q "serviceAccountName" "$f" || missing="$missing serviceAccountName(69)"
-          grep -q "minReadySeconds" "$f" || missing="$missing minReadySeconds(73)"
-          grep -q "automountServiceAccountToken" "$f" || missing="$missing automountServiceAccountToken(84)"
-          grep -q "revisionHistoryLimit" "$f" || missing="$missing revisionHistoryLimit(85)"
-          if [ -n "$missing" ]; then
-            echo "::WARNING:: cycle 26 hardening drift in $f:$missing"
-          fi
-        done
-        exit 0
-    adr-phantom-check:
-      # standards/adr.md §9.5 — phantom ADR commit 시점 차단 (양 path union, cycle 25 P10 RCA).
-      glob: "HANDOFF.md"
-      run: |
-        if ! echo "{staged_files}" | grep -qE '(^|/)HANDOFF\.md$'; then exit 0; fi
-        refs=$(grep -oE 'ADR-[0-9]{4}' HANDOFF.md 2>/dev/null | sort -u)
-        [ -z "$refs" ] && exit 0
-        missing=""
-        is_wrapper=0
-        [ -f STRUCTURE.md ] && is_wrapper=1
-        for ref in $refs; do
-          num="${ref#ADR-}"
-          if ls "docs/kb/adr/${num}-"*.md >/dev/null 2>&1; then continue; fi
-          if ls "docs/adr/${num}-"*.md >/dev/null 2>&1; then continue; fi
-          if [ "$is_wrapper" = "1" ]; then
-            found=0
-            for p in */*/docs/kb/adr/${num}-*.md */docs/kb/adr/${num}-*.md */*/docs/adr/${num}-*.md */docs/adr/${num}-*.md; do
-              [ -f "$p" ] && found=1 && break
-            done
-            [ "$found" = "1" ] && continue
-          fi
-          missing="$missing $ref"
-        done
-        if [ -n "$missing" ]; then
-          echo "::ERROR:: standards/adr.md §9.5 phantom ADR 발견:"
-          for ref in $missing; do echo "  $ref"; done
-          exit 1
-        fi
-    hetzner-mention-block:
-      # 사용자 결정 #7 — Contabo VPS 강제. ADR-0073 + ADR-0077 모두 Rejected.
-      run: |
-        if [ "${HETZNER_OK:-0}" = "1" ]; then exit 0; fi
-        violated=""
-        for f in {staged_files}; do
-          [ -f "$f" ] || continue
-          case "$f" in
-            *0073-contabo-vps-alternative*|*0077-contabo-day0-evidence*|*INC-0046-cilium-ingress*|*hetzner-rejection-final.md|*MEMORY.md|*lefthook.yml|*checklist.md|*adr/README.md|*adr/INDEX.md|*0029-six-layer-defense*|*HANDOFF.md)
-              continue ;;
-          esac
-          added=$(git diff --cached --unified=0 -- "$f" 2>/dev/null | grep -E '^\+[^+]' | grep -iE '\bhetzner\b' || true)
-          if [ -n "$added" ]; then
-            violated="$violated\n  $f:\n$added"
-          fi
-        done
-        if [ -n "$violated" ]; then
-          printf "::ERROR:: Contabo VPS 강제 — 외부 클라우드 마이그레이션 금지:%s\n" "$violated"
-          echo "우회: HETZNER_OK=1 env (사용자 reopen 결정 시만)"
-          exit 1
-        fi
-    claude-md-bloat-block:
-      # RFC-0041 Phase C — CLAUDE.md ≤100 line lean entry.
-      run: |
-        if [ "${CLAUDE_MD_BLOAT_OK:-0}" = "1" ]; then exit 0; fi
-        for f in CLAUDE.md AGENTS.md GEMINI.md; do
-          if [ -f "$f" ] && [ ! -L "$f" ]; then
-            lines=$(wc -l < "$f")
-            if [ "$lines" -gt 100 ]; then
-              echo "::ERROR:: RFC-0041 Phase C — $f bloat ($lines line > 100)."
-              echo "참조: ai-dev/rfcs/0041-claude-code-large-codebase-best-practices.md §Phase C"
-              exit 1
-            fi
-          fi
-        done
+
+    go-fmt:
+      glob: "*.go"
+      run: gofmt -l -w {staged_files}
+      stage_fixed: true
+
     orphan-plan-files-block:
-      # L1 dirty-residue prevention — repo 루트 임시 plan/scratch 파일 commit 차단.
+      # repo 루트의 임시 plan / scratch 파일 commit 차단.
       run: |
         if [ "${ORPHAN_OK:-0}" = "1" ]; then exit 0; fi
         violated=""
@@ -144,163 +33,26 @@ pre-commit:
           esac
         done
         if [ -n "$violated" ]; then
-          echo "::ERROR:: L1 dirty-residue prevention — 임시 plan/scratch 파일 commit 차단:"
+          echo "::ERROR:: 임시 plan / scratch 파일 commit 차단:"
           for v in $violated; do echo "  - $v"; done
           echo "우회: ORPHAN_OK=1 git commit"
           exit 1
         fi
-    bitnami-chart-reintroduction-block:
-      # ADR-0136 (Bitnami portfolio 영구 폐기, 2026-05-17) L5 prevention — chart + image 양 layer.
-      glob: "**/{Chart.yaml,Chart.lock,values*.yaml,values*.yml,kustomization.yaml,kustomization.yml,*.tf,*.tfvars,Dockerfile,Dockerfile.*}"
-      run: |
-        if [ "${BITNAMI_OK:-0}" = "1" ]; then exit 0; fi
-        violated=""
-        for f in {staged_files}; do
-          [ -f "$f" ] || continue
-          stripped=$(sed -E '/^\s*#/d; /historical-exempt:/d; /bitnami-exempt:/d' "$f")
-          hit=""
-          if echo "$stripped" | grep -qE '(repository:\s*oci://registry-1\.docker\.io/bitnamicharts|charts\.bitnami\.com/bitnami|chart:\s*["'"'"']?bitnami/)'; then
-            hit="chart-dep"
-          fi
-          if echo "$stripped" | grep -qE '(image:\s*["'"'"']?(docker\.io/)?bitnami(legacy)?/|repository:\s*["'"'"']?bitnami(legacy)?/|newName:\s*["'"'"']?(docker\.io/)?bitnami(legacy)?/|FROM\s+(docker\.io/)?bitnami(legacy)?/)'; then
-            hit="${hit:+$hit + }image-direct"
-          fi
-          if echo "$stripped" | awk '
-            /^[[:space:]]*registry:[[:space:]]*["'"'"']?docker\.io/{r=1; next}
-            /^[[:space:]]*repository:[[:space:]]*["'"'"']?bitnami(legacy)?\//{if(r){found=1; exit}}
-            /^[[:space:]]*[a-zA-Z]/{r=0}
-            END{exit !found}'; then
-            hit="${hit:+$hit + }image-split"
-          fi
-          if [ -n "$hit" ]; then
-            violated="$violated\n  - $f ($hit)"
-          fi
-        done
-        if [ -n "$violated" ]; then
-          printf "::ERROR:: ADR-0136 — Bitnami chart/image 재도입 차단$violated\n"
-          echo "우회: BITNAMI_OK=1 git commit (PR 본문 사유 인용 의무)"
-          exit 1
-        fi
-    plan-codex-review-marker:
-      # RFC-0045 §2.5 Plan Adversarial Review L5 prevention.
-      run: |
-        if [ "${PLAN_BYPASS:-0}" = "1" ]; then exit 0; fi
-        marker_re='(codex-review:|codex-skip:|t1-exempt:)'
-        violated=""
-        for f in {staged_files}; do
-          slashes=$(printf '%s' "$f" | tr -cd '/' | wc -c | tr -d ' ')
-          case "$f" in
-            docs/plans/*/INDEX.md|docs/plans/*/HANDOFF.md)
-              [ "$slashes" = "3" ] || continue
-              plan_dir=$(dirname "$f")
-              sibling_has_marker=0
-              for s in "$plan_dir/INDEX.md" "$plan_dir/HANDOFF.md"; do
-                [ -f "$s" ] || continue
-                if grep -qiE "$marker_re" "$s" 2>/dev/null; then
-                  sibling_has_marker=1
-                  break
-                fi
-              done
-              if [ "$sibling_has_marker" = "1" ]; then continue; fi
-              if ! grep -qiE "$marker_re" "$f" 2>/dev/null; then
-                violated="$violated $f"
-              fi
-              continue
-              ;;
-            docs/plans/*.md)
-              [ "$slashes" = "2" ] || continue
-              if ! grep -qiE "$marker_re" "$f" 2>/dev/null; then
-                violated="$violated $f"
-              fi
-              continue
-              ;;
-            *)
-              continue
-              ;;
-          esac
-        done
-        if [ -n "$violated" ]; then
-          echo "::ERROR:: RFC-0045 §2.5 Plan Adversarial Review L5 — plan SSOT marker 부재 차단:"
-          for v in $violated; do echo "  - $v"; done
-          echo "우회: PLAN_BYPASS=1 git commit (PR 본문 사유 인용 의무)"
-          exit 1
-        fi
 
-    # ─── Go stack-specific hook (operator-commons, 2026-05-20) ────────────────
-    # standards/linting.md §8 Go matrix: gofmt (pre-commit) + go vet + golangci-lint (pre-push).
-    # S2 Phase 2 (2026-05-21, ADR-0011): 레거시 .lefthook.yml 통합 — write-staged 동작 (auto-fix).
-    go-fmt:
-      glob: "*.go"
-      run: gofmt -l -w {staged_files}
-      stage_fixed: true
-
-    # ─── RFC-0002 §2 GitHub Actions block — new file addition only (ADR-0012, 2026-05-21) ─────
-    # 신규 .github/workflows/ 파일 *추가* 차단. 기존 파일 *변경* 은 허용 (dependabot 정합).
-    # 우회: PLAN_BYPASS=1 git commit (PR 본문 사유 인용 의무) — RFC-0002 §2 예외 ① / ② / ③.
-    # P2-2 audit 항목 자동 강제 — operator family v3.x-stable 조건 일부.
     gha-block:
+      # GitHub Actions 영구 금지 정책 — `.github/workflows/` 신규 추가 차단.
+      # 기존 파일 변경은 허용 (dependabot 정합). 우회: PLAN_BYPASS=1 (예외 ADR 첨부 의무).
       run: |
         added=$(git diff --cached --name-only --diff-filter=A | grep "^\.github/workflows/" || true)
         if [ -n "$added" ]; then
-          echo "❌ RFC-0002 §2 위반: .github/workflows/ 신규 파일 추가 금지"
+          echo "❌ GitHub Actions 영구 금지: .github/workflows/ 신규 파일 추가 금지"
           echo "   파일: $added"
           echo "   대체: 로컬 4계층 (lefthook + Makefile + 리뷰어 증거)"
-          echo "   예외 (helm-publish/release/scorecard 등) ADR 작성 후 사용자 명시 승인 필요"
           exit 1
         fi
 
 commit-msg:
   commands:
-    commitlint:
-      # Node repo 만 — package.json 부재 시 skip (Go repo 정합).
-      run: |
-        if [ ! -f package.json ]; then exit 0; fi
-        pnpm exec commitlint --edit {1}
-      skip:
-        - rebase
-        - merge
-    memory-md-line-limit:
-      # RFC-0032 P4 §9.8 — MEMORY.md ≤200 line.
-      run: |
-        memfile="$HOME/.claude/projects/-Users-phil-WorkSpace/memory/MEMORY.md"
-        if [ -f "$memfile" ]; then
-          lines=$(wc -l < "$memfile" | tr -d ' ')
-          if [ "$lines" -gt 200 ]; then
-            echo "ERROR: MEMORY.md line count $lines > 200 (standards/adr.md §9.8)"
-            exit 1
-          fi
-        fi
-      skip:
-        - rebase
-        - merge
-    gitlab-mcp-raw-pattern-block:
-      # RFC-0040 §D4 L5 commit-msg stage — gh pr create gitlab... / curl POST 차단.
-      run: |
-        if [ "${GITLAB_MCP_BYPASS:-0}" = "1" ]; then exit 0; fi
-        if grep -q '\[skip-hooks\]' {1}; then exit 0; fi
-        if grep -iE 'RFC-0040|workflow\.md\s*§10|checklist\.md\s*§3|D2-bis|MCP First' {1} >/dev/null 2>&1; then exit 0; fi
-        if grep -iE '(\bgh\s+pr\s+create\b[^\n]*gitlab\.keiailab\.com|curl[^\n]*api/v4/[^\n]*merge_requests[^\n]*(-X\s+POST|--request\s+POST|--data))' {1} >/dev/null 2>&1; then
-          echo "ERROR: RFC-0040 §D2 위반 — raw alternative 흔적 commit message 감지"
-          echo "MUST: mcp__keiailab-gitlab__create_merge_request 호출"
-          exit 1
-        fi
-      skip:
-        - rebase
-        - merge
-    naming-policy-block:
-      # Goal §9 (mailstory cycle) — R1/R2 식별 토큰 차단.
-      run: |
-        if grep -q '\[skip-hooks\]' {1}; then exit 0; fi
-        if grep -iE '\b(stalwart|stalw|agentmail|agent-mail|agent_mail|agentmail\.to)\b' {1} >/dev/null 2>&1; then
-          echo "ERROR: NAMING POLICY — R1/R2 식별 토큰 commit-msg 금지"
-          echo "       대신 'R1' / 'R2' / 'reference service' 익명 코드 사용"
-          exit 1
-        fi
-      skip:
-        - rebase
-        - merge
-    # S2 Phase 2 (2026-05-21, ADR-0011): 레거시 .lefthook.yml 통합 — Conventional Commits + DCO.
-    # commitlint 는 Node repo 만 (package.json 부재 시 skip) — Go-only repo 정합으로 본 hook 추가.
     conventional-commits:
       run: |
         if ! grep -qE "^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\(.+\))?!?: .+" "{1}"; then
@@ -311,9 +63,9 @@ commit-msg:
       skip:
         - rebase
         - merge
+
     dco-signoff:
-      # S2 Phase 2 (2026-05-21, ADR-0011): 레거시 .lefthook.yml A-P0-5 통합.
-      # DCO Signed-off-by enforce by default. DCO_STRICT=0 으로 일시 우회.
+      # DCO Signed-off-by 강제. DCO_STRICT=0 으로 임시 우회.
       run: |
         if ! grep -qE '^Signed-off-by: .+ <.+@.+>' "{1}"; then
           if [ "${DCO_STRICT:-1}" = "1" ]; then
@@ -330,65 +82,6 @@ commit-msg:
 pre-push:
   parallel: true
   commands:
-    typecheck-py:
-      glob: "*.py"
-      run: uv run mypy --strict --pretty {staged_files} || true
-    typecheck-ts:
-      glob: "*.{ts,tsx}"
-      run: pnpm exec tsc --noEmit
-      skip: { ref: hotfix/* }
-    gitlab-force-push-rebase-warn:
-      # RFC-0035 §D2-bis — force-push warning (squash empty cascade seal).
-      run: |
-        if [ "${GITLAB_FORCE_PUSH_OK:-0}" = "1" ]; then exit 0; fi
-        branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
-        remote_ref="origin/$branch"
-        if git rev-parse --verify "$remote_ref" >/dev/null 2>&1; then
-          behind=$(git rev-list --count "HEAD..$remote_ref" 2>/dev/null || echo 0)
-          if [ "$behind" -gt "0" ]; then
-            echo "::WARNING:: force-push 위험 — local '$branch' 가 origin/$branch 보다 $behind commit 뒤."
-          fi
-        fi
-    dirty-merged-worktree-warn:
-      # RFC-0029 layer 5 instance #19 — dirty merged worktree warn-only.
-      run: |
-        if [ "${DIRTY_WORKTREE_OK:-0}" = "1" ]; then exit 0; fi
-        default_ref=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/||')
-        [ -z "$default_ref" ] && exit 0
-        default_branch=$(echo "$default_ref" | sed 's|^origin/||')
-        tmpf=$(mktemp -t dirty-merged-wt.XXXXXX) || exit 0
-        trap 'rm -f "$tmpf"' EXIT
-        git worktree list --porcelain | awk '
-          /^worktree / {wt=$2}
-          /^branch / {br=$2; sub("refs/heads/","",br); print wt"\t"br}
-        ' > "$tmpf"
-        violations=0
-        while IFS="	" read -r wt br; do
-          [ -z "$wt" ] && continue
-          [ "$br" = "$default_branch" ] && continue
-          [ -d "$wt" ] || continue
-          if git branch --merged "$default_ref" --list "$br" 2>/dev/null | grep -q .; then
-            if [ -n "$(git -C "$wt" status --porcelain 2>/dev/null)" ]; then
-              echo "::WARNING:: dirty merged worktree — $wt (branch '$br' 머지 후 dirty)"
-              violations=$((violations+1))
-            fi
-          fi
-        done < "$tmpf"
-        exit 0
-    gitlab-mcp-bypass-block:
-      # RFC-0040 L5 — gitlab.keiailab.com origin + stable branch direct push 차단.
-      # operator-commons 는 origin=github → 본 hook 미적용.
-      run: |
-        origin=$(git config --get remote.origin.url 2>/dev/null || echo "")
-        branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
-        if echo "$origin" | grep -q "gitlab.keiailab.com" && [ "$branch" = "stable" ]; then
-          if [ "${GITLAB_MCP_BYPASS:-0}" != "1" ]; then
-            echo "::ERROR:: RFC-0040 §2.4 위반 — gitlab.keiailab.com origin 의 stable direct push"
-            exit 1
-          fi
-        fi
-
-    # ─── Go stack-specific pre-push (operator-commons, 2026-05-20) ───────────
     go-vet:
       glob: "*.go"
       run: |
@@ -396,7 +89,6 @@ pre-push:
         go vet ./...
 
     go-test:
-      # Go test — race detector + short mode (long-running 회피).
       glob: "*.go"
       run: |
         cd "$(git rev-parse --show-toplevel)"
@@ -412,10 +104,7 @@ pre-push:
           echo "golangci-lint not installed — graceful degrade skip"
         fi
 
-    # S2 Phase 2 (2026-05-21, ADR-0011): 레거시 .lefthook.yml 통합 — Go module CVE + drift.
     govulncheck:
-      # Go module CVE — call graph 기반. library 다운스트림 (3 operator) 보호.
-      # 설치: go install golang.org/x/vuln/cmd/govulncheck@latest
       run: |
         if command -v govulncheck >/dev/null 2>&1; then
           cd "$(git rev-parse --show-toplevel)"
@@ -425,7 +114,6 @@ pre-push:
         fi
 
     go-mod-tidy:
-      # go.mod / go.sum drift 차단 (배포 신뢰성 게이트).
       run: |
         cd "$(git rev-parse --show-toplevel)"
         cp go.mod /tmp/.go.mod.commons.bak
@@ -440,22 +128,6 @@ pre-push:
         fi
         rm -f /tmp/.go.mod.commons.bak /tmp/.go.sum.commons.bak
 
-    # S4 Phase 2 (2026-05-21, docs/specs/2026-05-21-i18n-4lang-master-design.md §4.3):
-    # README 4-lang drift check — EN canonical ↔ {ko,ja,zh}. pre-push 위치 (commit 마찰 회피).
-    readme-i18n-sync:
-      glob: "README*.md"
-      run: |
-        cd "$(git rev-parse --show-toplevel)"
-        if [ -x scripts/check-readme-sync.sh ]; then
-          bash scripts/check-readme-sync.sh
-        else
-          echo "[warn] scripts/check-readme-sync.sh 부재 — i18n drift check skip"
-        fi
-
-    # ─── audit P1-12 + P1-13 보강 (2026-05-21, ADR-0013 + ADR-0015) ───────────
-    # go-licenses + markdown-link-check 의 lefthook pre-push 통합 — operator
-    # family 3 operator 와 일관성. forgewise (Python) 는 N/A. 본 hook 은
-    # *경고만* (Go Module 라이브러리 + library Helm chart, 운영 제품 아님).
     go-licenses:
       glob: "*.go"
       run: |
@@ -464,6 +136,7 @@ pre-push:
         else
           echo "[info] go-licenses 미설치 (go install github.com/google/go-licenses@latest) — skip"
         fi
+
     markdown-link-check:
       glob: "*.md"
       run: |
@@ -475,13 +148,20 @@ pre-push:
           echo "[info] markdown-link-check 미설치 (npm i -g markdown-link-check) — skip"
         fi
 
+    readme-i18n-sync:
+      glob: "README*.md"
+      run: |
+        cd "$(git rev-parse --show-toplevel)"
+        if [ -x scripts/check-readme-sync.sh ]; then
+          bash scripts/check-readme-sync.sh
+        else
+          echo "[warn] scripts/check-readme-sync.sh 부재 — i18n drift check skip"
+        fi
+
 post-merge:
   commands:
-    deps-log:
-      run: bash $(git rev-parse --show-toplevel)/.githooks/deps-log.sh || true
-
-    # RFC-0046 L5 — auto branch cleanup (gone + merged local prune).
     auto-branch-cleanup:
+      # main 머지 후 gone + merged 로컬 브랜치 자동 정리.
       run: |
         if [ "${AUTO_CLEANUP_OFF:-0}" = "1" ]; then exit 0; fi
         cd "$(git rev-parse --show-toplevel)" || exit 0
@@ -503,5 +183,5 @@ post-merge:
           fi
         done
         if [ "$pruned" -gt 0 ]; then
-          echo "RFC-0046 auto-branch-cleanup: pruned $pruned stale local branches" 1>&2
+          echo "auto-branch-cleanup: pruned $pruned stale local branches" 1>&2
         fi

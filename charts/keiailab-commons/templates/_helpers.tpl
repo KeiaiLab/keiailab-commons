@@ -1,10 +1,10 @@
 {{/*
 keiailab-commons — Helm library chart helper partial.
 
-Plan §2 D14 (Sprint B PR-B2) — RFC-0019 §3.1 implementation.
+기반 library chart partial 표준 implementation.
 
-본 chart 는 type: library — consumer chart (mongodb-operator /
-postgres-operator / valkey-operator) 가 dependency 로 import 후 include
+본 chart 는 type: library — consumer chart (downstream operator /
+downstream operator / downstream operator) 가 dependency 로 import 후 include
 호출.
 
 Provided helpers:
@@ -12,18 +12,18 @@ Provided helpers:
   - keiailab.observability.serviceMonitor     — ServiceMonitor 공통 spec.
 
 future helpers (별 PR):
-  - keiailab.networkpolicy.dataplane          — RFC-0019 §3.2
-  - keiailab.networkpolicy.controlplane       — RFC-0019 §3.2
-  - keiailab.security.podSecurityRestricted   — RFC-0019 §3.4
-  - keiailab.rbac.serviceAccount              — RFC-0019 §3.5
-  - keiailab.rbac.controllerBase              — RFC-0019 §3.5
+  - keiailab.networkpolicy.dataplane          — library chart partial 표준
+  - keiailab.networkpolicy.controlplane       — library chart partial 표준
+  - keiailab.security.podSecurityRestricted   — library chart partial 표준
+  - keiailab.rbac.serviceAccount              — library chart partial 표준
+  - keiailab.rbac.controllerBase              — library chart partial 표준
 */}}
 
 
 {{/*
 keiailab.commonLabels — Helm 표준 공통 label set.
 
-4-repo operator chart 에서 동일 적용 — kubectl 검색 정합성 보장.
+downstream consumer operator chart 에서 동일 적용 — kubectl 검색 정합성 보장.
 컨벤션: Kubernetes Recommended Labels
 (https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/).
 
@@ -61,9 +61,9 @@ keiailab.observability.serviceMonitor — Prometheus Operator ServiceMonitor
 
   {{- include "keiailab.observability.serviceMonitor" (dict
       "ctx" .
-      "fullname" (include "mongodb-operator.fullname" .)
-      "labels" (include "mongodb-operator.labels" .)
-      "selectorLabels" (include "mongodb-operator.selectorLabels" .)) }}
+      "fullname" (include "downstream-operator.fullname" .)
+      "labels" (include "downstream-operator.labels" .)
+      "selectorLabels" (include "downstream-operator.selectorLabels" .)) }}
 */}}
 {{- define "keiailab.observability.serviceMonitor" -}}
 {{- $ctx := .ctx -}}

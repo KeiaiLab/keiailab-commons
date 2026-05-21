@@ -48,7 +48,7 @@ markdown-link-check:
 ## Consequences
 
 - ✅ audit P1-12 + P1-13 commons ✅ 적용
-- ✅ operator family 3 operator + commons 일관성 (downstream component 는 Python — go-licenses N/A)
+- ✅ operator family downstream operator + commons 일관성 (downstream component 는 Python — go-licenses N/A)
 - ⚠️ go-licenses + markdown-link-check 미설치 시 *skip* — 실 차단 아님 (경고만)
   - 개발자 워크플로 마찰 회피
   - CI (현재 GHA 영구 금지로 부재) 부재 대체로 충분치 않음 — 후속 cycle 에서 install 강제 검토

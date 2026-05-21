@@ -1,6 +1,6 @@
 // Package networkpolicy — Kubernetes NetworkPolicy builder.
 //
-// 3 keiailab operator 의 공통 패턴:
+// downstream operator 의 공통 패턴:
 //   - deny-by-default (PolicyTypes 명시)
 //   - 같은 인스턴스 pod 간 ingress 허용 (self-peer)
 //   - 추가 peers (PodSelector / NamespaceSelector matchLabels)

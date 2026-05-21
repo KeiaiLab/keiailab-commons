@@ -10,7 +10,7 @@
 ADR-0005/0006 (PR-B2/B6) 이 commons library chart 의 §3.1 (ServiceMonitor +
 commonLabels) + §3.2 (NetworkPolicy) 구축. 본 ADR 은 §3.5 (RBAC partials).
 
-4-repo (mongodb / postgres / valkey operator) 의 RBAC YAML 분석:
+downstream consumer (mongodb / postgres / valkey operator) 의 RBAC YAML 분석:
 - 공통 verb set (~80 LOC): leader-election (`coordination.k8s.io/leases`),
   events (core + events.k8s.io), 자체 service watch, managed workload
   (apps/statefulsets, deployments) + dependent (core/services, configmaps,
@@ -39,7 +39,7 @@ commonLabels) + §3.2 (NetworkPolicy) 구축. 본 ADR 은 §3.5 (RBAC partials).
 
 4. **PR 분할**:
    - **PR-C1** (본 PR): commons partials + chart v0.3.0.
-   - **PR-C2~C4** (별 PR, 3 operator): RBAC yaml 의 base verb 들이
+   - **PR-C2~C4** (별 PR, downstream operator): RBAC yaml 의 base verb 들이
      `controllerBase` / `workloadBase` partial include 로 교체. delta
      CRD-specific rules 만 자체 yaml 보존.
 
@@ -47,7 +47,7 @@ commonLabels) + §3.2 (NetworkPolicy) 구축. 본 ADR 은 §3.5 (RBAC partials).
 
 ### Positive
 
-- 4-repo 공통 RBAC ~80 LOC 추출 — single source. duplicate verb 의 사일런
+- downstream consumer 공통 RBAC ~80 LOC 추출 — single source. duplicate verb 의 사일런
   drift 차단.
 - `controllerBase` 가 *명시적 인텐트* — 새 operator 추가 시 RBAC 표준
   채택 가능 (tooling unification 정책 §3.3 lint 위반 방지).
@@ -80,5 +80,5 @@ commonLabels) + §3.2 (NetworkPolicy) 구축. 본 ADR 은 §3.5 (RBAC partials).
 
 - Helm library chart 정책 §3.5.
 - ADR-0005 (§3.1), ADR-0006 (§3.2).
-- Plan §2 D15 (Sprint C PR-C1).
+- 구현 결정.
 - 후속 PR-C2 (mongodb) / PR-C3 (postgres) / PR-C4 (valkey): RBAC partial 채택.

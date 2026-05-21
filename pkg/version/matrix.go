@@ -1,10 +1,10 @@
-// matrix.go — generic Matrix[E MatrixEntry] 구조 (Plan §2 D12, ADR-0004).
+// matrix.go — generic Matrix[E MatrixEntry] 구조 (ADR-0004).
 //
-// postgres-operator 의 internal/version/matrix.go 의 Combo / Channel /
+// downstream operator 의 internal/version/matrix.go 의 Combo / Channel /
 // FeatureGate 같은 *struct entry* 패턴을 표준화. 단순 []string 화이트리스트
 // (기존 List) 와 별개로 *rich entry* 표현 필요 시 사용.
 //
-// 사용 예 (postgres-operator/internal/version/matrix.go):
+// 사용 예 (downstream operator version matrix source):
 //
 //	type Combo struct {
 //	    Major   string  // PG major version (예: "16")

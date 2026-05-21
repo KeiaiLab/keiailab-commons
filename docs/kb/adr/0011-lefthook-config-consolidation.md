@@ -33,7 +33,7 @@ lefthook CLI 는 `lefthook.yml` 을 우선 로드하고 `.lefthook.yml` 은 *fal
 
 - (+) Go 가드 (gofmt write-staged) 가 pre-commit 시점에 *auto-fix* 적용 (개발자 마찰 0).
 - (+) Conventional Commits + DCO 가 Go-only repo 에서도 강제 (GitHub Actions 차단 정책 §1 로컬 4계층 정합).
-- (+) Go module CVE 가드 (govulncheck) 활성 — library 다운스트림 (3 operator) 보호.
+- (+) Go module CVE 가드 (govulncheck) 활성 — library 다운스트림 (downstream operator) 보호.
 - (+) go.mod / go.sum drift 차단 — 배포 신뢰성 게이트.
 - (+) 설정 파일 1개 = drift 발생 가능성 0.
 - (+) template SSOT (sub-repo drift 정책 §6.5 sync drift seal) 정합.

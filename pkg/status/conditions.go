@@ -1,7 +1,7 @@
-// Package status 는 4-repo keiailab operator 공통 Condition Type / Reason
+// Package status 는 downstream consumer keiailab operator 공통 Condition Type / Reason
 // 카탈로그 + apimeta.SetStatusCondition 헬퍼를 제공한다.
 //
-// 본 패키지는 RFC-0018 §3.1 의 spec 을 구현한다. postgres-operator 의
+// 본 패키지는 pkg/status 표준 의 spec 을 구현한다. downstream operator 의
 // internal/controller/status.go 패턴 + Kubernetes deployment controller
 // 관용구 (KEP-1623) 를 표준으로 채택.
 //
@@ -13,7 +13,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// 표준 Condition Type — kubectl describe 출력 정합성을 위해 4-repo 동일.
+// 표준 Condition Type — kubectl describe 출력 정합성을 위해 downstream consumer 동일.
 //
 // 운영자가 4 operator 모두에서 같은 키워드 (Ready / Progressing / Degraded /
 // Available) 로 검색 가능.
@@ -30,7 +30,7 @@ const (
 	TypeAvailable = "Available"
 )
 
-// 표준 Reason 카탈로그 — postgres-operator ADR-0009 패턴 + Kubernetes
+// 표준 Reason 카탈로그 — downstream operator conditions 패턴 + Kubernetes
 // deployment controller 관용구. Reason 은 *기계 가독* 식별자이므로
 // PascalCase + 의미 안정성 보장.
 const (
@@ -102,7 +102,7 @@ func SetDegraded(conditions *[]metav1.Condition, reason, message string, observe
 // 통과 후 호출. Ready 보다 약한 신호 (operator 의 reconcile 완료 vs 외부
 // 호출 가능).
 //
-// 4-repo 정합 패턴: SetReady=True 직후 SetAvailable=True 호출. reconcile
+// downstream consumer 정합 패턴: SetReady=True 직후 SetAvailable=True 호출. reconcile
 // 진입 시점에는 SetReady=False/Progressing 만 호출하고 Available 은 변경
 // 안 함 (외부 client 의 기존 연결 유지).
 func SetAvailable(

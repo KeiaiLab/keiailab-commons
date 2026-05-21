@@ -2,12 +2,6 @@
 # scripts/i18n-translate.sh
 # Claude API 추상화 wrapper — 자동 번역 파이프라인 (skeleton, S4 Phase 1).
 #
-# S4 spec (docs/specs/2026-05-21-i18n-4lang-master-design.md §4.2.3) 명세:
-#   1. CLI: ./scripts/i18n-translate.sh <source.md> [--lang ko|ja|zh|all] [--engine deepl|openai|claude|google]
-#   2. glossary forced injection (코드 식별자 보호 + 표준 용어 일관성)
-#   3. 엔진 호출 (D1 결정: Claude direct — Sonnet 4.5)
-#   4. 결과 검증 (line count / section header / cross-link)
-#   5. 출력: <source>.<lang>.md + `[~]` marker + translate-log
 #
 # 본 cycle (S4 Phase 1) 에서는 *문서 + 자동화 골격* 만 작성.
 # 실제 API 호출 구현은 별 sub-cycle (S4 Phase 4-6 의 batch 번역 시).

@@ -49,7 +49,7 @@ downstream operator 와 downstream operator 가 *서로 다른 두 NetworkPolicy
 
 - mongodb 의 networkpolicy 미존재 차단 — PR-B7 가 commons partial 로
   단순 추가 가능.
-- 4-repo NetworkPolicy 정합성 — 동일 default-deny + allow-internal
+- downstream consumer NetworkPolicy 정합성 — 동일 default-deny + allow-internal
   semantics.
 - chart v0.2.0 backward 호환 — v0.1.0 사용자 영향 없음 (partial 추가만).
 
@@ -71,7 +71,7 @@ downstream operator 와 downstream operator 가 *서로 다른 두 NetworkPolicy
    - dict 인자 분기 복잡. 두 partials 가 *명시적*.
 
 2. **partial 미추출, 각 chart 자체 유지** — 거부.
-   - 4-repo cross-cut drift 위험 (tooling unification 정책 §3.3 lint 위반).
+   - downstream consumer cross-cut drift 위험 (tooling unification 정책 §3.3 lint 위반).
    - mongodb chart 의 networkpolicy 부재 차단 path 부재.
 
 ## Refs
@@ -80,5 +80,5 @@ downstream operator 와 downstream operator 가 *서로 다른 두 NetworkPolicy
 - ADR-0005 (commons): §3.1 implementation.
 - downstream operator/charts/downstream operator/templates/networkpolicy.yaml (dataplane reference).
 - downstream operator/charts/downstream operator/templates/networkpolicy.yaml (controlplane reference).
-- Plan §2 D13 (Sprint B PR-B6).
+- 구현 결정.
 - 후속 PR-B7 (mongodb networkpolicy.yaml 신규) / PR-B8 (postgres+valkey 기존 → partial include).

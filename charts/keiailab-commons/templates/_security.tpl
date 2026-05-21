@@ -1,10 +1,10 @@
 {{/*
-keiailab-commons — PodSecurity Restricted partials (RFC-0019 §3.4).
+keiailab-commons — PodSecurity Restricted partials (library chart partial 표준).
 
-Plan §2 D14 / commons-ADR-0008.
+기반: commons-ADR-0008.
 
 K8s Pod Security Standards "restricted" profile (PSS Restricted) 의
-표준 SecurityContext / ContainerSecurityContext 출력. 4-repo (mongodb /
+표준 SecurityContext / ContainerSecurityContext 출력. downstream consumer (mongodb /
 postgres / valkey operator) 의 *manager pod* 보안 표준화.
 
 reference: https://kubernetes.io/docs/concepts/security/pod-security-standards/

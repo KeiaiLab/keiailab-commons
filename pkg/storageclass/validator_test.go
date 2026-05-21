@@ -149,7 +149,7 @@ func TestMustNormalize_invalidPanics(t *testing.T) {
 func TestPostgresOperatorStorageClassPtrPattern(t *testing.T) {
 	t.Parallel()
 
-	// Replaces: postgres-operator storageClassPtr() helper pattern.
+	// Replaces: downstream operator storageClassPtr() helper pattern.
 	// Pattern: empty → nil (cluster default), non-empty → &string.
 
 	cases := []struct {

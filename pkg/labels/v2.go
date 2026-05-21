@@ -23,7 +23,7 @@ const (
 // 사용 예:
 //
 //	labels := labels.AllV2(set, labels.V2{
-//	    CreatedBy: "valkey-operator",
+//	    CreatedBy: "downstream-operator",
 //	    Tier:      "cache",
 //	    Owner:     "platform-team",
 //	})
@@ -43,7 +43,7 @@ func (s Set) AllV2(v2 V2) map[string]string {
 
 // V2 는 K8s 1.30+ v2 라벨 매핑.
 type V2 struct {
-	// CreatedBy — controller / tool 이름 (e.g. "valkey-operator").
+	// CreatedBy — controller / tool 이름 (e.g. "downstream-operator").
 	CreatedBy string
 	// Tier — 컴포넌트 tier (e.g. "cache").
 	Tier string

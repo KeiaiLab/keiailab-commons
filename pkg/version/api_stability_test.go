@@ -17,7 +17,7 @@ func (s stableTestEntry) PrimaryKey() string { return s.Key }
 
 // TestAPIStability — public API surface 가 v0.x 진화에서 유지되는지 확인.
 //
-// 본 테스트는 3-repo (mongodb / valkey / postgres) 의 호출 패턴을 모방한
+// 본 테스트는 downstream (mongodb / valkey / postgres) 의 호출 패턴을 모방한
 // *cross-version compatibility 표면 가드*. ROADMAP §"Cross-version
 // compatibility test — 3 repo CI 통합" 의 first slice.
 //

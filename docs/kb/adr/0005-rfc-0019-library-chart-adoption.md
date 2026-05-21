@@ -7,7 +7,7 @@
 
 ## Context
 
-4-repo (mongodb / postgres / valkey operator) Helm chart 의 *공통 partial*
+downstream consumer (mongodb / postgres / valkey operator) Helm chart 의 *공통 partial*
 중복 (~230 LOC, Helm library chart 정책 §Motivation). Helm library chart 패키징 표준으로
 *single source* 로 통합.
 
@@ -43,7 +43,7 @@
 
 ### Positive
 
-- 4-repo cross-cut partial 중복 제거 path 구축. PR-B4/B5 에서 mongodb /
+- downstream consumer cross-cut partial 중복 제거 path 구축. PR-B4/B5 에서 mongodb /
   valkey 의 servicemonitor.yaml 이 partial include 로 전환 가능.
 - *single source* 로 정정 — kubectl 검색 정합성 강제.
 - Helm 표준 library chart — ArgoCD GitOps 흐름과 정합.
@@ -67,7 +67,7 @@
      type 이 정확.
 
 2. **각 chart 의 _helpers.tpl 에 cp 유지** — 거부.
-   - 4-repo drift 위험. tooling unification 정책 §3.3 lint 위반.
+   - downstream consumer drift 위험. tooling unification 정책 §3.3 lint 위반.
 
 3. **public Helm repo (Bitnami chart-base 등) 사용** — 거부.
    - keiailab 도메인 표준 (commonLabels 의 prefix 등) 외부 chart 와
@@ -76,6 +76,6 @@
 ## Refs
 
 - Helm library chart 정책 §3.1: commonLabels + ServiceMonitor partial 표준.
-- Plan §2 D14 (Sprint B PR-B2).
+- 구현 결정.
 - 후속 OCI publish: PR-B2.2 (별 PR).
 - Helm library chart: <https://helm.sh/docs/topics/library_charts/>

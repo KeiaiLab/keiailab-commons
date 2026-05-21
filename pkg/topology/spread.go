@@ -5,7 +5,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// 기본 임계값 / topology key — 3 operator 의 통합 default.
+// 기본 임계값 / topology key — downstream operator 의 통합 default.
 const (
 	// DefaultMinReplicas 는 default TSC 를 자동 주입하기 위한 *최소 replica 수*
 	// 의 기본값이다. 본 값 미만 시 nil 반환 (single pod 환경 spread 무의미).

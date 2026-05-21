@@ -23,10 +23,10 @@ operator-commons 使用 3-tier 稳定性:
 | `pkg/finalizer` | Stable | (v1 entry — 无需追加工作) |
 | `pkg/labels` | Stable | (v1 entry) |
 | `pkg/status` | Stable | (v1 entry) |
-| `pkg/version` | Beta | Generic `Matrix[E]` 3-repo verify |
-| `pkg/monitoring` | Beta | ServiceMonitor 3-repo e2e |
+| `pkg/version` | Beta | Generic `Matrix[E]` downstream verify |
+| `pkg/monitoring` | Beta | ServiceMonitor downstream e2e |
 | `pkg/networkpolicy` | Beta | 4-direction TCP/UDP verify |
-| `pkg/security` | Beta | restricted PSA 3-repo guard |
+| `pkg/security` | Beta | restricted PSA downstream guard |
 | `pkg/webhook` | Experimental | Multi-repo adoption + stabilize |
 
 ## 升级流程
@@ -68,7 +68,7 @@ operator-commons 使用 3-tier 稳定性:
 2. 在 6+ 连续 minor release (v0.8 → v0.13) 中 BREAKING CHANGE 为 0
 3. godoc coverage ≥80% (本文档 + per-package — 用 `scripts/godoc-coverage.sh` 验证)
 4. CITATION.cff + Zenodo DOI
-5. `v1.0.0-rc.N` 的 3-repo import e2e 验证
+5. `v1.0.0-rc.N` 的 downstream import e2e 验证
 6. `go vet ./... && go test ./...` clean + coverage ≥85%
 7. CHANGELOG.md v0.x evolution history + v1.0.0 release notes
 8. 本 `docs/STABILITY.md` (当前文件)

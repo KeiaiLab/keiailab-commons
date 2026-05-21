@@ -23,17 +23,17 @@ operator-commons は 3-tier 安定性を使用します:
 | `pkg/finalizer` | Stable | (v1 entry — 追加作業無し) |
 | `pkg/labels` | Stable | (v1 entry) |
 | `pkg/status` | Stable | (v1 entry) |
-| `pkg/version` | Beta | Generic `Matrix[E]` 3-repo verify |
-| `pkg/monitoring` | Beta | ServiceMonitor 3-repo e2e |
+| `pkg/version` | Beta | Generic `Matrix[E]` downstream verify |
+| `pkg/monitoring` | Beta | ServiceMonitor downstream e2e |
 | `pkg/networkpolicy` | Beta | 4-direction TCP/UDP verify |
-| `pkg/security` | Beta | restricted PSA 3-repo guard |
+| `pkg/security` | Beta | restricted PSA downstream guard |
 | `pkg/webhook` | Experimental | Multi-repo adoption + stabilize |
 
 ## 昇格プロセス
 
 1. Sub-task PR が昇格提案と共に open (例: `feat(pkg/X): promote to Stable`)
 2. 昇格基準 (ROADMAP 基準) を CI で検証:
-   - Cross-repo import passes (3 operator)
+   - Cross-repo import passes (downstream operator)
    - パッケージ godoc coverage ≥80%
    - Unit + integration test coverage ≥85%
    - exported API に `// TODO` / `// FIXME` 無し
@@ -68,7 +68,7 @@ operator-commons は 3-tier 安定性を使用します:
 2. 6+ 連続 minor release (v0.8 → v0.13) で BREAKING CHANGE 0
 3. godoc coverage ≥80% (本文書 + per-package — `scripts/godoc-coverage.sh` で検証)
 4. CITATION.cff + Zenodo DOI
-5. `v1.0.0-rc.N` の 3-repo import e2e 検証
+5. `v1.0.0-rc.N` の downstream import e2e 検証
 6. `go vet ./... && go test ./...` clean + coverage ≥85%
 7. CHANGELOG.md v0.x evolution history + v1.0.0 release notes
 8. 本 `docs/STABILITY.md` (現在のファイル)

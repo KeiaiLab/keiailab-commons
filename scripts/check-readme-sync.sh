@@ -6,8 +6,6 @@
 #   기존 EN↔KO 한정 → EN↔{KO,JA,ZH} 매트릭스 확장.
 #   언어별 임계값 (한자 압축 반영): KO=15% / JA=25% / ZH=30%.
 #
-# 원본: PR2 (`docs/readme-i18n-ko`, 2026-05-20) — RFC-0045 §2.5 Codex challenge #3
-#       drift control codify. lefthook pre-commit `readme-i18n-sync` hook sister.
 #
 # 검사 항목 (per target lang):
 #   1. 양 file 존재

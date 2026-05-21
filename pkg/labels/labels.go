@@ -1,6 +1,6 @@
 // Package labels — recommended Kubernetes labels (app.kubernetes.io/*) builder.
 //
-// 3 keiailab operator 가 동일 convention 으로 label 부여:
+// downstream operator 가 동일 convention 으로 label 부여:
 //
 //	commonsabels.New("mongodb", instance, "controller-manager", "1.4.6", "downstream operator")
 //	→ {

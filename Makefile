@@ -1,4 +1,4 @@
-# operator-commons Makefile — RFC-0017 §3.3 표준 타겟 (라이브러리 특성).
+# operator-commons Makefile — 라이브러리 표준 타겟.
 # 본 라이브러리는 cmd/main.go 부재 → build/run/deploy 타겟 없음.
 # 필수 타겟: lint, test, audit (validate, sbom 제외).
 
@@ -43,10 +43,6 @@ audit: ## govulncheck (Go module CVE call-graph 검사)
 	@command -v govulncheck >/dev/null || { echo "[warn] govulncheck 미설치 — go install golang.org/x/vuln/cmd/govulncheck@latest" >&2; exit 0; }
 	govulncheck ./...
 
-.PHONY: audit-quality
-audit-quality: ## 5 repo production-grade 자동 측정 (P0/P1/P2/OP/C 50+ 항목, ADR-0013)
-	@bash scripts/audit-production-grade.sh
-
 .PHONY: tidy
 tidy: ## go mod tidy + diff 검사 (drift 차단)
 	@cp go.mod /tmp/.gomod.bak; cp go.sum /tmp/.gosum.bak
@@ -63,9 +59,9 @@ tidy: ## go mod tidy + diff 검사 (drift 차단)
 .PHONY: tag
 tag: ## annotated tag 생성 안내 (수동 — v0.X.Y 인자 필요)
 	@echo "사용법: git tag -a v0.X.Y -m 'release v0.X.Y' && git push origin v0.X.Y"
-	@echo "후속: 3 consumer operator 의 go.mod require 버전 bump PR 작성"
+	@echo "후속: downstream consumer 의 go.mod require 버전 bump PR 작성"
 
 .PHONY: release
-release: ## 자동 release pipeline (scripts/release.sh, ADR-0014). 사용: make release VERSION=v0.8.0
-	@[ -n "$(VERSION)" ] || { echo "Usage: make release VERSION=v0.8.0"; exit 1; }
+release: ## 자동 release pipeline (scripts/release.sh). 사용: make release VERSION=v0.9.0
+	@[ -n "$(VERSION)" ] || { echo "Usage: make release VERSION=v0.9.0"; exit 1; }
 	bash scripts/release.sh $(VERSION)

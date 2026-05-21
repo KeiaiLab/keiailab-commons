@@ -41,7 +41,7 @@ Consumer migration 자체는 각 repo 별 신규 ADR 에서 추적 (mongodb/valk
 
 ### Positive
 
-- 3 operator 가 v0.6.0 import 후 `SetAvailable` 사용 가능 — Phase 보고
+- downstream operator 가 v0.6.0 import 후 `SetAvailable` 사용 가능 — Phase 보고
   표준화 (Endpoint 가용성 신호 분리).
 - `SetReadyFalse` 가 가장 빈번한 reconcile 실패 호출 패턴의 가독성
   향상 — 5 줄 → 2 줄.
@@ -50,14 +50,14 @@ Consumer migration 자체는 각 repo 별 신규 ADR 에서 추적 (mongodb/valk
 
 ### Negative
 
-- API 표면 +2 함수 — 4-repo 통일 가치가 슈가 비용 정당화.
+- API 표면 +2 함수 — downstream consumer 통일 가치가 슈가 비용 정당화.
 - `EnsureRemoval` 부재로 인해 호출자 측 boilerplate 2 줄 유지 — 단,
   controller-runtime 미의존 원칙 보존이 더 큰 가치.
 
 ### Trade-offs
 
 - *commons API 추가 최소화* (본 ADR) vs *호출자 편의 극대화* (`EnsureRemoval`
-  추가, 거부됨) — `pkg/finalizer` 의 zero-dep 원칙이 4-repo cross-cut
+  추가, 거부됨) — `pkg/finalizer` 의 zero-dep 원칙이 downstream consumer cross-cut
   무게에서 우위.
 - *generic 4종 ConditionType 만 표준화* (pkg/status + pkg/finalizer 표준 §3.3) vs *전체
   도메인 ConditionType 표준화* — 후자는 무관 type 의 strawman 노출.
@@ -68,7 +68,7 @@ Consumer migration 자체는 각 repo 별 신규 ADR 에서 추적 (mongodb/valk
    - controller-runtime `client.Client` 의존 → 미의존 원칙 위반.
    - sub-package 분리 비용 > 두 줄 호출자 boilerplate 비용.
 2. **`SetReady` 시그니처 변경 (variadic options)** — 거부.
-   - 기존 호출자 모두 깨짐 (3 operator 가 v0.6.0 bump 시 일괄 수정 필요).
+   - 기존 호출자 모두 깨짐 (downstream operator 가 v0.6.0 bump 시 일괄 수정 필요).
    - 슈가 2종 추가가 동일 가치를 호환 보존하며 제공.
 3. **`pkg/condition` 신규 패키지로 분리** — 거부.
    - `pkg/status` 가 이미 적합한 이름. 분리 시 import 표면 증가.

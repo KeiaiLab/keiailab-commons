@@ -1,6 +1,6 @@
 // Package webhook — admission validation 보조 helpers.
 //
-// 3 keiailab operator 의 webhook validation 공통 패턴:
+// downstream operator 의 webhook validation 공통 패턴:
 //
 //	if v.Spec.Version.Version != "" && !IsSupported(v.Spec.Version.Version) {
 //	    errs = append(errs, field.NotSupported(path, value, allowedList))
