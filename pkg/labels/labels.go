@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Package labels — recommended Kubernetes labels (app.kubernetes.io/*) builder.
 //
 // downstream operator 가 동일 convention 으로 label 부여:

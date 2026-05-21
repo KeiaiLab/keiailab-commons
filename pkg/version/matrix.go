@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // matrix.go — generic Matrix[E MatrixEntry] 구조 (ADR-0004).
 //
 // downstream operator 의 internal/version/matrix.go 의 Combo / Channel /

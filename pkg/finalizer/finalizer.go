@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Package finalizer 는 downstream consumer keiailab operator 공통 Finalizer 헬퍼를
 // 제공한다.
 //

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Stability: Experimental.
 //
 // 본 패키지는 keiailab operator 3종 (postgres / mongodb / valkey) 의

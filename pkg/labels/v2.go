@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 package labels
 
 // V2 추가 라벨 — Kubernetes 1.30+ Recommended labels v2 mapping.

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Package storageclass provides DNS-1123 subdomain validation and
 // nil-pointer normalization for K8s StorageClass name fields.
 //

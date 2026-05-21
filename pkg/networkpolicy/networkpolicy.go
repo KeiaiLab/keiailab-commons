@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Package networkpolicy — Kubernetes NetworkPolicy builder.
 //
 // downstream operator 의 공통 패턴:

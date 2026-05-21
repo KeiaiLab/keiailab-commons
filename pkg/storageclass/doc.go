@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Stability: Stable.
 //
 // 본 패키지는 K8s PersistentVolumeClaim.Spec.StorageClassName 의 DNS-1123

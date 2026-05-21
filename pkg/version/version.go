@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Package version — operator 들이 공통으로 사용하는 *지원 DB 버전 화이트리스트* 패턴.
 //
 // 사용 예 (각 operator 의 api/v1alpha1/*_types.go):

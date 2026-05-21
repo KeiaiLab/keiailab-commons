@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Package webhook — admission validation 보조 helpers.
 //
 // downstream operator 의 webhook validation 공통 패턴:

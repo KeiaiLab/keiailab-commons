@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 // Package events provides Kubernetes Event recording helpers and standard
 // reconciler event reasons shared across keiailab operators.
 //
