@@ -201,5 +201,5 @@
 
 | Date | Change | Refs |
 |---|---|---|
-| 2026-05-21 | 新增 — 中文标准术语表 placeholder v0.1 (4 sections, ~45 terms, 简体) | deep-petting-cookie §Phase 0.8 + supercycle Wave 4 §4.4 sister |
-| 2026-05-21 | S4 Phase 1 — Claude 完整翻译全 10 sections × ~120 terms 扩充 (机器翻译,待母语审阅) | docs/specs/2026-05-21-i18n-4lang-master-design.md §4.2.1 |
+| 2026-05-21 | 新增 — 中文标准术语表 placeholder v0.1 (4 sections, ~45 terms, 简体) | 초기 도입 cycle |
+| 2026-05-21 | 초기 완역 (Claude 자동 번역, native review 대기)|초기 완역 (Claude 자동 번역, native review 대기) |

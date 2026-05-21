@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # scripts/i18n-translate.sh
-# Claude API 추상화 wrapper — 자동 번역 파이프라인 (skeleton, S4 Phase 1).
+# Claude API 추상화 wrapper — 자동 번역 파이프라인 (skeleton, 초기 cycle).
 #
 #
-# 본 cycle (S4 Phase 1) 에서는 *문서 + 자동화 골격* 만 작성.
-# 실제 API 호출 구현은 별 sub-cycle (S4 Phase 4-6 의 batch 번역 시).
+# 본 cycle (초기 cycle) 에서는 *문서 + 자동화 골격* 만 작성.
+# 실제 API 호출 구현은 별 sub-cycle (후속 cycle 의 batch 번역 시).
 #
 # 사용자 결정 D1: Claude direct (현재 세션에서 subagent 가 직접 번역) — API 자동 호출 *옵션*.
 # 본 cycle 에서는 subagent 가 Claude 모델 그 자체로서 translate 를 수행하므로,
@@ -41,7 +41,7 @@ Example:
   $0 docs/getting-started.md --lang ja --dry-run
 
 비고:
-  - 본 script 는 S4 Phase 1 시점의 *skeleton*. 실제 API 호출은 별 sub-cycle 구현.
+  - 본 script 는 초기 cycle 시점의 *skeleton*. 실제 API 호출은 후속 cycle 구현.
   - 현 cycle 시점에는 subagent (Claude) 가 직접 번역 (D1 결정 사항).
   - 생성된 파일에는 \`[검토 필요]\` marker + warning 배너 강제 삽입.
 EOF
@@ -104,7 +104,7 @@ esac
 WARNING_BANNER='> ⚠️ This translation is AI-generated and pending native review.'
 
 echo "==================================================="
-echo "i18n-translate.sh — S4 Phase 1 skeleton"
+echo "i18n-translate.sh — 초기 cycle skeleton"
 echo "==================================================="
 echo "Source:    $SOURCE_FILE"
 echo "Languages: $LANGS"
@@ -124,11 +124,11 @@ for lang in $LANGS; do
     continue
   fi
 
-  # S4 Phase 1 시점: 실제 API 호출 미구현.
+  # 초기 cycle 시점: 실제 API 호출 미구현.
   # 향후 (별 sub-cycle): glossary forced injection + API 호출 + 결과 검증.
   cat <<EOF >&2
 
-  [TODO] $lang 번역 실행 미구현 — S4 Phase 1 skeleton.
+  [TODO] $lang 번역 실행 미구현 — 초기 cycle skeleton.
 
   현 시점 권장 절차 (사용자 결정 D1: Claude direct):
     1. Claude (subagent) 가 $SOURCE_FILE 본문을 읽고 직접 $lang 로 번역

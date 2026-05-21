@@ -139,7 +139,7 @@ echo ""
 echo "다음 단계:"
 echo "  1. downstream operator 의 go.mod 에 operator-commons $VERSION 채택"
 echo "  2. UPGRADING.md 의 v$VERSION_NUMERIC 섹션 검토"
-echo "  3. (Sprint 1 / S5) pkg/* 추출 패키지 변경 시 deprecation 경로 확인"
+echo "  3. pkg/* 추출 패키지 변경 시 deprecation 경로 확인"
 
 # cleanup
 rm -rf "$PACKAGE_DIR"

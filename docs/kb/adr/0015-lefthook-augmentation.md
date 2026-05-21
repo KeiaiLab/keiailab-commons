@@ -6,7 +6,7 @@
 | Date | 2026-05-21 |
 | Author | keiailab |
 | Supersedes | (none) |
-| Related | ADR-0011 (lefthook 통합), ADR-0013 (audit SSOT), S7 (postgres + mongodb 의 동일 패턴) |
+| Related | ADR-0011 (lefthook 통합) |
 
 ## Context
 
