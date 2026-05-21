@@ -87,7 +87,7 @@ GitHub README 의 shield.io badge 는 위 hex 사용 권장.
 > **Shared Go library for keiailab operators — finalizer / labels / status / version / security / monitoring partials**
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
+  <a href="../LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
   <!-- 기존 shield.io badges 유지 + 정합 -->
 </p>
 
@@ -115,7 +115,7 @@ GitHub README 의 shield.io badge 는 위 hex 사용 권장.
 </p>
 
 <p align="center">
-  © 2026 keiailab · <a href="LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
+  © 2026 keiailab · <a href="../LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
 </p>
 ```
 
@@ -145,9 +145,9 @@ README 의 shield.io badge 순서 (좌→우):
 
 ## 11. License & Attribution
 
-- License: [Apache-2.0](LICENSE)
+- License: [Apache-2.0](../LICENSE)
 - Copyright: © 2026 keiailab contributors
-- Third-party attributions: see [NOTICE](NOTICE) (if applicable)
+- Third-party attributions: see [NOTICE](../NOTICE) (if applicable)
 
 ---
 
@@ -160,5 +160,5 @@ README 의 shield.io badge 순서 (좌→우):
 </p>
 
 <p align="center">
-  © 2026 keiailab · <a href="LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
+  © 2026 keiailab · <a href="../LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
 </p>

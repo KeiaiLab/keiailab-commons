@@ -196,7 +196,7 @@
 - ユーザー supercycle plan: `~/.claude/plans/2026-05-21-keiailab-operator-supercycle.md` §6 Wave 4 §4.4 「各言語別の *glossary* 1 ファイル」
 - deep-petting-cookie plan: `~/.claude/plans/deep-petting-cookie.md` §Phase 0.8 (i18n-glossary 新規)
 - Kubernetes 日本語翻訳ガイド: <https://kubernetes.io/ja/docs/contribute/localization_ja/>
-- 本ライブラリ ROADMAP §API Stability Tier: `../../ROADMAP.md`
+- 本ライブラリ ROADMAP §API Stability Tier: `../ROADMAP.md`
 - Korean SSOT: [`glossary-ko.md`](glossary-ko.md) (10 sections × ~120 terms 完全版)
 
 ## §10 変更履歴

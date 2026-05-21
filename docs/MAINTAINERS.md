@@ -58,5 +58,5 @@ PR2 (`docs/readme-i18n-ko`, 2026-05-20) — RFC-0045 §2.5 Codex challenge #3 dr
 </p>
 
 <p align="center">
-  © 2026 keiailab · <a href="LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
+  © 2026 keiailab · <a href="../LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
 </p>

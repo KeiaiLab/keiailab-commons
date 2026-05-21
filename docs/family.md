@@ -44,7 +44,7 @@ This repository is the **shared Go library** — *not* a controller. It provides
 
 Design invariant: **leaf packages are stdlib + k8s API types only**. No controller-runtime, no logr, no operator-sdk leakage.
 
-See [ARCHITECTURE.md](../ARCHITECTURE.md) for the detailed package surface and [ROADMAP.md](../ROADMAP.md) for tier promotion criteria.
+See [ARCHITECTURE.md](ARCHITECTURE.md) for the detailed package surface and [ROADMAP.md](ROADMAP.md) for tier promotion criteria.
 
 ## What we do NOT do
 
@@ -59,16 +59,16 @@ See [ARCHITECTURE.md](../ARCHITECTURE.md) for the detailed package surface and [
 | Task | Entry point |
 |---|---|
 | Import `operator-commons` in your operator | [README.md](../README.md) Usage section |
-| Read the architecture | [ARCHITECTURE.md](../ARCHITECTURE.md) |
+| Read the architecture | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | File an issue or feature request | https://github.com/keiailab/operator-commons/issues |
 | Discuss design or roadmap | https://github.com/keiailab/operator-commons/discussions |
 | Contribute code | [CONTRIBUTING.md](../CONTRIBUTING.md) |
 | Report a security issue | [SECURITY.md](../SECURITY.md) |
-| Learn the brand / voice | [BRANDING.md](../BRANDING.md) |
-| Track adopters / who uses this | [ADOPTERS.md](../ADOPTERS.md) |
-| Find maintainers | [MAINTAINERS.md](../MAINTAINERS.md) |
-| Review governance model | [GOVERNANCE.md](../GOVERNANCE.md) |
-| Check upcoming work | [ROADMAP.md](../ROADMAP.md) |
+| Learn the brand / voice | [BRANDING.md](BRANDING.md) |
+| Track adopters / who uses this | [ADOPTERS.md](ADOPTERS.md) |
+| Find maintainers | [MAINTAINERS.md](MAINTAINERS.md) |
+| Review governance model | [GOVERNANCE.md](GOVERNANCE.md) |
+| Check upcoming work | [ROADMAP.md](ROADMAP.md) |
 | Review API stability promise | [docs/STABILITY.md](STABILITY.md) |
 
 ## Cross-family compatibility
@@ -88,7 +88,7 @@ import (
 
 A breaking change in `operator-commons` requires a synchronized bump across all three database operators — verified by the `make cross-validation` target in Wave 5 of the supercycle.
 
-See [ADOPTERS.md](../ADOPTERS.md) for the live consumer matrix (3 operators × 8 packages × adoption %).
+See [ADOPTERS.md](ADOPTERS.md) for the live consumer matrix (3 operators × 8 packages × adoption %).
 
 ## i18n
 

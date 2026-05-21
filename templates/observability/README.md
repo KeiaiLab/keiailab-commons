@@ -78,5 +78,5 @@ partial 자체를 chart 에 *포함* 하려면:
 
 ## 변경 정책
 
-- 본 partial 의 spec 변경 = *공개 API breaking* — RFC + 3 consumer LGTM (GOVERNANCE.md "공개 API breaking" 절차).
+- 본 partial 의 spec 변경 = *공개 API breaking* — RFC + 3 consumer LGTM (docs/GOVERNANCE.md "공개 API breaking" 절차).
 - 메트릭 명명 규약 변경 = *합의 후 4-repo 동시 PR* (operator-specific 로 발산하면 본 표준 의미 상실).

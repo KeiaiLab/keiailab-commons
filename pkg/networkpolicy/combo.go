@@ -16,7 +16,7 @@ import (
 //	    PodSelector:       map[string]string{"app": "monitoring"},
 //	}
 //
-// Refs: ROADMAP.md 'CIDR + namespace selector + pod selector 조합 helper'
+// Refs: docs/ROADMAP.md 'CIDR + namespace selector + pod selector 조합 helper'
 //
 //	(P-B.8.2)
 type ComboPeer struct {

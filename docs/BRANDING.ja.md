@@ -89,11 +89,11 @@ GitHub README の shield.io badge は上記 hex 使用推奨。
 > **keiailab オペレーターの共有 Go ライブラリ — finalizer / labels / status / version / security / monitoring partial**
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
+  <a href="../LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
 </p>
 
 <p align="center">
-  <a href="README.md">English</a> |
+  <a href="../README.md">English</a> |
   <a href="README.ko.md">한국어</a> |
   <b>日本語</b> |
   <a href="README.zh.md">中文</a>
@@ -116,7 +116,7 @@ GitHub README の shield.io badge は上記 hex 使用推奨。
 </p>
 
 <p align="center">
-  © 2026 keiailab · <a href="LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
+  © 2026 keiailab · <a href="../LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
 </p>
 ```
 
@@ -146,9 +146,9 @@ README の shield.io badge 順序 (左→右):
 
 ## 11. License & Attribution
 
-- License: [Apache-2.0](LICENSE)
+- License: [Apache-2.0](../LICENSE)
 - Copyright: © 2026 keiailab contributors
-- Third-party attribution: [NOTICE](NOTICE) 参照 (該当時)
+- Third-party attribution: [NOTICE](../NOTICE) 参照 (該当時)
 
 ---
 
@@ -161,5 +161,5 @@ README の shield.io badge 順序 (左→右):
 </p>
 
 <p align="center">
-  © 2026 keiailab · <a href="LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
+  © 2026 keiailab · <a href="../LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
 </p>

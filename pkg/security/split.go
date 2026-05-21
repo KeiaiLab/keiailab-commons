@@ -18,7 +18,7 @@ import (
 //	    security.WithPodFSGroup(1000),
 //	)
 //
-// Refs: ROADMAP.md 'Pod / Container SecurityContext 분리 helper' (P-B.9.2)
+// Refs: docs/ROADMAP.md 'Pod / Container SecurityContext 분리 helper' (P-B.9.2)
 func RestrictedPodSecurityContext(opts ...PodOption) *corev1.PodSecurityContext {
 	psc := &corev1.PodSecurityContext{
 		RunAsNonRoot: ptr.To(true),

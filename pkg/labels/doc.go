@@ -4,5 +4,5 @@
 // v1.0.0 진입 시 자동으로 Stable Tier 됩니다.
 // Kubernetes v1.30+ 의 권장 라벨 (app.kubernetes.io/*) 매핑 v2 포함.
 //
-// 자세한 격상 조건 / API 안정성 매트릭스는 ROADMAP.md §API Stability Tier 참조.
+// 자세한 격상 조건 / API 안정성 매트릭스는 docs/ROADMAP.md §API Stability Tier 참조.
 package labels

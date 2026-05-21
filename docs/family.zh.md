@@ -46,7 +46,7 @@
 
 设计 invariant: **leaf 包只能使用 stdlib + k8s API 类型**. 无 controller-runtime,无 logr,无 operator-sdk 泄漏。
 
-详细包 surface 见 [ARCHITECTURE.md](../ARCHITECTURE.md),tier 升级标准见 [ROADMAP.md](../ROADMAP.md)。
+详细包 surface 见 [ARCHITECTURE.md](ARCHITECTURE.md),tier 升级标准见 [ROADMAP.md](ROADMAP.md)。
 
 ## 我们*不*做的事
 
@@ -61,16 +61,16 @@
 | 任务 | 入口 |
 |---|---|
 | 在操作器中导入 `operator-commons` | [README.md](../README.md) Usage 部分 |
-| 阅读架构 | [ARCHITECTURE.md](../ARCHITECTURE.md) |
+| 阅读架构 | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | 提交 issue 或功能请求 | https://github.com/keiailab/operator-commons/issues |
 | 讨论设计或路线图 | https://github.com/keiailab/operator-commons/discussions |
 | 贡献代码 | [CONTRIBUTING.md](../CONTRIBUTING.md) |
 | 报告安全问题 | [SECURITY.md](../SECURITY.md) |
-| 学习品牌 / 风格 | [BRANDING.md](../BRANDING.md) |
-| 追踪采用者 / 谁在使用 | [ADOPTERS.md](../ADOPTERS.md) |
-| 寻找维护者 | [MAINTAINERS.md](../MAINTAINERS.md) |
-| 审查治理模型 | [GOVERNANCE.md](../GOVERNANCE.md) |
-| 检查即将开展的工作 | [ROADMAP.md](../ROADMAP.md) |
+| 学习品牌 / 风格 | [BRANDING.md](BRANDING.md) |
+| 追踪采用者 / 谁在使用 | [ADOPTERS.md](ADOPTERS.md) |
+| 寻找维护者 | [MAINTAINERS.md](MAINTAINERS.md) |
+| 审查治理模型 | [GOVERNANCE.md](GOVERNANCE.md) |
+| 检查即将开展的工作 | [ROADMAP.md](ROADMAP.md) |
 | 审查 API 稳定性承诺 | [docs/STABILITY.md](STABILITY.md) |
 
 ## 跨家族兼容性
@@ -90,7 +90,7 @@ import (
 
 `operator-commons` 中的 breaking change 需要 3 个数据库操作器同步 bump — supercycle Wave 5 的 `make cross-validation` 目标进行验证。
 
-实时 consumer matrix (3 operator × 8 package × 采用率 %) 见 [ADOPTERS.md](../ADOPTERS.md)。
+实时 consumer matrix (3 operator × 8 package × 采用率 %) 见 [ADOPTERS.md](ADOPTERS.md)。
 
 ## i18n
 

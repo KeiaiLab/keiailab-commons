@@ -1,6 +1,6 @@
 # Contributing to operator-commons
 
-`keiailab/operator-commons` 는 3 keiailab Kubernetes operator 가 공통으로 import 하는 Go 라이브러리입니다. 모든 기여는 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) 와 [GOVERNANCE.md](GOVERNANCE.md) 를 따릅니다.
+`keiailab/operator-commons` 는 3 keiailab Kubernetes operator 가 공통으로 import 하는 Go 라이브러리입니다. 모든 기여는 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) 와 [GOVERNANCE.md](docs/GOVERNANCE.md) 를 따릅니다.
 
 ## 기여 흐름
 

@@ -6,5 +6,5 @@
 // (PeriodSeconds=10 / TimeoutSeconds=1 / SuccessThreshold=1 / FailureThreshold=3)
 // 를 제공하며, 2+ repo 라이브 적용 evidence 확보 시 Beta 격상 candidate.
 //
-// 자세한 격상 조건 / API 안정성 매트릭스는 ROADMAP.md §API Stability Tier 참조.
+// 자세한 격상 조건 / API 안정성 매트릭스는 docs/ROADMAP.md §API Stability Tier 참조.
 package probes

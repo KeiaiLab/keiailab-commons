@@ -9,5 +9,5 @@
 // (commit 1494ff6) + valkey-operator 동일 진행 + mongodb-operator sister 적용
 // candidate. 3 operator 라이브 적용 후 Stable Tier 격상.
 //
-// 자세한 격상 조건 / API 안정성 매트릭스는 ROADMAP.md §API Stability Tier 참조.
+// 자세한 격상 조건 / API 안정성 매트릭스는 docs/ROADMAP.md §API Stability Tier 참조.
 package events
