@@ -1,5 +1,7 @@
 # API 안정성 약속
 
+> [English](STABILITY.md) | **한국어** | [日本語](STABILITY.ja.md) | [中文](STABILITY.zh.md)
+
 > ⚠️ This translation is AI-generated and pending native review. — 본 번역은 Claude 기계 번역 결과입니다. 모국어 검토자의 검수 전까지 `[검토 필요]` 상태입니다.
 
 > operator-commons 의 API 안정성 등급과 breaking-change 정책.

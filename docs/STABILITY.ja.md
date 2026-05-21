@@ -1,5 +1,7 @@
 # API 安定性の約束
 
+> [English](STABILITY.md) | [한국어](STABILITY.ko.md) | **日本語** | [中文](STABILITY.zh.md)
+
 > ⚠️ This translation is AI-generated and pending native review. — 本翻訳は Claude による機械翻訳結果です。母語話者検証完了まで `[検証必要]` 状態です。
 
 > operator-commons の API 安定性ティアと breaking-change ポリシー。

@@ -1,6 +1,8 @@
-# Coverage Report — v1.0.0 graduation B.11.3
+# Coverage Report — v1.0.0 graduation
 
-> `go test ./pkg/... -coverprofile=cover.out` 측정 결과. v1.0.0 졸업 조건 #7 (`커버리지 ≥ 85%`) 충족.
+> **English / 한국어** | [日本語](coverage-report.ja.md) | [中文](coverage-report.zh.md)
+
+> `go test ./pkg/... -coverprofile=cover.out` 측정 결과. v1.0.0 졸업 조건 (`커버리지 ≥ 85 %`) 충족.
 
 ## 측정 결과 (2026-05-14)
 

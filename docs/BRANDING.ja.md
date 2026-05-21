@@ -1,5 +1,7 @@
 # ブランドガイド — `operator-commons`
 
+> [English](BRANDING.md) | [한국어](BRANDING.ko.md) | **日本語** | [中文](BRANDING.zh.md)
+
 > ⚠️ This translation is AI-generated and pending native review.
 >
 > `operator-commons` ライブラリの visual identity、voice、tone。

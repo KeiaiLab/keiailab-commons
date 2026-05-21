@@ -1,5 +1,7 @@
 # 브랜드 가이드 — `operator-commons`
 
+> [English](BRANDING.md) | **한국어** | [日本語](BRANDING.ja.md) | [中文](BRANDING.zh.md)
+
 > `operator-commons` 라이브러리의 visual identity, voice, tone.
 
 본 문서는 `operator-commons` 브랜딩 결정의 canonical reference 입니다.

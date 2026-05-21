@@ -1,5 +1,7 @@
 # 品牌指南 — `operator-commons`
 
+> [English](BRANDING.md) | [한국어](BRANDING.ko.md) | [日本語](BRANDING.ja.md) | **中文**
+
 > ⚠️ This translation is AI-generated and pending native review.
 >
 > `operator-commons` 库的 visual identity、voice、tone。

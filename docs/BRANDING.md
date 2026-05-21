@@ -1,5 +1,7 @@
 # Branding Guide — `operator-commons`
 
+> **English** | [한국어](BRANDING.ko.md) | [日本語](BRANDING.ja.md) | [中文](BRANDING.zh.md)
+
 > Visual identity, voice, and tone for the `operator-commons` library.
 
 This document is the canonical reference for `operator-commons` branding
