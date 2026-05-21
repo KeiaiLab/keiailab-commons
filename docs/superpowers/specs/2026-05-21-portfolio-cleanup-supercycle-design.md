@@ -175,7 +175,7 @@
 
 | 항목 | 값 |
 |---|---|
-| 상태 | 미시작 |
+| 상태 | **Implemented (2026-05-21)** — T1+T2+T3 완료 (PR #42 + #43 + #44 + #45 + #46 + 사용자 PR #40 흡수), T4 사용자 PR #47 (S4 Phase 1) 흡수 완료. [verification](../plans/2026-05-21-s2-verification.md) |
 | 작업 | (a) `archive/main-13-commits-merge-style-2026-05-21` 브랜치 분석 — 13 commits 가 *모두* main 의 ancestor 인지 확인 후 안전 시 삭제 (또는 tag 로 보존 후 브랜치 삭제); (b) `docs/family.md` 의 `v0.7.0 (you are here)` → `v0.8.0` 갱신; (c) `README.ja.md` + `README.zh.md` placeholder → 본문 (`README.ko.md` 패턴 따라); (d) `docs/i18n/glossary-ja.md` + `glossary-zh.md` placeholder → 본문 (`glossary-ko.md` ~120 terms 패턴 따라) |
 | 산출 | commons 의 stale = 0, i18n 4-lang 본문 완성, family.md drift 해소 |
 | 후속 | S5 가 commons 의 *안정 상태* 를 가정 |
