@@ -6,7 +6,8 @@ package labels
 // `app.kubernetes.io/managed-by` 외) 를 v1 Set 위에 일관 적용.
 //
 // Refs: https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/
-//       ROADMAP.md "Recommended labels v2 매핑 (K8s 1.30+)" (P-B.4.1)
+//
+//	ROADMAP.md "Recommended labels v2 매핑 (K8s 1.30+)" (P-B.4.1)
 const (
 	// LabelCreatedBy — 리소스를 생성한 controller / tool. RFC: K8s 1.30+
 	LabelCreatedBy = "app.kubernetes.io/created-by"
