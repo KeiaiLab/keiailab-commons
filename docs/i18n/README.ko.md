@@ -1,6 +1,6 @@
 # i18n — operator-commons 다국어 정책
 
-> [English](README.md) | **한국어**
+> [English](README.md) | **한국어** | [日本語](README.ja.md)
 
 본 문서는 `operator-commons` 다국어 문서 운영 정책을 정의합니다. English
 canonical + 한국어 / 日本語 / 中文 의 4-lang 골격을 유지합니다.

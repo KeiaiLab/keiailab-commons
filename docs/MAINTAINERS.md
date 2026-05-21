@@ -1,6 +1,6 @@
 # Maintainers
 
-> **English** | [한국어](MAINTAINERS.ko.md)
+> **English** | [한국어](MAINTAINERS.ko.md) | [日本語](MAINTAINERS.ja.md)
 
 This document records the maintainers with decision-making authority
 for `keiailab/operator-commons`.

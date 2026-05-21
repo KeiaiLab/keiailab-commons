@@ -1,6 +1,6 @@
 # Contributing to operator-commons
 
-> [English](CONTRIBUTING.md) | **한국어**
+> [English](CONTRIBUTING.md) | **한국어** | [日本語](CONTRIBUTING.ja.md)
 
 `keiailab/operator-commons` 는 downstream Kubernetes operator 가 공통으로
 import 하는 Go 라이브러리입니다. 모든 기여는 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
