@@ -43,6 +43,10 @@ audit: ## govulncheck (Go module CVE call-graph 검사)
 	@command -v govulncheck >/dev/null || { echo "[warn] govulncheck 미설치 — go install golang.org/x/vuln/cmd/govulncheck@latest" >&2; exit 0; }
 	govulncheck ./...
 
+.PHONY: audit-quality
+audit-quality: ## 5 repo production-grade 자동 측정 (P0/P1/P2/OP/C 50+ 항목, ADR-0013)
+	@bash scripts/audit-production-grade.sh
+
 .PHONY: tidy
 tidy: ## go mod tidy + diff 검사 (drift 차단)
 	@cp go.mod /tmp/.gomod.bak; cp go.sum /tmp/.gosum.bak
