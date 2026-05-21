@@ -1,4 +1,6 @@
-# Coverage Report — v1.0.0 graduation B.11.3
+# Coverage Report — v1.0.0 graduation
+
+> [English / 한국어](coverage-report.md) | **日本語** | [中文](coverage-report.zh.md)
 
 > ⚠️ This translation is AI-generated and pending native review. — 本翻訳は Claude による機械翻訳結果です。
 

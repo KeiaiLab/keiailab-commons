@@ -1,5 +1,7 @@
 # API 稳定性承诺
 
+> [English](STABILITY.md) | [한국어](STABILITY.ko.md) | [日本語](STABILITY.ja.md) | **中文**
+
 > ⚠️ This translation is AI-generated and pending native review. — 本翻译为 Claude 机器翻译结果。母语审阅者校验前为 `[待校验]` 状态。
 
 > operator-commons 的 API 稳定性等级和 breaking-change 策略。
