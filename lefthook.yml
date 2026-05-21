@@ -452,6 +452,29 @@ pre-push:
           echo "[warn] scripts/check-readme-sync.sh 부재 — i18n drift check skip"
         fi
 
+    # ─── audit P1-12 + P1-13 보강 (2026-05-21, ADR-0013 + ADR-0015) ───────────
+    # go-licenses + markdown-link-check 의 lefthook pre-push 통합 — operator
+    # family 3 operator 와 일관성. forgewise (Python) 는 N/A. 본 hook 은
+    # *경고만* (Go Module 라이브러리 + library Helm chart, 운영 제품 아님).
+    go-licenses:
+      glob: "*.go"
+      run: |
+        if command -v go-licenses >/dev/null; then
+          go-licenses check ./... --disallowed_types=forbidden,restricted 2>&1 | head -20 || echo "[warn] go-licenses 발견 — 검토 필요"
+        else
+          echo "[info] go-licenses 미설치 (go install github.com/google/go-licenses@latest) — skip"
+        fi
+    markdown-link-check:
+      glob: "*.md"
+      run: |
+        if command -v markdown-link-check >/dev/null; then
+          for f in {staged_files}; do
+            markdown-link-check --quiet "$f" 2>&1 | grep -vE "^$|^Checking" || true
+          done
+        else
+          echo "[info] markdown-link-check 미설치 (npm i -g markdown-link-check) — skip"
+        fi
+
 post-merge:
   commands:
     deps-log:

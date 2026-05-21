@@ -52,7 +52,18 @@ check_P0_4_conventional() {
 
 check_P0_6_no_workflows() {
   local repo=$1
-  [[ ! -d "$PARENT/$repo/.github/workflows" || -z "$(ls -A "$PARENT/$repo/.github/workflows" 2>/dev/null)" ]] && echo "✅" || echo "❌"
+  # 케이스 1: workflow 부재 → ✅ (RFC-0002 strict)
+  if [[ ! -d "$PARENT/$repo/.github/workflows" || -z "$(ls -A "$PARENT/$repo/.github/workflows" 2>/dev/null)" ]]; then
+    echo "✅"
+    return
+  fi
+  # 케이스 2: workflow 존재 + v2.0 정합 ADR 첨부 → ✅ (RFC-0002 §2 일탈 ADR)
+  # 패턴: gha-retention, restore-github-actions, gha-retain
+  if find "$PARENT/$repo/docs/kb/adr/" -type f \( -name "*gha-retention*" -o -name "*restore-github-actions*" -o -name "*gha-retain*" -o -name "*gha-removal*" \) 2>/dev/null | grep -q .; then
+    echo "✅"
+    return
+  fi
+  echo "❌"
 }
 
 check_P0_8_license() {

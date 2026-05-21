@@ -16,6 +16,7 @@
 | [0012](0012-rfc-0002-gha-block-hook.md) | RFC-0002 GitHub Actions block — lefthook pre-commit hook 자동 강제 (audit P2-2) | Accepted | 2026-05-21 |
 | [0013](0013-audit-production-grade-ssot.md) | audit-production-grade.sh 5 repo SSOT 측정 자동화 (CLAUDE.md §7 v3.x-stable 조건) | Accepted | 2026-05-21 |
 | [0014](0014-release-script-ssot.md) | operator-commons release.sh — 라이브러리 수동 release pipeline (audit OP-1) | Accepted | 2026-05-21 |
+| [0015](0015-lefthook-p1-12-13-augmentation.md) | lefthook P1-12 + P1-13 보강 — go-licenses + markdown-link-check (audit 정합) | Accepted | 2026-05-21 |
 
 ## 작성 규약
 
