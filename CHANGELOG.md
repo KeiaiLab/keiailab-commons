@@ -8,6 +8,12 @@
 
 ## [Unreleased]
 
+### Added (v0.8.0 candidate — 3 신규 패키지, 2026-05-21)
+
+- `pkg/probes` (Experimental tier) — corev1.Probe fluent builder. HTTP / HTTPS / TCP / Exec 4 handlers + kubelet default (Period=10s / Timeout=1s / SuccessThreshold=1 / FailureThreshold=3) + InitialDelay/Period/Timeout 음수 → 0 clamp + Build() handler 미설정 시 panic (fail-fast). AST audit evidence: 9 sites / 50-55 LOC reduction (postgres 2 HTTP + mongo 2 Exec + valkey 2 Exec + 3 cross-cutting). 100% coverage + 0 lint. (commit `2107a87`, deep-petting-cookie §Phase 2.1)
+- `pkg/storageclass` (Stable tier 즉시) — DNS-1123 subdomain validator. `IsValid` / `Validate` (+ `ErrInvalidStorageClassName` sentinel) / `Normalize` (empty→nil cluster default + trim + pointer return) / `MustNormalize`. AST audit evidence: postgres `storageClassPtr()` + mongo/valkey sister 패턴 통일. 100% coverage + 0 lint. (commit `5df41fa`, deep-petting-cookie §Phase 2.2)
+- `pkg/events` (Beta tier) — Kubernetes Event 생성 helper + 9 표준 Reason constants (Created/Updated/Deleted/Reconciled/ReconcileError/Provisioning/Ready/Degraded/Failed) + minimal Recorder interface (k8s.io/client-go/tools/record.EventRecorder 구조 정합, client-go 의존 회피) + Emit/Emitf/EmitWarning/EmitWarningf (nil-safe) + WrappedError. postgres RFC-0023 Phase 2 sister (commit `1494ff6` 라이브 evidence). 100% coverage + 0 lint. (commit `3f4867b`, deep-petting-cookie §Phase 2.3)
+
 ### Added (v1.0.0 graduation track — P-B 다중 sub-task)
 
 - `scripts/godoc-coverage.sh` — per-package + total godoc coverage 계산. v1.0 80% threshold 검증 (PR #12, B.1.1).
