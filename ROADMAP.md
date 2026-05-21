@@ -183,3 +183,17 @@
 | 2026-05-09 | v0.7.0 — generic `Matrix[E]` 추가 | CHANGELOG |
 | 2026-05-09 | v0.6.0 — `SetAvailable` 헬퍼 추가 | CHANGELOG |
 | 2026-05-09 | 4-repo audit 기반 설계 정합 | audit 산출물 |
+
+---
+
+<p align="center">
+  <b>keiailab operator family</b><br/>
+  <a href="https://github.com/keiailab/postgres-operator">postgres-operator</a> ·
+  <a href="https://github.com/keiailab/mongodb-operator">mongodb-operator</a> ·
+  <a href="https://github.com/keiailab/valkey-operator">valkey-operator</a> ·
+  <a href="https://github.com/keiailab/operator-commons">operator-commons</a>
+</p>
+
+<p align="center">
+  © 2026 keiailab · <a href="LICENSE">Apache-2.0</a> · <a href="https://keiailab.com">keiailab.com</a>
+</p>
