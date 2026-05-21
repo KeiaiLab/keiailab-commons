@@ -3,13 +3,14 @@
 | 메타 | 값 |
 |---|---|
 | 날짜 | 2026-05-21 |
-| 상태 | Proposed |
+| 상태 | **Mostly Implemented** (2026-05-21 — S2/S4/S5/S6 Implemented · S3/S7 거의 완료 · S1 마무리 진행 중) |
 | 작성자 | keiailab — superpowers brainstorming session |
 | 범위 | 5 저장소 통합 정리 (postgres-operator / mongodb-operator / valkey-operator / operator-commons / forgewise) |
-| Supercycle | `cleanup supercycle 2026-05-21` (Wave 2 = 3-tier 분류 완료 · Wave 3 = branding partial · Wave 4 = i18n partial) |
+| Supercycle | `cleanup supercycle 2026-05-21` (Wave 2 = 3-tier 분류 완료 · Wave 3 = branding 완료 · Wave 4 = i18n 완료 · Wave 5 = cross-validation 본 spec) |
 | 후속 | S1~S7 sub-spec / RFC 0005 / 각 sub-project 의 `writing-plans` 산출 |
 | 우선순위 | (사용자 결정) operator-commons → 3 operators → forgewise |
 | Commit 작성자 | `TaeHwan Park <eightynine01@gmail.com>` + `Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>` |
+| Verification | [docs/superpowers/plans/2026-05-21-portfolio-verification.md](../plans/2026-05-21-portfolio-verification.md) |
 
 ## 1. 배경 (Background)
 
@@ -161,73 +162,84 @@
 
 ### 4.2 Sub-Project 카드
 
-#### S1 — valkey-operator PR Cleanup + GHA 제거
+#### S1 — valkey-operator PR Cleanup + GHA retention
 
 | 항목 | 값 |
 |---|---|
-| 상태 | **이미 시작됨** (`.claude/worktrees/spec+pr-cleanup-and-gha-removal-2026-05-21/`, commit `22e13b0`) |
-| 기존 spec | `docs/specs/2026-05-21-pr-cleanup-and-gha-removal-design.md` (295 LOC, 7 Phase, 8 Goals, 8 Success Criteria) |
-| 본 spec 의 변경 사항 | (a) PR #157 처리 = **머지** (D3: multi-arch 허용 결정); (b) lefthook 의 `platforms-amd64-guard` 제거; (c) ADR 0048 본문에 D3 반영 |
-| 산출 | 21 PR → 0 / 16 GHA → 0 / 11 required_status_checks → 0 / multi-arch 빌드 enable (PR #157) |
-| 후속 | S5 의 valkey 부분 (commons v0.8.0 consume) |
+| 상태 | **진행 중 (2026-05-21)** — 21 open PR → 3 잔존 (#164/#165/#166 v0.8.0 consume + ja/zh README native), 16+ stale → 12, GHA **retention** 노선 (ADR-0048 Accepted = per operator family trade-off, D1 v2.0 amendment 정합) |
+| 기존 spec | `docs/specs/2026-05-21-pr-cleanup-and-gha-retention-design.md` (v2.0 retention 노선) — PR #163 머지 |
+| PR 머지 (오늘 2026-05-21) | #138 (P-C.6 OTel docs) · #141~#156 (dependabot 전수) · #158 (TLS immutable + ready msg) · #159 (PDB delete) · #160 (3-tier 분류) · #161 (BRANDING Wave 3) · #163 (S1+ spec) · #167 (ADR-0048 integrated) · #168 (actions/stale bump) · #169 (ADR-0048 Accepted) · #170 (Sprint 1 P2 commons -322 LOC) · #171 (lefthook 3종 hook P1-11/12/13) · #172 (helm-publish.sh) · #173 (UPGRADING.md) · #174 (ADR-0050 audit augmentation) |
+| ADR 변경 | ADR-0048 Status Proposed → **Accepted** (commit `f2d9ee4`, per operator family v2.0 retention 결정) · ADR-0049 (Sprint 1 commons P2 adoption) · ADR-0050 (audit augmentation) |
+| 본 spec 의 변경 사항 (D1 v2.0 amendment 적용) | (a) PR #157 multi-arch **별 cycle 로 분리** (cluster 1대 시범 검증 후 머지 결정); (b) GHA 제거 → **retention 14 wf** (ADR-0048 정합); (c) `platforms-amd64-guard` 제거는 RFC 0006 (local commit `0a98641`, push 보류) 의 별 결정 |
+| 잔여 | 3 open PR (#164 v0.8.0 consume / #165 ja README / #166 zh README), 12 stale, 1 issue (#4 Renovate) |
+| 후속 | S5-valkey 의 commons v0.9.0 consume 는 main 에서 직접 진행 (Sprint 1 Phase 2 PR `7c8b128`+`daa763c` 완료) |
+| Cross-link | [valkey docs/specs/2026-05-21-pr-cleanup-and-gha-retention-design.md](https://github.com/keiailab/valkey-operator/blob/main/docs/specs/2026-05-21-pr-cleanup-and-gha-retention-design.md) |
 
 #### S2 — operator-commons stale 정리 + i18n placeholder → 본문
 
 | 항목 | 값 |
 |---|---|
-| 상태 | **Implemented (2026-05-21)** — T1+T2+T3 완료 (PR #42 + #43 + #44 + #45 + #46 + 사용자 PR #40 흡수), T4 사용자 PR #47 (S4 Phase 1) 흡수 완료. [verification](../plans/2026-05-21-s2-verification.md) |
-| 작업 | (a) `archive/main-13-commits-merge-style-2026-05-21` 브랜치 분석 — 13 commits 가 *모두* main 의 ancestor 인지 확인 후 안전 시 삭제 (또는 tag 로 보존 후 브랜치 삭제); (b) `docs/family.md` 의 `v0.7.0 (you are here)` → `v0.8.0` 갱신; (c) `README.ja.md` + `README.zh.md` placeholder → 본문 (`README.ko.md` 패턴 따라); (d) `docs/i18n/glossary-ja.md` + `glossary-zh.md` placeholder → 본문 (`glossary-ko.md` ~120 terms 패턴 따라) |
+| 상태 | **Implemented (2026-05-21)** — T1+T2+T3+T4 모두 완료. [verification](../plans/2026-05-21-s2-verification.md) |
+| PR 머지 | #36 (portfolio spec) · #37 (S2 plan) · #38 (S2 sub-spec) · #42 (T1 archive + ADR-0009) · #43 (T1 부속 tag + ADR-0010) · #44 (T2 v0.8.0 drift) · #45 (S2 Phase 2 lefthook + ADR-0011) · #46 (T3-zh README native 125 LOC) · #50 (T5 verification + spec Status Implemented) · 사용자 평행: #40 (T3-ja README native 122 LOC) · #47 (T4 + S4 Phase 1 흡수: commons SSOT glossary 4-lang) |
+| 작업 | (a) `archive/main-13-commits-merge-style-2026-05-21` 브랜치 분석 — tag 로 보존 후 브랜치 삭제 (ADR-0009/0010); (b) `docs/family.md` 의 `v0.7.0` → `v0.8.0` drift 해소; (c) `README.ja.md` + `README.zh.md` placeholder → 본문 native; (d) `docs/i18n/glossary-ja.md` + `glossary-zh.md` placeholder → 본문 (203/207/207 LOC) |
 | 산출 | commons 의 stale = 0, i18n 4-lang 본문 완성, family.md drift 해소 |
-| 후속 | S5 가 commons 의 *안정 상태* 를 가정 |
-| Branch | `feat/s2-commons-stale-i18n-2026-05-21` |
-| 검증 | `git branch -r \| wc -l = 2` (main + archive 둘 다 제거 후 1 — archive 보존 시 2) |
+| 후속 | S5 가 commons 의 *안정 상태* 를 가정 (v0.8.0 → v0.9.0 진전) |
+| Branch | `feat/s2-commons-stale-i18n-2026-05-21` (`feat/s4-i18n-master-2026-05-21` 등 사용자 평행 작업 흡수) |
+| Cross-link | [docs/superpowers/plans/2026-05-21-s2-verification.md](../plans/2026-05-21-s2-verification.md) |
 
 #### S3 — Branding Wave 3 마무리 (5 repos consistency)
 
 | 항목 | 값 |
 |---|---|
-| 상태 | postgres/mongo/commons 완료, **valkey BLOCKED** (#161, S1 이후 머지 가능), **forgewise 미시작** |
-| 작업 | (a) S1 종료 후 valkey PR #161 머지; (b) forgewise 에 BRANDING.md + docs/family.md 추가 — *단 family 표는 4 operators + forgewise (5번째 친구) 명시*; (c) 모든 5 repos 의 docs/family.md 가 commons v0.8.0 명시; (d) `family.md` 5번째 행 = forgewise (MCP-native dev intelligence) — operator family + sister tool 구분 |
-| 산출 | 5 repos 의 README header / footer 100% 정합 + BRANDING + family 일관 |
-| Branch | `feat/s3-branding-completion-2026-05-21` (각 repo) |
+| 상태 | **거의 완료 (2026-05-21)** — 5/5 repos 모두 BRANDING.md + docs/family.md 존재 (`test -f` PASS), valkey #161 머지 확인됨 |
+| PR 머지 | postgres #82 (Wave 3 BRANDING/family) · #83 (4-lang README ja/zh native 237 LOC) · mongo #188 (Wave 3 BRANDING/family) · #189 (4-lang README ja/zh placeholder) · #191 (ja native 557 LOC) · #192 (zh native 566 LOC) · commons #35 (Wave 3 BRANDING + 13 root .md footer) · valkey #160 (3-tier docs) · #161 (BRANDING Wave 3) · forgewise #9 (BRANDING 4-lang) · #10 (docs/family 4-lang) · #4 (거버넌스 5종) · #11 (README ja/zh 본문) |
+| 산출 | 5 repos 모두 README header/footer 100% 정합 + BRANDING + family 일관. 검증: `for r in <5 repos>: test -f BRANDING.md && test -f docs/family.md` 5/5 PASS |
+| 잔여 | (확인 필요) forgewise 의 GitHub `licenseInfo.key` detection 수정 = G8 (S6 와 정합) |
 
 #### S4 — i18n 본문 (ja/zh) + CRD description 4-lang
 
 | 항목 | 값 |
 |---|---|
-| 상태 | placeholder 단계 (README.ja/zh 모두 placeholder, glossary ja/zh placeholder, CRD description 영어만) |
-| 작업 | (a) `docs/i18n/glossary-ja.md` + `glossary-zh.md` 본문 작성 (ko 기준 ~120 terms 매핑); (b) 5 repos 의 README.ja.md / README.zh.md placeholder → 본문 (RFC-0025 `[~]` partial marker 해소); (c) CRD `+kubebuilder:validation:Description` 필드 다국어 (현재 영어만) — *option: i18n-aware controller-gen 도구 검토 (context7 MCP 로 확인)*; (d) (3 operators) `config/crd/bases/*.yaml` 의 description 필드에 ko/ja/zh annotation 추가 (e.g. `keiailab.com/description.ko` annotation) — kubebuilder 호환 방식 |
-| 산출 | 5 repos 4-lang 본문 + CRD description 4-lang (annotation 방식) |
-| Branch | `feat/s4-i18n-content-2026-05-21` |
-| 의존 | S2 (commons glossary 본문) |
-| 리스크 | CRD i18n 방식이 kubebuilder 미지원 — annotation 우회 또는 별 ConfigMap 방식 결정 필요. *S4 진입 시점에 context7 MCP 로 kubebuilder 1.x 최신 i18n 정책 조회 후 결정* |
+| 상태 | **Implemented (2026-05-21)** — commons SSOT + 5 repos README + lefthook hook + sync 스크립트 모두 완성 (D1~D5 결정 본 sub-spec 자체에 명시) |
+| PR 머지 | commons #39 (S4 i18n 마스터 spec D1~D5 결정) · #47 (Phase 1 commons SSOT 정비: glossary 4-lang 203/207/207 LOC + sync 매트릭스) · #48 (Phase 2 readme-i18n-sync lefthook pre-push hook) · #49 (Phase 3 sync-from-commons.sh 신규) · #51 (Phase 4 commons docs/ P0 번역: family + STABILITY + coverage-report) · #53 (Phase 5 top-level P1: BRANDING 3-lang + ADOPTERS 2-lang) · 사용자 평행 (각 repo): postgres #83 (4-lang ja/zh native) · mongo #189 + #191 + #192 (4-lang) · valkey #165/#166 (3 open PR — ja/zh native, S1 마무리 시 흡수) · forgewise #1+#10+#11 (4-lang README + family + 본문) |
+| 작업 | (a) commons SSOT glossary 4-lang 본문; (b) 5 repos README 4-lang (en canonical + ko + ja + zh); (c) readme-i18n-sync pre-push hook (drift 차단); (d) sync-from-commons.sh (SSOT → 4 repo 배포); (e) D1~D5 결정: en canonical / 4-lang scope / kubectl explain CRD 영어 유지 / glossary SSOT in commons / sync hook 강제 |
+| 산출 | commons 의 docs/i18n/ 4-lang SSOT + 5 repos README 4-lang + drift 자동 차단 hook |
+| 후속 | CRD description annotation 방식 (`keiailab.com/description.ko`) 은 *별 cycle* 로 분리 (D5 결정: 우선 README + commons docs/ 본문 완성) |
+| Cross-link | [commons S4 spec](https://github.com/keiailab/operator-commons/pull/39) — D1~D5 결정 spec 자체에 명시 |
 
-#### S5 — 3 operators commons v0.8.0 consume
+#### S5 — 3 operators commons v0.8.0 consume → v0.9.0 진전
 
 | 항목 | 값 |
 |---|---|
-| 상태 | mongodb PR #190 **이미 OPEN** (BLOCKED 가능성 = S7 의존), postgres/valkey 미시작 |
-| 작업 | (a) mongodb PR #190 머지 (S7-mongo 완료 후 BLOCKED 해제); (b) postgres `go.mod` 의 `operator-commons v0.7.0 → v0.8.0` + 3 신규 패키지 (probes/storageclass/events) 적용 사이트 식별 (AST audit) + 적용; (c) valkey 동일 패턴; (d) 3 operators 의 `docs/family.md` 의 `v0.7.0+` → `v0.8.0+` 갱신 |
-| 산출 | 3 operators 모두 v0.8.0 consume + 50~55 LOC 감소 (probes 적용 site 기준 commons CHANGELOG 인용) |
-| Branch | (각 repo) `feat/s5-commons-v0.8.0-consume-2026-05-21` (mongo 는 이미 #190 존재 — 그대로 활용) |
+| 상태 | **Implemented + v0.9.0 진전 (2026-05-21)** — 3 operators 모두 v0.9.0 까지 진전 (v0.8.0 초과). Sprint 1 Phase 2 (pkg/pvc + pkg/topology 신규 추출) 도 3 operators 모두 채택 완료 |
+| PR 머지 | mongo #190 (commons v0.7.0 → v0.8.0 + pkg/probes 2 Exec site, commit `cb888b7`) · postgres #84 (commons v0.7.0 → v0.8.0 + pkg/probes 2 HTTP site, commit `c72b435`) · valkey #164 (3 open PR 중 1건, v0.7.0 → v0.8.0 + pkg/probes 2 Exec, in-flight) · v0.9.0 bump (3 operators 모두): mongo `a1ff450` · postgres `4abf932` · valkey `daa763c` · Sprint 1 P2: commons #52 (pkg/pvc + pkg/topology 신규 추출) · postgres #91 (-375 LOC) · mongo #202 (-327 LOC) · valkey #170 (-322 LOC) |
+| 작업 | (a) 3 operators v0.8.0 consume + pkg/probes 적용 사이트 식별 + 적용; (b) v0.9.0 release cut (Sprint 1 commons release); (c) Sprint 1 Phase 2 pkg/pvc + pkg/topology 신규 추출 + 3 operators 채택 (-1,024 LOC 합산); (d) docs/family.md 의 `v0.7.0+` → `v0.8.0+` → `v0.9.0+` 진전 갱신 |
+| 산출 | 3 operators 모두 commons v0.9.0 consume + Sprint 1 P2 채택 + 합산 -1,024 LOC 중복 해소 |
+| 후속 | Sprint 1 Phase 3 (pkg/coordinator 신규 추출) — *별 cycle* |
+| Branch | (각 repo) `feat/sprint-1-pvc-topology-extraction-2026-05-21` · `feat/sprint-1-phase-2-pvc-topology-adopt-2026-05-21` |
 
 #### S6 — forgewise 표준화 + 다국어 + LICENSE detection 수정
 
 | 항목 | 값 |
 |---|---|
-| 상태 | LICENSE 파일은 Apache-2.0 (정상), GitHub `licenseInfo.key = "other"` (이상), 5 표준 docs (BRANDING/family/CONTRIBUTING/SECURITY/CODE_OF_CONDUCT) 미존재 |
-| 작업 | (a) LICENSE GitHub detection 진단: `gh api repos/keiailab/forgewise/license` 로 GitHub 의 license 인식 상태 확인 → 인식 안 되면 LICENSE 파일 SPDX header 정합 (e.g. 첫 줄에 `# Apache License 2.0` 추가, `LICENSE.txt` 와 충돌 검사); (b) BRANDING.md 추가 — postgres/mongo 패턴 따르되 family 표에 forgewise = "sister tool, not operator" 별도 행; (c) docs/family.md 추가 — postgres 패턴; (d) CONTRIBUTING.md / SECURITY.md / CODE_OF_CONDUCT.md / NOTICE 추가 (commons 패턴); (e) README.ja.md / README.zh.md / README.ko.md placeholder 본문 검증 (이미 존재 — i18n S4 와 정합); (f) Apache-2.0 NOTICE 파일 추가 (third-party attribution) |
-| 산출 | forgewise 가 다른 4개와 동일한 5 표준 docs + GitHub license = Apache-2.0 + 4-lang README |
-| Branch | `feat/s6-forgewise-standardization-2026-05-21` |
+| 상태 | **거의 완료 (2026-05-21)** — 5 표준 docs 모두 추가, 4-lang README + 4-lang BRANDING/family, audit lefthook P0-9/P1-13 보강. 잔여: GitHub `licenseInfo.key` detection 수정 (G8) |
+| PR 머지 | #1 (README 4-lang en canonical SSOT + ko rename + ja/zh placeholder) · #2 (S6 design doc) · #3 (lefthook Python 4 계층 게이트) · #4 (거버넌스 5종 ko: SECURITY/CONTRIBUTING/COC/CHANGELOG/AGENTS) · #5 (S6 plan INDEX.md) · #6 (운영 4종 신규: Installation/Configuration/API Reference/Upgrade) · #7 (거버넌스 5종 + 운영 4종 + lefthook 키워드 강제) · #8 (ADR-0001 Python 스택 override) · #9 (BRANDING 4-lang) · #10 (docs/family 4-lang) · #11 (README ja/zh placeholder → 본문 완전 번역) · #12 (운영 4종 ja/zh) · #13 (commons SSOT sync + readme-i18n-sync lefthook) · main HEAD: `aad600f feat(audit): lefthook P0-9/P1-13 보강 + release.sh + Makefile` · CODEOWNERS / ADOPTERS / ROADMAP / PR template 사용자 평행 추가 |
+| 작업 | (a) BRANDING.md / docs/family.md / CONTRIBUTING / SECURITY / COC / CHANGELOG / AGENTS / 운영 4종 / lefthook 4 계층 / 4-lang README/docs / readme-i18n-sync 자동화; (b) LICENSE 파일 Apache-2.0 정합 (LICENSE 파일 자체는 정상) |
+| 산출 | forgewise 가 다른 4개와 동일한 5 표준 docs + 4-lang README + lefthook + commons SSOT sync hook |
+| 잔여 | GitHub `licenseInfo.key = "other"` → "apache-2.0" detection 수정 (G8) — 별 cycle 또는 audit augmentation |
+| Branch | (각 PR 별) `feat/i18n-en-canonical-2026-05-21` · `feat/governance-5-set-2026-05-21` · etc. |
 
-#### S7 — postgres + mongodb GHA 제거 + 로컬 4계층 보강
+#### S7 — postgres + mongodb GHA per-repo 정합 (D1 v2.0 amendment)
 
 | 항목 | 값 |
 |---|---|
-| 상태 | 미시작 (S1 패턴 재사용 — required_status_checks 갯수만 확인 후 동일 절차) |
-| 작업 | S1 의 atomic 패턴 (workflow 제거 + branch protection 갱신 + ADR) 을 postgres / mongo 에 각각 적용. 단 mongo 는 `feat/v0.8.0-consume-2026-05-21` PR #190 머지 후. commons 는 GHA 가 *이미 0개* 라 본 S7 에서 OOS. |
-| 산출 | postgres / mongo / valkey 모두 GHA = 0 (commons 는 이미 0). 5 repos 중 forgewise = 0 (애초 GHA 없음). |
-| Branch | (각 repo) `feat/s7-gha-removal-2026-05-21` |
+| 상태 | **per-repo 정합 (2026-05-21)** — postgres = strict 제거 노선 (14 → 3 narrow exception); mongo = retention 노선 (12 wf 유지, race 후 re-restore); valkey = retention 노선 (14 wf 유지, ADR-0048). 5 repos: commons=0 (애초) / postgres=3 / mongo=12 / valkey=14 / forgewise=0 |
+| PR 머지 (postgres strict 노선) | #85 (ADR-0017 integrated GHA retention rationale 1차) · #86 (RFC-0002 .github/workflows 전체 제거 14 파일) · #87 (helm-publish.sh + release.sh) · #88 (로컬 4계층 보강 kube-linter + go-licenses + markdown-link-check) · #89 (ADR-0018 Accepted GHA 전면 제거) · #90 (revert restore 14 wf race) · #91 (Sprint 1 P2 -375 LOC) · #92 (ADR-0019 Accepted GHA 유지 v2.0 정합) · #93 (RFC-0002 GHA cleanup 11 wf 제거, narrow exception 3 유지) · #94 (broad .claude gitignore) · #95 (RFC-0002 gha-block hook + UPGRADING.md) · ADR-0022 (`beb4d42`, narrow exception 3 wf 정합) |
+| PR 머지 (mongo retention 노선) | #193 (ADR-0031 integrated GHA retention rationale 1차) · #194 (RFC-0002 .github/workflows 전체 제거 12 파일) · #195 (helm-publish.sh) · #196 (로컬 4계층 보강) · #197 (ADR-0032 Accepted GHA 전면 제거 — Superseded) · #199 (revert restore 12 wf) · #200 (RFC-0002 GHA cleanup 9 wf race 시도) · #201 (.claude-flow gitignore) · #202 (Sprint 1 P2 -327 LOC) · #203 (ADR-0033 Accepted GHA 유지 v2.0 정합) · #204 (revert re-restore 9 wf, race 정정) · #205 (RFC-0002 gha-block hook + ADR-0035) |
+| ADR | postgres: ADR-0017 (proposed) / ADR-0018 (Accepted GHA 제거) / ADR-0019 (Accepted GHA 유지, ADR-0018 Superseded) / ADR-0020 (Sprint 1 P2) / ADR-0021 (gha-block hook) / ADR-0022 (narrow exception 3 wf 정합). mongo: ADR-0031~0035 동일 패턴 |
+| 작업 | (a) 각 repo per-repo 결정 — postgres = 11 wf 제거 + 3 narrow exception 유지 (pages / dependabot / release tag); (b) mongo = 12 wf retention (operator family v2.0 정합); (c) valkey S1 에서 14 wf retention (ADR-0048); (d) commons = GHA 0 유지; (e) forgewise = GHA 0 유지 (애초 부재); (f) RFC-0002 gha-block pre-commit hook 3 repos 모두 적용 |
+| 산출 | per-repo 정합 (cleanup 의도 = 각 repo 별 결정 보장 달성) + RFC-0002 narrow exception 3종 표준화 + 로컬 4계층 보강 (kube-linter + go-licenses + markdown-link-check) 3 operators 동등 |
+| Branch | postgres `feat/rfc-0002-gha-cleanup-2026-05-21` 등 / mongo `revert/restore-workflows-2026-05-21` 등 |
 
 ### 4.3 거버넌스 변경 — RFC 0005 (가칭)
 
