@@ -258,8 +258,10 @@ func TestValidateDir_ManifestsSubdirsIgnored(t *testing.T) {
 	t.Parallel()
 
 	root := makeValidBundle(t)
-	// Add a subdirectory inside manifests/ — should not affect validation.
-	subDir := filepath.Join(root, "manifests", "subdir")
+	// Add a subdirectory whose name sorts before csv.yaml to ensure the
+	// IsDir() skip branch in dirContainsYAML is exercised before any YAML
+	// file is found. ("aaa-dir" < "csv.yaml" in ReadDir order.)
+	subDir := filepath.Join(root, "manifests", "aaa-dir")
 	if err := os.MkdirAll(subDir, 0o755); err != nil {
 		t.Fatal(err)
 	}
@@ -267,4 +269,62 @@ func TestValidateDir_ManifestsSubdirsIgnored(t *testing.T) {
 	if err := ValidateDir(root); err != nil {
 		t.Errorf("subdirectories in manifests/ should be ignored: %v", err)
 	}
+}
+
+func TestValidateDir_ManifestsUnreadable(t *testing.T) {
+	t.Parallel()
+
+	if os.Getuid() == 0 {
+		t.Skip("skipping permission test when running as root")
+	}
+
+	root := t.TempDir()
+	manifestsDir := filepath.Join(root, "manifests")
+	if err := os.MkdirAll(manifestsDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	// Write a YAML file first, then make dir unreadable.
+	if err := os.WriteFile(filepath.Join(manifestsDir, "csv.yaml"), []byte("kind: CSV\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chmod(manifestsDir, 0o000); err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { os.Chmod(manifestsDir, 0o755) })
+
+	err := ValidateDir(root)
+	if err == nil {
+		t.Error("expected error for unreadable manifests/")
+	}
+	if strings.Contains(err.Error(), "reading manifests/") {
+		// Good — the wrapped os.ReadDir error.
+		return
+	}
+	// On some OSes, Stat on the dir might fail differently.
+	t.Logf("got error (acceptable): %v", err)
+}
+
+func TestValidateDir_AnnotationsUnreadable(t *testing.T) {
+	t.Parallel()
+
+	if os.Getuid() == 0 {
+		t.Skip("skipping permission test when running as root")
+	}
+
+	root := makeValidBundle(t)
+	annotationsPath := filepath.Join(root, "metadata", "annotations.yaml")
+	if err := os.Chmod(annotationsPath, 0o000); err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { os.Chmod(annotationsPath, 0o644) })
+
+	err := ValidateDir(root)
+	if err == nil {
+		t.Error("expected error for unreadable annotations.yaml")
+	}
+	if strings.Contains(err.Error(), "reading annotations.yaml") {
+		// Good — the wrapped os.ReadFile error.
+		return
+	}
+	t.Logf("got error (acceptable): %v", err)
 }
