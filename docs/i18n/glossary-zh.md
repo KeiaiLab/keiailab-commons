@@ -8,7 +8,7 @@
 
 ## §1 一致性规则
 
-1. **代码标识符保持英文** — 例: `ValkeyCluster`, `kubectl`, `Helm`, `pkg/probes`. 禁止中文翻译。
+1. **代码标识符保持英文** — 例: `MyResource`, `kubectl`, `Helm`, `pkg/probes`. 禁止中文翻译。
 2. **标准 K8s 术语 = 英文优先 + 中文附注** — 例: `Pod (容器组)`, `Deployment (部署)`. 首次出现时英文 + 括号中文,后续可单独使用中文。
 3. **operator-commons API 名称保持英文** — 例: `Reconciler`, `Finalizer`, `EventRecorder`. 可附中文注释 (`Finalizer (终结器)`)。
 4. **外部用户可见文档 (README/CONTRIBUTING/SECURITY 等)** = 书面语体. 内部文档 (HANDOFF/AGENTS 等) = 口语体可。
@@ -71,7 +71,7 @@
 | InitContainer | 初始化容器 (InitContainer) |
 | Sidecar Container | 边车容器 |
 
-## §downstream operator-commons 库术语
+## §3 operator-commons 库术语
 
 | English (canonical) | 中文 |
 |---|---|
@@ -86,6 +86,9 @@
 | `pkg/probes` (v0.8.0 新增) | 探针构建器包 (`pkg/probes`) |
 | `pkg/storageclass` (v0.8.0 新增) | 存储类包 (`pkg/storageclass`) |
 | `pkg/events` (v0.8.0 新增) | 事件记录器包 (`pkg/events`) |
+| `pkg/pvc` (v0.9.0 新增) | PVC 扩展包 (`pkg/pvc`) |
+| `pkg/topology` (v0.9.0 新增) | 拓扑分散包 (`pkg/topology`) |
+| `pkg/bundle` (v0.10.0 新增) | OLM v1 捆绑包元数据包 (`pkg/bundle`) |
 | Recorder interface | Recorder 接口 (英文为主) |
 | EventType (Normal / Warning) | 事件类型 (Normal / Warning) |
 | Reason (event reason) | 事件原因 (Reason) |
@@ -201,5 +204,5 @@
 
 | Date | Change | Refs |
 |---|---|---|
-| 2026-05-21 | 新增 — 中文标准术语表 placeholder v0.1 (4 sections, ~45 terms, 简体) | 초기 도입 cycle |
-| 2026-05-21 | 초기 완역 (Claude 자동 번역, native review 대기)|초기 완역 (Claude 자동 번역, native review 대기) |
+| 2026-05-21 | 新增 — 中文标准术语表 placeholder v0.1 (4 sections, ~45 terms, 简体) | 初始导入周期 |
+| 2026-05-21 | 初始完译 (Claude 自动翻译, native review 待定) | — |

@@ -10,18 +10,12 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
-  <a href="https://golang.org/"><img src="https://img.shields.io/badge/Go-1.25+-00ADD8?logo=go" alt="Go Version"/></a>
+  <a href="https://golang.org/"><img src="https://img.shields.io/badge/Go-1.26+-00ADD8?logo=go" alt="Go Version"/></a>
   <a href="https://pkg.go.dev/github.com/keiailab/operator-commons"><img src="https://pkg.go.dev/badge/github.com/keiailab/operator-commons.svg" alt="Go Reference"/></a>
   <a href="https://scorecard.dev/viewer/?uri=github.com/keiailab/operator-commons"><img src="https://api.scorecard.dev/projects/github.com/keiailab/operator-commons/badge" alt="OpenSSF Scorecard"/></a>
   <a href="https://github.com/keiailab/operator-commons/discussions"><img src="https://img.shields.io/github/discussions/keiailab/operator-commons?label=discussions&logo=github" alt="GitHub Discussions"/></a>
 </p>
 
-<p align="center">
-  <b>English</b> |
-  <a href="README.ko.md">한국어</a> |
-  <a href="README.ja.md">日本語</a> |
-  <a href="README.zh.md">中文</a>
-</p>
 
 ---
 
@@ -55,8 +49,11 @@ canonical implementation, and stop re-inventing it in every repository.
 | `pkg/networkpolicy` | Beta | Deny-by-default NetworkPolicy builder + functional options (`WithSelfIngress`, `WithIngressFromPeers`, `WithDenyEgress`, `WithEgressToPeers`, `ComboPeer`). |
 | `pkg/security` | Beta | PodSecurity *restricted* SecurityContext builder + Pod / Container split + seccomp profile pointers. |
 | `pkg/events` | Beta | Minimal `Recorder` interface + nine standard `Reason` constants + `Emit` / `EmitWarning` / `WrappedError` (nil-safe). |
+| `pkg/pvc` | Beta | PVC expansion helpers — comparison + safe in-place update (controller-runtime dependency — ADR-0016). |
+| `pkg/topology` | Beta | TopologySpreadConstraints HA defaults + zone-aware affinity builder. |
 | `pkg/probes` | Experimental | `corev1.Probe` fluent builder — HTTP / HTTPS / TCP / Exec with kubelet defaults and clamp. |
 | `pkg/webhook` | Experimental | Admission validation helpers — `ValidateAllowedVersion`, `ValidateWithPredicate`, conversion registry. |
+| `pkg/bundle` | Experimental | OLM v1 bundle metadata helpers — annotations, FBC schema types, directory validation (ADR-0017). |
 
 [docs/STABILITY.md](docs/STABILITY.md) defines the tier promise.
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) covers the package surface and

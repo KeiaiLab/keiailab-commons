@@ -4,15 +4,15 @@ keiailab-commons — NetworkPolicy partials (library chart partial 표준).
 기반: commons-ADR-0006.
 
 두 패턴 추출:
-  - keiailab.networkpolicy.dataplane    — managed workload 보호 (postgres 패턴).
-  - keiailab.networkpolicy.controlplane — operator manager 자체 보호 (valkey 패턴).
+  - keiailab.networkpolicy.dataplane    — managed workload protection (dataplane pattern).
+  - keiailab.networkpolicy.controlplane — operator manager protection (controlplane pattern).
 */}}
 
 
 {{/*
 keiailab.networkpolicy.dataplane — managed dataplane workload 보호 NetworkPolicy 묶음.
 
-postgres 패턴: default-deny + allow-internal-instance (같은 managed-by
+dataplane pattern: default-deny + allow-internal-instance (같은 managed-by
 label 의 pod 간만 dataplane port 허용).
 
 caller 인자 (dict):
@@ -84,7 +84,7 @@ spec:
 {{/*
 keiailab.networkpolicy.controlplane — operator manager pod 자체 보호.
 
-valkey 패턴: manager pod 의 ingress (metrics + 선택적 webhook) +
+controlplane pattern: manager pod 의 ingress (metrics + 선택적 webhook) +
 egress (K8s API + DNS + 사용자 추가).
 
 caller 인자 (dict):

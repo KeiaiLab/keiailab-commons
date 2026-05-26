@@ -3,17 +3,16 @@
 - Date: 2026-05-09
 - Status: Accepted
 - Authors: @eightynine01
-- Refs: pkg/status + pkg/finalizer 표준 (`docs/kb/rfc/0018-status-finalizer-standard.md`)
+- Refs: pkg/status + pkg/finalizer 표준
 
 ## Context
 
 operator-commons v0.5.0 시점에 `pkg/finalizer` 와 `pkg/status` 채택률이
-0% 임이 측정됨. 3 consuming operator (mongodb / valkey / postgres) 가
+0% 임이 측정됨. downstream consumers 가
 각자 finalizer slice 직접 조작 + ConditionType/Reason 분기 구현.
 
 본 ADR 은 pkg/status + pkg/finalizer 표준 의 commons-side implementation 결정을 보존한다.
-Consumer migration 자체는 각 repo 별 신규 ADR 에서 추적 (mongodb/valkey
-신규, postgres ADR-0008 갱신).
+Consumer migration 자체는 각 repo 별 신규 ADR 에서 추적 (downstream ADR 갱신).
 
 ## Decision
 
@@ -75,5 +74,5 @@ Consumer migration 자체는 각 repo 별 신규 ADR 에서 추적 (mongodb/valk
 
 ## Refs
 
-- pkg/status + pkg/finalizer 표준: `docs/kb/rfc/0018-status-finalizer-standard.md`
+- pkg/status + pkg/finalizer 표준
 - 사례: `pkg/status/conditions.go` (변경 후), `pkg/finalizer/finalizer.go` (변경 없음).

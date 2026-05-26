@@ -33,7 +33,7 @@ downstream consumer 의 manager Deployment / DB workload StatefulSet 이 동일 
 2. **`override` 인자 패턴**: caller 가 `override` dict 키로 사용자 정의
    SecurityContext 전달 시 partial 이 *그대로 출력* — v1alpha2
    PodSecurityRestricted=false 시 사용자 override 시나리오 지원
-   (downstream operator ADR-0036 정합).
+   (downstream ADR 정합).
 
 3. **runAsUser/Group default 65532**: distroless nonroot 표준 UID/GID.
    각 operator 의 Dockerfile 와 정합 (`USER 65532:65532`).
@@ -53,7 +53,7 @@ downstream consumer 의 manager Deployment / DB workload StatefulSet 이 동일 
 - downstream consumer manager pod 의 PSS Restricted 표준화 — `kubectl describe`
   + Pod Security Admission label 검증 정합.
 - override 인자로 v1alpha2 의 PodSecurityRestricted=false 시나리오
-  (valkey ADR-0036) 와 정합.
+  (downstream ADR) 와 정합.
 - Helm library chart 정책 §3 implementation 완결 — commons library chart 가 §3.1/
   §3.2/§3.4/§3.5 모두 보유.
 
@@ -71,7 +71,7 @@ downstream consumer 의 manager Deployment / DB workload StatefulSet 이 동일 
   Pod/Container SecurityContext 의 *상위 vs 하위* 표면 다름. 분리가
   명시적.
 - *PSS Restricted 강제* (default) vs *override 우선* — `override` 인자가
-  설정되면 default 무시. valkey ADR-0036 의 secure-by-default + opt-out
+  설정되면 default 무시. downstream ADR 의 secure-by-default + opt-out
   path 와 정합.
 
 ## Alternatives Considered
@@ -90,7 +90,7 @@ downstream consumer 의 manager Deployment / DB workload StatefulSet 이 동일 
 
 - Helm library chart 정책 §3.4 (이제 implementation 완료).
 - ADR-0005/0006/0007: §3.1/§3.2/§3.5 implementation 선행.
-- downstream operator ADR-0036 (PodSecurityRestricted Optional Toggle): 본
+- downstream ADR (PodSecurityRestricted Optional Toggle): 본
   partial 의 override 시나리오 부모.
 - 구현 결정.
 - K8s PSS: <https://kubernetes.io/docs/concepts/security/pod-security-standards/>

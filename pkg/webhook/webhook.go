@@ -11,18 +11,18 @@
 // 본 패키지는 위 패턴을 *one-liner* 로 통합. 빈 문자열은 *defaulter 책임* —
 // validation 이 skip (defaulter 가 채운 후 다시 검증).
 //
-// 사용 예 (valkey webhook):
+// 사용 예 (myapp webhook):
 //
 //	import commonswebhook "github.com/keiailab/operator-commons/pkg/webhook"
 //	import commonsversion "github.com/keiailab/operator-commons/pkg/version"
 //
-//	var supportedValkey = commonsversion.MustList("8.0.9", "8.1.6", "9.0.4")
+//	var supportedMyApp = commonsversion.MustList("8.0.9", "8.1.6", "9.0.4")
 //
-//	func validateValkeySpec(v *Valkey) field.ErrorList {
+//	func validateMyAppSpec(v *MyApp) field.ErrorList {
 //	    var errs field.ErrorList
 //	    p := field.NewPath("spec")
 //	    if err := commonswebhook.ValidateAllowedVersion(
-//	        p.Child("version", "version"), v.Spec.Version.Version, supportedValkey,
+//	        p.Child("version", "version"), v.Spec.Version.Version, supportedMyApp,
 //	    ); err != nil {
 //	        errs = append(errs, err)
 //	    }
@@ -57,11 +57,11 @@ func ValidateAllowedVersion(path *field.Path, value string, list version.List) *
 // ValidateWithPredicate — caller 가 정의한 predicate 함수 + 허용 목록.
 // semver-prefix 매칭 같은 비-exact 검증에 사용.
 //
-// 예 (mongodb):
+// 예 (downstream operator):
 //
 //		commonswebhook.ValidateWithPredicate(path, value,
-//		    IsSupportedMongoDBVersion, // major.minor 추출 후 matching
-//		    SupportedMongoDBVersions,  // 외부 노출 슬라이스
+//		    IsSupportedVersion, // major.minor 추출 후 matching
+//		    SupportedVersions,  // 외부 노출 슬라이스
 //		)
 //
 //	  - 빈 문자열 → nil.

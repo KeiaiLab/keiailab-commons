@@ -1,42 +1,46 @@
-# Coverage Report — v1.0.0 graduation
+# カバレッジレポート
 
-> [English / 한국어](coverage-report.md) | **日本語** | [中文](coverage-report.zh.md)
+> [English](coverage-report.md) | [한국어](coverage-report.ko.md) | **日本語** | [中文](coverage-report.zh.md)
 
-> ⚠️ This translation is AI-generated and pending native review. — 本翻訳は Claude による機械翻訳結果です。
+> `go test ./pkg/... -coverprofile=cover.out` 測定結果。
+> v1.0.0 卒業条件: カバレッジ ≥ 85 %。
 
-> `go test ./pkg/... -coverprofile=cover.out` 測定結果。v1.0.0 卒業条件 #7 (`カバレッジ ≥ 85%`) 充足。
+## 測定結果 (2026-05-26)
 
-## 測定結果 (2026-05-14)
-
-| Package | Coverage | Status |
+| パッケージ | カバレッジ | 状態 |
 |---|---:|---|
+| `pkg/events` | **100.0%** | ✅ |
 | `pkg/finalizer` | **96.3%** | ✅ |
 | `pkg/labels` | **100.0%** | ✅ |
 | `pkg/monitoring` | **97.6%** | ✅ |
 | `pkg/networkpolicy` | **89.2%** | ✅ |
+| `pkg/probes` | **100.0%** | ✅ |
+| `pkg/pvc` | **90.2%** | ✅ |
 | `pkg/security` | **100.0%** | ✅ |
 | `pkg/status` | **87.5%** | ✅ |
+| `pkg/storageclass` | **100.0%** | ✅ |
+| `pkg/topology` | **100.0%** | ✅ |
 | `pkg/version` | **100.0%** | ✅ |
 | `pkg/webhook` | **97.2%** | ✅ |
-| **合計 (statements)** | **96.3%** | **✅ PASS (≥85%)** |
+| **合計 (statements)** | **96.2%** | **✅ PASS (≥85%)** |
 
-8 package すべてが v1.0.0 threshold (85%) を通過。
+全13パッケージがv1.0.0閾値（85%）を超過しています。
 
 ## 再現コマンド
 
 ```bash
 go test -coverprofile=cover.out -covermode=atomic ./pkg/...
 go tool cover -func=cover.out | tail -1
-# total:                                  (statements)            96.3%
+# total:                                  (statements)            96.2%
 ```
 
-## 今後の維持
+## 保守
 
-- CI ゲート: `pre-push` hook で push の度にカバレッジ測定
-- Regression alarm: 85% 以下に落ちると PR ブロック
-- 新規 package 追加時に同じ ≥85% 基準
+- 品質ゲート: `pre-push` hookが毎pushでカバレッジを測定します。
+- 回帰警報: パッケージが85%未満に低下するとPRをブロックします。
+- 新規パッケージも同じ ≥ 85% 基準を満たす必要があります。
 
-## Refs
+## 参照
 
-- ROADMAP.md "v1.0.0 卒業条件" #7
-- docs/STABILITY.md graduation criterion #6
+- [ROADMAP.md](ROADMAP.md) — v1.0.0 卒業条件 #7。
+- [STABILITY.md](STABILITY.md) — 卒業条件 #6。

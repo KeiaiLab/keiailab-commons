@@ -8,7 +8,7 @@
 
 ## §1 一貫性ルール
 
-1. **コード識別子は英文そのまま** — 例: `ValkeyCluster`, `kubectl`, `Helm`, `pkg/probes`. 日本語翻訳禁止。
+1. **コード識別子は英文そのまま** — 例: `MyResource`, `kubectl`, `Helm`, `pkg/probes`. 日本語翻訳禁止。
 2. **標準 K8s 用語は英文優先 + 日本語併記** — 例: `Pod (ポッド)`, `Deployment (デプロイメント)`. 本文初出時に英文 + 括弧日本語、以降は日本語単独可。
 3. **operator-commons API 名称は英文そのまま** — 例: `Reconciler`, `Finalizer`, `EventRecorder`. 日本語併記可 (`Finalizer (ファイナライザー)`)。
 4. **外部ユーザー可視文書 (README/CONTRIBUTING/SECURITY 等)** = 敬体 (`です/ます調`). 内部文書 (HANDOFF/AGENTS 等) = 常体または自由。
@@ -71,7 +71,7 @@
 | InitContainer | 初期化コンテナ (InitContainer) |
 | Sidecar Container | サイドカーコンテナ |
 
-## §downstream operator-commons ライブラリ用語
+## §3 operator-commons ライブラリ用語
 
 | English (canonical) | 日本語 |
 |---|---|
@@ -86,6 +86,9 @@
 | `pkg/probes` (v0.8.0 新規) | プローブビルダーパッケージ (`pkg/probes`) |
 | `pkg/storageclass` (v0.8.0 新規) | ストレージクラスパッケージ (`pkg/storageclass`) |
 | `pkg/events` (v0.8.0 新規) | イベントレコーダーパッケージ (`pkg/events`) |
+| `pkg/pvc` (v0.9.0 新規) | PVC 拡張パッケージ (`pkg/pvc`) |
+| `pkg/topology` (v0.9.0 新規) | トポロジー分散パッケージ (`pkg/topology`) |
+| `pkg/bundle` (v0.10.0 新規) | OLM v1 バンドルメタデータパッケージ (`pkg/bundle`) |
 | Recorder interface | Recorder インターフェース (英文そのまま) |
 | EventType (Normal / Warning) | イベントタイプ (Normal / Warning) |
 | Reason (event reason) | イベント理由 (Reason) |
@@ -201,5 +204,5 @@
 
 | Date | Change | Refs |
 |---|---|---|
-| 2026-05-21 | 新規 — 日本語標準用語集 placeholder v0.1 (4 sections, ~45 terms) | 초기 도입 cycle |
-| 2026-05-21 | 初期完訳 (Claude 自動翻訳、native review 待ち)|초기 완역 (Claude 자동 번역, native review 대기) |
+| 2026-05-21 | 新規 — 日本語標準用語集 placeholder v0.1 (4 sections, ~45 terms) | 初期導入サイクル |
+| 2026-05-21 | 初期完訳 (Claude 自動翻訳、native review 待ち) | — |

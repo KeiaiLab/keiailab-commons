@@ -4,9 +4,9 @@
 //
 // downstream operator 가 동일 convention 으로 label 부여:
 //
-//	commonsabels.New("mongodb", instance, "controller-manager", "1.4.6", "downstream operator")
+//	commonsabels.New("myapp", instance, "controller-manager", "1.4.6", "downstream operator")
 //	→ {
-//	    "app.kubernetes.io/name":       "mongodb",
+//	    "app.kubernetes.io/name":       "myapp",
 //	    "app.kubernetes.io/instance":   instance,
 //	    "app.kubernetes.io/component":  "controller-manager",
 //	    "app.kubernetes.io/version":    "1.4.6",

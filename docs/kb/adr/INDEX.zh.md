@@ -19,6 +19,7 @@
 | [0014](0014-release-script-ssot.md) | `scripts/release.sh` — 手动 library release pipeline | Accepted | 2026-05-21 |
 | [0015](0015-lefthook-augmentation.md) | lefthook 增强 — `go-licenses` + `markdown-link-check` | Accepted | 2026-05-21 |
 | [0016](0016-pvc-topology-extraction.md) | `pkg/pvc` + `pkg/topology` 引入（下游 dedup） | Accepted | 2026-05-21 |
+| [0017](0017-olm-v1-bundle-package.md) | `pkg/bundle` — OLM v1 捆绑包元数据助手 | Accepted | 2026-05-26 |
 
 ## 约定
 

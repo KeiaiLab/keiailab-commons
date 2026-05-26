@@ -82,7 +82,7 @@ operator-commons 는 3-tier 안정성을 사용합니다:
 
 ## Caller 책임
 
-Caller (downstream operator, downstream operator, downstream operator):
+Caller (downstream operator):
 - v1.0.0 까지 `go.mod` 에서 `vMAJOR.MINOR.PATCH` 로 pin
 - deprecation warning 을 위해 `CHANGELOG.md` 구독
 - GA 전 `v1.0.0-rc.N` 에 대해 테스트

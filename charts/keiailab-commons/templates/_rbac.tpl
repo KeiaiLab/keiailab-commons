@@ -76,7 +76,7 @@ Role 의 rules: 아래에 nindent 호출.
     {{ include "keiailab.rbac.controllerBase" . | nindent 4 }}
     # delta CRD-specific rules:
     - apiGroups: ["cache.keiailab.io"]
-      resources: ["valkeys", "valkeyclusters"]
+      resources: ["<kinds>", "<kindclusters>"]
       verbs: ["*"]
 */}}
 {{- define "keiailab.rbac.controllerBase" -}}
@@ -107,7 +107,7 @@ rules 와 별개 — 모든 workload-managing operator 공통.
   - apiGroups: ["apps"]    # 본 partial 가 cover
   - apiGroups: [""]         # 본 partial 가 cover (services/configmaps/secrets)
   - apiGroups: ["cache.keiailab.io"]
-    resources: ["valkeys"]  # delta — caller 자체 yaml
+    resources: ["<kinds>"]  # delta — caller chart YAML
     verbs: ["*"]
 */}}
 {{- define "keiailab.rbac.workloadBase" -}}

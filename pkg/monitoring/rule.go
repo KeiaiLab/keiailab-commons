@@ -42,18 +42,18 @@ type RuleGroup struct {
 //
 // 사용 예:
 //
-//	rule := monitoring.NewPrometheusRule("vk-alerts", "default",
-//	    map[string]string{"app.kubernetes.io/instance": "vk-cluster"},
+//	rule := monitoring.NewPrometheusRule("myapp-alerts", "default",
+//	    map[string]string{"app.kubernetes.io/instance": "myapp-cluster"},
 //	    monitoring.RuleGroup{
-//	        Name:     "valkey.rules",
+//	        Name:     "myapp.rules",
 //	        Interval: "30s",
 //	        Alerts: []monitoring.AlertRule{
 //	            {
-//	                Alert:       "ValkeyDown",
-//	                Expr:        "up{job=\"valkey\"} == 0",
+//	                Alert:       "MyAppDown",
+//	                Expr:        "up{job=\"myapp\"} == 0",
 //	                For:         "5m",
 //	                Labels:      map[string]string{"severity": "critical"},
-//	                Annotations: map[string]string{"summary": "Valkey instance down"},
+//	                Annotations: map[string]string{"summary": "MyApp instance down"},
 //	            },
 //	        },
 //	    },

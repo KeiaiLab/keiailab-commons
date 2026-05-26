@@ -14,9 +14,9 @@ type ConvertFunc func(src any) (dst any, err error)
 // 사용 예 (downstream operator):
 //
 //	reg := webhook.NewConversionRegistry()
-//	reg.Register("valkey.io/v1alpha1", "valkey.io/v1alpha2", convertV1A1ToV1A2)
-//	reg.Register("valkey.io/v1alpha2", "valkey.io/v1alpha1", convertV1A2ToV1A1)
-//	dst, err := reg.Convert("valkey.io/v1alpha1", "valkey.io/v1alpha2", src)
+//	reg.Register("example.io/v1alpha1", "example.io/v1alpha2", convertV1A1ToV1A2)
+//	reg.Register("example.io/v1alpha2", "example.io/v1alpha1", convertV1A2ToV1A1)
+//	dst, err := reg.Convert("example.io/v1alpha1", "example.io/v1alpha2", src)
 //
 // 본 helper 는 controller-runtime 의존을 회피하고 callback 패턴으로 변환
 // 로직을 위임. caller 는 별도 admission webhook server 에서 호출.

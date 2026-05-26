@@ -11,7 +11,7 @@
 ## Context
 
 audit P2/OP 의 OP-1 (release.sh script) 가 operator-commons 에서 ❌. 다른 4 repo:
-- downstream operator, downstream operator, downstream operator: 본 ADR 시점 ✅ (S7 + valkey ralph-loop 결과로 이미 보유)
+- downstream operators: 본 ADR 시점 ✅ (이미 보유)
 - downstream component: ❌ (Python 패키지, 별 release 양식)
 
 operator-commons 는 *Go module 라이브러리* + *Helm library chart* 의 dual deliverable:

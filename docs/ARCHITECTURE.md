@@ -34,6 +34,7 @@
 | `pkg/topology` | Beta | PVC topology spread helpers + zone-aware affinity. | No |
 | `pkg/probes` | Experimental | `corev1.Probe` fluent builder — HTTP / HTTPS / TCP / Exec, kubelet defaults + clamp. | No |
 | `pkg/webhook` | Experimental | Admission validation helpers — `ValidateAllowedVersion`, `ValidateWithPredicate`, conversion registry. | No |
+| `pkg/bundle` | **Experimental** | OLM v1 bundle metadata — annotations, FBC schema types, directory validation. | No |
 
 Design invariant: **leaf packages depend on the Kubernetes API types and
 stdlib only**. No controller-runtime, no logr, no operator-sdk leakage.

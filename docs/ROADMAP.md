@@ -32,6 +32,7 @@ the library evolves according to the needs of its downstream consumers.
 | `pkg/topology` | Beta | Downstream topology spread live adoption. |
 | `pkg/webhook` | **Experimental** | Multi-downstream adoption + stabilization. |
 | `pkg/probes` | **Experimental** | 2+ downstream adoption → Beta. |
+| `pkg/bundle` | **Experimental** | 2+ downstream adoption → Beta. |
 
 **Tier semantics**:
 
@@ -234,3 +235,17 @@ the library evolves according to the needs of its downstream consumers.
 ---
 
 <p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+
+### pkg/bundle (Experimental)
+
+- [x] Bundle annotations — six required registry+v1 annotation constants
+  plus `NewAnnotations` builder with `Map()` and `DockerLabels()`.
+- [x] FBC schema types — Go structs for `olm.package`, `olm.channel`,
+  `olm.bundle`, `olm.deprecations` with JSON serialization.
+- [x] Bundle directory validation — `ValidateDir(path)` checks
+  `manifests/` + `metadata/` + `annotations.yaml`.
+- [x] Unit tests (≥ 85 % coverage).
+- [ ] 2+ downstream live adoption (Beta criterion).
+- [ ] **Tier promotion** → Beta → Stable.
+- Verify: downstream operator bundle build uses commons annotations
+  with regression 0.

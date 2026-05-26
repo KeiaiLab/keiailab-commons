@@ -5,7 +5,7 @@
 // downstream operator 가 동일 convention 으로 ServiceMonitor 생성:
 //
 //	sm := monitoring.NewServiceMonitor(monitoring.ServiceMonitorParams{
-//	    Name:      "mongodb-metrics",
+//	    Name:      "myapp-metrics",
 //	    Namespace: ns,
 //	    Selector:  labels.New("example-app", instance, "metrics", "", "downstream-operator").Selector(),
 //	    Port:      "metrics",

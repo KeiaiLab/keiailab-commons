@@ -19,7 +19,7 @@ import (
 )
 
 // Prefix — keiailab 표준 finalizer prefix. repo 별 specific suffix 는 호출자가
-// 부여 (예: "mongodb.keiailab.com/finalizer", "valkey.keiailab.com/finalizer").
+// 부여 (예: "myapp.keiailab.com/finalizer", "myservice.keiailab.com/finalizer").
 const Prefix = "keiailab.com/"
 
 // Add 는 obj 의 finalizer slice 에 name 이 없으면 추가한다.

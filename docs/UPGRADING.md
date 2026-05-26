@@ -89,7 +89,45 @@ kubectl apply -f config/samples/
 kubectl get <CR> -A  # observe reconciliation
 ```
 
-## 3. v0.9.x → v1.0.0
+## 3. v0.9.x → v0.10.x
+
+### New packages (minor bump)
+
+| Package | Purpose | Tier |
+|---|---|---|
+| `pkg/bundle` | OLM v1 bundle metadata helpers | Experimental |
+
+### Migration
+
+Add the import in your downstream operator:
+
+```go
+import (
+    "github.com/keiailab/operator-commons/pkg/bundle"
+)
+```
+
+### Backwards compatibility
+
+- All existing packages keep their signatures.
+- `pkg/bundle` is opt-in — no existing code is affected.
+
+### Recommended migration procedure
+
+```bash
+# 1. bump the dependency
+go get github.com/keiailab/operator-commons@v0.10.0
+go mod tidy
+
+# 2. verify
+make verify  # lint + test + build
+
+# 3. generate bundle metadata
+annotations := bundle.NewAnnotations("my-operator", []string{"stable"}, "stable")
+annotationMap := annotations.Map()
+```
+
+## 4. v0.9.x → v1.0.0
 
 Proceeds when the v1.0.0 graduation criteria (see
 [STABILITY.md](STABILITY.md) "v1.0.0 graduation") are satisfied:
@@ -98,7 +136,7 @@ Proceeds when the v1.0.0 graduation criteria (see
 - v0.x → v1.0 is a *naming* change — semantics are unchanged (no
   breaking change).
 
-## 4. General migration checklist
+## 5. General migration checklist
 
 Before upgrade:
 
@@ -113,7 +151,7 @@ After upgrade:
 - [ ] e2e passes.
 - [ ] Helm chart `charts/<operator>` `dependencies:` updated.
 
-## 5. Breaking-change notice policy
+## 6. Breaking-change notice policy
 
 - **Deprecation**: add `// Deprecated:` comment in the new minor; remove
   two minors later.
@@ -129,4 +167,4 @@ After upgrade:
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab</p>

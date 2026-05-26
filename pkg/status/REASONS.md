@@ -73,7 +73,7 @@
 `kubectl get <cr> -o jsonpath='{.status.conditions}'` 출력으로 매트릭스 검증:
 
 ```bash
-kubectl get postgrescluster prod -o jsonpath='{range .status.conditions[*]}{.type}={.status}/{.reason}{"\n"}{end}'
+kubectl get <kind> <name> -o jsonpath='{range .status.conditions[*]}{.type}={.status}/{.reason}{"\n"}{end}'
 # Ready=True/Available
 # Progressing=False/Available
 # Available=True/Available

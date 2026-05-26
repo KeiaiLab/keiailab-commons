@@ -65,7 +65,7 @@ func TestValidateWithPredicate_EmptyValueSkipped(t *testing.T) {
 
 func TestValidateWithPredicate_Allowed(t *testing.T) {
 	t.Parallel()
-	// semver-prefix 매칭 시뮬레이션 (mongodb pattern).
+	// semver-prefix 매칭 시뮬레이션 (major.minor pattern).
 	majorMinor := func(v string) bool {
 		// 단순화: "8.3" prefix 만 허용.
 		return strings.HasPrefix(v, "8.3")

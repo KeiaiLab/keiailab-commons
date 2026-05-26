@@ -11,11 +11,11 @@ import (
 
 func TestNew_DenyByDefault(t *testing.T) {
 	t.Parallel()
-	np := New("test", "default", map[string]string{"app": "valkey"})
+	np := New("test", "default", map[string]string{"app": "myapp"})
 	if np.Name != "test" || np.Namespace != "default" {
 		t.Errorf("metadata mismatch: %+v", np.ObjectMeta)
 	}
-	if got := np.Spec.PodSelector.MatchLabels["app"]; got != "valkey" {
+	if got := np.Spec.PodSelector.MatchLabels["app"]; got != "myapp" {
 		t.Errorf("podSelector mismatch: %v", np.Spec.PodSelector.MatchLabels)
 	}
 	if len(np.Spec.PolicyTypes) != 1 || np.Spec.PolicyTypes[0] != networkingv1.PolicyTypeIngress {
@@ -65,7 +65,7 @@ func TestWithDenyEgress_Idempotent(t *testing.T) {
 
 func TestWithSelfIngress(t *testing.T) {
 	t.Parallel()
-	np := New("t", "ns", map[string]string{"app": "valkey"},
+	np := New("t", "ns", map[string]string{"app": "myapp"},
 		WithSelfIngress([]int32{6379, 16379}))
 	if len(np.Spec.Ingress) != 1 {
 		t.Fatalf("expected 1 ingress rule, got %d", len(np.Spec.Ingress))
@@ -75,7 +75,7 @@ func TestWithSelfIngress(t *testing.T) {
 		t.Fatalf("expected 1 from peer, got %d", len(rule.From))
 	}
 	peer := rule.From[0]
-	if peer.PodSelector == nil || peer.PodSelector.MatchLabels["app"] != "valkey" {
+	if peer.PodSelector == nil || peer.PodSelector.MatchLabels["app"] != "myapp" {
 		t.Errorf("self-peer podSelector mismatch: %+v", peer.PodSelector)
 	}
 	if len(rule.Ports) != 2 {
@@ -166,7 +166,7 @@ func TestWithEgressToPeers_EmptySkipped(t *testing.T) {
 
 func TestCombination_FullPolicy(t *testing.T) {
 	t.Parallel()
-	np := New("vk-cluster", "data", map[string]string{"app": "valkey"},
+	np := New("myapp-cluster", "data", map[string]string{"app": "myapp"},
 		WithLabels(map[string]string{"managed-by": "downstream-operator"}),
 		WithSelfIngress([]int32{6379, 16379}),
 		WithIngressFromPeers(

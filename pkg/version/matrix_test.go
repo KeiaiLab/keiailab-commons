@@ -8,7 +8,7 @@ import (
 	"github.com/keiailab/operator-commons/pkg/version"
 )
 
-// testEntry — 테스트용 MatrixEntry 구현. postgres 의 Combo 패턴 모사.
+// testEntry — 테스트용 MatrixEntry 구현. downstream 의 Combo 패턴 모사.
 type testEntry struct {
 	Version string
 	Channel string

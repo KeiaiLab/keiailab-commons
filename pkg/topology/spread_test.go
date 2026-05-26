@@ -47,20 +47,20 @@ func TestDefaulted_replicas_at_min_injects(t *testing.T) {
 	}
 }
 
-func TestDefaulted_postgres_pattern_WithMinReplicas_1(t *testing.T) {
-	got := Defaulted(nil, 1, map[string]string{"app": "pg"}, WithMinReplicas(1))
+func TestDefaulted_additional_replicas_pattern_WithMinReplicas_1(t *testing.T) {
+	got := Defaulted(nil, 1, map[string]string{"app": "myapp"}, WithMinReplicas(1))
 	if len(got) != 2 {
-		t.Fatalf("postgres pattern (min=1, replicas=1): expected 2 TSCs, got %d", len(got))
+		t.Fatalf("additional replicas pattern (min=1, replicas=1): expected 2 TSCs, got %d", len(got))
 	}
-	got = Defaulted(nil, 0, map[string]string{"app": "pg"}, WithMinReplicas(1))
+	got = Defaulted(nil, 0, map[string]string{"app": "myapp"}, WithMinReplicas(1))
 	if got != nil {
-		t.Errorf("postgres pattern (min=1, replicas=0): nil expected, got %v", got)
+		t.Errorf("additional replicas pattern (min=1, replicas=0): nil expected, got %v", got)
 	}
 }
 
 func TestDefaulted_label_selector_matches(t *testing.T) {
 	selector := map[string]string{
-		"app.kubernetes.io/name":     "postgres",
+		"app.kubernetes.io/name":     "myapp",
 		"app.kubernetes.io/instance": "x",
 	}
 	got := Defaulted(nil, 3, selector)
@@ -167,7 +167,7 @@ func TestDefaultTopologyKeys_order(t *testing.T) {
 }
 
 func TestDefaulted_combined_options(t *testing.T) {
-	got := Defaulted(nil, 1, map[string]string{"app": "pg"},
+	got := Defaulted(nil, 1, map[string]string{"app": "myapp"},
 		WithMinReplicas(1),
 		WithTopologyKeys("rack", TopologyKeyZone, TopologyKeyHostname),
 		WithMaxSkew(2),

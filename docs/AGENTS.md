@@ -31,7 +31,8 @@ operator-commons/
 │   ├── storageclass/   # storageClass validator + Normalize
 │   ├── topology/       # PVC topology spread helpers
 │   ├── version/        # Version allowlist + generic Matrix
-│   └── webhook/        # Admission validation helpers
+│   ├── webhook/        # Admission validation helpers
+│   └── bundle/         # OLM v1 bundle metadata helpers
 ├── charts/keiailab-commons/   # Helm library chart partials
 ├── templates/observability/   # ServiceMonitor partial
 ├── scripts/                   # Release + i18n drift scripts

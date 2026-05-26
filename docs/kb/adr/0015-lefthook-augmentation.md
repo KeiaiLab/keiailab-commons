@@ -14,7 +14,7 @@ audit P1 의 다음 항목이 commons 에서 ❌:
 - P1-12 go-licenses (forbidden / restricted 라이선스 차단)
 - P1-13 markdown-link-check (broken link 차단)
 
-postgres + mongodb 는 S7 의 lefthook 3종 보강 PR (#88 / #196) 머지로 이미 ✅.
+downstream operators 는 lefthook 3종 보강 PR 머지로 이미 ✅.
 operator family 정합성 위해 commons 도 동일 3종 보강 (kube-linter 는 operator
 전용이라 N/A — commons 는 Helm *library* chart 만, 실 manifest 없음).
 
@@ -48,7 +48,7 @@ markdown-link-check:
 ## Consequences
 
 - ✅ audit P1-12 + P1-13 commons ✅ 적용
-- ✅ operator family downstream operator + commons 일관성 (downstream component 는 Python — go-licenses N/A)
+- ✅ operator family downstream operators + commons 일관성 (downstream component 는 Python — go-licenses N/A)
 - ⚠️ go-licenses + markdown-link-check 미설치 시 *skip* — 실 차단 아님 (경고만)
   - 개발자 워크플로 마찰 회피
   - CI (현재 GHA 영구 금지로 부재) 부재 대체로 충분치 않음 — 후속 cycle 에서 install 강제 검토
@@ -68,6 +68,6 @@ lefthook run pre-push
 
 ## Migration
 
-- 4 repo (postgres / mongodb / valkey / downstream component) 의 lefthook 에 동일 패턴
+- downstream repos 의 lefthook 에 동일 패턴
 - downstream component 는 go-licenses N/A (Python — pyproject.toml 의 license-file 검사 또는 pip-licenses 별 hook)
-- valkey 는 ralph-loop 관리 → 본 ADR 의 검토 후 ralph-loop 가 반영
+- 일부 downstream operator 는 별도 관리 영역 → 본 ADR 의 검토 후 반영

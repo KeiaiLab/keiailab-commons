@@ -38,7 +38,7 @@ const (
 // Example (Exec liveness with auth-aware command):
 //
 //	probe := probes.New().
-//	    Exec("valkey-cli", "-a", "$(VALKEY_PASSWORD)", "ping").
+//	    Exec("myapp-cli", "-a", "$(MYAPP_PASSWORD)", "ping").
 //	    InitialDelay(20*time.Second).
 //	    FailureThreshold(5).
 //	    Build()

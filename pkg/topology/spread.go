@@ -12,7 +12,7 @@ const (
 	// DefaultMinReplicas 는 default TSC 를 자동 주입하기 위한 *최소 replica 수*
 	// 의 기본값이다. 본 값 미만 시 nil 반환 (single pod 환경 spread 무의미).
 	//
-	// mongodb / valkey 가 이 값을 사용. postgres 는 WithMinReplicas(1) override.
+	// 대부분의 downstream operator 가 이 값을 사용. 일부는 WithMinReplicas(1) override.
 	DefaultMinReplicas int32 = 2
 
 	// TopologyKeyZone — 표준 K8s zone label key.
@@ -56,8 +56,8 @@ func newConfig(opts ...Option) *config {
 }
 
 // WithMinReplicas 는 default TSC 를 주입하는 최소 replica 임계값을 변경한다.
-// 기본값은 DefaultMinReplicas (2). downstream operator 처럼 replicas 가 "추가
-// 복제본 수" 의미인 경우 WithMinReplicas(1) 사용.
+// 기본값은 DefaultMinReplicas (2). replicas 가 "추가 복제본 수" 의미인
+// downstream operator 의 경우 WithMinReplicas(1) 사용.
 //
 // replicas < min → 주입 skip (nil 반환).
 func WithMinReplicas(min int32) Option {
@@ -107,20 +107,20 @@ func WithWhenUnsatisfiable(a corev1.UnsatisfiableConstraintAction) Option {
 //  2. replicas < minReplicas → nil 반환 (단일 pod 환경 → spread 무의미).
 //  3. 그 외 → topologyKeys 의 각 키에 대해 MaxSkew=1 + ScheduleAnyway TSC 주입.
 //
-// 사용 예 (downstream operator):
+// 사용 예 (downstream operator — "추가 복제본" 의미):
 //
 //	tsc := topology.Defaulted(
 //	    cluster.Spec.Shards.TopologySpreadConstraints,
 //	    cluster.Spec.Shards.Replicas,
 //	    labels,
-//	    topology.WithMinReplicas(1), // postgres 는 "additional copies" 의미.
+//	    topology.WithMinReplicas(1), // "additional copies" 의미.
 //	)
 //
-// 사용 예 (downstream operator):
+// 사용 예 (downstream operator — user TSC 미사용):
 //
 //	tsc := topology.Defaulted(
-//	    nil, // mongodb 는 user TSC 사용 안 함.
-//	    mdb.Spec.Members,
+//	    nil, // user TSC 사용 안 함.
+//	    app.Spec.Members,
 //	    labels,
 //	)
 //

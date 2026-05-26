@@ -2,7 +2,7 @@
 
 // Stability: Experimental.
 //
-// 본 패키지는 keiailab operator 3종 (postgres / mongodb / valkey) 의
+// 본 패키지는 keiailab downstream operator 의
 // corev1.Probe 구성 패턴 (총 9 sites, 50-55 LOC 중복) 을 단일 fluent builder
 // 로 통일합니다. HTTP / HTTPS / TCP / Exec 4 핸들러 + kubelet default
 // (PeriodSeconds=10 / TimeoutSeconds=1 / SuccessThreshold=1 / FailureThreshold=3)
