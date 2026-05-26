@@ -11,7 +11,7 @@ import (
 // TestRestrictedPSACompliance — PodSecurity "restricted" 정책의 의무 가드를
 // RestrictedContainer helper 가 충족하는지 검증.
 //
-// 3 repo (mongodb / valkey / postgres) 가 본 helper 를 직접 사용하므로
+// 다수 downstream repo 가 본 helper 를 직접 사용하므로
 // regression 가드 = downstream 정합 가드.
 //
 // PSA restricted container-level 의무 (K8s 1.25+):

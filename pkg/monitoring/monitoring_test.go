@@ -9,9 +9,9 @@ import (
 func TestNewServiceMonitor_RequiredFields(t *testing.T) {
 	t.Parallel()
 	sm := NewServiceMonitor(ServiceMonitorParams{
-		Name:      "mongodb-metrics",
+		Name:      "myapp-metrics",
 		Namespace: "default",
-		Selector:  map[string]string{"app": "mongodb"},
+		Selector:  map[string]string{"app": "myapp"},
 		Port:      "metrics",
 	})
 	if sm.GetAPIVersion() != "monitoring.coreos.com/v1" {
@@ -20,7 +20,7 @@ func TestNewServiceMonitor_RequiredFields(t *testing.T) {
 	if sm.GetKind() != "ServiceMonitor" {
 		t.Errorf("Kind = %q, want ServiceMonitor", sm.GetKind())
 	}
-	if sm.GetName() != "mongodb-metrics" {
+	if sm.GetName() != "myapp-metrics" {
 		t.Errorf("Name = %q", sm.GetName())
 	}
 	if sm.GetNamespace() != "default" {
@@ -31,10 +31,10 @@ func TestNewServiceMonitor_RequiredFields(t *testing.T) {
 func TestNewServiceMonitor_AllOptional(t *testing.T) {
 	t.Parallel()
 	sm := NewServiceMonitor(ServiceMonitorParams{
-		Name:              "vk-metrics",
+		Name:              "myapp-metrics",
 		Namespace:         "data",
 		Labels:            map[string]string{"team": "data"},
-		Selector:          map[string]string{"app.kubernetes.io/name": "valkey"},
+		Selector:          map[string]string{"app.kubernetes.io/name": "myapp"},
 		NamespaceSelector: []string{"data", "data-staging"},
 		Port:              "metrics",
 		Path:              "/custom-metrics",

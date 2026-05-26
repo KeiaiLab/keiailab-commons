@@ -41,13 +41,13 @@ func TestSet_All_AllFields(t *testing.T) {
 func TestSet_All_OptionalEmpty(t *testing.T) {
 	t.Parallel()
 	s := Set{
-		Name:      "valkey",
+		Name:      "myapp",
 		Instance:  "cache",
 		ManagedBy: "downstream operator",
 		// Component/Version/PartOf 미지정.
 	}
 	got := s.All()
-	if got["app.kubernetes.io/name"] != "valkey" {
+	if got["app.kubernetes.io/name"] != "myapp" {
 		t.Error("name missing")
 	}
 	for _, key := range []string{

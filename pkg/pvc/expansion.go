@@ -21,7 +21,7 @@ import (
 // controller 는 각 replica 별로 `<vct-name>-<sts-name>-<ordinal>` 형태로 PVC 를
 // 명명하므로, 본 상수 + STS 이름 + ordinal 로 PVC 이름이 재구성된다.
 //
-// downstream operator (mongodb / postgres / valkey) 모두 STS VCT 이름을 "data" 로 통일.
+// downstream operator 모두 STS VCT 이름을 "data" 로 통일.
 const DefaultVCTName = "data"
 
 // ErrEmptyVCTName 은 옵션으로 빈 VCT 이름이 주어졌을 때 반환한다.

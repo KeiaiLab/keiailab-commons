@@ -85,7 +85,7 @@ func TestTCP_setsTCPSocketAction(t *testing.T) {
 func TestExec_setsExecActionCommand(t *testing.T) {
 	t.Parallel()
 
-	cmd := []string{"valkey-cli", "-a", "$(VALKEY_PASSWORD)", "ping"}
+	cmd := []string{"myapp-cli", "-a", "$(MYAPP_PASSWORD)", "ping"}
 	got := probes.New().Exec(cmd...).Build()
 
 	if got.Exec == nil {
@@ -170,7 +170,7 @@ func TestBuild_panicsWhenNoHandler(t *testing.T) {
 	_ = probes.New().Build()
 }
 
-func TestPostgresOperatorReadinessPattern(t *testing.T) {
+func TestHTTPReadinessPattern(t *testing.T) {
 	t.Parallel()
 
 	// Replaces: downstream operator builders source
@@ -181,37 +181,37 @@ func TestPostgresOperatorReadinessPattern(t *testing.T) {
 		Build()
 
 	if got.HTTPGet.Path != "/readyz" || got.InitialDelaySeconds != 5 {
-		t.Errorf("postgres readiness pattern mismatch: %+v", got)
+		t.Errorf("HTTP readiness pattern mismatch: %+v", got)
 	}
 }
 
-func TestMongoDBOperatorLivenessExecPattern(t *testing.T) {
+func TestExecLivenessPattern(t *testing.T) {
 	t.Parallel()
 
 	// Replaces: downstream operator builders source
 	got := probes.New().
-		Exec("mongosh", "--quiet", "--eval", "db.adminCommand('ping')").
+		Exec("myapp-cli", "--quiet", "--eval", "health").
 		InitialDelay(30 * time.Second).
 		Period(10 * time.Second).
 		Build()
 
-	if got.Exec.Command[0] != "mongosh" || got.InitialDelaySeconds != 30 {
-		t.Errorf("mongodb liveness pattern mismatch: %+v", got)
+	if got.Exec.Command[0] != "myapp-cli" || got.InitialDelaySeconds != 30 {
+		t.Errorf("exec liveness pattern mismatch: %+v", got)
 	}
 }
 
-func TestValkeyOperatorReadinessExecPattern(t *testing.T) {
+func TestExecReadinessPattern(t *testing.T) {
 	t.Parallel()
 
 	// Replaces: downstream operator builders source
 	got := probes.New().
-		Exec("valkey-cli", "-a", "$(VALKEY_PASSWORD)", "ping").
+		Exec("myapp-cli", "-a", "$(MYAPP_PASSWORD)", "ping").
 		InitialDelay(5 * time.Second).
 		Period(10 * time.Second).
 		FailureThreshold(3).
 		Build()
 
-	if got.Exec.Command[0] != "valkey-cli" || got.FailureThreshold != 3 {
-		t.Errorf("valkey readiness pattern mismatch: %+v", got)
+	if got.Exec.Command[0] != "myapp-cli" || got.FailureThreshold != 3 {
+		t.Errorf("exec readiness pattern mismatch: %+v", got)
 	}
 }
