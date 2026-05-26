@@ -3,20 +3,19 @@ keiailab-commons — Helm library chart helper partial.
 
 기반 library chart partial 표준 implementation.
 
-본 chart 는 type: library — consumer chart (downstream operator /
-downstream operator / downstream operator) 가 dependency 로 import 후 include
-호출.
+본 chart 는 type: library — consumer chart (downstream operators) 가
+dependency 로 import 후 include 호출.
 
 Provided helpers:
-  - keiailab.commonLabels                     — Helm 표준 공통 label.
-  - keiailab.observability.serviceMonitor     — ServiceMonitor 공통 spec.
-
-future helpers (별 PR):
-  - keiailab.networkpolicy.dataplane          — library chart partial 표준
-  - keiailab.networkpolicy.controlplane       — library chart partial 표준
-  - keiailab.security.podSecurityRestricted   — library chart partial 표준
-  - keiailab.rbac.serviceAccount              — library chart partial 표준
-  - keiailab.rbac.controllerBase              — library chart partial 표준
+  - keiailab.commonLabels                     — Helm 표준 공통 label          (_helpers.tpl)
+  - keiailab.observability.serviceMonitor     — ServiceMonitor 공통 spec      (_helpers.tpl)
+  - keiailab.networkpolicy.dataplane          — dataplane NetworkPolicy       (_networkpolicy.tpl)
+  - keiailab.networkpolicy.controlplane       — controlplane NetworkPolicy    (_networkpolicy.tpl)
+  - keiailab.security.podSecurityContext      — Pod securityContext           (_security.tpl)
+  - keiailab.security.containerSecurityContext — Container securityContext    (_security.tpl)
+  - keiailab.rbac.serviceAccount              — ServiceAccount               (_rbac.tpl)
+  - keiailab.rbac.controllerBase              — controller ClusterRole/Binding (_rbac.tpl)
+  - keiailab.rbac.workloadBase                — workload Role/Binding         (_rbac.tpl)
 */}}
 
 

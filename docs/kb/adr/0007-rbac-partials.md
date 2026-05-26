@@ -10,13 +10,12 @@
 ADR-0005/0006 (PR-B2/B6) 이 commons library chart 의 §3.1 (ServiceMonitor +
 commonLabels) + §3.2 (NetworkPolicy) 구축. 본 ADR 은 §3.5 (RBAC partials).
 
-downstream consumer (mongodb / postgres / valkey operator) 의 RBAC YAML 분석:
+downstream consumer 의 RBAC YAML 분석:
 - 공통 verb set (~80 LOC): leader-election (`coordination.k8s.io/leases`),
   events (core + events.k8s.io), 자체 service watch, managed workload
   (apps/statefulsets, deployments) + dependent (core/services, configmaps,
   secrets, pvc, pods).
-- delta (CRD-specific): mongodb `mongodbs/finalizers`, postgres
-  `postgresclusters/status`, valkey `valkeys/finalizers` 등 — 각 chart
+- delta (CRD-specific): `<kind>/finalizers`, `<kind>/status` 등 — 각 chart
   자체 yaml 보존.
 
 ## Decision
@@ -39,7 +38,7 @@ downstream consumer (mongodb / postgres / valkey operator) 의 RBAC YAML 분석:
 
 4. **PR 분할**:
    - **PR-C1** (본 PR): commons partials + chart v0.3.0.
-   - **PR-C2~C4** (별 PR, downstream operator): RBAC yaml 의 base verb 들이
+   - **후속 PR** (별 PR, downstream operators): RBAC yaml 의 base verb 들이
      `controllerBase` / `workloadBase` partial include 로 교체. delta
      CRD-specific rules 만 자체 yaml 보존.
 
@@ -81,4 +80,4 @@ downstream consumer (mongodb / postgres / valkey operator) 의 RBAC YAML 분석:
 - Helm library chart 정책 §3.5.
 - ADR-0005 (§3.1), ADR-0006 (§3.2).
 - 구현 결정.
-- 후속 PR-C2 (mongodb) / PR-C3 (postgres) / PR-C4 (valkey): RBAC partial 채택.
+- 후속 downstream PRs: RBAC partial 채택.

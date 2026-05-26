@@ -7,7 +7,7 @@
 
 ## Context
 
-downstream consumer (mongodb / postgres / valkey operator) Helm chart 의 *공통 partial*
+downstream consumer Helm chart 의 *공통 partial*
 중복 (~230 LOC, Helm library chart 정책 §Motivation). Helm library chart 패키징 표준으로
 *single source* 로 통합.
 
@@ -43,8 +43,8 @@ downstream consumer (mongodb / postgres / valkey operator) Helm chart 의 *공�
 
 ### Positive
 
-- downstream consumer cross-cut partial 중복 제거 path 구축. PR-B4/B5 에서 mongodb /
-  valkey 의 servicemonitor.yaml 이 partial include 로 전환 가능.
+- downstream consumer cross-cut partial 중복 제거 path 구축. 후속 PR 에서 downstream operator 의
+  servicemonitor.yaml 이 partial include 로 전환 가능.
 - *single source* 로 정정 — kubectl 검색 정합성 강제.
 - Helm 표준 library chart — ArgoCD GitOps 흐름과 정합.
 

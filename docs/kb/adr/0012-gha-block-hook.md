@@ -28,7 +28,7 @@
 
 ### v2.0 정합 고려 (operator family)
 
-2026-05-21 사용자 결정: operator 3 (postgres / mongodb / valkey) 는 v2.0 = GHA *유지* + 통합 ADR (ADR-0048 sister: ADR-0019 / ADR-0033) + 로컬 4계층 dual-track.
+2026-05-21 사용자 결정: downstream operators 는 v2.0 = GHA *유지* + 통합 downstream ADRs + 로컬 4계층 dual-track.
 
 따라서 본 hook 은:
 - 신규 파일 추가 (`--diff-filter=A`) 만 차단
@@ -57,7 +57,7 @@ gha-block:
 - ✅ 신규 GHA workflow 의도치 않은 도입 자동 차단
 - ✅ dependabot/renovate 의 기존 workflow 갱신 정상 (modified 만 — 차단 안 함)
 - ✅ commons 의 PLAN_BYPASS 패턴 일관 적용 — plan review 정책 §2.5 plan SSOT 차단과 동일 우회 메커니즘
-- ⚠️ 4 repo (postgres/mongodb/valkey/downstream component) 에 sync 필요 — `scripts/sync-from-commons.sh` 활용 또는 별 PR 각각
+- ⚠️ 4 downstream repo 에 sync 필요 — `scripts/sync-from-commons.sh` 활용 또는 별 PR 각각
 - ⚠️ 본 hook 만으로는 `.github/workflows/` 의 *기존 파일 삭제* 차단 불가 — 의도된 (ADR-0018/0032 의 GitHub Actions 차단 정책 strict 노선 일 때 필요한 동작) 이므로 차단 안 함이 정합
 
 ## Verification
@@ -81,7 +81,7 @@ rmdir .github/workflows 2>/dev/null
 ## Migration
 
 본 ADR 채택 후 후속 sub-cycle:
-- S9 sub-cycle: 4 repo (postgres / mongodb / valkey / downstream component) 의 lefthook 에 동일 hook 추가
-- valkey 는 ralph-loop 관리 영역 (본 thread 만지지 않음)
-- downstream component 는 S4-D 완료 후 (lefthook 변경 충돌 회피)
-- postgres + mongodb 는 S7 revert 완료 후
+- S9 sub-cycle: downstream repos 의 lefthook 에 동일 hook 추가
+- 일부 downstream operator 는 별도 관리 영역 (본 thread 만지지 않음)
+- downstream component 는 선행 작업 완료 후 (lefthook 변경 충돌 회피)
+- 나머지 downstream operators 는 선행 revert 완료 후

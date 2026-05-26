@@ -82,7 +82,7 @@ operator-commons 使用 3-tier 稳定性:
 
 ## Caller 责任
 
-Caller (downstream operator, downstream operator, downstream operator):
+Caller (downstream operator):
 - 在 v1.0.0 之前在 `go.mod` 中以 `vMAJOR.MINOR.PATCH` pin
 - 订阅 `CHANGELOG.md` 以获取 deprecation warning
 - 在 GA 之前对 `v1.0.0-rc.N` 进行测试
