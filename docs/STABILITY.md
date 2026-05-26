@@ -34,6 +34,7 @@ Stability Tier":
 | `pkg/topology` | Beta | Downstream topology spread live adoption. |
 | `pkg/webhook` | Experimental | Multi-downstream adoption + stabilization. |
 | `pkg/probes` | Experimental | 2+ downstream live adoption. |
+| `pkg/bundle` | Experimental | 2+ downstream bundle adoption. |
 
 ## Promotion process
 

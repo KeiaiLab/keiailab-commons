@@ -53,6 +53,7 @@ canonical implementation, and stop re-inventing it in every repository.
 | `pkg/topology` | Beta | TopologySpreadConstraints HA defaults + zone-aware affinity builder. |
 | `pkg/probes` | Experimental | `corev1.Probe` fluent builder — HTTP / HTTPS / TCP / Exec with kubelet defaults and clamp. |
 | `pkg/webhook` | Experimental | Admission validation helpers — `ValidateAllowedVersion`, `ValidateWithPredicate`, conversion registry. |
+| `pkg/bundle` | Experimental | OLM v1 bundle metadata helpers — annotations, FBC schema types, directory validation (ADR-0017). |
 
 [docs/STABILITY.md](docs/STABILITY.md) defines the tier promise.
 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) covers the package surface and

@@ -17,6 +17,7 @@
 | [0014](0014-release-script-ssot.md) | `scripts/release.sh` — 라이브러리 수동 release pipeline | Accepted | 2026-05-21 |
 | [0015](0015-lefthook-augmentation.md) | lefthook 보강 — `go-licenses` + `markdown-link-check` | Accepted | 2026-05-21 |
 | [0016](0016-pvc-topology-extraction.md) | `pkg/pvc` + `pkg/topology` 신규 추출 (downstream 중복 해소) | Accepted | 2026-05-21 |
+| [0017](0017-olm-v1-bundle-package.md) | `pkg/bundle` — OLM v1 번들 메타데이터 헬퍼 | Accepted | 2026-05-26 |
 
 ## 작성 규약
 

@@ -86,6 +86,9 @@
 | `pkg/probes` (v0.8.0 新增) | 探针构建器包 (`pkg/probes`) |
 | `pkg/storageclass` (v0.8.0 新增) | 存储类包 (`pkg/storageclass`) |
 | `pkg/events` (v0.8.0 新增) | 事件记录器包 (`pkg/events`) |
+| `pkg/pvc` (v0.9.0 新增) | PVC 扩展包 (`pkg/pvc`) |
+| `pkg/topology` (v0.9.0 新增) | 拓扑分散包 (`pkg/topology`) |
+| `pkg/bundle` (v0.10.0 新增) | OLM v1 捆绑包元数据包 (`pkg/bundle`) |
 | Recorder interface | Recorder 接口 (英文为主) |
 | EventType (Normal / Warning) | 事件类型 (Normal / Warning) |
 | Reason (event reason) | 事件原因 (Reason) |

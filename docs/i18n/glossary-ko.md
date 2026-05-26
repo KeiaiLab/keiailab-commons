@@ -84,6 +84,9 @@
 | `pkg/probes` (v0.8.0 신규) | 프로브 빌더 패키지 (`pkg/probes`) |
 | `pkg/storageclass` (v0.8.0 신규) | 스토리지 클래스 패키지 (`pkg/storageclass`) |
 | `pkg/events` (v0.8.0 신규) | 이벤트 레코더 패키지 (`pkg/events`) |
+| `pkg/pvc` (v0.9.0 신규) | PVC 확장 패키지 (`pkg/pvc`) |
+| `pkg/topology` (v0.9.0 신규) | 토폴로지 분산 패키지 (`pkg/topology`) |
+| `pkg/bundle` (v0.10.0 신규) | OLM v1 번들 메타데이터 패키지 (`pkg/bundle`) |
 | Recorder interface | Recorder 인터페이스 (영문 그대로) |
 | EventType (Normal / Warning) | 이벤트 타입 (Normal / Warning) |
 | Reason (event reason) | 이벤트 사유 (Reason) |

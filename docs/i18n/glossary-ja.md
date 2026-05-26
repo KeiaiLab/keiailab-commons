@@ -86,6 +86,9 @@
 | `pkg/probes` (v0.8.0 新規) | プローブビルダーパッケージ (`pkg/probes`) |
 | `pkg/storageclass` (v0.8.0 新規) | ストレージクラスパッケージ (`pkg/storageclass`) |
 | `pkg/events` (v0.8.0 新規) | イベントレコーダーパッケージ (`pkg/events`) |
+| `pkg/pvc` (v0.9.0 新規) | PVC 拡張パッケージ (`pkg/pvc`) |
+| `pkg/topology` (v0.9.0 新規) | トポロジー分散パッケージ (`pkg/topology`) |
+| `pkg/bundle` (v0.10.0 新規) | OLM v1 バンドルメタデータパッケージ (`pkg/bundle`) |
 | Recorder interface | Recorder インターフェース (英文そのまま) |
 | EventType (Normal / Warning) | イベントタイプ (Normal / Warning) |
 | Reason (event reason) | イベント理由 (Reason) |
