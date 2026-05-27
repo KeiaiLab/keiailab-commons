@@ -22,8 +22,8 @@ import (
 const (
 	// TypeReady — 운영 가능 상태. False 인 경우 Reason 으로 차단점 식별.
 	TypeReady = "Ready"
-	// TypeProgressing — reconcile 진행 중. PostgresCluster 생성, ValkeyCluster
-	// shard scaling 등 *작업 중* 상태.
+	// TypeProgressing — reconcile 진행 중. 리소스 생성, shard scaling 등
+	// *작업 중* 상태.
 	TypeProgressing = "Progressing"
 	// TypeDegraded — 부분 장애. 일부 기능은 작동, 일부는 장애.
 	TypeDegraded = "Degraded"

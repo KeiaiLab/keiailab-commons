@@ -1,20 +1,20 @@
 // SPDX-License-Identifier: Apache-2.0
 
-// Package version — operator 들이 공통으로 사용하는 *지원 DB 버전 화이트리스트* 패턴.
+// Package version — operator 들이 공통으로 사용하는 *지원 버전 화이트리스트* 패턴.
 //
 // 사용 예 (각 operator 의 api/v1alpha1/*_types.go):
 //
-//	var SupportedMongoDBVersions = version.MustList("8.0", "8.2", "8.3")
+//	var SupportedVersions = version.MustList("8.0", "8.2", "8.3")
 //
 // 그리고 webhook validation 에서:
 //
-//	if !version.IsSupported(SupportedMongoDBVersions, v.Spec.Version) {
+//	if !version.IsSupported(SupportedVersions, v.Spec.Version) {
 //	    errs = append(errs, field.NotSupported(...))
 //	}
 //
 // 디자인 결정:
-//   - 단순 []string 컨벤션 — semver 파싱 없이 정확 매칭. RDB / WAL / oplog format
-//     호환성은 *각 operator 가 책임*.
+//   - 단순 []string 컨벤션 — semver 파싱 없이 정확 매칭. 포맷 호환성은
+//     *각 operator 가 책임*.
 //   - MustList 는 빈 리스트 또는 빈 문자열 포함 시 panic — init time 가드.
 package version
 

@@ -148,7 +148,7 @@ func TestMustNormalize_invalidPanics(t *testing.T) {
 	_ = storageclass.MustNormalize("Invalid_Name")
 }
 
-func TestPostgresOperatorStorageClassPtrPattern(t *testing.T) {
+func TestStorageClassPtrPattern(t *testing.T) {
 	t.Parallel()
 
 	// Replaces: downstream operator storageClassPtr() helper pattern.
