@@ -1,0 +1,11 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: downstream-app-metrics
+  namespace: default
+spec:
+  endpoints:
+  - port: metrics
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: downstream-app

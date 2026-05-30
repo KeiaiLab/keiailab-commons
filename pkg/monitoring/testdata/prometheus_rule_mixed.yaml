@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app.kubernetes.io/instance: downstream-app-cluster
+  name: downstream-app-alerts
+  namespace: data
+spec:
+  groups:
+  - interval: 30s
+    name: downstream-app.rules
+    rules:
+    - alert: DownstreamAppDown
+      annotations:
+        summary: downstream-app instance down
+      expr: up{job="downstream-app"} == 0
+      for: 5m
+      labels:
+        severity: critical
+    - expr: avg(up{job="downstream-app"})
+      labels:
+        team: data
+      record: downstream_app:up:ratio
