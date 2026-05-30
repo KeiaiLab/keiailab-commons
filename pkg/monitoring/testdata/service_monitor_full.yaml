@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/part-of: valkey
+    team: data
+  name: valkey-metrics
+  namespace: data
+spec:
+  endpoints:
+  - honorLabels: true
+    interval: 15s
+    path: /custom-metrics
+    port: metrics
+    scheme: https
+    scrapeTimeout: 10s
+  namespaceSelector:
+    matchNames:
+    - data
+    - data-staging
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: valkey

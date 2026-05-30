@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app.kubernetes.io/instance: valkey-cluster
+  name: valkey-alerts
+  namespace: data
+spec:
+  groups:
+  - interval: 30s
+    name: valkey.rules
+    rules:
+    - alert: ValkeyDown
+      annotations:
+        summary: Valkey instance down
+      expr: up{job="valkey"} == 0
+      for: 5m
+      labels:
+        severity: critical
+    - expr: avg(up{job="valkey"})
+      labels:
+        team: data
+      record: valkey:up:ratio
