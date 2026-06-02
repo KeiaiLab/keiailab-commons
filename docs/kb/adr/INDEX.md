@@ -18,6 +18,7 @@
 | [0015](0015-lefthook-augmentation.md) | lefthook augmentation — `go-licenses` + `markdown-link-check` | Accepted | 2026-05-21 |
 | [0016](0016-pvc-topology-extraction.md) | `pkg/pvc` + `pkg/topology` introduction (downstream dedup) | Accepted | 2026-05-21 |
 | [0017](0017-olm-v1-bundle-package.md) | `pkg/bundle` — OLM v1 bundle metadata helpers | Accepted | 2026-05-26 |
+| [0018](0018-gitops-artifacthub-standardization.md) | GitOps overlay + ArtifactHub 검증 파이프라인 표준화 (operator 4종 2-layer 표준, type:library Layer2 제외, repositoryID 등록 후 확정) | Accepted | 2026-06-02 |
 
 ## Conventions
 
