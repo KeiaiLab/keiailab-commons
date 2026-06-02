@@ -24,3 +24,6 @@ keywords:
 annotations:
   artifacthub.io/license: Apache-2.0
   artifacthub.io/category: integration-delivery
+  artifacthub.io/signKey: |
+    fingerprint: 89A409476828CB992338C378651E51AF520BCB78
+    url: https://github.com/keiailab.gpg

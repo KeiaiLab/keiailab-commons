@@ -1,0 +1,29 @@
+name: Helm chart lint
+
+on:
+  pull_request:
+    paths:
+      - 'charts/**'
+      - '.github/workflows/helm-lint.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+      - uses: azure/setup-helm@dda3372f752e03dde6b3237bc9431cdc2f7a02a2 # v5
+        with:
+          version: latest
+      - uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
+      - name: Run ct lint
+        run: ct lint --target-branch=main --charts charts/keiailab-commons
+      - name: Helm template smoke
+        # keiailab-commons は type: library — partial テンプレート (_*.tpl) のみ.
+        # helm template は library chart を直接レンダリングできないため lint のみで検証.
+        # kubeconform は空入力になるため実行しない (library chart には不適切).
+        run: helm lint charts/keiailab-commons
