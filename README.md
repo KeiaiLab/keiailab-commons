@@ -1,109 +1,120 @@
-<p align="center">
-  <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
-</p>
-
 # operator-commons
 
-> **Shared Go library for Kubernetes operator scaffolding — finalizer / labels / status / version / security / monitoring partials.**
->
-> **English** | [한국어](README.ko.md) | [日本語](README.ja.md) | [中文](README.zh.md)
+> Shared Go helpers for Kubernetes operator scaffolding — finalizers, recommended labels, status conditions, supported-version allowlists, restricted PodSecurity contexts, NetworkPolicies, ServiceMonitor builders, and a Helm library chart.
 
-<p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
-  <a href="https://golang.org/"><img src="https://img.shields.io/badge/Go-1.26+-00ADD8?logo=go" alt="Go Version"/></a>
-  <a href="https://pkg.go.dev/github.com/keiailab/operator-commons"><img src="https://pkg.go.dev/badge/github.com/keiailab/operator-commons.svg" alt="Go Reference"/></a>
-  <a href="https://scorecard.dev/viewer/?uri=github.com/keiailab/operator-commons"><img src="https://api.scorecard.dev/projects/github.com/keiailab/operator-commons/badge" alt="OpenSSF Scorecard"/></a>
-  <a href="https://github.com/keiailab/operator-commons/discussions"><img src="https://img.shields.io/github/discussions/keiailab/operator-commons?label=discussions&logo=github" alt="GitHub Discussions"/></a>
-</p>
+**English** | [한국어](README.ko.md) | [日本語](README.ja.md) | [中文](README.zh.md)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Go](https://img.shields.io/badge/Go-1.26+-00ADD8?logo=go)](https://golang.org/)
+[![Go Reference](https://pkg.go.dev/badge/github.com/keiailab/operator-commons.svg)](https://pkg.go.dev/github.com/keiailab/operator-commons)
 
----
-
-A reusable Go library that removes scaffolding drift from Kubernetes operator
-codebases — PodSecurity restricted contexts, supported-version allowlists,
-NetworkPolicy templates, ServiceMonitor builders, finalizer / status helpers,
-and Helm library chart partials, packaged behind a small, stable API surface.
-
-> Status: **v0.x — API may break.** v1.0 onwards SemVer stable.
-
-## Why
-
-Operator authors repeatedly implement identical scaffolding — restricted
+Operator authors repeatedly re-implement the same scaffolding: restricted
 PodSecurity contexts, supported-version matrices, default-deny NetworkPolicies,
-ServiceMonitor builders, finalizer helpers, status condition catalogs.
-Independent re-implementation produces silent inconsistencies between similar
-reconcilers and gradually drifts apart on minor revisions. `operator-commons`
-is the single source of truth for that scaffolding: import the helper, get the
-canonical implementation, and stop re-inventing it in every repository.
+ServiceMonitor builders, finalizer helpers, status condition catalogs. Each
+independent copy drifts apart over time and grows silent inconsistencies.
+`operator-commons` is one place to get the canonical implementation, behind a
+small API surface that follows a clear stability promise.
+
+## Installation
+
+```sh
+go get github.com/keiailab/operator-commons@latest
+```
+
+Requires Go 1.26+. The library depends only on `k8s.io/api`,
+`k8s.io/apimachinery`, and `sigs.k8s.io/controller-runtime`; most packages use
+no controller-runtime at all (see the table below).
+
+## Usage
+
+Build a `restricted`-profile container SecurityContext and a supported-version
+allowlist:
+
+```go
+import (
+	"github.com/keiailab/operator-commons/pkg/security"
+	"github.com/keiailab/operator-commons/pkg/version"
+	corev1 "k8s.io/api/core/v1"
+)
+
+var supported = version.MustList("1.0", "1.1", "1.2")
+
+func containerSecurityContext() *corev1.SecurityContext {
+	return security.RestrictedContainer(
+		security.WithRunAsUser(999),
+		security.WithRunAsGroup(999),
+	)
+}
+
+func isAllowed(v string) bool { return supported.IsSupported(v) }
+```
+
+Apply recommended Kubernetes labels and report status conditions on a CR:
+
+```go
+import (
+	"github.com/keiailab/operator-commons/pkg/labels"
+	"github.com/keiailab/operator-commons/pkg/status"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
+
+// app.kubernetes.io/* recommended labels.
+ls := labels.New("my-db", "my-db-prod", "database", "1.2.0", "my-operator")
+deployment.Labels = ls.All()                 // full label set
+deployment.Spec.Selector.MatchLabels = ls.Selector() // stable subset (no version)
+
+// Standard Ready/Available conditions.
+status.SetReady(&cr.Status.Conditions, "Reconciled", "all components ready", cr.Generation)
+if status.IsReady(cr.Status.Conditions) {
+	// ...
+}
+```
+
+Each package ships runnable examples in its `doc.go` — browse them with
+`go doc github.com/keiailab/operator-commons/pkg/<name>` or on
+[pkg.go.dev](https://pkg.go.dev/github.com/keiailab/operator-commons).
 
 ## Packages
 
 | Package | Tier | Purpose |
 |---|---|---|
-| `pkg/finalizer` | Stable | Finalizer helpers — `Add` / `Remove` / `Has` / `EnsureOrder` (stdlib `slices` only, no controller-runtime dependency). |
-| `pkg/labels` | Stable | Recommended Kubernetes labels (`app.kubernetes.io/*`) builder — `Set`, `All()`, `Selector()`, plus v2 mapping (`AllV2`). |
-| `pkg/status` | Stable | Four standard Condition Types + six Reason catalog + helpers (`SetReady`, `SetAvailable`, `SetReadyFalse`). |
-| `pkg/storageclass` | Stable | DNS-1123 storageClass validator + `Normalize` / `MustNormalize` (empty → cluster default pointer). |
-| `pkg/version` | Beta | Version allowlist convention (`MustList`, `IsSupported`, `Strings`, `Default`) + generic `Matrix[E MatrixEntry]` + serializer. |
-| `pkg/monitoring` | Beta | Prometheus Operator `ServiceMonitor` and `PrometheusRule` builders (unstructured — CRD-soft). |
-| `pkg/networkpolicy` | Beta | Deny-by-default NetworkPolicy builder + functional options (`WithSelfIngress`, `WithIngressFromPeers`, `WithDenyEgress`, `WithEgressToPeers`, `ComboPeer`). |
-| `pkg/security` | Beta | PodSecurity *restricted* SecurityContext builder + Pod / Container split + seccomp profile pointers. |
-| `pkg/events` | Beta | Minimal `Recorder` interface + nine standard `Reason` constants + `Emit` / `EmitWarning` / `WrappedError` (nil-safe). |
-| `pkg/pvc` | Beta | PVC expansion helpers — comparison + safe in-place update (controller-runtime dependency — ADR-0016). |
-| `pkg/topology` | Beta | TopologySpreadConstraints HA defaults + zone-aware affinity builder. |
-| `pkg/probes` | Experimental | `corev1.Probe` fluent builder — HTTP / HTTPS / TCP / Exec with kubelet defaults and clamp. |
+| `pkg/finalizer` | Stable | Finalizer helpers — `Add` / `Remove` / `Has` / `EnsureOrder` (stdlib `slices` only, no controller-runtime). |
+| `pkg/labels` | Stable | Recommended `app.kubernetes.io/*` labels — `New`, `Set.All()`, `Set.Selector()`, plus a v2 mapping (`AllV2`). |
+| `pkg/status` | Stable | Standard Condition types + Reason catalog — `SetReady`, `SetAvailable`, `SetProgressing`, `SetDegraded`, `IsReady`, `FindCondition`. |
+| `pkg/storageclass` | Stable | DNS-1123 storageClass validation + `Normalize` / `MustNormalize` (empty → cluster-default pointer). |
+| `pkg/version` | Beta | Supported-version allowlist — `MustList`, `IsSupported`, `Strings`, `Default` + generic `Matrix[E MatrixEntry]`. |
+| `pkg/monitoring` | Beta | Prometheus Operator `ServiceMonitor` / `PrometheusRule` builders (unstructured — no CRD dependency). |
+| `pkg/networkpolicy` | Beta | Deny-by-default NetworkPolicy builder + functional options (`WithSelfIngress`, `WithIngressFromPeers`, `WithDenyEgress`, `WithEgressToPeers`). |
+| `pkg/security` | Beta | PodSecurity `restricted` SecurityContext builder — container / pod split + seccomp profile helpers. |
+| `pkg/events` | Beta | Minimal `Recorder` interface + `Emit` / `EmitWarning` / `WrappedError` (nil-safe). |
+| `pkg/pvc` | Beta | PVC expansion helpers — comparison + safe in-place update (uses controller-runtime). |
+| `pkg/topology` | Beta | `TopologySpreadConstraints` HA defaults + zone-aware affinity. |
+| `pkg/probes` | Experimental | `corev1.Probe` fluent builder — HTTP / HTTPS / TCP / Exec with kubelet defaults. |
 | `pkg/webhook` | Experimental | Admission validation helpers — `ValidateAllowedVersion`, `ValidateWithPredicate`, conversion registry. |
-| `pkg/bundle` | Experimental | OLM v1 bundle metadata helpers — annotations, FBC schema types, directory validation (ADR-0017). |
+| `pkg/bundle` | Experimental | OLM v1 bundle metadata helpers — annotations, FBC schema types, directory validation. |
 
-[docs/STABILITY.md](docs/STABILITY.md) defines the tier promise.
-[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) covers the package surface and
-design invariants. [docs/ROADMAP.md](docs/ROADMAP.md) tracks the tier promotion
-criteria and the v1.0 graduation checklist.
+A Helm library chart (`charts/keiailab-commons`, `type: library`) provides
+matching partials for downstream consumer charts.
 
-## Usage
+See [docs/STABILITY.md](docs/STABILITY.md) for the tier promise,
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the package surface and design
+invariants, and [docs/ROADMAP.md](docs/ROADMAP.md) for tier-promotion criteria
+and the v1.0 graduation checklist.
 
-```go
-import (
-    "github.com/keiailab/operator-commons/pkg/security"
-    "github.com/keiailab/operator-commons/pkg/version"
-    corev1 "k8s.io/api/core/v1"
-)
+## Versioning
 
-var supportedVersions = version.MustList("1.0", "1.1", "1.2")
+- **v0.x**: API breaking changes are allowed. Each `v0.N.M` tag bumps a
+  package's public API or a meaningful behavioural change — pin a specific
+  version in `go.mod`.
+- **v1.0 onwards**: Semantic Versioning. Breaking changes require an ADR.
 
-func buildContainerSecurityContext() *corev1.SecurityContext {
-    return security.RestrictedContainer(
-        security.WithRunAsUser(999),
-        security.WithRunAsGroup(999),
-    )
-}
-```
+## Contributing
 
-Per-package examples live in the corresponding `pkg/<name>/doc.go` package
-documentation (`go doc github.com/keiailab/operator-commons/pkg/<name>`).
-
-## Versioning and release
-
-- **v0.x**: API breaking changes are allowed. Each tag (`v0.N.M`) bumps either
-  a package's public API or a meaningful behavioural change. Consumers pin a
-  specific version via `go.mod`.
-- **v1.0 onwards**: Semantic Versioning. Breaking changes require an ADR
-  (`docs/kb/adr/`).
-- A local `replace` directive is acceptable for cross-repo development; release
-  tags always carry the canonical module path.
-
-## Community
-
-- **Discussions**: [GitHub Discussions](https://github.com/keiailab/operator-commons/discussions) — package API questions, integration patterns, new helper proposals.
-- **Issues**: [GitHub Issues](https://github.com/keiailab/operator-commons/issues) — bugs and concrete feature requests.
-- **Security**: see [SECURITY.md](SECURITY.md) for the private disclosure process.
-- **Contributing**: see [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow.
+Bug reports and feature requests go to
+[Issues](https://github.com/keiailab/operator-commons/issues). See
+[CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and
+[SECURITY.md](SECURITY.md) for the private disclosure process.
 
 ## License
 
-Apache-2.0 — see [LICENSE](LICENSE). Zero AGPL / BUSL transitive dependency
-goal (audited per minor release).
-
----
-
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+[MIT](LICENSE) © keiailab.
