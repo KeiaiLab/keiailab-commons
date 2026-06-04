@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 
 // matrix.go — generic Matrix[E MatrixEntry] 구조 (ADR-0004).
 //

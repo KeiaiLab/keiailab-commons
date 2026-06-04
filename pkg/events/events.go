@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 
 // Package events provides Kubernetes Event recording helpers and standard
 // reconciler event reasons shared across keiailab operators.

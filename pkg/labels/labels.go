@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 
 // Package labels — recommended Kubernetes labels (app.kubernetes.io/*) builder.
 //

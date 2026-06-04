@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 
 // Package status 는 downstream consumer keiailab operator 공통 Condition Type / Reason
 // 카탈로그 + apimeta.SetStatusCondition 헬퍼를 제공한다.

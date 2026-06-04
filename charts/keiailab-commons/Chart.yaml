@@ -22,5 +22,5 @@ keywords:
   - servicemonitor
   - rbac
 annotations:
-  artifacthub.io/license: Apache-2.0
+  artifacthub.io/license: MIT
   artifacthub.io/category: integration-delivery

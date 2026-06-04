@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 
 // Package version — operator 들이 공통으로 사용하는 *지원 버전 화이트리스트* 패턴.
 //

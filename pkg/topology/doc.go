@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 
 // Package topology 는 keiailab downstream operator 의 공통
 // TopologySpreadConstraints 헬퍼를 제공한다. 현재 단일 기능:

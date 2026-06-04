@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: MIT
 
 // Package security — PodSecurity "restricted" 정책 충족 SecurityContext builder.
 //
