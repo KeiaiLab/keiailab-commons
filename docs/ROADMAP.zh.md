@@ -206,7 +206,7 @@ follow-up items*。本项目不维护基于时间的截止日期 —
 - **仅 Kubernetes API** — `k8s.io/api`、`k8s.io/apimachinery`、
   `k8s.io/utils`。controller-runtime 依赖*绝不在 leaf 包中
   添加*。
-- **仅 Apache-2.0 兼容 license** — 每次添加依赖都
+- **仅 permissive-license-compatible license** — 每次添加依赖都
   需要 ADR。
 - **完整 godoc** — 每个新增 public API 都需要 godoc。
 
@@ -235,4 +235,4 @@ follow-up items*。本项目不维护基于时间的截止日期 —
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

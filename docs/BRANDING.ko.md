@@ -71,7 +71,7 @@ GitHub README shield.io 배지는 같은 hex 값을 사용합니다.
 - **Library-focused** — `operator-commons` 는 *라이브러리* 입니다.
   controller-runtime, CRD, reconciler 는 downstream consumer 의 책임이며
   본 라이브러리의 책임이 아닙니다.
-- **License-aware** — Apache-2.0 only. charter 목표는 AGPL / BUSL transitive
+- **License-aware** — MIT only. charter 목표는 AGPL / BUSL transitive
   의존성 0 건입니다 (`docs/kb/adr/0001-charter.md` 참조).
 
 **Avoid**:
@@ -116,7 +116,7 @@ GitHub README shield.io 배지는 같은 hex 값을 사용합니다.
 ```markdown
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>
 ```
 
 추가 cross-link 블록은 두지 않습니다. footer 를 최소화하여 문서를
@@ -126,7 +126,7 @@ self-contained 로 유지합니다.
 
 README 의 shield.io 배지는 다음 순서 (좌→우):
 
-1. License (Apache-2.0)
+1. License (MIT)
 2. Go Version (1.25+)
 3. Go Reference (pkg.go.dev)
 4. OpenSSF Scorecard
@@ -152,10 +152,10 @@ README 의 shield.io 배지는 다음 순서 (좌→우):
 
 ## 11. License & Attribution
 
-- License: [Apache-2.0](../LICENSE)
+- License: [MIT](../LICENSE)
 - Copyright: © 2026 keiailab contributors
 - Third-party attribution: [NOTICE](../NOTICE) 참조
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

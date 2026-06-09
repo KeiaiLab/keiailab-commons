@@ -64,7 +64,7 @@ downstream maintainer と private advisory を共有します。
 
 ## ライセンス / supply chain
 
-本ライブラリは **Apache-2.0 only** であり、AGPL / BUSL の transitive
+本ライブラリは **MIT only** であり、AGPL / BUSL の transitive
 依存をゼロにする charter goal を持ちます (`docs/kb/adr/0001-charter.md`)。
 すべての minor release でライセンス監査が実行されます。
 
@@ -82,4 +82,4 @@ downstream maintainer と private advisory を共有します。
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

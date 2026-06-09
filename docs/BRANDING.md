@@ -76,7 +76,7 @@ consumers.
 - **Library-focused** — `operator-commons` is a *library*. Controller-runtime,
   CRDs, and reconcilers are the responsibility of the downstream consumer,
   not of this library.
-- **License-aware** — Apache-2.0 only. The charter goal is zero AGPL / BUSL
+- **License-aware** — MIT only. The charter goal is zero AGPL / BUSL
   transitive dependencies (see `docs/kb/adr/0001-charter.md`).
 
 **Avoid**:
@@ -120,7 +120,7 @@ Every README and root-level `.md` file ends with a single attribution line:
 ```markdown
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>
 ```
 
 No additional cross-link block. Keep the footer minimal so the document
@@ -130,7 +130,7 @@ remains self-contained.
 
 The shield.io badges in the README appear in this order (left → right):
 
-1. License (Apache-2.0)
+1. License (MIT)
 2. Go Version (1.25+)
 3. Go Reference (pkg.go.dev)
 4. OpenSSF Scorecard
@@ -154,10 +154,10 @@ The shield.io badges in the README appear in this order (left → right):
 
 ## 11. License and attribution
 
-- License: [Apache-2.0](../LICENSE)
+- License: [MIT](../LICENSE)
 - Copyright: © 2026 keiailab contributors
 - Third-party attributions: see [NOTICE](../NOTICE)
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

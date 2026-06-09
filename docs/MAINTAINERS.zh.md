@@ -68,4 +68,4 @@ maintainer 的 LGTM — 参见 [GOVERNANCE.md](GOVERNANCE.zh.md)。
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

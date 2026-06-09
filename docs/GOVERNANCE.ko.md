@@ -64,4 +64,4 @@ downstream consumer 측 fix release 가능 시점까지 embargo 를 유지합니
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

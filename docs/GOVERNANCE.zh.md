@@ -75,4 +75,4 @@ CVE 报告遵循 [SECURITY.md](../SECURITY.zh.md)。报告以私有方式
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

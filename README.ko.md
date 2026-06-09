@@ -98,10 +98,10 @@ func buildContainerSecurityContext() *corev1.SecurityContext {
 
 ## 라이선스
 
-Apache-2.0 — [LICENSE](LICENSE) 참조. AGPL / BUSL transitive 의존성 0건 목표
+MIT — [LICENSE](LICENSE) 참조. AGPL / BUSL transitive 의존성 0건 목표
 (매 minor 릴리스마다 감사).
 
 ---
 
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

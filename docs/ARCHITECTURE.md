@@ -14,7 +14,7 @@
   dependency at the leaf-package level.
 - **Stability tier**: v0.x (API may break). v1.0+ SemVer-stable per
   [ROADMAP.md](ROADMAP.md) graduation criteria.
-- **License**: Apache-2.0.
+- **License**: MIT.
 - **Module path**: `github.com/keiailab/operator-commons`.
 
 ## Package surface
@@ -131,4 +131,4 @@ Per [ROADMAP.md](ROADMAP.md) "v1.0.0 졸업 조건":
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

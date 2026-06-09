@@ -57,9 +57,9 @@ CODE_OF_CONDUCT, CONTRIBUTING, SECURITY, CHANGELOG, `.github/`).
 3. **Test coverage** — every change inside `pkg/<sub>` must add or update
    a unit test.
 4. **Dependency hygiene** — when adding a dependency, document the
-   provenance and license in the PR body. Apache-2.0 transitive-only is
+   provenance and license in the PR body. permissive-license transitive-only is
    the charter rule.
-5. **Apache-2.0 license-only** — zero AGPL / BUSL transitive dependency
+5. **MIT license-only** — zero AGPL / BUSL transitive dependency
    target (`docs/kb/adr/0001-charter.md`).
 
 ## Local quality gates
@@ -107,4 +107,4 @@ header (Nygard five sections).
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

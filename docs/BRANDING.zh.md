@@ -72,7 +72,7 @@ GitHub README shield.io 徽章使用相同的 hex 值。
 - **Evidence-based** — claim 包含 benchmark、SLA 或 link。
 - **Library-focused** — `operator-commons` 是 *库*。controller-runtime、CRD、
   reconciler 是 downstream consumer 的责任,而非本库的责任。
-- **License-aware** — 仅 Apache-2.0。charter 目标为 AGPL / BUSL transitive
+- **License-aware** — 仅 MIT。charter 目标为 AGPL / BUSL transitive
   依赖 0 件 (`docs/kb/adr/0001-charter.md`)。
 
 **Avoid**:
@@ -114,7 +114,7 @@ GitHub README shield.io 徽章使用相同的 hex 值。
 ```markdown
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>
 ```
 
 不添加额外 cross-link 区块。footer 保持最小化,使文档 self-contained。
@@ -123,7 +123,7 @@ GitHub README shield.io 徽章使用相同的 hex 值。
 
 README 的 shield.io 徽章按以下顺序 (左→右):
 
-1. License (Apache-2.0)
+1. License (MIT)
 2. Go Version (1.25+)
 3. Go Reference (pkg.go.dev)
 4. OpenSSF Scorecard
@@ -147,10 +147,10 @@ README 的 shield.io 徽章按以下顺序 (左→右):
 
 ## 11. License and Attribution
 
-- License: [Apache-2.0](../LICENSE)
+- License: [MIT](../LICENSE)
 - Copyright: © 2026 keiailab contributors
 - Third-party attribution: 参见 [NOTICE](../NOTICE)
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

@@ -69,4 +69,4 @@ downstream operator 와 commons 를 동시에 수정해야 하는 *cross-cut* �
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

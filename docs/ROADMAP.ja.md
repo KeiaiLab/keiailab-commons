@@ -201,7 +201,7 @@
 
 - **Kubernetes API のみ** — `k8s.io/api`、`k8s.io/apimachinery`、
   `k8s.io/utils`。controller-runtime 依存性は leaf package に *追加禁止*。
-- **Apache-2.0 互換ライセンスのみ** — 依存性追加には ADR 必須。
+- **permissive-license-compatibleライセンスのみ** — 依存性追加には ADR 必須。
 - **完全な godoc** — すべての新規 public API に godoc 必須。
 
 ## ガバナンス / 追跡
@@ -226,4 +226,4 @@
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

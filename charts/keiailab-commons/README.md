@@ -38,7 +38,7 @@ metadata:
 
 ## License
 
-Apache-2.0 — `../../LICENSE` 참조.
+MIT — `../../LICENSE` 참조.
 
 ## Refs
 

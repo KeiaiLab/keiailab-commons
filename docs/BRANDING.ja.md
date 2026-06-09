@@ -76,7 +76,7 @@ consumer。
 - **Library-focused** — `operator-commons` は *ライブラリ* です。
   controller-runtime、CRD、reconciler は downstream consumer の責任であり、
   本ライブラリの責任ではありません。
-- **License-aware** — Apache-2.0 only。charter の目標は AGPL / BUSL
+- **License-aware** — MIT only。charter の目標は AGPL / BUSL
   transitive 依存ゼロ件です (`docs/kb/adr/0001-charter.md`)。
 
 **Avoid**:
@@ -121,7 +121,7 @@ consumer。
 ```markdown
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>
 ```
 
 追加の cross-link ブロックは置きません。Footer を最小化して文書を
@@ -131,7 +131,7 @@ self-contained に保ちます。
 
 README の shield.io バッジは次の順序 (左→右):
 
-1. License (Apache-2.0)
+1. License (MIT)
 2. Go Version (1.25+)
 3. Go Reference (pkg.go.dev)
 4. OpenSSF Scorecard
@@ -155,10 +155,10 @@ README の shield.io バッジは次の順序 (左→右):
 
 ## 11. License and Attribution
 
-- License: [Apache-2.0](../LICENSE)
+- License: [MIT](../LICENSE)
 - Copyright: © 2026 keiailab contributors
 - Third-party attribution: [NOTICE](../NOTICE) 参照
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

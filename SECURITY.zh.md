@@ -64,7 +64,7 @@ patch 仅针对最新 minor 发布。
 
 ## License / 供应链
 
-本库**仅 Apache-2.0**，charter 目标是零 AGPL /
+本库**仅 MIT**，charter 目标是零 AGPL /
 BUSL 传递依赖（`docs/kb/adr/0001-charter.md`）。每次 minor release
 均运行 license audit。
 
@@ -82,4 +82,4 @@ BUSL 传递依赖（`docs/kb/adr/0001-charter.md`）。每次 minor release
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

@@ -62,7 +62,7 @@ prioritised for review.
 
 ## License / supply chain
 
-This library is **Apache-2.0 only**, with a charter goal of zero AGPL /
+This library is **MIT only**, with a charter goal of zero AGPL /
 BUSL transitive dependencies (`docs/kb/adr/0001-charter.md`). A license
 audit runs at every minor release.
 
@@ -80,4 +80,4 @@ Operators that import this library should:
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

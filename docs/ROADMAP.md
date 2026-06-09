@@ -205,7 +205,7 @@ the library evolves according to the needs of its downstream consumers.
 - **Kubernetes API only** — `k8s.io/api`, `k8s.io/apimachinery`,
   `k8s.io/utils`. controller-runtime dependency *must not be added at
   leaf packages*.
-- **Apache-2.0-compatible licenses only** — every dependency addition
+- **MIT-compatible licenses only** — every dependency addition
   requires an ADR.
 - **Complete godoc** — every new public API requires godoc.
 
@@ -234,7 +234,7 @@ the library evolves according to the needs of its downstream consumers.
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>
 
 ### pkg/bundle (Experimental)
 

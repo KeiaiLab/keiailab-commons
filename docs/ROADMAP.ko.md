@@ -182,7 +182,7 @@
 
 - **Kubernetes API 만** — `k8s.io/api`, `k8s.io/apimachinery`, `k8s.io/utils`.
   controller-runtime 의존 *추가 금지*.
-- **Apache-2.0 호환 라이선스만** — 의존성 추가 시 ADR 작성.
+- **permissive-license-compatible 라이선스만** — 의존성 추가 시 ADR 작성.
 - **godoc 완비** — 신규 public API 는 godoc 의무.
 
 ## 거버넌스 / 추적
@@ -205,4 +205,4 @@
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

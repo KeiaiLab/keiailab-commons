@@ -71,4 +71,4 @@ CVE 報告は [SECURITY.md](../SECURITY.ja.md) に従います。報告は priva
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

@@ -131,4 +131,4 @@ v1.0.0 昇格基準 ([STABILITY.md](STABILITY.ja.md) の「v1.0.0 graduation」
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>

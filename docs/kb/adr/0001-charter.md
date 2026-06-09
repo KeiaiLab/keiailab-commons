@@ -37,7 +37,7 @@ Rationale:
 
 ### v0.x charter
 
-- Apache-2.0 license, **zero AGPL / BUSL transitive dependency** goal,
+- MIT license, **zero AGPL / BUSL transitive dependency** goal,
   audited per minor release.
 - API breaking changes are allowed in v0.x; v1.0 onwards SemVer stable.
 - Each tag (`v0.N.M`) bumps either a package, a public API, or a meaningful

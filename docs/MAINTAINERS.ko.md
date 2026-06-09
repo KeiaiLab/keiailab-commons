@@ -62,4 +62,4 @@ header 수 일치 + line count ±15 % + 양방향 cross-link. lefthook pre-push
 
 ---
 
-<p align="center">© 2026 keiailab · Apache-2.0 · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>
