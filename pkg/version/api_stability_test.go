@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/keiailab/operator-commons/pkg/version"
+	"github.com/keiailab/keiailab-commons/pkg/version"
 )
 
 // stableTestEntry — api stability test 전용 MatrixEntry 구현.

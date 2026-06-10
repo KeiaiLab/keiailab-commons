@@ -1,4 +1,4 @@
-# ROADMAP — operator-commons
+# ROADMAP — keiailab-commons
 
 > [English](ROADMAP.md) | **한국어** | [日本語](ROADMAP.ja.md) | [中文](ROADMAP.zh.md)
 
@@ -51,7 +51,7 @@
 - [ ] downstream consumer 가 v1.0.0 commons import 후 회귀 0.
 - [x] `go vet ./... && go test ./...` clean (커버리지 96.3 % > 85 % threshold).
 - [x] API 안정성 promise 문서 — [STABILITY.md](STABILITY.md).
-- Verify: downstream consumer CI 가 `operator-commons v1.0.0` import 후 모든
+- Verify: downstream consumer CI 가 `keiailab-commons v1.0.0` import 후 모든
   e2e PASS.
 
 ## 패키지별 보강 항목

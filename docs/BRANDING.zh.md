@@ -1,23 +1,23 @@
-# 品牌指南 — `operator-commons`
+# 品牌指南 — `keiailab-commons`
 
 > [English](BRANDING.md) | [한국어](BRANDING.ko.md) | [日本語](BRANDING.ja.md) | **中文**
 
 > ⚠️ This translation is AI-generated and pending native review.
 >
-> `operator-commons` 库的 visual identity、voice、tone。
+> `keiailab-commons` 库的 visual identity、voice、tone。
 
-本文档是 `operator-commons` 品牌决策的 canonical reference。适用于 README、
+本文档是 `keiailab-commons` 品牌决策的 canonical reference。适用于 README、
 发布说明、以及关于本项目的外部沟通。
 
 ## 1. Identity
 
 **Organization**: [keiailab](https://keiailab.com)。
 
-**Project**: `operator-commons` —— 用于 Kubernetes operator 通用 scaffolding
+**Project**: `keiailab-commons` —— 用于 Kubernetes operator 通用 scaffolding
 (finalizer / labels / status / version / security / monitoring partial) 的
 Go 库。
 
-本库以 Go 模块 `github.com/keiailab/operator-commons` 与 Helm library chart
+本库以 Go 模块 `github.com/keiailab/keiailab-commons` 与 Helm library chart
 (`charts/keiailab-commons`) 形式发布。downstream operator 通过标准 Go module
 import 使用 —— 这里不指名或背书任何具体 consumer。
 
@@ -70,7 +70,7 @@ GitHub README shield.io 徽章使用相同的 hex 值。
 
 - **Direct** — 尽可能使用 bullet point 而非段落。
 - **Evidence-based** — claim 包含 benchmark、SLA 或 link。
-- **Library-focused** — `operator-commons` 是 *库*。controller-runtime、CRD、
+- **Library-focused** — `keiailab-commons` 是 *库*。controller-runtime、CRD、
   reconciler 是 downstream consumer 的责任,而非本库的责任。
 - **License-aware** — 仅 MIT。charter 目标为 AGPL / BUSL transitive
   依赖 0 件 (`docs/kb/adr/0001-charter.md`)。
@@ -90,7 +90,7 @@ GitHub README shield.io 徽章使用相同的 hex 值。
   <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
 </p>
 
-# operator-commons
+# keiailab-commons
 
 > **用于 Kubernetes operator 通用 scaffolding 的 Go 共享库 — finalizer / labels / status / version / security / monitoring partials.**
 
@@ -129,13 +129,13 @@ README 的 shield.io 徽章按以下顺序 (左→右):
 4. OpenSSF Scorecard
 5. GitHub Discussions
 
-> **Note**: `operator-commons` 是 *库*,因此 container image、Helm chart、
+> **Note**: `keiailab-commons` 是 *库*,因此 container image、Helm chart、
 > Kubernetes deployment 徽章不放在本库 —— 放在出货 image 或 chart 的
 > downstream operator README 上。
 
 ## 9. Discussions / Issues / PR Template
 
-- **Discussions**: `https://github.com/keiailab/operator-commons/discussions` — 包 API 提问、integration 案例、新 helper 提案。
+- **Discussions**: `https://github.com/keiailab/keiailab-commons/discussions` — 包 API 提问、integration 案例、新 helper 提案。
 - **Issues**: bug 报告与包含 use case 的具体 feature request。相关时明示 downstream consumer 影响。
 - **PR template**: `.github/PULL_REQUEST_TEMPLATE.md` — Conventional Commits + 用户场景 + 验证命令输出引用。
 
@@ -143,7 +143,7 @@ README 的 shield.io 徽章按以下顺序 (左→右):
 
 - **Website**: <https://keiailab.com>
 - **GitHub Org**: <https://github.com/keiailab>
-- **pkg.go.dev**: <https://pkg.go.dev/github.com/keiailab/operator-commons>
+- **pkg.go.dev**: <https://pkg.go.dev/github.com/keiailab/keiailab-commons>
 
 ## 11. License and Attribution
 

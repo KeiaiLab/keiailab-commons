@@ -1,12 +1,12 @@
 cff-version: 1.2.0
-title: operator-commons
+title: keiailab-commons
 message: "If you use this software, please cite it as below."
 type: software
 authors:
   - name: "keiailab contributors"
     website: "https://github.com/keiailab"
-repository-code: "https://github.com/keiailab/operator-commons"
-url: "https://github.com/keiailab/operator-commons"
+repository-code: "https://github.com/keiailab/keiailab-commons"
+url: "https://github.com/keiailab/keiailab-commons"
 abstract: >-
   A shared Go library and Helm library chart for Kubernetes operator
   scaffolding. Provides controller-runtime independent finalizer / status /

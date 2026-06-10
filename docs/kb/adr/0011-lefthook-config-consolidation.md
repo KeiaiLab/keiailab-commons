@@ -9,7 +9,7 @@
 
 ## Context
 
-operator-commons 는 2026-05-20 시점에 template SSOT template 의 `lefthook.yml` (407 LOC) 을 도입하면서 기존 GitHub Actions 차단 정책 §1 정합 minimal 버전 `.lefthook.yml` (65 LOC) 을 *중복 보존* 했다.
+keiailab-commons 는 2026-05-20 시점에 template SSOT template 의 `lefthook.yml` (407 LOC) 을 도입하면서 기존 GitHub Actions 차단 정책 §1 정합 minimal 버전 `.lefthook.yml` (65 LOC) 을 *중복 보존* 했다.
 
 lefthook CLI 는 `lefthook.yml` 을 우선 로드하고 `.lefthook.yml` 은 *fallback override* 로 해석한다. 양 파일 공존 시:
 - 신규 `lefthook.yml` 의 Go 가드 (go-vet / go-test / golangci-lint) 는 활성

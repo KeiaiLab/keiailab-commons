@@ -2,7 +2,7 @@
 
 > [English](../../README.md) | [한국어](glossary-ko.md) | **日本語** | [中文](glossary-zh.md)
 >
-> 本用語集は keiailab operator family 4 リポジトリ (operator-commons + downstream operator + downstream operator + downstream operator) の日本語翻訳時に*必ず参照*する標準用語集です。
+> 本用語集は keiailab operator family 4 リポジトリ (keiailab-commons + downstream operator + downstream operator + downstream operator) の日本語翻訳時に*必ず参照*する標準用語集です。
 >
 > ⚠️ **This translation is AI-generated and pending native review.** — Claude による機械翻訳。母語話者 (native reviewer) による品質検証後 `[x]` 完了状態へ昇格します。本ファイルの全項目は `[検証必要]` 状態として扱ってください。
 
@@ -10,7 +10,7 @@
 
 1. **コード識別子は英文そのまま** — 例: `MyResource`, `kubectl`, `Helm`, `pkg/probes`. 日本語翻訳禁止。
 2. **標準 K8s 用語は英文優先 + 日本語併記** — 例: `Pod (ポッド)`, `Deployment (デプロイメント)`. 本文初出時に英文 + 括弧日本語、以降は日本語単独可。
-3. **operator-commons API 名称は英文そのまま** — 例: `Reconciler`, `Finalizer`, `EventRecorder`. 日本語併記可 (`Finalizer (ファイナライザー)`)。
+3. **keiailab-commons API 名称は英文そのまま** — 例: `Reconciler`, `Finalizer`, `EventRecorder`. 日本語併記可 (`Finalizer (ファイナライザー)`)。
 4. **外部ユーザー可視文書 (README/CONTRIBUTING/SECURITY 等)** = 敬体 (`です/ます調`). 内部文書 (HANDOFF/AGENTS 等) = 常体または自由。
 5. **敬体と常体の混在禁止** — 1 文書内で一貫性を保つこと。
 
@@ -71,7 +71,7 @@
 | InitContainer | 初期化コンテナ (InitContainer) |
 | Sidecar Container | サイドカーコンテナ |
 
-## §3 operator-commons ライブラリ用語
+## §3 keiailab-commons ライブラリ用語
 
 | English (canonical) | 日本語 |
 |---|---|
@@ -188,7 +188,7 @@
 | English (canonical) | 日本語 |
 |---|---|
 | keiailab operator family | keiailab オペレーターファミリー |
-| operator-commons | operator-commons (英文そのまま — Go モジュール名) |
+| keiailab-commons | keiailab-commons (英文そのまま — Go モジュール名) |
 | supercycle | スーパーサイクル — 多段階サイクルの非公式用語 |
 | Wave (Wave 0 ~ Wave 5) | Wave (英文そのまま) |
 | Phase | フェーズ (Phase) |

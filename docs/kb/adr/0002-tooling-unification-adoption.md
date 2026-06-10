@@ -7,7 +7,7 @@
 
 ## Context
 
-본 repo 의 도구 표면을 정비합니다. operator-commons 는 *라이브러리* 이므로
+본 repo 의 도구 표면을 정비합니다. keiailab-commons 는 *라이브러리* 이므로
 일부 항목 (`validate` 타겟, Dockerfile HEALTHCHECK) 은 해당 사항이 없습니다.
 
 본 repo 의 도입 시점 상태 (2026-05-09):
@@ -67,4 +67,4 @@ audit:
 
 ## References
 
-- 관련 ADR: [ADR-0001](0001-charter.md) (operator-commons charter).
+- 관련 ADR: [ADR-0001](0001-charter.md) (keiailab-commons charter).

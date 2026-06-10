@@ -13,8 +13,8 @@
 //
 // 사용 예 (myapp webhook):
 //
-//	import commonswebhook "github.com/keiailab/operator-commons/pkg/webhook"
-//	import commonsversion "github.com/keiailab/operator-commons/pkg/version"
+//	import commonswebhook "github.com/keiailab/keiailab-commons/pkg/webhook"
+//	import commonsversion "github.com/keiailab/keiailab-commons/pkg/version"
 //
 //	var supportedMyApp = commonsversion.MustList("8.0.9", "8.1.6", "9.0.4")
 //
@@ -33,7 +33,7 @@ package webhook
 import (
 	"k8s.io/apimachinery/pkg/util/validation/field"
 
-	"github.com/keiailab/operator-commons/pkg/version"
+	"github.com/keiailab/keiailab-commons/pkg/version"
 )
 
 // ValidateAllowedVersion — value 가 list 에 정확 매칭하는지 검증.

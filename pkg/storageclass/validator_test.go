@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/keiailab/operator-commons/pkg/storageclass"
+	"github.com/keiailab/keiailab-commons/pkg/storageclass"
 )
 
 func TestIsValid(t *testing.T) {

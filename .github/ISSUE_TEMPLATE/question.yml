@@ -1,5 +1,5 @@
 name: Question
-about: Ask a question about operator-commons usage or design
+about: Ask a question about keiailab-commons usage or design
 title: '[QUESTION] '
 labels: ['question', 'triage']
 assignees: ''
@@ -8,7 +8,7 @@ body:
     attributes:
       value: |
         For general usage questions, prefer
-        [GitHub Discussions](https://github.com/keiailab/operator-commons/discussions).
+        [GitHub Discussions](https://github.com/keiailab/keiailab-commons/discussions).
         Use this template only when the question requires maintainer attention
         (e.g. an API ambiguity that may need a documentation fix).
 
@@ -58,7 +58,7 @@ body:
   - type: input
     id: commons_version
     attributes:
-      label: operator-commons version
+      label: keiailab-commons version
       description: Which release tag (or commit SHA) are you asking about?
       placeholder: "e.g. v0.9.0"
 

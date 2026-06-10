@@ -7,7 +7,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/keiailab/operator-commons/pkg/status"
+	"github.com/keiailab/keiailab-commons/pkg/status"
 )
 
 // TestSetReady 는 SetReady 가 빈 conditions 에 새 Condition 을 추가하는지,

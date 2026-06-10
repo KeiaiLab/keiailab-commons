@@ -4,11 +4,11 @@
 
 > ⚠️ This translation is AI-generated and pending native review. — 本翻訳は Claude による機械翻訳結果です。母語話者検証完了まで `[検証必要]` 状態です。
 
-> operator-commons の API 安定性ティアと breaking-change ポリシー。
+> keiailab-commons の API 安定性ティアと breaking-change ポリシー。
 
 ## ティア (Tier)
 
-operator-commons は 3-tier 安定性を使用します:
+keiailab-commons は 3-tier 安定性を使用します:
 
 | Tier | 互換性 | Breaking change ポリシー |
 |---|---|---|

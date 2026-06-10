@@ -1,10 +1,10 @@
-# i18n — operator-commons 多语言政策
+# i18n — keiailab-commons 多语言政策
 
 > [English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | **中文**
 
 > ⚠️ This translation is AI-generated and pending native review.
 
-本文档定义 `operator-commons` 文档如何在多种
+本文档定义 `keiailab-commons` 文档如何在多种
 语言中维护。本项目保持英文 canonical 加上
 韩文 / 日文 / 中文翻译。
 

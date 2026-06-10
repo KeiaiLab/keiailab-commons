@@ -2,7 +2,7 @@
 
 > **English** | [한국어](SECURITY.ko.md) | [日本語](SECURITY.ja.md) | [中文](SECURITY.zh.md)
 
-`keiailab/operator-commons` is imported by downstream Kubernetes
+`keiailab/keiailab-commons` is imported by downstream Kubernetes
 operators. A vulnerability in this library can directly affect the
 operational security of those downstream consumers.
 
@@ -15,7 +15,7 @@ operational security of those downstream consumers.
 Use one of the following private channels:
 
 1. **GitHub Security Advisory** (preferred):
-   `https://github.com/keiailab/operator-commons/security/advisories/new`
+   `https://github.com/keiailab/keiailab-commons/security/advisories/new`
 2. **Email**: `security@keiailab.com` (PGP optional):
    - PGP fingerprint:
      `89A4 0947 6828 CB99 2338  C378 651E 51AF 520B CB78`.
@@ -75,7 +75,7 @@ Operators that import this library should:
 2. **Use `pkg/webhook`** — do not re-implement version validation.
 3. **Use `pkg/networkpolicy`** — deny-by-default NetworkPolicy builder.
 4. Track the latest patch of
-   `github.com/keiailab/operator-commons` in `go.mod` (Renovate
+   `github.com/keiailab/keiailab-commons` in `go.mod` (Renovate
    automatic PRs).
 
 ---

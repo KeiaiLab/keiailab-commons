@@ -1,4 +1,4 @@
-# operator-commons / templates / observability
+# keiailab-commons / templates / observability
 
 Helm library chart partial assets. Consumer charts use the named template
 to define Prometheus Operator `ServiceMonitor` resources in a consistent
@@ -79,8 +79,8 @@ metrics:
 To include the partial in a consumer chart:
 
 1. Sub-chart: copy to `charts/<name>/charts/keiailab-observability/`.
-2. Git submodule: reference `operator-commons/templates/observability/`.
-3. Build-time copy: `cp operator-commons/templates/observability/*.tpl
+2. Git submodule: reference `keiailab-commons/templates/observability/`.
+3. Build-time copy: `cp keiailab-commons/templates/observability/*.tpl
    charts/<name>/templates/_partials/` (Makefile target).
 
 Record the adoption method in the consumer's ADR.

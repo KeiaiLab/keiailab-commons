@@ -19,12 +19,12 @@
 | downstream operator | ❌ |
 | downstream operator | ❌ |
 | downstream operator | ❌ |
-| operator-commons | ❌ |
+| keiailab-commons | ❌ |
 | downstream component | ❌ (사전 hook 부재) |
 
 즉 *정책* (GitHub Actions 차단 정책) 은 있지만 *자동 강제* (lefthook hook) 이 부재. 사람이 의도하지 않은 `.github/workflows/` 추가 시 차단 불가.
 
-본 ADR 은 operator-commons (다중 언어 SSOT) 에 *최초* gha-block hook 신설 + 후속 4 repo 에 sync 패턴 확립.
+본 ADR 은 keiailab-commons (다중 언어 SSOT) 에 *최초* gha-block hook 신설 + 후속 4 repo 에 sync 패턴 확립.
 
 ### v2.0 정합 고려 (operator family)
 

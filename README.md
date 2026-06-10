@@ -1,4 +1,4 @@
-# operator-commons
+# keiailab-commons
 
 > Shared Go helpers for Kubernetes operator scaffolding — finalizers, recommended labels, status conditions, supported-version allowlists, restricted PodSecurity contexts, NetworkPolicies, ServiceMonitor builders, and a Helm library chart.
 
@@ -6,19 +6,19 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Go](https://img.shields.io/badge/Go-1.26+-00ADD8?logo=go)](https://golang.org/)
-[![Go Reference](https://pkg.go.dev/badge/github.com/keiailab/operator-commons.svg)](https://pkg.go.dev/github.com/keiailab/operator-commons)
+[![Go Reference](https://pkg.go.dev/badge/github.com/keiailab/keiailab-commons.svg)](https://pkg.go.dev/github.com/keiailab/keiailab-commons)
 
 Operator authors repeatedly re-implement the same scaffolding: restricted
 PodSecurity contexts, supported-version matrices, default-deny NetworkPolicies,
 ServiceMonitor builders, finalizer helpers, status condition catalogs. Each
 independent copy drifts apart over time and grows silent inconsistencies.
-`operator-commons` is one place to get the canonical implementation, behind a
+`keiailab-commons` is one place to get the canonical implementation, behind a
 small API surface that follows a clear stability promise.
 
 ## Installation
 
 ```sh
-go get github.com/keiailab/operator-commons@latest
+go get github.com/keiailab/keiailab-commons@latest
 ```
 
 Requires Go 1.26+. The library depends only on `k8s.io/api`,
@@ -32,8 +32,8 @@ allowlist:
 
 ```go
 import (
-	"github.com/keiailab/operator-commons/pkg/security"
-	"github.com/keiailab/operator-commons/pkg/version"
+	"github.com/keiailab/keiailab-commons/pkg/security"
+	"github.com/keiailab/keiailab-commons/pkg/version"
 	corev1 "k8s.io/api/core/v1"
 )
 
@@ -53,8 +53,8 @@ Apply recommended Kubernetes labels and report status conditions on a CR:
 
 ```go
 import (
-	"github.com/keiailab/operator-commons/pkg/labels"
-	"github.com/keiailab/operator-commons/pkg/status"
+	"github.com/keiailab/keiailab-commons/pkg/labels"
+	"github.com/keiailab/keiailab-commons/pkg/status"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -71,8 +71,8 @@ if status.IsReady(cr.Status.Conditions) {
 ```
 
 Each package ships runnable examples in its `doc.go` — browse them with
-`go doc github.com/keiailab/operator-commons/pkg/<name>` or on
-[pkg.go.dev](https://pkg.go.dev/github.com/keiailab/operator-commons).
+`go doc github.com/keiailab/keiailab-commons/pkg/<name>` or on
+[pkg.go.dev](https://pkg.go.dev/github.com/keiailab/keiailab-commons).
 
 ## Packages
 
@@ -111,7 +111,7 @@ and the v1.0 graduation checklist.
 ## Contributing
 
 Bug reports and feature requests go to
-[Issues](https://github.com/keiailab/operator-commons/issues). See
+[Issues](https://github.com/keiailab/keiailab-commons/issues). See
 [CONTRIBUTING.md](CONTRIBUTING.md) for the development workflow and
 [SECURITY.md](SECURITY.md) for the private disclosure process.
 

@@ -1,4 +1,4 @@
-# operator-commons Makefile — 라이브러리 표준 타겟.
+# keiailab-commons Makefile — 라이브러리 표준 타겟.
 # 본 라이브러리는 cmd/main.go 부재 → build/run/deploy 타겟 없음.
 # 필수 타겟: lint, test, audit (validate, sbom 제외).
 

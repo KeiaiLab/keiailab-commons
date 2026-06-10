@@ -4,7 +4,7 @@
 
 > ⚠️ This translation is AI-generated and pending native review.
 
-本ドキュメントは `keiailab/operator-commons` の意思決定権限を有する
+本ドキュメントは `keiailab/keiailab-commons` の意思決定権限を有する
 maintainer を記録します。
 
 ## 現在の maintainer

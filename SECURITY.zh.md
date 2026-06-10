@@ -4,7 +4,7 @@
 
 > ⚠️ This translation is AI-generated and pending native review.
 
-`keiailab/operator-commons` 被下游 Kubernetes operators
+`keiailab/keiailab-commons` 被下游 Kubernetes operators
 导入。本库的漏洞会直接影响这些下游 consumer 的
 运营安全。
 
@@ -17,7 +17,7 @@
 使用下列私有渠道之一：
 
 1. **GitHub Security Advisory**（首选）：
-   `https://github.com/keiailab/operator-commons/security/advisories/new`
+   `https://github.com/keiailab/keiailab-commons/security/advisories/new`
 2. **Email**：`security@keiailab.com`（PGP 可选）：
    - PGP fingerprint：
      `89A4 0947 6828 CB99 2338  C378 651E 51AF 520B CB78`。
@@ -77,7 +77,7 @@ BUSL 传递依赖（`docs/kb/adr/0001-charter.md`）。每次 minor release
 2. **使用 `pkg/webhook`** — 不要重新实现 version 校验。
 3. **使用 `pkg/networkpolicy`** — deny-by-default NetworkPolicy builder。
 4. 在 `go.mod` 中追踪
-   `github.com/keiailab/operator-commons` 的最新 patch（Renovate
+   `github.com/keiailab/keiailab-commons` 的最新 patch（Renovate
    自动 PR）。
 
 ---

@@ -1,7 +1,7 @@
-# AGENTS — operator-commons
+# AGENTS — keiailab-commons
 
 This document is the runbook for AI agents and human contributors working
-in the `operator-commons` repository. Project-specific guidance below
+in the `keiailab-commons` repository. Project-specific guidance below
 augments any global development conventions.
 
 ## Repository character
@@ -17,7 +17,7 @@ augments any global development conventions.
 ## Directory layout
 
 ```
-operator-commons/
+keiailab-commons/
 ├── pkg/
 │   ├── events/         # Kubernetes Event recorder + Reason catalog
 │   ├── finalizer/      # Finalizer helpers (no controller-runtime)

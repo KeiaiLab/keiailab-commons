@@ -8,7 +8,7 @@ import (
 
 	"k8s.io/apimachinery/pkg/util/validation/field"
 
-	"github.com/keiailab/operator-commons/pkg/version"
+	"github.com/keiailab/keiailab-commons/pkg/version"
 )
 
 func TestValidateAllowedVersion_EmptyValueSkipped(t *testing.T) {

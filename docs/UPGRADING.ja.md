@@ -1,10 +1,10 @@
-# Upgrading operator-commons
+# Upgrading keiailab-commons
 
 > [English](UPGRADING.md) | [한국어](UPGRADING.ko.md) | **日本語** | [中文](UPGRADING.zh.md)
 
 > ⚠️ This translation is AI-generated and pending native review.
 
-本ドキュメントは `github.com/keiailab/operator-commons` Go モジュールの
+本ドキュメントは `github.com/keiailab/keiailab-commons` Go モジュールの
 minor または major バージョンを bump する際に必要となる移行手順を集約
 します。downstream consumer の共通エントリポイントです。
 
@@ -38,7 +38,7 @@ helm template <your-operator> charts/<your-operator>
 ### Go モジュール利用者
 
 ```bash
-go get github.com/keiailab/operator-commons@v0.8.0
+go get github.com/keiailab/keiailab-commons@v0.8.0
 go mod tidy
 ```
 
@@ -59,8 +59,8 @@ downstream operator で import を追加:
 
 ```go
 import (
-    "github.com/keiailab/operator-commons/pkg/pvc"
-    "github.com/keiailab/operator-commons/pkg/topology"
+    "github.com/keiailab/keiailab-commons/pkg/pvc"
+    "github.com/keiailab/keiailab-commons/pkg/topology"
 )
 ```
 
@@ -78,7 +78,7 @@ import (
 
 ```bash
 # 1. 依存性を bump
-go get github.com/keiailab/operator-commons@v0.9.0
+go get github.com/keiailab/keiailab-commons@v0.9.0
 go mod tidy
 
 # 2. 検証
@@ -91,7 +91,27 @@ kubectl apply -f config/samples/
 kubectl get <CR> -A  # reconciliation を観測
 ```
 
-## 3. v0.9.x → v1.0.0
+## 3. v0.9.x → v0.10.x
+
+### Repository / module rename
+
+`v0.10.0` から Go module path は次を使用します:
+
+```bash
+github.com/keiailab/keiailab-commons
+```
+
+downstream operator は import path と dependency pin を更新します:
+
+```bash
+go get github.com/keiailab/keiailab-commons@v0.10.0
+go mod tidy
+```
+
+既存の `v0.9.x` tag は `github.com/keiailab/operator-commons` module path
+を宣言しているため、新しい module path では利用できません。
+
+## 4. v0.9.x → v1.0.0
 
 v1.0.0 昇格基準 ([STABILITY.md](STABILITY.ja.md) の「v1.0.0 graduation」
 参照) が満たされたときに進行します:
@@ -100,7 +120,7 @@ v1.0.0 昇格基準 ([STABILITY.md](STABILITY.ja.md) の「v1.0.0 graduation」
 - v0.x → v1.0 は *naming* 変更 — セマンティクスは変更なし (breaking
   change なし)。
 
-## 4. 汎用移行チェックリスト
+## 5. 汎用移行チェックリスト
 
 アップグレード前:
 
@@ -115,7 +135,7 @@ v1.0.0 昇格基準 ([STABILITY.md](STABILITY.ja.md) の「v1.0.0 graduation」
 - [ ] e2e pass。
 - [ ] Helm chart `charts/<operator>` の `dependencies:` 更新。
 
-## 5. Breaking-change 通知ポリシー
+## 6. Breaking-change 通知ポリシー
 
 - **Deprecation**: 新しい minor で `// Deprecated:` コメント追加。
   2 minor 後に削除。

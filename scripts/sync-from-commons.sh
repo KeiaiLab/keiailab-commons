@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # scripts/sync-from-commons.sh
-# operator-commons → 4 repo (postgres + mongodb + valkey + forgewise) 의 i18n SSOT 동기.
+# keiailab-commons → 4 repo (postgres + mongodb + valkey + forgewise) 의 i18n SSOT 동기.
 #
 # S4 Phase 3 (2026-05-21, docs/specs/2026-05-21-i18n-4lang-master-design.md §4.4):
 #   RFC-0029 §6.5 sub-repo sync drift seal 정합 — SSOT 본문 그대로 cp.
@@ -176,7 +176,7 @@ else
   echo ""
   echo "후속 절차:"
   echo "  1. 각 sub-repo 에서 'git status' + 'git diff' 로 변경 확인"
-  echo "  2. 각 repo 별 PR 생성 (commit message: 'chore(i18n): SSOT sync from operator-commons')"
+  echo "  2. 각 repo 별 PR 생성 (commit message: 'chore(i18n): SSOT sync from keiailab-commons')"
   echo "  3. 5 PR 머지 후 4-lang drift check 통합 검증"
 fi
 exit 0

@@ -1,4 +1,4 @@
-module github.com/keiailab/operator-commons
+module github.com/keiailab/keiailab-commons
 
 go 1.26.0
 

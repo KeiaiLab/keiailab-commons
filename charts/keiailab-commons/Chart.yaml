@@ -1,7 +1,7 @@
 apiVersion: v2
 name: keiailab-commons
 description: |
-  keiailab operator-commons Helm library chart.
+  Keiailab commons Helm library chart.
   downstream consumer 가
   공유하는 partial helper (commonLabels / observability.serviceMonitor 등)
   를 제공한다. type: library — consumer chart 가 dependency 로 import.
@@ -9,9 +9,9 @@ type: library
 version: 0.8.0
 appVersion: "0.8.0"
 kubeVersion: ">=1.25.0-0"
-home: https://github.com/keiailab/operator-commons
+home: https://github.com/keiailab/keiailab-commons
 sources:
-  - https://github.com/keiailab/operator-commons/tree/main/charts/keiailab-commons
+  - https://github.com/keiailab/keiailab-commons/tree/main/charts/keiailab-commons
 maintainers:
   - name: keiailab
     url: https://github.com/keiailab

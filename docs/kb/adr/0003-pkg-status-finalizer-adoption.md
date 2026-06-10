@@ -7,7 +7,7 @@
 
 ## Context
 
-operator-commons v0.5.0 시점에 `pkg/finalizer` 와 `pkg/status` 채택률이
+keiailab-commons v0.5.0 시점에 `pkg/finalizer` 와 `pkg/status` 채택률이
 0% 임이 측정됨. downstream consumers 가
 각자 finalizer slice 직접 조작 + ConditionType/Reason 분기 구현.
 

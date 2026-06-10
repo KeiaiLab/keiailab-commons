@@ -1,8 +1,8 @@
-# Upgrading operator-commons
+# Upgrading keiailab-commons
 
 > [English](UPGRADING.md) | **한국어** | [日本語](UPGRADING.ja.md) | [中文](UPGRADING.zh.md)
 
-본 문서는 `github.com/keiailab/operator-commons` Go 모듈의 minor / major
+본 문서는 `github.com/keiailab/keiailab-commons` Go 모듈의 minor / major
 버전 업그레이드 시 필요한 마이그레이션 작업을 정리합니다. downstream
 consumer 가 본 라이브러리를 import 할 때의 *공통 진입점* 입니다.
 
@@ -36,7 +36,7 @@ helm template <your-operator> charts/<your-operator>
 ### Go 모듈 사용자
 
 ```bash
-go get github.com/keiailab/operator-commons@v0.8.0
+go get github.com/keiailab/keiailab-commons@v0.8.0
 go mod tidy
 ```
 
@@ -57,8 +57,8 @@ downstream operator 의 import path 추가:
 
 ```go
 import (
-    "github.com/keiailab/operator-commons/pkg/pvc"
-    "github.com/keiailab/operator-commons/pkg/topology"
+    "github.com/keiailab/keiailab-commons/pkg/pvc"
+    "github.com/keiailab/keiailab-commons/pkg/topology"
 )
 ```
 
@@ -76,7 +76,7 @@ import (
 
 ```bash
 # 1. 의존 bump
-go get github.com/keiailab/operator-commons@v0.9.0
+go get github.com/keiailab/keiailab-commons@v0.9.0
 go mod tidy
 
 # 2. 검증
@@ -89,7 +89,27 @@ kubectl apply -f config/samples/
 kubectl get <CR> -A  # reconcile 결과 확인
 ```
 
-## 3. v0.9.x → v1.0.0
+## 3. v0.9.x → v0.10.x
+
+### repository / module rename
+
+`v0.10.0`부터 Go module path는 다음 경로를 사용합니다.
+
+```bash
+github.com/keiailab/keiailab-commons
+```
+
+downstream operator는 import path와 dependency pin을 함께 갱신합니다.
+
+```bash
+go get github.com/keiailab/keiailab-commons@v0.10.0
+go mod tidy
+```
+
+기존 `v0.9.x` tag는 `github.com/keiailab/operator-commons` module path를
+선언하므로 새 module path로 소비할 수 없습니다.
+
+## 4. v0.9.x → v1.0.0
 
 v1.0.0 졸업 조건 충족 시점에 진행합니다 ([STABILITY.md](STABILITY.md) "v1.0.0
 graduation" 참조).
@@ -97,7 +117,7 @@ graduation" 참조).
 - 모든 패키지가 Stable tier 로 격상.
 - v0.x → v1.0 은 *명명만* 변경, semantic 동일 (breaking change 없음).
 
-## 4. 일반 마이그레이션 체크리스트
+## 5. 일반 마이그레이션 체크리스트
 
 업그레이드 전:
 
@@ -112,7 +132,7 @@ graduation" 참조).
 - [ ] e2e PASS.
 - [ ] Helm chart `charts/<operator>` 의 `dependencies:` 갱신.
 
-## 5. 비호환 변경 안내 정책
+## 6. 비호환 변경 안내 정책
 
 - **Deprecation**: 신규 minor 에서 `// Deprecated:` 주석 + 2 minor 후 제거.
 - **Breaking**: major bump + 본 UPGRADING.md 의 별 섹션 + ADR 작성.

@@ -1,10 +1,10 @@
-# Branding Guide — `operator-commons`
+# Branding Guide — `keiailab-commons`
 
 > **English** | [한국어](BRANDING.ko.md) | [日本語](BRANDING.ja.md) | [中文](BRANDING.zh.md)
 
-> Visual identity, voice, and tone for the `operator-commons` library.
+> Visual identity, voice, and tone for the `keiailab-commons` library.
 
-This document is the canonical reference for `operator-commons` branding
+This document is the canonical reference for `keiailab-commons` branding
 decisions. It applies to the README, release notes, and any external
 communication about the project.
 
@@ -12,12 +12,12 @@ communication about the project.
 
 **Organization**: [keiailab](https://keiailab.com).
 
-**Project**: `operator-commons` — a shared Go library for Kubernetes operator
+**Project**: `keiailab-commons` — a shared Go library for Kubernetes operator
 scaffolding (finalizer / labels / status / version / security / monitoring
 partials).
 
 The library is published as a Go module at
-`github.com/keiailab/operator-commons` and as a Helm library chart
+`github.com/keiailab/keiailab-commons` and as a Helm library chart
 (`charts/keiailab-commons`). It is consumed by downstream operator
 implementations via standard Go module import — no specific consumer is
 named or endorsed here.
@@ -73,7 +73,7 @@ consumers.
 
 - **Direct** — prefer bullet points over paragraphs where possible.
 - **Evidence-based** — claims include a benchmark, an SLA, or a link.
-- **Library-focused** — `operator-commons` is a *library*. Controller-runtime,
+- **Library-focused** — `keiailab-commons` is a *library*. Controller-runtime,
   CRDs, and reconcilers are the responsibility of the downstream consumer,
   not of this library.
 - **License-aware** — MIT only. The charter goal is zero AGPL / BUSL
@@ -96,7 +96,7 @@ Every README's first block follows this layout:
   <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
 </p>
 
-# operator-commons
+# keiailab-commons
 
 > **Shared Go library for Kubernetes operator scaffolding — finalizer / labels / status / version / security / monitoring partials.**
 
@@ -136,13 +136,13 @@ The shield.io badges in the README appear in this order (left → right):
 4. OpenSSF Scorecard
 5. GitHub Discussions
 
-> **Note**: `operator-commons` is a *library*, so container image, Helm
+> **Note**: `keiailab-commons` is a *library*, so container image, Helm
 > chart, or Kubernetes deployment badges do not belong here — they belong on
 > the README of a downstream operator that ships an image or chart.
 
 ## 9. Discussions, issues, PR templates
 
-- **Discussions**: `https://github.com/keiailab/operator-commons/discussions` — package API questions, integration patterns, new helper proposals.
+- **Discussions**: `https://github.com/keiailab/keiailab-commons/discussions` — package API questions, integration patterns, new helper proposals.
 - **Issues**: bug reports plus concrete feature requests; include the use case and downstream consumer impact when relevant.
 - **PR template**: `.github/PULL_REQUEST_TEMPLATE.md` — Conventional Commits + user-facing scenario + verification command output.
 
@@ -150,7 +150,7 @@ The shield.io badges in the README appear in this order (left → right):
 
 - **Website**: <https://keiailab.com>
 - **GitHub Org**: <https://github.com/keiailab>
-- **pkg.go.dev**: <https://pkg.go.dev/github.com/keiailab/operator-commons>
+- **pkg.go.dev**: <https://pkg.go.dev/github.com/keiailab/keiailab-commons>
 
 ## 11. License and attribution
 

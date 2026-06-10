@@ -4,11 +4,11 @@
 
 > ⚠️ This translation is AI-generated and pending native review. — 本翻译为 Claude 机器翻译结果。母语审阅者校验前为 `[待校验]` 状态。
 
-> operator-commons 的 API 稳定性等级和 breaking-change 策略。
+> keiailab-commons 的 API 稳定性等级和 breaking-change 策略。
 
 ## 等级 (Tier)
 
-operator-commons 使用 3-tier 稳定性:
+keiailab-commons 使用 3-tier 稳定性:
 
 | Tier | 兼容性 | Breaking change 策略 |
 |---|---|---|

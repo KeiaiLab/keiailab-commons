@@ -1,4 +1,4 @@
-# ADR-0001: operator-commons charter
+# ADR-0001: keiailab-commons charter
 
 - Date: 2026-05-07
 - Status: Accepted
@@ -23,7 +23,7 @@ propagated to others, and version-allowlist signatures diverged.
 
 ## Decision
 
-Create `github.com/keiailab/operator-commons` as a **separate Go module
+Create `github.com/keiailab/keiailab-commons` as a **separate Go module
 repository** (not a monorepo module).
 
 Rationale:
@@ -60,7 +60,7 @@ Rationale:
 
 - A cross-cut breaking change requires one PR per downstream consumer —
   the same overhead as separate repos today, but with explicit visibility.
-- Local development across `operator-commons` plus downstream consumers
+- Local development across `keiailab-commons` plus downstream consumers
   requires either a Go workspace or a `replace` directive — slightly more
   setup than a monorepo.
 
@@ -73,7 +73,7 @@ Rationale:
 ## Alternatives Considered
 
 1. **Monorepo (`keiailab/keiai-platform`)** — rejected: monorepo bootstrap
-   is itself a separate effort, and the `operator-commons` MVP is needed
+   is itself a separate effort, and the `keiailab-commons` MVP is needed
    sooner.
 2. **Vendor commons into a single operator's `internal/commons`** —
    rejected: delays the deduplication benefit and elevates one downstream

@@ -1,4 +1,4 @@
-# lefthook.yml — operator-commons (Go library).
+# lefthook.yml — keiailab-commons (Go library).
 #
 # 우회: 환경변수 LEFTHOOK=0 또는 commit 메시지에 '[skip-hooks]' 포함.
 

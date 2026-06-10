@@ -4,7 +4,7 @@
 
 > ⚠️ This translation is AI-generated and pending native review.
 
-本ドキュメントは `keiailab/operator-commons` ライブラリの意思決定
+本ドキュメントは `keiailab/keiailab-commons` ライブラリの意思決定
 プロセスを定義します。本ライブラリは downstream の consumer operator から
 共通で import されるため、*public API* への変更は downstream 互換性に
 影響を与えます。

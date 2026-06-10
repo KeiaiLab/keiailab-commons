@@ -2,7 +2,7 @@
   <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
 </p>
 
-# operator-commons
+# keiailab-commons
 
 > **Kubernetes operator 共通 scaffolding のための Go ライブラリ — finalizer / labels / status / version / security / monitoring partials.**
 >
@@ -11,9 +11,9 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
   <a href="https://golang.org/"><img src="https://img.shields.io/badge/Go-1.26+-00ADD8?logo=go" alt="Go Version"/></a>
-  <a href="https://pkg.go.dev/github.com/keiailab/operator-commons"><img src="https://pkg.go.dev/badge/github.com/keiailab/operator-commons.svg" alt="Go Reference"/></a>
-  <a href="https://scorecard.dev/viewer/?uri=github.com/keiailab/operator-commons"><img src="https://api.scorecard.dev/projects/github.com/keiailab/operator-commons/badge" alt="OpenSSF Scorecard"/></a>
-  <a href="https://github.com/keiailab/operator-commons/discussions"><img src="https://img.shields.io/github/discussions/keiailab/operator-commons?label=discussions&logo=github" alt="GitHub Discussions"/></a>
+  <a href="https://pkg.go.dev/github.com/keiailab/keiailab-commons"><img src="https://pkg.go.dev/badge/github.com/keiailab/keiailab-commons.svg" alt="Go Reference"/></a>
+  <a href="https://scorecard.dev/viewer/?uri=github.com/keiailab/keiailab-commons"><img src="https://api.scorecard.dev/projects/github.com/keiailab/keiailab-commons/badge" alt="OpenSSF Scorecard"/></a>
+  <a href="https://github.com/keiailab/keiailab-commons/discussions"><img src="https://img.shields.io/github/discussions/keiailab/keiailab-commons?label=discussions&logo=github" alt="GitHub Discussions"/></a>
 </p>
 
 
@@ -35,7 +35,7 @@ Operator 作成者は同じ scaffolding を繰り返し実装します — restr
 PodSecurity context、サポートバージョンマトリクス、default-deny NetworkPolicy、
 ServiceMonitor ビルダー、finalizer ヘルパー、status condition カタログ。
 これらを独立に再実装すると、似た reconciler の間で静かな不整合が生じ、
-マイナーリビジョンを重ねるごとに少しずつ分岐します。`operator-commons` は
+マイナーリビジョンを重ねるごとに少しずつ分岐します。`keiailab-commons` は
 その scaffolding の単一ソースです — ヘルパーを import すれば canonical な
 実装が手に入り、すべてのリポジトリで再発明する必要がなくなります。
 
@@ -67,8 +67,8 @@ v1.0 卒業チェックリストを追跡します。
 
 ```go
 import (
-    "github.com/keiailab/operator-commons/pkg/security"
-    "github.com/keiailab/operator-commons/pkg/version"
+    "github.com/keiailab/keiailab-commons/pkg/security"
+    "github.com/keiailab/keiailab-commons/pkg/version"
     corev1 "k8s.io/api/core/v1"
 )
 
@@ -83,7 +83,7 @@ func buildContainerSecurityContext() *corev1.SecurityContext {
 ```
 
 各パッケージごとの例は `pkg/<name>/doc.go` のパッケージドキュメントにあります
-(`go doc github.com/keiailab/operator-commons/pkg/<name>`)。
+(`go doc github.com/keiailab/keiailab-commons/pkg/<name>`)。
 
 ## バージョニングとリリース
 
@@ -96,8 +96,8 @@ func buildContainerSecurityContext() *corev1.SecurityContext {
 
 ## コミュニティ
 
-- **Discussions**: [GitHub Discussions](https://github.com/keiailab/operator-commons/discussions) — パッケージ API 質問、integration 事例、新 helper 提案。
-- **Issues**: [GitHub Issues](https://github.com/keiailab/operator-commons/issues) — バグおよび具体的な機能要望。
+- **Discussions**: [GitHub Discussions](https://github.com/keiailab/keiailab-commons/discussions) — パッケージ API 質問、integration 事例、新 helper 提案。
+- **Issues**: [GitHub Issues](https://github.com/keiailab/keiailab-commons/issues) — バグおよび具体的な機能要望。
 - **Security**: 非公開報告手順は [SECURITY.md](SECURITY.md) を参照。
 - **Contributing**: 開発ワークフローは [CONTRIBUTING.md](CONTRIBUTING.md) を参照。
 

@@ -1,4 +1,4 @@
-# ROADMAP — operator-commons
+# ROADMAP — keiailab-commons
 
 > [English](ROADMAP.md) | [한국어](ROADMAP.ko.md) | **日本語** | [中文](ROADMAP.zh.md)
 
@@ -55,7 +55,7 @@
 - [x] `go vet ./... && go test ./...` clean (カバレッジ 96.3 % > 85 %
   閾値)。
 - [x] API 安定性の約束文書 — [STABILITY.md](STABILITY.ja.md)。
-- 検証: downstream consumer CI が `operator-commons v1.0.0` に対する
+- 検証: downstream consumer CI が `keiailab-commons v1.0.0` に対する
   全 e2e テストを pass。
 
 ## パッケージ別 follow-up

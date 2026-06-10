@@ -1,10 +1,10 @@
-# Contributing to operator-commons
+# Contributing to keiailab-commons
 
 > [English](CONTRIBUTING.md) | [한국어](CONTRIBUTING.ko.md) | [日本語](CONTRIBUTING.ja.md) | **中文**
 
 > ⚠️ This translation is AI-generated and pending native review.
 
-`keiailab/operator-commons` 是被下游 Kubernetes operators 导入的
+`keiailab/keiailab-commons` 是被下游 Kubernetes operators 导入的
 Go library。所有贡献遵循
 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) 和
 [docs/GOVERNANCE.md](docs/GOVERNANCE.zh.md)。
@@ -35,18 +35,18 @@ Go library。所有贡献遵循
 
 ## 本地开发（与下游 consumer 的跨切关联工作）
 
-当变更同时涉及 `operator-commons` 和下游 operator 时：
+当变更同时涉及 `keiailab-commons` 和下游 operator 时：
 
 ```fish
 # 1. 在 consumer operator 的 go.mod 中添加 replace directive
 #    （仅本地；不要提交它）
 # go.mod 尾部：
-#   replace github.com/keiailab/operator-commons => ../operator-commons
+#   replace github.com/keiailab/keiailab-commons => ../keiailab-commons
 
 # 2. 双方均编辑 + 各自运行 `go test ./...`
 
 # 3. 拆分 PR：
-#    - operator-commons 侧：merge + tag（例如 v0.9.0）
+#    - keiailab-commons 侧：merge + tag（例如 v0.9.0）
 #    - consumer 侧：bump require directive（删除 replace）
 ```
 

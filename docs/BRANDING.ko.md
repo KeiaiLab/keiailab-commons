@@ -1,21 +1,21 @@
-# 브랜드 가이드 — `operator-commons`
+# 브랜드 가이드 — `keiailab-commons`
 
 > [English](BRANDING.md) | **한국어** | [日本語](BRANDING.ja.md) | [中文](BRANDING.zh.md)
 
-> `operator-commons` 라이브러리의 visual identity, voice, tone.
+> `keiailab-commons` 라이브러리의 visual identity, voice, tone.
 
-본 문서는 `operator-commons` 브랜딩 결정의 canonical reference 입니다.
+본 문서는 `keiailab-commons` 브랜딩 결정의 canonical reference 입니다.
 README, release note, 프로젝트에 관한 외부 커뮤니케이션에 적용됩니다.
 
 ## 1. Identity
 
 **Organization**: [keiailab](https://keiailab.com).
 
-**Project**: `operator-commons` — Kubernetes operator 공통 scaffolding
+**Project**: `keiailab-commons` — Kubernetes operator 공통 scaffolding
 (finalizer / labels / status / version / security / monitoring partial) 을
 위한 Go 라이브러리입니다.
 
-본 라이브러리는 Go 모듈 `github.com/keiailab/operator-commons` 와
+본 라이브러리는 Go 모듈 `github.com/keiailab/keiailab-commons` 와
 Helm library chart (`charts/keiailab-commons`) 로 배포됩니다. downstream
 operator 가 표준 Go module import 로 사용합니다 — 특정 consumer 를
 지명하거나 endorsement 하지 않습니다.
@@ -68,7 +68,7 @@ GitHub README shield.io 배지는 같은 hex 값을 사용합니다.
 
 - **Direct** — 가능하면 문단보다 bullet point 를 사용합니다.
 - **Evidence-based** — 모든 claim 은 benchmark, SLA, 또는 link 를 동반합니다.
-- **Library-focused** — `operator-commons` 는 *라이브러리* 입니다.
+- **Library-focused** — `keiailab-commons` 는 *라이브러리* 입니다.
   controller-runtime, CRD, reconciler 는 downstream consumer 의 책임이며
   본 라이브러리의 책임이 아닙니다.
 - **License-aware** — MIT only. charter 목표는 AGPL / BUSL transitive
@@ -91,7 +91,7 @@ GitHub README shield.io 배지는 같은 hex 값을 사용합니다.
   <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
 </p>
 
-# operator-commons
+# keiailab-commons
 
 > **Kubernetes operator 공통 scaffolding 을 위한 Go 라이브러리 — finalizer / labels / status / version / security / monitoring partials.**
 
@@ -132,13 +132,13 @@ README 의 shield.io 배지는 다음 순서 (좌→우):
 4. OpenSSF Scorecard
 5. GitHub Discussions
 
-> **Note**: `operator-commons` 는 *라이브러리* 이므로 container image,
+> **Note**: `keiailab-commons` 는 *라이브러리* 이므로 container image,
 > Helm chart, Kubernetes deployment 배지는 본 라이브러리에 부착하지 않습니다 —
 > 이미지나 chart 를 배포하는 downstream operator README 에 둡니다.
 
 ## 9. Discussions / Issues / PR Template
 
-- **Discussions**: `https://github.com/keiailab/operator-commons/discussions` — 패키지 API 질문, integration 사례, 새 helper 제안.
+- **Discussions**: `https://github.com/keiailab/keiailab-commons/discussions` — 패키지 API 질문, integration 사례, 새 helper 제안.
 - **Issues**: 버그 보고 및 use case 가 있는 구체적 feature request. 관련 시
   downstream consumer 영향을 명시합니다.
 - **PR template**: `.github/PULL_REQUEST_TEMPLATE.md` — Conventional Commits +
@@ -148,7 +148,7 @@ README 의 shield.io 배지는 다음 순서 (좌→우):
 
 - **Website**: <https://keiailab.com>
 - **GitHub Org**: <https://github.com/keiailab>
-- **pkg.go.dev**: <https://pkg.go.dev/github.com/keiailab/operator-commons>
+- **pkg.go.dev**: <https://pkg.go.dev/github.com/keiailab/keiailab-commons>
 
 ## 11. License & Attribution
 

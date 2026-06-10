@@ -1,4 +1,4 @@
-# ROADMAP — operator-commons
+# ROADMAP — keiailab-commons
 
 > **English** | [한국어](ROADMAP.ko.md) | [日本語](ROADMAP.ja.md) | [中文](ROADMAP.zh.md)
 
@@ -56,7 +56,7 @@ the library evolves according to the needs of its downstream consumers.
   threshold).
 - [x] API stability promise document — [STABILITY.md](STABILITY.md).
 - Verify: downstream consumer CI passes all e2e tests against
-  `operator-commons v1.0.0`.
+  `keiailab-commons v1.0.0`.
 
 ## Per-package follow-up
 

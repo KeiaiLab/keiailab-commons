@@ -10,7 +10,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 
-	"github.com/keiailab/operator-commons/pkg/events"
+	"github.com/keiailab/keiailab-commons/pkg/events"
 )
 
 // mockRecorder implements events.Recorder for unit testing.

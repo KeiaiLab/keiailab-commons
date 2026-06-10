@@ -12,10 +12,10 @@ import (
 
 // Sentinel errors returned by ValidateDir.
 var (
-	ErrMissingManifests  = errors.New("bundle: manifests/ directory not found")
-	ErrMissingMetadata   = errors.New("bundle: metadata/ directory not found")
+	ErrMissingManifests   = errors.New("bundle: manifests/ directory not found")
+	ErrMissingMetadata    = errors.New("bundle: metadata/ directory not found")
 	ErrMissingAnnotations = errors.New("bundle: metadata/annotations.yaml not found")
-	ErrNoManifestFiles   = errors.New("bundle: manifests/ contains no .yaml or .yml files")
+	ErrNoManifestFiles    = errors.New("bundle: manifests/ contains no .yaml or .yml files")
 )
 
 // ValidateDir checks that path is a valid OLM operator bundle directory.

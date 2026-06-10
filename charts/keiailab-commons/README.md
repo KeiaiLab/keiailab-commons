@@ -1,6 +1,6 @@
 # keiailab-commons (Helm library chart)
 
-`operator-commons` 의 *Helm library chart*. downstream operator chart 들이
+`keiailab-commons` 의 *Helm library chart*. downstream operator chart 들이
 공통으로 사용할 partial helper 를 제공합니다.
 
 ## 사용

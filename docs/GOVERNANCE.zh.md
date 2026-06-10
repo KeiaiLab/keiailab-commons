@@ -4,7 +4,7 @@
 
 > ⚠️ This translation is AI-generated and pending native review.
 
-本文档定义 `keiailab/operator-commons` 库的
+本文档定义 `keiailab/keiailab-commons` 库的
 决策流程。本库在多个下游 consumer operator 之间
 被共同导入，因此对 *public API* 的变更影响
 下游兼容性。

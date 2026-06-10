@@ -7,7 +7,7 @@
 
 ## Context
 
-operator-commons v0.5.0 의 `pkg/version` 은 단순 `[]string` 화이트리스트
+keiailab-commons v0.5.0 의 `pkg/version` 은 단순 `[]string` 화이트리스트
 (`List` + `MustList` + `IsSupported`) 만 제공. 일부 downstream operator 가
 채택했으나 다른 downstream operator 는 *rich entry* (Major / Image
 / Channel / FeatureGate) 가 필요하여 자체 `internal/version/matrix.go`

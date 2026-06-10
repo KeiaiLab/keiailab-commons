@@ -4,7 +4,7 @@
 
 > ⚠️ This translation is AI-generated and pending native review.
 
-`keiailab/operator-commons` は downstream の Kubernetes operator から
+`keiailab/keiailab-commons` は downstream の Kubernetes operator から
 import されます。本ライブラリの脆弱性は、それらの downstream consumer の
 運用セキュリティに直接影響を与える可能性があります。
 
@@ -17,7 +17,7 @@ import されます。本ライブラリの脆弱性は、それらの downstrea
 以下のいずれかの private チャネルを使用してください:
 
 1. **GitHub Security Advisory** (推奨):
-   `https://github.com/keiailab/operator-commons/security/advisories/new`
+   `https://github.com/keiailab/keiailab-commons/security/advisories/new`
 2. **Email**: `security@keiailab.com` (PGP optional):
    - PGP fingerprint:
      `89A4 0947 6828 CB99 2338  C378 651E 51AF 520B CB78`。
@@ -77,7 +77,7 @@ downstream maintainer と private advisory を共有します。
 2. **`pkg/webhook` を使用** — version validation を再実装しない。
 3. **`pkg/networkpolicy` を使用** — deny-by-default NetworkPolicy
    builder。
-4. `go.mod` 内の `github.com/keiailab/operator-commons` の最新パッチを
+4. `go.mod` 内の `github.com/keiailab/keiailab-commons` の最新パッチを
    追跡 (Renovate 自動 PR)。
 
 ---

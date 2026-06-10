@@ -1,12 +1,12 @@
-# ブランドガイド — `operator-commons`
+# ブランドガイド — `keiailab-commons`
 
 > [English](BRANDING.md) | [한국어](BRANDING.ko.md) | **日本語** | [中文](BRANDING.zh.md)
 
 > ⚠️ This translation is AI-generated and pending native review.
 >
-> `operator-commons` ライブラリの visual identity、voice、tone。
+> `keiailab-commons` ライブラリの visual identity、voice、tone。
 
-本ドキュメントは `operator-commons` ブランディング決定の canonical reference
+本ドキュメントは `keiailab-commons` ブランディング決定の canonical reference
 です。README、リリースノート、プロジェクトに関する外部コミュニケーションに
 適用されます。
 
@@ -14,11 +14,11 @@
 
 **Organization**: [keiailab](https://keiailab.com)。
 
-**Project**: `operator-commons` — Kubernetes operator 共通 scaffolding
+**Project**: `keiailab-commons` — Kubernetes operator 共通 scaffolding
 (finalizer / labels / status / version / security / monitoring partial) の
 ための Go ライブラリです。
 
-本ライブラリは Go モジュール `github.com/keiailab/operator-commons` と
+本ライブラリは Go モジュール `github.com/keiailab/keiailab-commons` と
 Helm library chart (`charts/keiailab-commons`) として公開されています。
 標準 Go モジュール import によって downstream operator が利用しますが、
 特定の consumer を指名・推奨することはありません。
@@ -73,7 +73,7 @@ consumer。
 
 - **Direct** — 可能な限り段落より bullet point。
 - **Evidence-based** — claim は benchmark、SLA、link を伴います。
-- **Library-focused** — `operator-commons` は *ライブラリ* です。
+- **Library-focused** — `keiailab-commons` は *ライブラリ* です。
   controller-runtime、CRD、reconciler は downstream consumer の責任であり、
   本ライブラリの責任ではありません。
 - **License-aware** — MIT only。charter の目標は AGPL / BUSL
@@ -96,7 +96,7 @@ consumer。
   <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
 </p>
 
-# operator-commons
+# keiailab-commons
 
 > **Kubernetes operator 共通 scaffolding のための Go ライブラリ — finalizer / labels / status / version / security / monitoring partials.**
 
@@ -137,13 +137,13 @@ README の shield.io バッジは次の順序 (左→右):
 4. OpenSSF Scorecard
 5. GitHub Discussions
 
-> **Note**: `operator-commons` は *ライブラリ* なので、container image、
+> **Note**: `keiailab-commons` は *ライブラリ* なので、container image、
 > Helm chart、Kubernetes deployment バッジは本ライブラリに付けません —
 > イメージや chart を出荷する downstream operator の README に置きます。
 
 ## 9. Discussions / Issues / PR Template
 
-- **Discussions**: `https://github.com/keiailab/operator-commons/discussions` — パッケージ API 質問、integration 事例、新 helper 提案。
+- **Discussions**: `https://github.com/keiailab/keiailab-commons/discussions` — パッケージ API 質問、integration 事例、新 helper 提案。
 - **Issues**: バグ報告および use case ありの具体的 feature request。関連時に downstream consumer 影響を明示。
 - **PR template**: `.github/PULL_REQUEST_TEMPLATE.md` — Conventional Commits + ユーザーシナリオ + 検証コマンド出力引用。
 
@@ -151,7 +151,7 @@ README の shield.io バッジは次の順序 (左→右):
 
 - **Website**: <https://keiailab.com>
 - **GitHub Org**: <https://github.com/keiailab>
-- **pkg.go.dev**: <https://pkg.go.dev/github.com/keiailab/operator-commons>
+- **pkg.go.dev**: <https://pkg.go.dev/github.com/keiailab/keiailab-commons>
 
 ## 11. License and Attribution
 

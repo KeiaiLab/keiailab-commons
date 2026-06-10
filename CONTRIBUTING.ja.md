@@ -1,10 +1,10 @@
-# Contributing to operator-commons
+# Contributing to keiailab-commons
 
 > [English](CONTRIBUTING.md) | [한국어](CONTRIBUTING.ko.md) | **日本語** | [中文](CONTRIBUTING.zh.md)
 
 > ⚠️ This translation is AI-generated and pending native review.
 
-`keiailab/operator-commons` は downstream の Kubernetes operator から
+`keiailab/keiailab-commons` は downstream の Kubernetes operator から
 import される Go ライブラリです。すべての貢献は
 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) および
 [docs/GOVERNANCE.md](docs/GOVERNANCE.ja.md) に従います。
@@ -37,18 +37,18 @@ import される Go ライブラリです。すべての貢献は
 
 ## ローカル開発 (downstream consumer と横断する作業)
 
-`operator-commons` と downstream operator を同時に変更する場合:
+`keiailab-commons` と downstream operator を同時に変更する場合:
 
 ```fish
 # 1. consumer operator の go.mod に replace directive を追加
 #    (local only。commit しないこと)
 # go.mod 末尾:
-#   replace github.com/keiailab/operator-commons => ../operator-commons
+#   replace github.com/keiailab/keiailab-commons => ../keiailab-commons
 
 # 2. 両側を編集 + 各々で `go test ./...` を実行
 
 # 3. PR を分割:
-#    - operator-commons 側: merge + tag (例: v0.9.0)
+#    - keiailab-commons 側: merge + tag (例: v0.9.0)
 #    - consumer 側: require directive を bump (replace 削除)
 ```
 

@@ -7,7 +7,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/keiailab/operator-commons/pkg/finalizer"
+	"github.com/keiailab/keiailab-commons/pkg/finalizer"
 )
 
 // fakeObj — metav1.Object 인터페이스 minimal 구현 (테스트 헬퍼).

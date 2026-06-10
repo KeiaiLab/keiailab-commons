@@ -4,7 +4,7 @@
 
 > ⚠️ This translation is AI-generated and pending native review.
 
-本文档记录对 `keiailab/operator-commons` 拥有
+本文档记录对 `keiailab/keiailab-commons` 拥有
 决策权限的 maintainer。
 
 ## 当前 maintainer

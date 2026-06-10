@@ -1,10 +1,10 @@
-# ADR Index — operator-commons
+# ADR Index — keiailab-commons
 
 > **English** | [한국어](INDEX.ko.md) | [日本語](INDEX.ja.md) | [中文](INDEX.zh.md)
 
 | ID | Title | Status | Date |
 |----|-------|--------|------|
-| [0001](0001-charter.md) | operator-commons charter | Accepted | 2026-05-07 |
+| [0001](0001-charter.md) | keiailab-commons charter | Accepted | 2026-05-07 |
 | [0002](0002-tooling-unification-adoption.md) | Tooling unification — `.golangci.yml` + `Makefile` introduction | Accepted | 2026-05-09 |
 | [0003](0003-pkg-status-finalizer-adoption.md) | `pkg/status` sugar (`SetAvailable` + `SetReadyFalse`) addition | Accepted | 2026-05-09 |
 | [0004](0004-pkg-version-generic-matrix.md) | `pkg/version` generic `Matrix[E]` introduction | Accepted | 2026-05-09 |
@@ -18,6 +18,7 @@
 | [0015](0015-lefthook-augmentation.md) | lefthook augmentation — `go-licenses` + `markdown-link-check` | Accepted | 2026-05-21 |
 | [0016](0016-pvc-topology-extraction.md) | `pkg/pvc` + `pkg/topology` introduction (downstream dedup) | Accepted | 2026-05-21 |
 | [0017](0017-olm-v1-bundle-package.md) | `pkg/bundle` — OLM v1 bundle metadata helpers | Accepted | 2026-05-26 |
+| [0018](0018-keiailab-commons-rename.md) | `keiailab-commons` repository and module rename | Accepted | 2026-06-11 |
 
 ## Conventions
 

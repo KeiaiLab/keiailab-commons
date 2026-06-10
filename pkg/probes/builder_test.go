@@ -9,7 +9,7 @@ import (
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 
-	"github.com/keiailab/operator-commons/pkg/probes"
+	"github.com/keiailab/keiailab-commons/pkg/probes"
 )
 
 func TestNew_appliesKubeletDefaults(t *testing.T) {

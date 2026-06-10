@@ -2,7 +2,7 @@
   <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
 </p>
 
-# operator-commons
+# keiailab-commons
 
 > **用于 Kubernetes operator 通用 scaffolding 的 Go 共享库 — finalizer / labels / status / version / security / monitoring partials.**
 >
@@ -11,9 +11,9 @@
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
   <a href="https://golang.org/"><img src="https://img.shields.io/badge/Go-1.26+-00ADD8?logo=go" alt="Go Version"/></a>
-  <a href="https://pkg.go.dev/github.com/keiailab/operator-commons"><img src="https://pkg.go.dev/badge/github.com/keiailab/operator-commons.svg" alt="Go Reference"/></a>
-  <a href="https://scorecard.dev/viewer/?uri=github.com/keiailab/operator-commons"><img src="https://api.scorecard.dev/projects/github.com/keiailab/operator-commons/badge" alt="OpenSSF Scorecard"/></a>
-  <a href="https://github.com/keiailab/operator-commons/discussions"><img src="https://img.shields.io/github/discussions/keiailab/operator-commons?label=discussions&logo=github" alt="GitHub Discussions"/></a>
+  <a href="https://pkg.go.dev/github.com/keiailab/keiailab-commons"><img src="https://pkg.go.dev/badge/github.com/keiailab/keiailab-commons.svg" alt="Go Reference"/></a>
+  <a href="https://scorecard.dev/viewer/?uri=github.com/keiailab/keiailab-commons"><img src="https://api.scorecard.dev/projects/github.com/keiailab/keiailab-commons/badge" alt="OpenSSF Scorecard"/></a>
+  <a href="https://github.com/keiailab/keiailab-commons/discussions"><img src="https://img.shields.io/github/discussions/keiailab/keiailab-commons?label=discussions&logo=github" alt="GitHub Discussions"/></a>
 </p>
 
 
@@ -33,7 +33,7 @@ partial,封装在一个小而稳定的 API 表面之后。
 Operator 作者反复实现相同的 scaffolding —— restricted PodSecurity context、
 支持版本矩阵、default-deny NetworkPolicy、ServiceMonitor 构建器、finalizer
 帮助函数、status condition 目录。各自独立重新实现会在相似 reconciler 之间产生
-隐性不一致,并随着 minor 修订逐渐分叉。`operator-commons` 是该 scaffolding 的
+隐性不一致,并随着 minor 修订逐渐分叉。`keiailab-commons` 是该 scaffolding 的
 单一来源 —— 导入帮助函数,获得 canonical 实现,无需在每个仓库重新发明。
 
 ## 包
@@ -63,8 +63,8 @@ Operator 作者反复实现相同的 scaffolding —— restricted PodSecurity c
 
 ```go
 import (
-    "github.com/keiailab/operator-commons/pkg/security"
-    "github.com/keiailab/operator-commons/pkg/version"
+    "github.com/keiailab/keiailab-commons/pkg/security"
+    "github.com/keiailab/keiailab-commons/pkg/version"
     corev1 "k8s.io/api/core/v1"
 )
 
@@ -79,7 +79,7 @@ func buildContainerSecurityContext() *corev1.SecurityContext {
 ```
 
 每个包的示例位于对应的 `pkg/<name>/doc.go` 包文档中
-(`go doc github.com/keiailab/operator-commons/pkg/<name>`)。
+(`go doc github.com/keiailab/keiailab-commons/pkg/<name>`)。
 
 ## 版本与发布
 
@@ -91,8 +91,8 @@ func buildContainerSecurityContext() *corev1.SecurityContext {
 
 ## 社区
 
-- **Discussions**: [GitHub Discussions](https://github.com/keiailab/operator-commons/discussions) — 包 API 提问、integration 案例、新 helper 提案。
-- **Issues**: [GitHub Issues](https://github.com/keiailab/operator-commons/issues) — bug 与具体特性请求。
+- **Discussions**: [GitHub Discussions](https://github.com/keiailab/keiailab-commons/discussions) — 包 API 提问、integration 案例、新 helper 提案。
+- **Issues**: [GitHub Issues](https://github.com/keiailab/keiailab-commons/issues) — bug 与具体特性请求。
 - **Security**: 私密上报流程见 [SECURITY.md](SECURITY.md)。
 - **Contributing**: 开发流程见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 

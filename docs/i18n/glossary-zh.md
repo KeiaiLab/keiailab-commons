@@ -2,7 +2,7 @@
 
 > [English](../../README.md) | [한국어](glossary-ko.md) | [日本語](glossary-ja.md) | **中文**
 >
-> 本术语表是 keiailab operator family 4 个仓库 (operator-commons + downstream operator + downstream operator + downstream operator) 的中文翻译时*必须参考*的标准术语表。简体中文 (中国大陆) 表记。
+> 本术语表是 keiailab operator family 4 个仓库 (keiailab-commons + downstream operator + downstream operator + downstream operator) 的中文翻译时*必须参考*的标准术语表。简体中文 (中国大陆) 表记。
 >
 > ⚠️ **This translation is AI-generated and pending native review.** — 由 Claude 机器翻译生成。母语审阅者 (native reviewer) 质量验证后升级到 `[x]` 完成状态。本文件所有条目按 `[검토 필요]` (待校验) 状态处理。
 
@@ -10,7 +10,7 @@
 
 1. **代码标识符保持英文** — 例: `MyResource`, `kubectl`, `Helm`, `pkg/probes`. 禁止中文翻译。
 2. **标准 K8s 术语 = 英文优先 + 中文附注** — 例: `Pod (容器组)`, `Deployment (部署)`. 首次出现时英文 + 括号中文,后续可单独使用中文。
-3. **operator-commons API 名称保持英文** — 例: `Reconciler`, `Finalizer`, `EventRecorder`. 可附中文注释 (`Finalizer (终结器)`)。
+3. **keiailab-commons API 名称保持英文** — 例: `Reconciler`, `Finalizer`, `EventRecorder`. 可附中文注释 (`Finalizer (终结器)`)。
 4. **外部用户可见文档 (README/CONTRIBUTING/SECURITY 等)** = 书面语体. 内部文档 (HANDOFF/AGENTS 等) = 口语体可。
 5. **简体中文 GB 标准** — 技术用语优先选用 GB 标准译法,1 个文档内保持一致性。
 
@@ -71,7 +71,7 @@
 | InitContainer | 初始化容器 (InitContainer) |
 | Sidecar Container | 边车容器 |
 
-## §3 operator-commons 库术语
+## §3 keiailab-commons 库术语
 
 | English (canonical) | 中文 |
 |---|---|
@@ -188,7 +188,7 @@
 | English (canonical) | 中文 |
 |---|---|
 | keiailab operator family | keiailab 操作器家族 |
-| operator-commons | operator-commons (英文为主 — Go 模块名) |
+| keiailab-commons | keiailab-commons (英文为主 — Go 模块名) |
 | supercycle | 超级周期 (supercycle) — 用户命名原本 |
 | Wave (Wave 0 ~ Wave 5) | Wave (英文为主) |
 | Phase | 阶段 (Phase) |

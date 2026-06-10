@@ -8,7 +8,7 @@
 
 1. **코드 식별자는 영문 그대로** — 예: `MyResource`, `kubectl`, `Helm`, `pkg/probes`. 한글 번역 금지.
 2. **표준 K8s 용어는 영문 우선 + 한국어 부기** — 예: `Pod (파드)`, `Deployment (디플로이먼트)`. 본문 첫 등장 시 영문 + 괄호 한국어, 이후 한국어 단독 허용.
-3. **operator-commons API 명칭은 영문 그대로** — 예: `Reconciler`, `Finalizer`, `EventRecorder`. 한국어 부기 가능 (`Finalizer (파이널라이저)`).
+3. **keiailab-commons API 명칭은 영문 그대로** — 예: `Reconciler`, `Finalizer`, `EventRecorder`. 한국어 부기 가능 (`Finalizer (파이널라이저)`).
 4. **외부 사용자 가시 문서 (README/CONTRIBUTING/SECURITY 등)** = 격식체 (`-습니다`, `-입니다`). 내부 문서 (HANDOFF/AGENTS 등) = 평어 또는 자유.
 5. **존댓말 평어 혼용 금지** — 한 문서 안 일관.
 
@@ -69,7 +69,7 @@
 | InitContainer | 초기화 컨테이너 (InitContainer) |
 | Sidecar Container | 사이드카 컨테이너 |
 
-## §3 operator-commons 라이브러리 용어
+## §3 keiailab-commons 라이브러리 용어
 
 | English (canonical) | 한국어 |
 |---|---|
@@ -186,7 +186,7 @@
 | English (canonical) | 한국어 |
 |---|---|
 | keiailab operator family | keiailab 오퍼레이터 패밀리 |
-| operator-commons | operator-commons (영문 그대로 — Go module 명) |
+| keiailab-commons | keiailab-commons (영문 그대로 — Go module 명) |
 | supercycle | 슈퍼사이클 (supercycle) — 사용자 명명 진본 |
 | Wave (Wave 0 ~ Wave 5) | Wave (영문 그대로) |
 | Phase | 페이즈 (Phase) |

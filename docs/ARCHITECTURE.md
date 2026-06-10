@@ -1,6 +1,6 @@
-# ARCHITECTURE — operator-commons
+# ARCHITECTURE — keiailab-commons
 
-> Single-page architecture description for the `operator-commons` shared
+> Single-page architecture description for the `keiailab-commons` shared
 > library. Updated when the package surface, tier, or design invariants
 > change.
 
@@ -15,7 +15,7 @@
 - **Stability tier**: v0.x (API may break). v1.0+ SemVer-stable per
   [ROADMAP.md](ROADMAP.md) graduation criteria.
 - **License**: MIT.
-- **Module path**: `github.com/keiailab/operator-commons`.
+- **Module path**: `github.com/keiailab/keiailab-commons`.
 
 ## Package surface
 
@@ -44,7 +44,7 @@ This keeps the library usable by any operator framework, including plain
 
 ## No CRDs, no reconciler
 
-`operator-commons` is a **library**, not a controller. It deliberately
+`keiailab-commons` is a **library**, not a controller. It deliberately
 does not provide:
 
 - CRD definitions.
@@ -53,7 +53,7 @@ does not provide:
 - An admission webhook server (only validation helpers).
 - An ArgoCD application or similar deployment artifact.
 
-Downstream consumers own those concerns. `operator-commons` provides the
+Downstream consumers own those concerns. `keiailab-commons` provides the
 building blocks they assemble.
 
 ## ADR index

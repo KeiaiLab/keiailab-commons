@@ -1,9 +1,9 @@
-# Upgrading operator-commons
+# Upgrading keiailab-commons
 
 > **English** | [한국어](UPGRADING.ko.md) | [日本語](UPGRADING.ja.md) | [中文](UPGRADING.zh.md)
 
 This document collects the migration steps needed when bumping a minor
-or major version of the `github.com/keiailab/operator-commons` Go
+or major version of the `github.com/keiailab/keiailab-commons` Go
 module. It is the common entry point for downstream consumers.
 
 ## 0. Version policy (SemVer)
@@ -50,7 +50,7 @@ name so existing clusters do not see an API breaking change.
 ### Go module consumers
 
 ```bash
-go get github.com/keiailab/operator-commons@v0.8.0
+go get github.com/keiailab/keiailab-commons@v0.8.0
 go mod tidy
 ```
 
@@ -71,8 +71,8 @@ Add the imports in your downstream operator:
 
 ```go
 import (
-    "github.com/keiailab/operator-commons/pkg/pvc"
-    "github.com/keiailab/operator-commons/pkg/topology"
+    "github.com/keiailab/keiailab-commons/pkg/pvc"
+    "github.com/keiailab/keiailab-commons/pkg/topology"
 )
 ```
 
@@ -90,7 +90,7 @@ import (
 
 ```bash
 # 1. bump the dependency
-go get github.com/keiailab/operator-commons@v0.9.0
+go get github.com/keiailab/keiailab-commons@v0.9.0
 go mod tidy
 
 # 2. verify
@@ -105,6 +105,24 @@ kubectl get <CR> -A  # observe reconciliation
 
 ## 3. v0.9.x → v0.10.x
 
+### Repository and module rename
+
+Starting with `v0.10.0`, the Go module path is:
+
+```bash
+github.com/keiailab/keiailab-commons
+```
+
+Update downstream imports and dependency pins:
+
+```bash
+go get github.com/keiailab/keiailab-commons@v0.10.0
+go mod tidy
+```
+
+Old `v0.9.x` tags declare `github.com/keiailab/operator-commons`, so they
+cannot be consumed through the new module path.
+
 ### New packages (minor bump)
 
 | Package | Purpose | Tier |
@@ -117,7 +135,7 @@ Add the import in your downstream operator:
 
 ```go
 import (
-    "github.com/keiailab/operator-commons/pkg/bundle"
+    "github.com/keiailab/keiailab-commons/pkg/bundle"
 )
 ```
 
@@ -130,7 +148,7 @@ import (
 
 ```bash
 # 1. bump the dependency
-go get github.com/keiailab/operator-commons@v0.10.0
+go get github.com/keiailab/keiailab-commons@v0.10.0
 go mod tidy
 
 # 2. verify

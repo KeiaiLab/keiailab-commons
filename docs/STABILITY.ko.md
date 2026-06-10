@@ -4,11 +4,11 @@
 
 > ⚠️ This translation is AI-generated and pending native review. — 본 번역은 Claude 기계 번역 결과입니다. 모국어 검토자의 검수 전까지 `[검토 필요]` 상태입니다.
 
-> operator-commons 의 API 안정성 등급과 breaking-change 정책.
+> keiailab-commons 의 API 안정성 등급과 breaking-change 정책.
 
 ## 등급 (Tier)
 
-operator-commons 는 3-tier 안정성을 사용합니다:
+keiailab-commons 는 3-tier 안정성을 사용합니다:
 
 | Tier | 호환성 | Breaking change 정책 |
 |---|---|---|

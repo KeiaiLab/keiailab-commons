@@ -1,8 +1,8 @@
-# Contributing to operator-commons
+# Contributing to keiailab-commons
 
 > **English** | [한국어](CONTRIBUTING.ko.md) | [日本語](CONTRIBUTING.ja.md) | [中文](CONTRIBUTING.zh.md)
 
-`keiailab/operator-commons` is a Go library imported by downstream
+`keiailab/keiailab-commons` is a Go library imported by downstream
 Kubernetes operators. All contributions follow
 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) and
 [docs/GOVERNANCE.md](docs/GOVERNANCE.md).
@@ -36,18 +36,18 @@ Kubernetes operators. All contributions follow
 
 ## Local development (cross-cut work with a downstream consumer)
 
-When a change touches both `operator-commons` and a downstream operator:
+When a change touches both `keiailab-commons` and a downstream operator:
 
 ```fish
 # 1. add a replace directive in the consumer operator's go.mod
 #    (local-only; do not commit it)
 # go.mod tail:
-#   replace github.com/keiailab/operator-commons => ../operator-commons
+#   replace github.com/keiailab/keiailab-commons => ../keiailab-commons
 
 # 2. edit both sides + run `go test ./...` on each
 
 # 3. split the PRs:
-#    - operator-commons side: merge + tag (e.g. v0.9.0)
+#    - keiailab-commons side: merge + tag (e.g. v0.9.0)
 #    - consumer side: bump the require directive (remove replace)
 ```
 

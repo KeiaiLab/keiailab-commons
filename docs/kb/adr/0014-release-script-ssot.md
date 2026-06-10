@@ -1,4 +1,4 @@
-# ADR-0014: operator-commons release.sh — 라이브러리 수동 release pipeline
+# ADR-0014: keiailab-commons release.sh — 라이브러리 수동 release pipeline
 
 | Meta | Value |
 |---|---|
@@ -10,11 +10,11 @@
 
 ## Context
 
-audit P2/OP 의 OP-1 (release.sh script) 가 operator-commons 에서 ❌. 다른 4 repo:
+audit P2/OP 의 OP-1 (release.sh script) 가 keiailab-commons 에서 ❌. 다른 4 repo:
 - downstream operators: 본 ADR 시점 ✅ (이미 보유)
 - downstream component: ❌ (Python 패키지, 별 release 양식)
 
-operator-commons 는 *Go module 라이브러리* + *Helm library chart* 의 dual deliverable:
+keiailab-commons 는 *Go module 라이브러리* + *Helm library chart* 의 dual deliverable:
 - Go module: tag (`vX.Y.Z`) 만으로 release (`go get` 자동)
 - Helm library chart: `charts/keiailab-commons/Chart.yaml` 의 version + 별 package + publish
 

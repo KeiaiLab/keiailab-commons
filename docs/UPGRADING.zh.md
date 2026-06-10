@@ -1,10 +1,10 @@
-# Upgrading operator-commons
+# Upgrading keiailab-commons
 
 > [English](UPGRADING.md) | [한국어](UPGRADING.ko.md) | [日本語](UPGRADING.ja.md) | **中文**
 
 > ⚠️ This translation is AI-generated and pending native review.
 
-本文档汇总在 bump `github.com/keiailab/operator-commons` Go
+本文档汇总在 bump `github.com/keiailab/keiailab-commons` Go
 module 的 minor 或 major 版本时所需的迁移步骤。它是
 下游 consumer 的通用入口点。
 
@@ -38,7 +38,7 @@ helm template <your-operator> charts/<your-operator>
 ### Go module consumer
 
 ```bash
-go get github.com/keiailab/operator-commons@v0.8.0
+go get github.com/keiailab/keiailab-commons@v0.8.0
 go mod tidy
 ```
 
@@ -59,8 +59,8 @@ go mod tidy
 
 ```go
 import (
-    "github.com/keiailab/operator-commons/pkg/pvc"
-    "github.com/keiailab/operator-commons/pkg/topology"
+    "github.com/keiailab/keiailab-commons/pkg/pvc"
+    "github.com/keiailab/keiailab-commons/pkg/topology"
 )
 ```
 
@@ -78,7 +78,7 @@ import (
 
 ```bash
 # 1. bump 依赖
-go get github.com/keiailab/operator-commons@v0.9.0
+go get github.com/keiailab/keiailab-commons@v0.9.0
 go mod tidy
 
 # 2. 验证
@@ -91,7 +91,27 @@ kubectl apply -f config/samples/
 kubectl get <CR> -A  # 观察 reconciliation
 ```
 
-## 3. v0.9.x → v1.0.0
+## 3. v0.9.x → v0.10.x
+
+### Repository / module rename
+
+从 `v0.10.0` 开始，Go module path 使用：
+
+```bash
+github.com/keiailab/keiailab-commons
+```
+
+下游 operator 需要同时更新 import path 和 dependency pin：
+
+```bash
+go get github.com/keiailab/keiailab-commons@v0.10.0
+go mod tidy
+```
+
+既有 `v0.9.x` tag 声明的是 `github.com/keiailab/operator-commons`
+module path，因此不能通过新的 module path 消费。
+
+## 4. v0.9.x → v1.0.0
 
 当满足 v1.0.0 graduation 标准（参见
 [STABILITY.md](STABILITY.zh.md) "v1.0.0 graduation"）时推进：
@@ -100,7 +120,7 @@ kubectl get <CR> -A  # 观察 reconciliation
 - v0.x → v1.0 是 *naming* 变更 — 语义不变（无
   breaking change）。
 
-## 4. 通用迁移检查清单
+## 5. 通用迁移检查清单
 
 升级前：
 
@@ -115,7 +135,7 @@ kubectl get <CR> -A  # 观察 reconciliation
 - [ ] e2e 通过。
 - [ ] Helm chart `charts/<operator>` `dependencies:` 更新。
 
-## 5. Breaking-change 通知政策
+## 6. Breaking-change 通知政策
 
 - **Deprecation**：在新 minor 中添加 `// Deprecated:` 注释；两个
   minor 之后移除。

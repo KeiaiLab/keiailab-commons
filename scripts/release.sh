@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# operator-commons 수동 release 스크립트.
+# keiailab-commons 수동 release 스크립트.
 #
 # 사용:
 #   bash scripts/release.sh v0.8.0
@@ -105,7 +105,7 @@ echo "   → $CHART_PKG"
 echo "🏷️  Creating tag $VERSION..."
 git tag -a "$VERSION" -m "Release $VERSION
 
-operator-commons $VERSION
+keiailab-commons $VERSION
 
 See CHANGELOG.md for details.
 "
@@ -137,7 +137,7 @@ fi
 echo "✅ Release $VERSION complete."
 echo ""
 echo "다음 단계:"
-echo "  1. downstream operator 의 go.mod 에 operator-commons $VERSION 채택"
+echo "  1. downstream operator 의 go.mod 에 keiailab-commons $VERSION 채택"
 echo "  2. UPGRADING.md 의 v$VERSION_NUMERIC 섹션 검토"
 echo "  3. pkg/* 추출 패키지 변경 시 deprecation 경로 확인"
 

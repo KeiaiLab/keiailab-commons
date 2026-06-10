@@ -1,4 +1,4 @@
-# ROADMAP — operator-commons
+# ROADMAP — keiailab-commons
 
 > [English](ROADMAP.md) | [한국어](ROADMAP.ko.md) | [日本語](ROADMAP.ja.md) | **中文**
 
@@ -56,7 +56,7 @@ follow-up items*。本项目不维护基于时间的截止日期 —
   阈值）。
 - [x] API stability 承诺文档 — [STABILITY.md](STABILITY.zh.md)。
 - Verify：下游 consumer CI 通过针对
-  `operator-commons v1.0.0` 的所有 e2e 测试。
+  `keiailab-commons v1.0.0` 的所有 e2e 测试。
 
 ## Per-package follow-up
 
