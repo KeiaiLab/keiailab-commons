@@ -16,6 +16,7 @@ Provided helpers:
   - keiailab.rbac.serviceAccount              — ServiceAccount               (_rbac.tpl)
   - keiailab.rbac.controllerBase              — controller ClusterRole/Binding (_rbac.tpl)
   - keiailab.rbac.workloadBase                — workload Role/Binding         (_rbac.tpl)
+  - keiailab.secrets.externalSecret           — ExternalSecret                (_externalsecret.tpl)
 */}}
 
 

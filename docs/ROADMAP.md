@@ -33,6 +33,7 @@ the library evolves according to the needs of its downstream consumers.
 | `pkg/webhook` | **Experimental** | Multi-downstream adoption + stabilization. |
 | `pkg/probes` | **Experimental** | 2+ downstream adoption → Beta. |
 | `pkg/bundle` | **Experimental** | 2+ downstream adoption → Beta. |
+| Helm `keiailab.secrets.externalSecret` | Beta | Downstream Valkey/MongoDB/PostgreSQL chart render equivalence. |
 
 **Tier semantics**:
 
@@ -109,6 +110,15 @@ the library evolves according to the needs of its downstream consumers.
 - [ ] Downstream equivalence e2e — same input → same manifest output.
 - [ ] **Tier promotion** → Stable.
 - Verify: `monitoring_test.go` golden file diff = 0.
+
+### Helm secrets partials (Beta)
+
+- [x] `keiailab.secrets.externalSecret` raw YAML helper — ESO/Infisical
+  materialization without CRD vendoring.
+- [ ] Downstream render equivalence across Valkey, MongoDB, and
+  PostgreSQL operator charts.
+- Verify: `helm template` with `externalSecrets.enabled=true` renders
+  `external-secrets.io/v1` only when the consumer explicitly opts in.
 
 ### pkg/networkpolicy (Beta)
 

@@ -10,7 +10,7 @@ consumer chart 의 `Chart.yaml` 에 의존성 추가:
 ```yaml
 dependencies:
   - name: keiailab-commons
-    version: ~0.4.0
+    version: ~0.8.0
     repository: oci://ghcr.io/keiailab/charts
 ```
 
@@ -35,6 +35,21 @@ metadata:
 | `keiailab.rbac.workloadBase` | managed workload (StatefulSet / Deployment + Service / ConfigMap / Secret / PVC / Pod) | v0.3.0 |
 | `keiailab.security.podSecurityContext` | PSS Restricted Pod SecurityContext (`runAsNonRoot` + `seccompProfile`) | v0.4.0 |
 | `keiailab.security.containerSecurityContext` | PSS Restricted Container SecurityContext (`capabilities.drop=ALL` + `readOnlyRootFilesystem`) | v0.4.0 |
+| `keiailab.secrets.externalSecret` | External Secrets Operator `ExternalSecret` 공통 spec (Infisical / SecretStore / ClusterSecretStore) | v0.8.0 |
+
+## ExternalSecret 예시
+
+```yaml
+{{ include "keiailab.secrets.externalSecret" (dict
+    "ctx" .
+    "name" "app-admin"
+    "labels" (include "my-operator.labels" .)
+    "secretStoreName" .Values.externalSecrets.clusterSecretStore
+    "targetName" "app-admin"
+    "data" (list (dict
+      "secretKey" "password"
+      "remoteKey" "/data/app/admin/password")) ) }}
+```
 
 ## License
 

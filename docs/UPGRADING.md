@@ -30,8 +30,22 @@ helm dep update charts/<your-operator>
 helm template <your-operator> charts/<your-operator>
 ```
 
-The `keiailab-commons` chart v0.8.0 partials (`_servicemonitor.tpl`,
-`_rbac.tpl`, `_networkpolicy.tpl`) require no additional work.
+The `keiailab-commons` chart v0.8.0 adds
+`keiailab.secrets.externalSecret`. It is opt-in and does not render
+unless the downstream chart calls the helper.
+
+Recommended values shape for downstream charts:
+
+```yaml
+externalSecrets:
+  enabled: false
+  clusterSecretStore: infisical
+  refreshInterval: 1h
+```
+
+Use the helper only for generated `ExternalSecret` resources. Workload
+CRDs should continue to reference the materialized Kubernetes `Secret`
+name so existing clusters do not see an API breaking change.
 
 ### Go module consumers
 
