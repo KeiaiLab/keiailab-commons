@@ -1,12 +1,26 @@
+<p align="center">
+  <a href="https://keiailab.com">
+    <img src="docs/branding/symbol.png" alt="keiailab" width="96"/>
+  </a>
+</p>
+
 # keiailab-commons
 
-> Shared Go helpers for Kubernetes operator scaffolding — finalizers, recommended labels, status conditions, supported-version allowlists, restricted PodSecurity contexts, NetworkPolicies, ServiceMonitor builders, and a Helm library chart.
+> **Keiailab operator foundation** — shared Go helpers for Kubernetes operator scaffolding, labels, status, security, monitoring, and Helm partials.
 
-**English** | [한국어](README.ko.md) | [日本語](README.ja.md) | [中文](README.zh.md)
+<p align="center">
+  <b>English</b> |
+  <a href="README.ko.md">한국어</a> |
+  <a href="README.ja.md">日本語</a> |
+  <a href="README.zh.md">中文</a>
+</p>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Go](https://img.shields.io/badge/Go-1.26+-00ADD8?logo=go)](https://golang.org/)
-[![Go Reference](https://pkg.go.dev/badge/github.com/keiailab/keiailab-commons.svg)](https://pkg.go.dev/github.com/keiailab/keiailab-commons)
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-0EA5A8.svg" alt="License: MIT"/></a>
+  <a href="https://golang.org/"><img src="https://img.shields.io/badge/Go-1.26%2B-00ADD8?logo=go&logoColor=white" alt="Go 1.26+"/></a>
+  <a href="https://pkg.go.dev/github.com/keiailab/keiailab-commons"><img src="https://pkg.go.dev/badge/github.com/keiailab/keiailab-commons.svg" alt="Go Reference"/></a>
+  <a href="https://github.com/keiailab/keiailab-commons/discussions"><img src="https://img.shields.io/github/discussions/keiailab/keiailab-commons?label=discussions&logo=github" alt="GitHub Discussions"/></a>
+</p>
 
 Operator authors repeatedly re-implement the same scaffolding: restricted
 PodSecurity contexts, supported-version matrices, default-deny NetworkPolicies,

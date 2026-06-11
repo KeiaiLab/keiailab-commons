@@ -24,11 +24,11 @@ operator 가 표준 Go module import 로 사용합니다 — 특정 consumer 를
 
 | 자산 | URL | 사용처 |
 |---|---|---|
-| Primary 로고 (SVG) | `https://keiailab.com/assets/logo.svg` | README header, 슬라이드 |
-| Mono mark | `https://keiailab.com/assets/mark.svg` | Favicon, social card |
-| Wordmark | `https://keiailab.com/assets/wordmark.svg` | Footer, dark background |
+| Current primary logo | `docs/branding/symbol.png` | README header, slide decks |
+| Current favicon | `https://keiailab.com/favicon.ico` | Favicon, social cards |
+| Planned SVG kit | `https://keiailab.com/assets/{logo,mark,wordmark}.svg` | Future replacement after URLs return 200 |
 
-**로고 배치**: README 상단 중앙, width 120 px. 항상 `https://keiailab.com` 으로 링크.
+**로고 배치**: README 상단 중앙, width 96 px. 항상 `https://keiailab.com` 으로 링크.
 
 **Clear space**: 로고 주위 최소 padding 은 로고 width 의 25 % 입니다.
 
@@ -88,7 +88,7 @@ GitHub README shield.io 배지는 같은 hex 값을 사용합니다.
 
 ```markdown
 <p align="center">
-  <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
+  <img src="docs/branding/symbol.png" alt="keiailab" width="96"/>
 </p>
 
 # keiailab-commons
@@ -96,7 +96,7 @@ GitHub README shield.io 배지는 같은 hex 값을 사용합니다.
 > **Kubernetes operator 공통 scaffolding 을 위한 Go 라이브러리 — finalizer / labels / status / version / security / monitoring partials.**
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-0EA5A8.svg" alt="License"/></a>
   <!-- 추가 shield.io 배지 -->
 </p>
 
