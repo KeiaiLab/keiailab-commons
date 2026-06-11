@@ -24,12 +24,22 @@ keiailab-commons 使用 3-tier 稳定性:
 |---|---|---|
 | `pkg/finalizer` | Stable | (v1 entry — 无需追加工作) |
 | `pkg/labels` | Stable | (v1 entry) |
-| `pkg/status` | Stable | (v1 entry) |
+| `pkg/status` | Stable | (v1 entry) — `update.go` (`UpdateWithRetry`) 为 Stable 包内的 Beta 表面 |
+| `pkg/storageclass` | Stable | trivial validation surface (regex + nil 检查) |
 | `pkg/version` | Beta | Generic `Matrix[E]` downstream verify |
 | `pkg/monitoring` | Beta | ServiceMonitor downstream e2e |
 | `pkg/networkpolicy` | Beta | 4-direction TCP/UDP verify |
 | `pkg/security` | Beta | restricted PSA downstream guard |
+| `pkg/events` | Beta | downstream Reconcile path 采用 + Event reason 一致性 |
+| `pkg/pvc` | Beta | downstream PVC expansion 采用 |
+| `pkg/topology` | Beta | downstream topology spread 采用 |
+| `pkg/apply` | Beta | downstream idempotent apply 采用 |
+| `pkg/reconcile` | Beta | downstream reconcile-loop helper 采用 |
+| `pkg/certmanager` | Beta | downstream Certificate / Issuer builder 采用 |
+| `pkg/reconcilemetrics` | Beta | downstream 采用 + Prometheus 时间序列名称保留 verify |
 | `pkg/webhook` | Experimental | Multi-repo adoption + stabilize |
+| `pkg/probes` | Experimental | 2+ downstream 采用 |
+| `pkg/bundle` | Experimental | 2+ downstream bundle 采用 |
 
 ## 升级流程
 

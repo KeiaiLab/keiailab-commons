@@ -80,7 +80,7 @@ Each package ships runnable examples in its `doc.go` — browse them with
 |---|---|---|
 | `pkg/finalizer` | Stable | Finalizer helpers — `Add` / `Remove` / `Has` / `EnsureOrder` (stdlib `slices` only, no controller-runtime). |
 | `pkg/labels` | Stable | Recommended `app.kubernetes.io/*` labels — `New`, `Set.All()`, `Set.Selector()`, plus a v2 mapping (`AllV2`). |
-| `pkg/status` | Stable | Standard Condition types + Reason catalog — `SetReady`, `SetAvailable`, `SetProgressing`, `SetDegraded`, `IsReady`, `FindCondition`. |
+| `pkg/status` | Stable | Standard Condition types + Reason catalog — `SetReady`, `SetAvailable`, `SetProgressing`, `SetDegraded`, `IsReady`, `FindCondition`, plus `UpdateWithRetry` (retry-on-conflict status persistence). |
 | `pkg/storageclass` | Stable | DNS-1123 storageClass validation + `Normalize` / `MustNormalize` (empty → cluster-default pointer). |
 | `pkg/version` | Beta | Supported-version allowlist — `MustList`, `IsSupported`, `Strings`, `Default` + generic `Matrix[E MatrixEntry]`. |
 | `pkg/monitoring` | Beta | Prometheus Operator `ServiceMonitor` / `PrometheusRule` builders (unstructured — no CRD dependency). |
@@ -89,6 +89,10 @@ Each package ships runnable examples in its `doc.go` — browse them with
 | `pkg/events` | Beta | Minimal `Recorder` interface + `Emit` / `EmitWarning` / `WrappedError` (nil-safe). |
 | `pkg/pvc` | Beta | PVC expansion helpers — comparison + safe in-place update (uses controller-runtime). |
 | `pkg/topology` | Beta | `TopologySpreadConstraints` HA defaults + zone-aware affinity. |
+| `pkg/apply` | Beta | Idempotent apply helpers — `ConfigMap` / `Service` / `StatefulSet` / `Deployment` / `NetworkPolicy` / `PDB` / `HPA`, preserving immutable fields + server defaults (uses controller-runtime). |
+| `pkg/certmanager` | Beta | cert-manager `Certificate` / self-signed `Issuer` builders — `CertParams`, `BuildCertificate`, `BuildSelfSignedIssuer`, `ServiceSANs` (unstructured — no CRD dependency). |
+| `pkg/reconcile` | Beta | Reconcile-loop helpers — `Statusable`, `ApplyErrorCondition`, `HandleFinalizerCleanup`, `SecretIfNotExists` (uses controller-runtime). |
+| `pkg/reconcilemetrics` | Beta | Prometheus reconcile metrics — `New(subsystem)` (preserves existing series names), `IncTotal` / `ObserveReconcile` / `IncError`, `ResultFor` (uses prometheus/client_golang). |
 | `pkg/probes` | Experimental | `corev1.Probe` fluent builder — HTTP / HTTPS / TCP / Exec with kubelet defaults. |
 | `pkg/webhook` | Experimental | Admission validation helpers — `ValidateAllowedVersion`, `ValidateWithPredicate`, conversion registry. |
 | `pkg/bundle` | Experimental | OLM v1 bundle metadata helpers — annotations, FBC schema types, directory validation. |

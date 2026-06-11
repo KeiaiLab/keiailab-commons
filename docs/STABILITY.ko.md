@@ -24,12 +24,22 @@ keiailab-commons 는 3-tier 안정성을 사용합니다:
 |---|---|---|
 | `pkg/finalizer` | Stable | (v1 진입 — 추가 작업 없음) |
 | `pkg/labels` | Stable | (v1 진입) |
-| `pkg/status` | Stable | (v1 진입) |
+| `pkg/status` | Stable | (v1 진입) — `update.go` (`UpdateWithRetry`) 는 Stable 패키지 내 Beta 표면 |
+| `pkg/storageclass` | Stable | trivial validation surface (regex + nil check) |
 | `pkg/version` | Beta | Generic `Matrix[E]` downstream verify |
 | `pkg/monitoring` | Beta | ServiceMonitor downstream e2e |
 | `pkg/networkpolicy` | Beta | 4-direction TCP/UDP verify |
 | `pkg/security` | Beta | restricted PSA downstream guard |
+| `pkg/events` | Beta | downstream Reconcile path 적용 + Event reason 일관성 |
+| `pkg/pvc` | Beta | PVC expansion downstream 라이브 적용 |
+| `pkg/topology` | Beta | topology spread downstream 라이브 적용 |
+| `pkg/apply` | Beta | idempotent apply downstream 라이브 적용 |
+| `pkg/reconcile` | Beta | reconcile-loop 헬퍼 downstream 라이브 적용 |
+| `pkg/certmanager` | Beta | Certificate / Issuer builder downstream 라이브 적용 |
+| `pkg/reconcilemetrics` | Beta | downstream 적용 + Prometheus 시계열 이름 보존 verify |
 | `pkg/webhook` | Experimental | Multi-repo adoption + stabilize |
+| `pkg/probes` | Experimental | 2+ downstream 라이브 적용 |
+| `pkg/bundle` | Experimental | 2+ downstream bundle 적용 |
 
 ## 격상 절차
 

@@ -17,13 +17,13 @@ follow-up items*。本项目不维护基于时间的截止日期 —
 | `[~]` | 部分实现（helper 存在，验证尚未完成）。 |
 | `[ ]` | 尚未开始。 |
 
-## API stability tier (current v0.9.x candidate)
+## API stability tier (current v0.11.0 candidate)
 
 | Package | Tier | Promotion criterion |
 |---|---|---|
 | `pkg/finalizer` | **Stable** | v1 entry (no additional work). |
 | `pkg/labels` | **Stable** | v1 entry (no additional work). |
-| `pkg/status` | **Stable** | v1 entry (no additional work). |
+| `pkg/status` | **Stable** | v1 entry (no additional work). `update.go` (`UpdateWithRetry`) is a Beta surface. |
 | `pkg/storageclass` | **Stable** | Trivial validation surface (regex + nil check). |
 | `pkg/version` (incl. `Matrix`) | Beta | Generic `Matrix[E]` cross-repo verify. |
 | `pkg/monitoring` | Beta | `ServiceMonitor` cross-downstream equivalence e2e. |
@@ -32,13 +32,22 @@ follow-up items*。本项目不维护基于时间的截止日期 —
 | `pkg/events` | Beta | Downstream live adoption + reconciliation regression 0. |
 | `pkg/pvc` | Beta | Downstream PVC expansion live adoption. |
 | `pkg/topology` | Beta | Downstream topology spread live adoption. |
+| `pkg/apply` | Beta | Downstream idempotent apply live adoption. |
+| `pkg/reconcile` | Beta | Downstream reconcile scaffolding live adoption. |
+| `pkg/certmanager` | Beta | Downstream Certificate / Issuer render live adoption. |
+| `pkg/reconcilemetrics` | Beta | Downstream live adoption + Prometheus series-name parity. |
 | `pkg/webhook` | **Experimental** | Multi-downstream adoption + stabilization. |
 | `pkg/probes` | **Experimental** | 2+ downstream adoption → Beta. |
+| `pkg/bundle` | **Experimental** | 2+ downstream adoption → Beta. |
 
 **Tier 语义**：
 
 - **Stable** — patch / minor release 中无 BREAKING CHANGE。使用
-  deprecation：标记、保留 2 个 minor release、然后移除。
+  deprecation：标记、保留 2 个 minor release、然后移除。已记录的例外：
+  v0.10.0 的 module path 变更（`operator-commons` → `keiailab-commons`）
+  属于 import-path 层面的 BREAKING CHANGE，是 0.x 阶段 minor release
+  中允许的变更（SemVer major-version-zero 规则，参见
+  [UPGRADING.md](UPGRADING.zh.md)）。
 - **Beta** — minor release 中允许 BREAKING CHANGE（必须出现在
   CHANGELOG 中）。API 形状基本稳定。
 - **Experimental** — 任何 release 都可能 BREAKING CHANGE。调用方
@@ -110,6 +119,15 @@ follow-up items*。本项目不维护基于时间的截止日期 —
 - [ ] 下游 equivalence e2e — 相同输入 → 相同 manifest 输出。
 - [ ] **Tier promotion** → Stable。
 - Verify：`monitoring_test.go` golden file diff = 0。
+
+### Helm secrets partials (Beta)
+
+- [x] `keiailab.secrets.externalSecret` raw YAML helper — 无需 CRD
+  vendoring 即可物化 ESO/Infisical。
+- [ ] Valkey、MongoDB、PostgreSQL operator chart 间的下游渲染
+  equivalence。
+- Verify：`externalSecrets.enabled=true` 时 `helm template` 仅在使用方
+  显式 opt-in 时渲染 `external-secrets.io/v1`。
 
 ### pkg/networkpolicy (Beta)
 
@@ -201,6 +219,65 @@ follow-up items*。本项目不维护基于时间的截止日期 —
 - [ ] 下游 live adoption 且 spread constraint 验证。
 - [ ] **Tier promotion** → Stable。
 
+### pkg/apply (Beta)
+
+- [x] Idempotent apply helper — ConfigMap / Secret / Service /
+  StatefulSet / Deployment / NetworkPolicy / PodDisruptionBudget /
+  HorizontalPodAutoscaler — `pkg/apply/apply.go`、
+  `pkg/apply/workload.go`。
+- [x] Immutable 字段保护 — Service ClusterIP / IPFamilies create-only、
+  StatefulSet immutable 字段保留 + RetryOnConflict、Deployment
+  server-default + revision annotation 保留、`preserveReplicas` 选项
+  （避免 HPA 冲突）。依赖 controller-runtime（non-leaf 包）。
+- [ ] 下游 live adoption 且 apply regression 0。
+- [ ] **Tier promotion** → Stable。
+- Verify：`go test ./pkg/apply/...`
+
+### pkg/reconcile (Beta)
+
+- [x] `Statusable` interface（`client.Object` + `GetConditions` +
+  `SetPhase`）— `pkg/reconcile/statusable.go`。
+- [x] `ApplyErrorCondition` + `HandleFinalizerCleanup` +
+  `SecretIfNotExists` helper。依赖 controller-runtime（non-leaf 包）。
+- [ ] 下游 live adoption 且 reconcile loop regression 0。
+- [ ] **Tier promotion** → Stable。
+- Verify：`go test ./pkg/reconcile/...`
+
+### pkg/certmanager (Beta)
+
+- [x] `CertParams` + `BuildCertificate` + `BuildSelfSignedIssuer` +
+  `ServiceSANs` — `pkg/certmanager/certificate.go`、
+  `pkg/certmanager/issuer.go`。
+- [x] 基于 unstructured — 对 cert-manager CRD 的 Go 依赖为零。
+- [ ] 下游 live adoption 且 Certificate / Issuer 渲染 regression 0。
+- [ ] **Tier promotion** → Stable。
+- Verify：`go test ./pkg/certmanager/...`
+
+### pkg/reconcilemetrics (Beta)
+
+- [x] `ReconcileMetrics`（Total / Latency / Errors）+ `New(subsystem)`
+  + `MustRegister` — 通过注入 subsystem 保留既有 operator 的
+  Prometheus 时序名称 — `pkg/reconcilemetrics/reconcilemetrics.go`。
+- [x] `IncTotal` / `ObserveReconcile` / `IncError` / `DeleteFor` /
+  `ResultFor` helper。
+- [ ] 下游 live adoption 且时序名称 parity 验证。
+- [ ] **Tier promotion** → Stable。
+- Verify：`go test ./pkg/reconcilemetrics/...`
+
+### pkg/bundle (Experimental)
+
+- [x] Bundle annotations — 6 个必需的 registry+v1 annotation 常量 +
+  `NewAnnotations` builder（`Map()` / `DockerLabels()`）。
+- [x] FBC schema 类型 — `olm.package`、`olm.channel`、`olm.bundle`、
+  `olm.deprecations` 的 Go struct + JSON 序列化。
+- [x] Bundle 目录校验 — `ValidateDir(path)` 检查 `manifests/` +
+  `metadata/` + `annotations.yaml`。
+- [x] 单元测试（覆盖率 ≥ 85 %）。
+- [ ] 2+ 下游 live adoption（Beta 标准）。
+- [ ] **Tier promotion** → Beta → Stable。
+- Verify：下游 operator 的 bundle build 使用 commons annotations 且
+  regression 0。
+
 ## 依赖政策
 
 - **仅 Kubernetes API** — `k8s.io/api`、`k8s.io/apimachinery`、
@@ -232,6 +309,20 @@ follow-up items*。本项目不维护基于时间的截止日期 —
   framework。
 - ❌ **过早的 v1.0.0** — 在满足 graduation
   标准之前保持 v0.x。
+
+## Adopters（采用方）
+
+| Repo | 使用包 | import 版本 |
+|---|---|---|
+| `mongodb-operator` | finalizer / version / webhook / pvc / topology / security | v0.10.0（计划迁移至 v0.11.0） |
+| `postgres-operator` | topology / pvc / status / security / version / webhook | v0.10.0（计划迁移至 v0.11.0） |
+| `valkey-operator` | finalizer / version / security / pvc / networkpolicy / monitoring | v0.10.0（计划迁移至 v0.11.0） |
+
+## 变更历史
+
+| Date | Change | Refs |
+|---|---|---|
+| 2026-06-11 | v0.11.0 candidate：新增 4 个 Beta 包（`pkg/apply` / `pkg/reconcile` / `pkg/certmanager` / `pkg/reconcilemetrics`）+ `pkg/status` `UpdateWithRetry` Beta surface + Adopters 表 + v0.10.0 module path 例外说明。 | v0.11.0 / [UPGRADING.md](UPGRADING.zh.md) |
 
 ---
 

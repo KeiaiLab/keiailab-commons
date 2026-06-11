@@ -15,13 +15,13 @@ the library evolves according to the needs of its downstream consumers.
 | `[~]` | Partial implementation (helper present, verification still open). |
 | `[ ]` | Not started. |
 
-## API stability tier (current v0.9.x candidate)
+## API stability tier (current v0.11.0 candidate)
 
 | Package | Tier | Promotion criterion |
 |---|---|---|
 | `pkg/finalizer` | **Stable** | v1 entry (no additional work). |
 | `pkg/labels` | **Stable** | v1 entry (no additional work). |
-| `pkg/status` | **Stable** | v1 entry (no additional work). |
+| `pkg/status` | **Stable** | v1 entry (no additional work). `update.go` (`UpdateWithRetry`) is a Beta surface. |
 | `pkg/storageclass` | **Stable** | Trivial validation surface (regex + nil check). |
 | `pkg/version` (incl. `Matrix`) | Beta | Generic `Matrix[E]` cross-repo verify. |
 | `pkg/monitoring` | Beta | `ServiceMonitor` cross-downstream equivalence e2e. |
@@ -30,6 +30,10 @@ the library evolves according to the needs of its downstream consumers.
 | `pkg/events` | Beta | Downstream live adoption + reconciliation regression 0. |
 | `pkg/pvc` | Beta | Downstream PVC expansion live adoption. |
 | `pkg/topology` | Beta | Downstream topology spread live adoption. |
+| `pkg/apply` | Beta | Downstream idempotent apply live adoption. |
+| `pkg/reconcile` | Beta | Downstream reconcile scaffolding live adoption. |
+| `pkg/certmanager` | Beta | Downstream Certificate / Issuer render live adoption. |
+| `pkg/reconcilemetrics` | Beta | Downstream live adoption + Prometheus series-name parity. |
 | `pkg/webhook` | **Experimental** | Multi-downstream adoption + stabilization. |
 | `pkg/probes` | **Experimental** | 2+ downstream adoption → Beta. |
 | `pkg/bundle` | **Experimental** | 2+ downstream adoption → Beta. |
@@ -38,7 +42,11 @@ the library evolves according to the needs of its downstream consumers.
 **Tier semantics**:
 
 - **Stable** — no BREAKING CHANGE in patch / minor releases. Use
-  deprecation: mark, keep for 2 minor releases, then remove.
+  deprecation: mark, keep for 2 minor releases, then remove. Recorded
+  exception: the v0.10.0 module path change (`operator-commons` →
+  `keiailab-commons`) was an import-path BREAKING CHANGE — permitted in
+  a 0.x minor release (SemVer major-version-zero rule, see
+  [UPGRADING.md](UPGRADING.md)).
 - **Beta** — BREAKING CHANGE allowed in minor releases (must appear in
   CHANGELOG). API shape is mostly settled.
 - **Experimental** — BREAKING CHANGE possible at any release. Callers
@@ -210,6 +218,69 @@ the library evolves according to the needs of its downstream consumers.
 - [ ] Downstream live adoption with spread constraint verification.
 - [ ] **Tier promotion** → Stable.
 
+### pkg/apply (Beta)
+
+- [x] Idempotent apply helpers — ConfigMap / Secret / Service /
+  StatefulSet / Deployment / NetworkPolicy / PodDisruptionBudget /
+  HorizontalPodAutoscaler — `pkg/apply/apply.go`,
+  `pkg/apply/workload.go`.
+- [x] Immutable-field guards — Service ClusterIP / IPFamilies
+  create-only, StatefulSet immutable fields + RetryOnConflict,
+  Deployment server-default + revision-annotation preservation,
+  `preserveReplicas` option (HPA conflict avoidance).
+  controller-runtime dependent (non-leaf package).
+- [ ] Downstream live adoption with apply regression 0.
+- [ ] **Tier promotion** → Stable.
+- Verify: `go test ./pkg/apply/...`
+
+### pkg/reconcile (Beta)
+
+- [x] `Statusable` interface (`client.Object` + `GetConditions` +
+  `SetPhase`) — `pkg/reconcile/statusable.go`.
+- [x] `ApplyErrorCondition` + `HandleFinalizerCleanup` +
+  `SecretIfNotExists` helpers. controller-runtime dependent
+  (non-leaf package).
+- [ ] Downstream live adoption with reconcile-loop regression 0.
+- [ ] **Tier promotion** → Stable.
+- Verify: `go test ./pkg/reconcile/...`
+
+### pkg/certmanager (Beta)
+
+- [x] `CertParams` + `BuildCertificate` + `BuildSelfSignedIssuer` +
+  `ServiceSANs` — `pkg/certmanager/certificate.go`,
+  `pkg/certmanager/issuer.go`.
+- [x] Unstructured-based — zero cert-manager CRD Go dependency.
+- [ ] Downstream live adoption with Certificate / Issuer render
+  regression 0.
+- [ ] **Tier promotion** → Stable.
+- Verify: `go test ./pkg/certmanager/...`
+
+### pkg/reconcilemetrics (Beta)
+
+- [x] `ReconcileMetrics` (Total / Latency / Errors) + `New(subsystem)`
+  + `MustRegister` — subsystem injection preserves existing operator
+  Prometheus time-series names —
+  `pkg/reconcilemetrics/reconcilemetrics.go`.
+- [x] `IncTotal` / `ObserveReconcile` / `IncError` / `DeleteFor` /
+  `ResultFor` helpers.
+- [ ] Downstream live adoption with time-series name parity.
+- [ ] **Tier promotion** → Stable.
+- Verify: `go test ./pkg/reconcilemetrics/...`
+
+### pkg/bundle (Experimental)
+
+- [x] Bundle annotations — six required registry+v1 annotation constants
+  plus `NewAnnotations` builder with `Map()` and `DockerLabels()`.
+- [x] FBC schema types — Go structs for `olm.package`, `olm.channel`,
+  `olm.bundle`, `olm.deprecations` with JSON serialization.
+- [x] Bundle directory validation — `ValidateDir(path)` checks
+  `manifests/` + `metadata/` + `annotations.yaml`.
+- [x] Unit tests (≥ 85 % coverage).
+- [ ] 2+ downstream live adoption (Beta criterion).
+- [ ] **Tier promotion** → Beta → Stable.
+- Verify: downstream operator bundle build uses commons annotations
+  with regression 0.
+
 ## Dependency policy
 
 - **Kubernetes API only** — `k8s.io/api`, `k8s.io/apimachinery`,
@@ -242,20 +313,20 @@ the library evolves according to the needs of its downstream consumers.
 - ❌ **Premature v1.0.0** — stay in v0.x until the graduation
   criteria are met.
 
+## Adopters
+
+| Repo | Packages used | Import version |
+|---|---|---|
+| `mongodb-operator` | finalizer / version / webhook / pvc / topology / security | v0.10.0 (v0.11.0 migration planned) |
+| `postgres-operator` | topology / pvc / status / security / version / webhook | v0.10.0 (v0.11.0 migration planned) |
+| `valkey-operator` | finalizer / version / security / pvc / networkpolicy / monitoring | v0.10.0 (v0.11.0 migration planned) |
+
+## Change history
+
+| Date | Change | Refs |
+|---|---|---|
+| 2026-06-11 | v0.11.0 candidate: four new Beta packages (`pkg/apply` / `pkg/reconcile` / `pkg/certmanager` / `pkg/reconcilemetrics`) + `pkg/status` `UpdateWithRetry` Beta surface + Adopters table + v0.10.0 module-path exception note. | v0.11.0 / [UPGRADING.md](UPGRADING.md) |
+
 ---
 
 <p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>
-
-### pkg/bundle (Experimental)
-
-- [x] Bundle annotations — six required registry+v1 annotation constants
-  plus `NewAnnotations` builder with `Map()` and `DockerLabels()`.
-- [x] FBC schema types — Go structs for `olm.package`, `olm.channel`,
-  `olm.bundle`, `olm.deprecations` with JSON serialization.
-- [x] Bundle directory validation — `ValidateDir(path)` checks
-  `manifests/` + `metadata/` + `annotations.yaml`.
-- [x] Unit tests (≥ 85 % coverage).
-- [ ] 2+ downstream live adoption (Beta criterion).
-- [ ] **Tier promotion** → Beta → Stable.
-- Verify: downstream operator bundle build uses commons annotations
-  with regression 0.

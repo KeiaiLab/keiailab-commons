@@ -17,13 +17,13 @@
 | `[~]` | 部分実装 (helper 存在、検証は未完)。 |
 | `[ ]` | 未着手。 |
 
-## API 安定性 tier (現在の v0.9.x 候補)
+## API 安定性 tier (現在の v0.11.0 候補)
 
 | パッケージ | Tier | 昇格基準 |
 |---|---|---|
 | `pkg/finalizer` | **Stable** | v1 entry (追加作業なし)。 |
 | `pkg/labels` | **Stable** | v1 entry (追加作業なし)。 |
-| `pkg/status` | **Stable** | v1 entry (追加作業なし)。 |
+| `pkg/status` | **Stable** | v1 entry (追加作業なし)。ただし `update.go` (`UpdateWithRetry`) は Beta surface。 |
 | `pkg/storageclass` | **Stable** | 自明な検証 surface (regex + nil チェック)。 |
 | `pkg/version` (`Matrix` 含む) | Beta | Generic `Matrix[E]` の cross-repo 検証。 |
 | `pkg/monitoring` | Beta | `ServiceMonitor` の downstream 横断同値性 e2e。 |
@@ -32,13 +32,22 @@
 | `pkg/events` | Beta | Downstream live 採用 + reconciliation regression 0。 |
 | `pkg/pvc` | Beta | Downstream PVC expansion live 採用。 |
 | `pkg/topology` | Beta | Downstream topology spread live 採用。 |
+| `pkg/apply` | Beta | Downstream idempotent apply live 採用。 |
+| `pkg/reconcile` | Beta | Downstream reconcile 共通スキャフォールド live 採用。 |
+| `pkg/certmanager` | Beta | Downstream Certificate / Issuer レンダー live 採用。 |
+| `pkg/reconcilemetrics` | Beta | Downstream live 採用 + Prometheus 時系列名 parity。 |
 | `pkg/webhook` | **Experimental** | Multi-downstream 採用 + 安定化。 |
 | `pkg/probes` | **Experimental** | 2+ downstream 採用 → Beta。 |
+| `pkg/bundle` | **Experimental** | 2+ downstream 採用 → Beta。 |
 
 **Tier セマンティクス**:
 
 - **Stable** — patch / minor release で BREAKING CHANGE なし。
-  deprecation を使用: 印を付けて 2 minor 維持後に削除。
+  deprecation を使用: 印を付けて 2 minor 維持後に削除。記録済みの例外:
+  v0.10.0 の module path 変更 (`operator-commons` → `keiailab-commons`)
+  は import-path の BREAKING CHANGE であり、0.x 段階の minor release
+  で許容される変更 (SemVer の major-version-zero 規則、
+  [UPGRADING.md](UPGRADING.ja.md) 参照)。
 - **Beta** — minor release で BREAKING CHANGE 許可 (CHANGELOG に記載
   必須)。API 形状はほぼ固まっている。
 - **Experimental** — 任意の release で BREAKING CHANGE 可能。呼び出し側が
@@ -109,6 +118,15 @@
 - [ ] Downstream 同値性 e2e — 同入力 → 同 manifest 出力。
 - [ ] **Tier 昇格** → Stable。
 - 検証: `monitoring_test.go` の golden file diff = 0。
+
+### Helm secrets partials (Beta)
+
+- [x] `keiailab.secrets.externalSecret` raw YAML helper — CRD vendoring
+  なしの ESO/Infisical materialization。
+- [ ] Valkey / MongoDB / PostgreSQL operator chart 横断の downstream
+  レンダー同値性。
+- 検証: `externalSecrets.enabled=true` の `helm template` が、利用側が
+  明示的に opt-in した場合のみ `external-secrets.io/v1` をレンダー。
 
 ### pkg/networkpolicy (Beta)
 
@@ -197,6 +215,68 @@
 - [ ] Downstream live 採用 + spread constraint 検証。
 - [ ] **Tier 昇格** → Stable。
 
+### pkg/apply (Beta)
+
+- [x] Idempotent apply helper — ConfigMap / Secret / Service /
+  StatefulSet / Deployment / NetworkPolicy / PodDisruptionBudget /
+  HorizontalPodAutoscaler — `pkg/apply/apply.go`、
+  `pkg/apply/workload.go`。
+- [x] Immutable フィールドのガード — Service ClusterIP / IPFamilies
+  create-only、StatefulSet immutable フィールド保持 + RetryOnConflict、
+  Deployment server-default + revision annotation 保持、
+  `preserveReplicas` オプション (HPA 競合回避)。controller-runtime
+  依存 (non-leaf パッケージ)。
+- [ ] Downstream live 採用 + apply regression 0。
+- [ ] **Tier 昇格** → Stable。
+- 検証: `go test ./pkg/apply/...`
+
+### pkg/reconcile (Beta)
+
+- [x] `Statusable` interface (`client.Object` + `GetConditions` +
+  `SetPhase`) — `pkg/reconcile/statusable.go`。
+- [x] `ApplyErrorCondition` + `HandleFinalizerCleanup` +
+  `SecretIfNotExists` helper。controller-runtime 依存 (non-leaf
+  パッケージ)。
+- [ ] Downstream live 採用 + reconcile loop regression 0。
+- [ ] **Tier 昇格** → Stable。
+- 検証: `go test ./pkg/reconcile/...`
+
+### pkg/certmanager (Beta)
+
+- [x] `CertParams` + `BuildCertificate` + `BuildSelfSignedIssuer` +
+  `ServiceSANs` — `pkg/certmanager/certificate.go`、
+  `pkg/certmanager/issuer.go`。
+- [x] Unstructured ベース — cert-manager CRD への Go 依存ゼロ。
+- [ ] Downstream live 採用 + Certificate / Issuer レンダー
+  regression 0。
+- [ ] **Tier 昇格** → Stable。
+- 検証: `go test ./pkg/certmanager/...`
+
+### pkg/reconcilemetrics (Beta)
+
+- [x] `ReconcileMetrics` (Total / Latency / Errors) + `New(subsystem)`
+  + `MustRegister` — subsystem 注入により既存 operator の Prometheus
+  時系列名を保持 — `pkg/reconcilemetrics/reconcilemetrics.go`。
+- [x] `IncTotal` / `ObserveReconcile` / `IncError` / `DeleteFor` /
+  `ResultFor` helper。
+- [ ] Downstream live 採用 + 時系列名 parity 検証。
+- [ ] **Tier 昇格** → Stable。
+- 検証: `go test ./pkg/reconcilemetrics/...`
+
+### pkg/bundle (Experimental)
+
+- [x] Bundle annotations — 必須 registry+v1 annotation 定数 6 種 +
+  `NewAnnotations` builder (`Map()` / `DockerLabels()`)。
+- [x] FBC schema 型 — `olm.package`、`olm.channel`、`olm.bundle`、
+  `olm.deprecations` の Go struct + JSON シリアライズ。
+- [x] Bundle ディレクトリ検証 — `ValidateDir(path)` が `manifests/` +
+  `metadata/` + `annotations.yaml` を確認。
+- [x] Unit テスト (カバレッジ ≥ 85 %)。
+- [ ] 2+ downstream live 採用 (Beta 基準)。
+- [ ] **Tier 昇格** → Beta → Stable。
+- 検証: downstream operator の bundle build が commons annotations を
+  使用し regression 0。
+
 ## 依存性ポリシー
 
 - **Kubernetes API のみ** — `k8s.io/api`、`k8s.io/apimachinery`、
@@ -223,6 +303,20 @@
 - ❌ **Plugin / extension SDK ポジション** — これはライブラリであり
   フレームワークではない。
 - ❌ **早すぎる v1.0.0** — 昇格基準を満たすまで v0.x に留まる。
+
+## 採用リポジトリ (Adopters)
+
+| Repo | 使用パッケージ | import バージョン |
+|---|---|---|
+| `mongodb-operator` | finalizer / version / webhook / pvc / topology / security | v0.10.0 (v0.11.0 移行予定) |
+| `postgres-operator` | topology / pvc / status / security / version / webhook | v0.10.0 (v0.11.0 移行予定) |
+| `valkey-operator` | finalizer / version / security / pvc / networkpolicy / monitoring | v0.10.0 (v0.11.0 移行予定) |
+
+## 変更履歴
+
+| Date | Change | Refs |
+|---|---|---|
+| 2026-06-11 | v0.11.0 candidate: 新規 Beta 4 パッケージ (`pkg/apply` / `pkg/reconcile` / `pkg/certmanager` / `pkg/reconcilemetrics`) + `pkg/status` `UpdateWithRetry` Beta surface + Adopters 表 + v0.10.0 module path 例外注記。 | v0.11.0 / [UPGRADING.md](UPGRADING.ja.md) |
 
 ---
 
