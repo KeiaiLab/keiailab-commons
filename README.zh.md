@@ -42,7 +42,7 @@ Operator 作者反复实现相同的 scaffolding —— restricted PodSecurity c
 |---|---|---|
 | `pkg/finalizer` | Stable | Finalizer 帮助 — `Add` / `Remove` / `Has` / `EnsureOrder` (仅 stdlib `slices`,无 controller-runtime 依赖)。 |
 | `pkg/labels` | Stable | Kubernetes 推荐标签 (`app.kubernetes.io/*`) 构建器 — `Set`、`All()`、`Selector()`,以及 v2 映射 (`AllV2`)。 |
-| `pkg/status` | Stable | 4 个标准 Condition Type + 6 个 Reason 目录 + 帮助函数 (`SetReady`、`SetAvailable`、`SetReadyFalse`)。 |
+| `pkg/status` | Stable | 4 个标准 Condition Type + 6 个 Reason 目录 + 帮助函数 (`SetReady`、`SetAvailable`、`SetReadyFalse`) + `UpdateWithRetry` (冲突重试的 status 持久化)。 |
 | `pkg/storageclass` | Stable | DNS-1123 storageClass 验证器 + `Normalize` / `MustNormalize` (empty → cluster default 指针)。 |
 | `pkg/version` | Beta | 版本 allowlist 约定 (`MustList`、`IsSupported`、`Strings`、`Default`) + 泛型 `Matrix[E MatrixEntry]` + 序列化器。 |
 | `pkg/monitoring` | Beta | Prometheus Operator `ServiceMonitor` 与 `PrometheusRule` 构建器 (unstructured — CRD-soft)。 |
@@ -51,6 +51,10 @@ Operator 作者反复实现相同的 scaffolding —— restricted PodSecurity c
 | `pkg/events` | Beta | 最小 `Recorder` 接口 + 9 个标准 `Reason` 常量 + `Emit` / `EmitWarning` / `WrappedError` (nil-safe)。 |
 | `pkg/pvc` | Beta | PVC 扩展助手 — 比较 + 安全就地更新 (controller-runtime 依赖 — ADR-0016)。 |
 | `pkg/topology` | Beta | TopologySpreadConstraints HA 默认值 + 区域感知亲和性构建器。 |
+| `pkg/apply` | Beta | 幂等 apply 帮助函数 — `ConfigMap` / `Service` / `StatefulSet` / `Deployment` / `NetworkPolicy` / `PDB` / `HPA`,保留 immutable 字段与服务器默认值 (controller-runtime 依赖)。 |
+| `pkg/certmanager` | Beta | cert-manager `Certificate` / self-signed `Issuer` 构建器 — `CertParams`、`BuildCertificate`、`BuildSelfSignedIssuer`、`ServiceSANs` (unstructured — 无 CRD 依赖)。 |
+| `pkg/reconcile` | Beta | Reconcile 循环帮助函数 — `Statusable`、`ApplyErrorCondition`、`HandleFinalizerCleanup`、`SecretIfNotExists` (controller-runtime 依赖)。 |
+| `pkg/reconcilemetrics` | Beta | Prometheus reconcile 指标 — `New(subsystem)` (保留既有时间序列名称)、`IncTotal` / `ObserveReconcile` / `IncError`、`ResultFor` (prometheus/client_golang 依赖)。 |
 | `pkg/probes` | Experimental | `corev1.Probe` fluent 构建器 — HTTP / HTTPS / TCP / Exec,kubelet 默认值 + clamp。 |
 | `pkg/webhook` | Experimental | Admission validation 帮助 — `ValidateAllowedVersion`、`ValidateWithPredicate`、conversion registry。 |
 | `pkg/bundle` | Experimental | OLM v1 捆绑包元数据助手 — 注解、FBC模式类型、目录验证 (ADR-0017)。 |

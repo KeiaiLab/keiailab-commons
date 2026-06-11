@@ -13,7 +13,79 @@
 
 ## [Unreleased]
 
-### Added (v0.9.x candidate)
+### Added
+
+- `pkg/apply` (Beta tier) — ConfigMap / Secret / Service / StatefulSet /
+  Deployment / NetworkPolicy / PodDisruptionBudget /
+  HorizontalPodAutoscaler の idempotent apply helper。Service ClusterIP /
+  IPFamilies の create-only ガード、StatefulSet immutable フィールド保持
+  + `RetryOnConflict`、Deployment server-default 保持 + revision
+  annotation 保持、`preserveReplicas` オプション (HPA との競合回避)。
+  3 operator 間で重複していた約 530 LOC を解消。controller-runtime に
+  依存。
+- `pkg/reconcile` (Beta tier) — `Statusable` interface (`client.Object` +
+  `GetConditions` + `SetPhase`) および `ApplyErrorCondition` +
+  `HandleFinalizerCleanup` + `SecretIfNotExists`。controller-runtime に
+  依存。
+- `pkg/certmanager` (Beta tier) — `CertParams` + `BuildCertificate` +
+  `BuildSelfSignedIssuer` + `ServiceSANs`。unstructured ベースで、
+  cert-manager CRD への Go 依存はゼロ。
+- `pkg/reconcilemetrics` (Beta tier) — `ReconcileMetrics` (Total /
+  Latency / Errors) + `New(subsystem)` + `MustRegister` + `IncTotal` /
+  `ObserveReconcile` / `IncError` / `DeleteFor` + `ResultFor`。subsystem
+  注入により既存 operator の Prometheus 時系列名を維持。
+- `pkg/status` `UpdateWithRetry` (Stable パッケージ内の Beta surface) —
+  refetch + mutate + `RetryOnConflict` による status subresource の
+  永続化。
+
+### Changed
+
+- 新規直接依存: `github.com/prometheus/client_golang` v1.23.2
+  (`pkg/reconcilemetrics` が導入)。
+
+## [0.10.0] — 2026-06-11
+
+### Added
+
+- `pkg/bundle` (Experimental tier) — OLM v1 operator bundle metadata
+  helper: `Annotations` (+ `DockerLabels`)、FBC `Package` / `Channel` /
+  `Bundle` builder、`ValidateDir`。
+- Helm chart partial named template `keiailab.secrets.externalSecret`
+  (`charts/keiailab-commons/templates/_externalsecret.tpl`)。
+- GitLab CI shadow pipeline。
+
+### Changed
+
+- **BREAKING**: module path 変更 —
+  `github.com/keiailab/operator-commons` →
+  `github.com/keiailab/keiailab-commons`。すべての consumer は import
+  path の更新が必要 — 0.x 段階のため minor bump として実施。
+- ライセンスを MIT に標準化 — すべての `.go` ファイルに SPDX ヘッダーを
+  追加。
+- README を正確性基準で書き直し。
+- self-contained 再構成 — 外部サービス参照を除去 (B1〜B14)。
+
+## [0.9.0] — 2026-05-21
+
+### Added
+
+- `pkg/pvc` (Beta tier) — PVC expansion helper および安全な in-place
+  update パス。
+- `pkg/topology` (Beta tier) — PVC topology spread helper および
+  zone-aware affinity。
+- `scripts/release.sh` — ライブラリの手動 release pipeline (ADR-0014)。
+- `docs/UPGRADING.md` — semver ポリシーおよび 3 operator マイグレーション
+  ガイド。
+- i18n S4 Phase 1〜5 — 4 言語 glossary 完成および翻訳 sync hook。
+
+### Changed
+
+- keiailab branding Wave 3 — README header / footer および
+  `BRANDING.md`、`docs/family.md`。
+
+## [0.8.0] — 2026-05-21
+
+### Added
 
 - `pkg/probes` (Experimental tier) — `corev1.Probe` fluent builder。HTTP /
   HTTPS / TCP / Exec handler + kubelet デフォルト値 (Period = 10 s /
@@ -30,25 +102,11 @@
   `Recorder` interface (`client-go` `record.EventRecorder` を import せず
   互換)。`Emit` / `Emitf` / `EmitWarning` /
   `EmitWarningf` (nil-safe) + `WrappedError`。カバレッジ 100 %、lint ゼロ。
-- `pkg/pvc` (Beta tier) — PVC expansion helper および安全な in-place
-  update パス。
-- `pkg/topology` (Beta tier) — PVC topology spread helper および
-  zone-aware affinity。
-
-### Added (v1.0.0 graduation track)
-
-- `scripts/godoc-coverage.sh` — パッケージ別 + 全体の godoc カバレッジ
-  計測。v1.0 で要求される 80 % 閾値を検証。
-- `docs/STABILITY.md` — 3-tier API 安定性の約束および昇格基準、
-  breaking-change ポリシー。
-- `pkg/status/REASONS.md` — Reason × Type × Status 使用マトリクス。
-- `pkg/finalizer.EnsureOrder` — 複数 finalizer のための順序保証 helper。
-  `desiredOrder` に対する stable sort、リスト未掲載の finalizer は末尾保持。
-- `pkg/labels.AllV2` + `V2` struct — Kubernetes 1.30+ Recommended labels
-  v2 マッピング。
-- `pkg/version.AsMap` + `MarshalJSON` — `Matrix[E]` serializer、
-  安定かつ JSON / YAML 互換のキー順序。
-- `pkg/version/api_stability_test.go` — public-API-surface ガード。
+- `pkg/monitoring.NewPrometheusRule` + `AlertRule` / `RecordingRule` /
+  `RuleGroup` — PrometheusRule (`monitoring.coreos.com/v1`) manifest
+  builder。
+- `pkg/webhook.ConversionRegistry` — CRD version pair 変換関数 registry
+  (`Register` / `Convert` / `HasPair`)。
 - `pkg/networkpolicy.ComboPeer` + `WithComboIngressFromPeers` — CIDR +
   NamespaceSelector + PodSelector 複合 peer helper。
 - `pkg/security.RestrictedPodSecurityContext` + option 群
@@ -57,6 +115,21 @@
 - `pkg/security.RuntimeDefaultSeccompProfile` +
   `LocalhostSeccompProfile` + `UnconfinedSeccompProfile` — seccomp
   profile ポインタ helper。
+- `pkg/version.AsMap` + `MarshalJSON` — `Matrix[E]` serializer、
+  安定かつ JSON / YAML 互換のキー順序。
+- `pkg/version/api_stability_test.go` — public-API-surface ガード。
+- `pkg/finalizer.EnsureOrder` — 複数 finalizer のための順序保証 helper。
+  `desiredOrder` に対する stable sort、リスト未掲載の finalizer は末尾保持。
+- `pkg/labels.AllV2` + `V2` struct — Kubernetes 1.30+ Recommended labels
+  v2 マッピング。
+- `pkg/status/REASONS.md` — Reason × Type × Status 使用マトリクス。
+- `docs/STABILITY.md` — 3-tier API 安定性の約束および昇格基準、
+  breaking-change ポリシー。
+- `scripts/godoc-coverage.sh` — パッケージ別 + 全体の godoc カバレッジ
+  計測。v1.0 で要求される 80 % 閾値を検証。
+- `docs/ARCHITECTURE.md` — 1 ページのアーキテクチャ説明。
+- README 4 言語 i18n 開始 — 英語 canonical + 韓国語翻訳、4 言語 switcher
+  および日本語 / 中国語 placeholder。
 
 ## [0.7.0] — 2026-05-09
 

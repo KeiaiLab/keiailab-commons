@@ -13,9 +13,10 @@
 //
 // # 의존성 정책
 //
-// commons 의 *순수 데이터 변환* 패키지 (finalizer, status, security 등) 와
-// 달리 본 패키지는 K8s API 호출을 직접 수행해야 한다. 따라서 단 한 곳
-// (`pkg/pvc`) 에서만 controller-runtime/pkg/client 를 의존한다.
+// commons 의 *순수 데이터 변환* 패키지 (finalizer, labels, security 등) 와
+// 달리 본 패키지는 K8s API 호출을 직접 수행해야 한다. controller-runtime/pkg/client
+// 의존 예외군은 v0.11.0 부터 `pkg/pvc` 단독이 아니라 4곳 — `pkg/pvc` + `pkg/apply` +
+// `pkg/reconcile` + `pkg/status` (update.go 한정) — 으로 확장되었다.
 //
 //   - List + Patch + Get 의 3-step 워크플로우 — 호출자가 imperative 한
 //     라이프사이클을 직접 관리하는 monitoring / security 와 다름.

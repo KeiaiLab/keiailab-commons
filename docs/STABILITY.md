@@ -23,7 +23,7 @@ Stability Tier":
 |---|---|---|
 | `pkg/finalizer` | Stable | (v1 entry — no additional work). |
 | `pkg/labels` | Stable | (v1 entry). |
-| `pkg/status` | Stable | (v1 entry). |
+| `pkg/status` | Stable | (v1 entry). `update.go` (`UpdateWithRetry`) is a Beta surface inside the Stable package. |
 | `pkg/storageclass` | Stable | Trivial validation surface (regex + nil check). |
 | `pkg/version` | Beta | Generic `Matrix[E]` cross-repo verify. |
 | `pkg/monitoring` | Beta | ServiceMonitor downstream e2e. |
@@ -32,6 +32,10 @@ Stability Tier":
 | `pkg/events` | Beta | Downstream Reconcile path adoption + Event reason consistency. |
 | `pkg/pvc` | Beta | Downstream PVC expansion live adoption. |
 | `pkg/topology` | Beta | Downstream topology spread live adoption. |
+| `pkg/apply` | Beta | Downstream idempotent apply live adoption. |
+| `pkg/reconcile` | Beta | Downstream reconcile-loop helper live adoption. |
+| `pkg/certmanager` | Beta | Downstream Certificate / Issuer builder live adoption. |
+| `pkg/reconcilemetrics` | Beta | Downstream adoption + Prometheus time-series name preservation verify. |
 | `pkg/webhook` | Experimental | Multi-downstream adoption + stabilization. |
 | `pkg/probes` | Experimental | 2+ downstream live adoption. |
 | `pkg/bundle` | Experimental | 2+ downstream bundle adoption. |

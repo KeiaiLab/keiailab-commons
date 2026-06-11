@@ -24,12 +24,22 @@ keiailab-commons は 3-tier 安定性を使用します:
 |---|---|---|
 | `pkg/finalizer` | Stable | (v1 entry — 追加作業無し) |
 | `pkg/labels` | Stable | (v1 entry) |
-| `pkg/status` | Stable | (v1 entry) |
+| `pkg/status` | Stable | (v1 entry) — `update.go` (`UpdateWithRetry`) は Stable パッケージ内の Beta サーフェス |
+| `pkg/storageclass` | Stable | trivial validation surface (regex + nil チェック) |
 | `pkg/version` | Beta | Generic `Matrix[E]` downstream verify |
 | `pkg/monitoring` | Beta | ServiceMonitor downstream e2e |
 | `pkg/networkpolicy` | Beta | 4-direction TCP/UDP verify |
 | `pkg/security` | Beta | restricted PSA downstream guard |
+| `pkg/events` | Beta | downstream Reconcile path 採用 + Event reason 一貫性 |
+| `pkg/pvc` | Beta | PVC expansion downstream ライブ適用 |
+| `pkg/topology` | Beta | topology spread downstream ライブ適用 |
+| `pkg/apply` | Beta | idempotent apply downstream ライブ適用 |
+| `pkg/reconcile` | Beta | reconcile-loop ヘルパー downstream ライブ適用 |
+| `pkg/certmanager` | Beta | Certificate / Issuer builder downstream ライブ適用 |
+| `pkg/reconcilemetrics` | Beta | downstream 適用 + Prometheus 時系列名保持 verify |
 | `pkg/webhook` | Experimental | Multi-repo adoption + stabilize |
+| `pkg/probes` | Experimental | 2+ downstream ライブ採用 |
+| `pkg/bundle` | Experimental | 2+ downstream bundle 採用 |
 
 ## 昇格プロセス
 

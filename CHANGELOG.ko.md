@@ -10,7 +10,73 @@
 
 ## [Unreleased]
 
-### Added (v0.9.x candidate)
+### Added
+
+- `pkg/apply` (Beta tier) — ConfigMap / Secret / Service / StatefulSet /
+  Deployment / NetworkPolicy / PodDisruptionBudget /
+  HorizontalPodAutoscaler idempotent apply helper. Service ClusterIP /
+  IPFamilies create-only 가드 + StatefulSet immutable 필드 보존 +
+  `RetryOnConflict` + Deployment server-default 보존 + revision
+  annotation 보존 + `preserveReplicas` 옵션 (HPA 충돌 방지). 3-operator
+  중복 ~530 LOC 해소. controller-runtime 의존.
+- `pkg/reconcile` (Beta tier) — `Statusable` interface (`client.Object` +
+  `GetConditions` + `SetPhase`) + `ApplyErrorCondition` +
+  `HandleFinalizerCleanup` + `SecretIfNotExists`. controller-runtime 의존.
+- `pkg/certmanager` (Beta tier) — `CertParams` + `BuildCertificate` +
+  `BuildSelfSignedIssuer` + `ServiceSANs` — unstructured 기반, cert-manager
+  CRD Go 의존 0.
+- `pkg/reconcilemetrics` (Beta tier) — `ReconcileMetrics` (Total / Latency /
+  Errors) + `New(subsystem)` + `MustRegister` + `IncTotal` /
+  `ObserveReconcile` / `IncError` / `DeleteFor` + `ResultFor` — subsystem
+  주입으로 기존 operator Prometheus 시계열 이름 보존.
+- `pkg/status` `UpdateWithRetry` (Stable 패키지 내 Beta 표면) — refetch +
+  mutate + `RetryOnConflict` 로 status subresource 영속화.
+
+### Changed
+
+- 신규 직접 의존: `github.com/prometheus/client_golang` v1.23.2
+  (`pkg/reconcilemetrics` 가 도입).
+
+## [0.10.0] - 2026-06-11
+
+### Added
+
+- `pkg/bundle` (Experimental tier) — OLM v1 operator bundle metadata
+  helper: `Annotations` (+ `DockerLabels`) + FBC `Package` / `Channel` /
+  `Bundle` builder + `ValidateDir`.
+- helm chart partial named template `keiailab.secrets.externalSecret`
+  신규 (`charts/keiailab-commons/templates/_externalsecret.tpl`).
+- GitLab CI shadow pipeline 신규.
+
+### Changed
+
+- **BREAKING**: module path 변경 —
+  `github.com/keiailab/operator-commons` →
+  `github.com/keiailab/keiailab-commons`. 모든 consumer 의 import path
+  갱신 필요 — 0.x 단계라 minor bump 으로 진행.
+- 라이선스 MIT 표준화 — 전 `.go` 파일 SPDX 헤더 추가.
+- README 정확성 기준 재작성.
+- self-contained 재구성 — 외부 서비스 참조 제거 (B1~B14).
+
+## [0.9.0] - 2026-05-21
+
+### Added
+
+- `pkg/pvc` (Beta tier) — PVC expansion helper + 안전한 in-place update.
+- `pkg/topology` (Beta tier) — PVC topology spread helper + zone-aware
+  affinity.
+- `scripts/release.sh` — 라이브러리 수동 release pipeline (ADR-0014).
+- `docs/UPGRADING.md` — semver 정책 + 3 operator 마이그레이션 가이드.
+- i18n S4 Phase 1~5 — glossary 4-lang 완성 + 번역 sync hook.
+
+### Changed
+
+- keiailab branding Wave 3 — README header / footer + `BRANDING.md` +
+  `docs/family.md`.
+
+## [0.8.0] - 2026-05-21
+
+### Added
 
 - `pkg/probes` (Experimental tier) — corev1.Probe fluent builder. HTTP /
   HTTPS / TCP / Exec 4 handlers + kubelet default (Period = 10 s /
@@ -26,23 +92,11 @@
   Provisioning / Ready / Degraded / Failed) + minimal `Recorder` interface +
   Emit / Emitf / EmitWarning / EmitWarningf (nil-safe) + WrappedError.
   100 % coverage + 0 lint.
-- `pkg/pvc` (Beta tier) — PVC expansion helper + 안전한 in-place update.
-- `pkg/topology` (Beta tier) — PVC topology spread helper + zone-aware
-  affinity.
-
-### Added (v1.0.0 graduation track)
-
-- `scripts/godoc-coverage.sh` — per-package + total godoc coverage 계산.
-  v1.0 80 % threshold 검증.
-- `docs/STABILITY.md` — 3-tier API stability promise + graduation criteria +
-  breaking change policy.
-- `pkg/status/REASONS.md` — Reason × Type × Status 사용 매트릭스.
-- `pkg/finalizer.EnsureOrder` — 다중 finalizer 순서 보장 helper. desiredOrder
-  안정 정렬 + 미지정 finalizer 후미 유지.
-- `pkg/labels.AllV2` + `V2` struct — K8s 1.30+ Recommended labels v2 매핑.
-- `pkg/version.AsMap` + `MarshalJSON` — `Matrix[E]` 시리얼라이저. JSON / YAML
-  호환, key 정렬 stable output.
-- `pkg/version/api_stability_test.go` — public API surface 가드.
+- `pkg/monitoring.NewPrometheusRule` + `AlertRule` / `RecordingRule` /
+  `RuleGroup` — PrometheusRule (`monitoring.coreos.com/v1`) manifest
+  builder.
+- `pkg/webhook.ConversionRegistry` — CRD version pair 변환 함수 registry
+  (`Register` / `Convert` / `HasPair`).
 - `pkg/networkpolicy.ComboPeer` + `WithComboIngressFromPeers` — CIDR +
   NamespaceSelector + PodSelector 조합 helper.
 - `pkg/security.RestrictedPodSecurityContext` + 옵션 (`WithPodFSGroup`,
@@ -50,6 +104,20 @@
   SecurityContext.
 - `pkg/security.RuntimeDefaultSeccompProfile` + `LocalhostSeccompProfile` +
   `UnconfinedSeccompProfile` — seccomp profile pointer helpers.
+- `pkg/version.AsMap` + `MarshalJSON` — `Matrix[E]` 시리얼라이저. JSON / YAML
+  호환, key 정렬 stable output.
+- `pkg/version/api_stability_test.go` — public API surface 가드.
+- `pkg/finalizer.EnsureOrder` — 다중 finalizer 순서 보장 helper. desiredOrder
+  안정 정렬 + 미지정 finalizer 후미 유지.
+- `pkg/labels.AllV2` + `V2` struct — K8s 1.30+ Recommended labels v2 매핑.
+- `pkg/status/REASONS.md` — Reason × Type × Status 사용 매트릭스.
+- `docs/STABILITY.md` — 3-tier API stability promise + graduation criteria +
+  breaking change policy.
+- `scripts/godoc-coverage.sh` — per-package + total godoc coverage 계산.
+  v1.0 80 % threshold 검증.
+- `docs/ARCHITECTURE.md` — single-page 아키텍처 설명.
+- README 4-lang i18n 시작 — EN canonical + KO 번역 + 4-lang switcher +
+  ja / zh placeholder.
 
 ## [0.7.0] - 2026-05-09
 

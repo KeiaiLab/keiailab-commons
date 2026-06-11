@@ -7,7 +7,8 @@
 // internal/controller/status.go 패턴 + Kubernetes deployment controller
 // 관용구 (KEP-1623) 를 표준으로 채택.
 //
-// 외부 의존성: k8s.io/apimachinery 만. controller-runtime 미의존.
+// 외부 의존성 (본 파일): k8s.io/apimachinery 만. client 의존 (controller-runtime)
+// 은 update.go 의 UpdateWithRetry 로 격리 — doc.go §의존성 정책 참조.
 package status
 
 import (

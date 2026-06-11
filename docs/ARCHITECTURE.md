@@ -23,15 +23,19 @@
 |---|---|---|---|
 | `pkg/finalizer` | **Stable** | `Add` / `Remove` / `Has` / `EnsureOrder` (stdlib `slices` only). | No |
 | `pkg/labels` | **Stable** | Recommended Kubernetes labels (`app.kubernetes.io/*`) builder — `Set`, `All()`, `Selector()`, plus `AllV2` for K8s 1.30+. | No |
-| `pkg/status` | **Stable** | Four standard Condition Types + six Reason catalog + helpers (`SetReady`, `SetAvailable`, `SetReadyFalse`). | No |
+| `pkg/status` | **Stable** | Four standard Condition Types + six Reason catalog + helpers (`SetReady`, `SetAvailable`, `SetReadyFalse`). | No — except `update.go` (`UpdateWithRetry`, Beta surface), which isolates the `pkg/client` dependency in that single file. |
 | `pkg/storageclass` | **Stable** | DNS-1123 storageClass validator + `Normalize` / `MustNormalize`. | No |
 | `pkg/version` | Beta | Version allowlist convention + generic `Matrix[E MatrixEntry]` + serializer. | No |
 | `pkg/monitoring` | Beta | Prometheus Operator `ServiceMonitor` and `PrometheusRule` builders (unstructured — CRD-soft). | No |
 | `pkg/networkpolicy` | Beta | Deny-by-default NetworkPolicy builder + functional options + `ComboPeer`. | No |
 | `pkg/security` | Beta | PodSecurity *restricted* SecurityContext builder + Pod / Container split + seccomp profile pointers. | No |
 | `pkg/events` | Beta | Minimal `Recorder` interface + nine standard `Reason` constants + `Emit` / `EmitWarning` / `WrappedError` (nil-safe). | No |
-| `pkg/pvc` | Beta | PVC expansion helpers — comparison + safe in-place update. | Yes (a single package; see ADR-0016). |
+| `pkg/pvc` | Beta | PVC expansion helpers — comparison + safe in-place update. | Yes (see ADR-0016). |
 | `pkg/topology` | Beta | PVC topology spread helpers + zone-aware affinity. | No |
+| `pkg/apply` | Beta | Idempotent apply helpers — ConfigMap / Secret / Service / StatefulSet / Deployment / NetworkPolicy / PDB / HPA, with create-only guards (Service `ClusterIP` / `IPFamilies`), immutable-field preservation + `RetryOnConflict`, and a `preserveReplicas` option. | Yes |
+| `pkg/reconcile` | Beta | Reconcile-loop helpers — `Statusable` interface + `ApplyErrorCondition` + `HandleFinalizerCleanup` + `SecretIfNotExists`. | Yes |
+| `pkg/certmanager` | Beta | `CertParams` + `BuildCertificate` + `BuildSelfSignedIssuer` + `ServiceSANs` (unstructured — zero cert-manager CRD Go dependency). | No |
+| `pkg/reconcilemetrics` | Beta | Reconcile Prometheus metrics — `New(subsystem)` + `IncTotal` / `ObserveReconcile` / `IncError` / `ResultFor`, preserving existing per-operator time-series names. | No (direct `prometheus/client_golang` dependency) |
 | `pkg/probes` | Experimental | `corev1.Probe` fluent builder — HTTP / HTTPS / TCP / Exec, kubelet defaults + clamp. | No |
 | `pkg/webhook` | Experimental | Admission validation helpers — `ValidateAllowedVersion`, `ValidateWithPredicate`, conversion registry. | No |
 | `pkg/bundle` | **Experimental** | OLM v1 bundle metadata — annotations, FBC schema types, directory validation. | No |
@@ -39,8 +43,9 @@
 Design invariant: **leaf packages depend on the Kubernetes API types and
 stdlib only**. No controller-runtime, no logr, no operator-sdk leakage.
 This keeps the library usable by any operator framework, including plain
-`client-go` projects. `pkg/pvc` is the documented single exception
-(ADR-0016).
+`client-go` projects. Since v0.11.0 the documented controller-runtime
+exceptions are `pkg/pvc` (ADR-0016), `pkg/apply`, `pkg/reconcile`, and
+`pkg/status` (`update.go` only).
 
 ## No CRDs, no reconciler
 
