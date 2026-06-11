@@ -308,15 +308,16 @@
 
 | Repo | 使用パッケージ | import バージョン |
 |---|---|---|
-| `mongodb-operator` | finalizer / version / webhook / pvc / topology / security | v0.10.0 (v0.11.0 移行予定) |
-| `postgres-operator` | topology / pvc / status / security / version / webhook | v0.10.0 (v0.11.0 移行予定) |
-| `valkey-operator` | finalizer / version / security / pvc / networkpolicy / monitoring | v0.10.0 (v0.11.0 移行予定) |
+| `mongodb-operator` | apply / reconcile / status / certmanager / reconcilemetrics / monitoring | v0.11.0 |
+| `postgres-operator` | finalizer / status / certmanager / reconcilemetrics / labels / probes | v0.11.0 |
+| `valkey-operator` | apply / reconcile / status / probes / storageclass / reconcilemetrics | v0.11.0 |
 
 ## 変更履歴
 
 | Date | Change | Refs |
 |---|---|---|
 | 2026-06-11 | v0.11.0 candidate: 新規 Beta 4 パッケージ (`pkg/apply` / `pkg/reconcile` / `pkg/certmanager` / `pkg/reconcilemetrics`) + `pkg/status` `UpdateWithRetry` Beta surface + Adopters 表 + v0.10.0 module path 例外注記。 | v0.11.0 / [UPGRADING.md](UPGRADING.ja.md) |
+| 2026-06-11 | Adopters: 3 operator すべて v0.11.0 への移行完了 (mongodb-operator#312 / postgres-operator#258 / valkey-operator#285) — 使用パッケージ列を更新。 | v0.11.0 |
 
 ---
 

@@ -282,15 +282,16 @@
 
 | Repo | 사용 패키지 | import 버전 |
 |---|---|---|
-| `mongodb-operator` | finalizer / version / webhook / pvc / topology / security | v0.10.0 (v0.11.0 마이그레이션 예정) |
-| `postgres-operator` | topology / pvc / status / security / version / webhook | v0.10.0 (v0.11.0 마이그레이션 예정) |
-| `valkey-operator` | finalizer / version / security / pvc / networkpolicy / monitoring | v0.10.0 (v0.11.0 마이그레이션 예정) |
+| `mongodb-operator` | apply / reconcile / status / certmanager / reconcilemetrics / monitoring | v0.11.0 |
+| `postgres-operator` | finalizer / status / certmanager / reconcilemetrics / labels / probes | v0.11.0 |
+| `valkey-operator` | apply / reconcile / status / probes / storageclass / reconcilemetrics | v0.11.0 |
 
 ## 변경 이력
 
 | Date | Change | Refs |
 |---|---|---|
 | 2026-06-11 | v0.11.0 candidate: 신규 Beta 4 패키지 (`pkg/apply` / `pkg/reconcile` / `pkg/certmanager` / `pkg/reconcilemetrics`) + `pkg/status` `UpdateWithRetry` Beta 표면 + Adopters 표 + v0.10.0 module path 예외 주석. | v0.11.0 / [UPGRADING.md](UPGRADING.ko.md) |
+| 2026-06-11 | Adopters: 3 operator 전부 v0.11.0 마이그레이션 완료 (mongodb-operator#312 / postgres-operator#258 / valkey-operator#285) — 사용 패키지 컬럼 갱신. | v0.11.0 |
 
 ---
 

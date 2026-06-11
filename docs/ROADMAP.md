@@ -317,15 +317,16 @@ the library evolves according to the needs of its downstream consumers.
 
 | Repo | Packages used | Import version |
 |---|---|---|
-| `mongodb-operator` | finalizer / version / webhook / pvc / topology / security | v0.10.0 (v0.11.0 migration planned) |
-| `postgres-operator` | topology / pvc / status / security / version / webhook | v0.10.0 (v0.11.0 migration planned) |
-| `valkey-operator` | finalizer / version / security / pvc / networkpolicy / monitoring | v0.10.0 (v0.11.0 migration planned) |
+| `mongodb-operator` | apply / reconcile / status / certmanager / reconcilemetrics / monitoring | v0.11.0 |
+| `postgres-operator` | finalizer / status / certmanager / reconcilemetrics / labels / probes | v0.11.0 |
+| `valkey-operator` | apply / reconcile / status / probes / storageclass / reconcilemetrics | v0.11.0 |
 
 ## Change history
 
 | Date | Change | Refs |
 |---|---|---|
 | 2026-06-11 | v0.11.0 candidate: four new Beta packages (`pkg/apply` / `pkg/reconcile` / `pkg/certmanager` / `pkg/reconcilemetrics`) + `pkg/status` `UpdateWithRetry` Beta surface + Adopters table + v0.10.0 module-path exception note. | v0.11.0 / [UPGRADING.md](UPGRADING.md) |
+| 2026-06-11 | Adopters: all three operators migrated to v0.11.0 (mongodb-operator#312 / postgres-operator#258 / valkey-operator#285) — packages-used column refreshed. | v0.11.0 |
 
 ---
 
