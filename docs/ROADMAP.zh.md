@@ -314,15 +314,16 @@ follow-up items*。本项目不维护基于时间的截止日期 —
 
 | Repo | 使用包 | import 版本 |
 |---|---|---|
-| `mongodb-operator` | finalizer / version / webhook / pvc / topology / security | v0.10.0（计划迁移至 v0.11.0） |
-| `postgres-operator` | topology / pvc / status / security / version / webhook | v0.10.0（计划迁移至 v0.11.0） |
-| `valkey-operator` | finalizer / version / security / pvc / networkpolicy / monitoring | v0.10.0（计划迁移至 v0.11.0） |
+| `mongodb-operator` | apply / reconcile / status / certmanager / reconcilemetrics / monitoring | v0.11.0 |
+| `postgres-operator` | finalizer / status / certmanager / reconcilemetrics / labels / probes | v0.11.0 |
+| `valkey-operator` | apply / reconcile / status / probes / storageclass / reconcilemetrics | v0.11.0 |
 
 ## 变更历史
 
 | Date | Change | Refs |
 |---|---|---|
 | 2026-06-11 | v0.11.0 candidate：新增 4 个 Beta 包（`pkg/apply` / `pkg/reconcile` / `pkg/certmanager` / `pkg/reconcilemetrics`）+ `pkg/status` `UpdateWithRetry` Beta surface + Adopters 表 + v0.10.0 module path 例外说明。 | v0.11.0 / [UPGRADING.md](UPGRADING.zh.md) |
+| 2026-06-11 | Adopters：3 个 operator 已全部迁移至 v0.11.0（mongodb-operator#312 / postgres-operator#258 / valkey-operator#285）— 已更新使用包列。 | v0.11.0 |
 
 ---
 
