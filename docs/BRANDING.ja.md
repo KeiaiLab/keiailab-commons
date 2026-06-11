@@ -27,11 +27,11 @@ Helm library chart (`charts/keiailab-commons`) として公開されています
 
 | 資産 | URL | 用途 |
 |---|---|---|
-| Primary ロゴ (SVG) | `https://keiailab.com/assets/logo.svg` | README ヘッダー、スライド |
-| Mono mark | `https://keiailab.com/assets/mark.svg` | Favicon、ソーシャルカード |
-| Wordmark | `https://keiailab.com/assets/wordmark.svg` | Footer、ダーク背景 |
+| Current primary logo | `docs/branding/symbol.png` | README header, slide decks |
+| Current favicon | `https://keiailab.com/favicon.ico` | Favicon, social cards |
+| Planned SVG kit | `https://keiailab.com/assets/{logo,mark,wordmark}.svg` | Future replacement after URLs return 200 |
 
-**ロゴ配置**: README 上部中央、width 120 px。常に `https://keiailab.com`
+**ロゴ配置**: README 上部中央、width 96 px。常に `https://keiailab.com`
 にリンク。
 
 **Clear space**: ロゴ周辺の最小 padding はロゴ width の 25 %。
@@ -93,7 +93,7 @@ consumer。
 
 ```markdown
 <p align="center">
-  <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
+  <img src="docs/branding/symbol.png" alt="keiailab" width="96"/>
 </p>
 
 # keiailab-commons
@@ -101,7 +101,7 @@ consumer。
 > **Kubernetes operator 共通 scaffolding のための Go ライブラリ — finalizer / labels / status / version / security / monitoring partials.**
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-0EA5A8.svg" alt="License"/></a>
   <!-- 追加 shield.io バッジ -->
 </p>
 

@@ -25,11 +25,11 @@ import 使用 —— 这里不指名或背书任何具体 consumer。
 
 | 资源 | URL | 用途 |
 |---|---|---|
-| Primary 标志 (SVG) | `https://keiailab.com/assets/logo.svg` | README header、幻灯片 |
-| Mono mark | `https://keiailab.com/assets/mark.svg` | Favicon、social card |
-| Wordmark | `https://keiailab.com/assets/wordmark.svg` | Footer、深色背景 |
+| Current primary logo | `docs/branding/symbol.png` | README header, slide decks |
+| Current favicon | `https://keiailab.com/favicon.ico` | Favicon, social cards |
+| Planned SVG kit | `https://keiailab.com/assets/{logo,mark,wordmark}.svg` | Future replacement after URLs return 200 |
 
-**标志位置**: README 顶部居中,width 120 px。始终链接到
+**标志位置**: README 顶部居中,width 96 px。始终链接到
 `https://keiailab.com`。
 
 **Clear space**: 标志周围的最小 padding 等于标志 width 的 25 %。
@@ -87,7 +87,7 @@ GitHub README shield.io 徽章使用相同的 hex 值。
 
 ```markdown
 <p align="center">
-  <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
+  <img src="docs/branding/symbol.png" alt="keiailab" width="96"/>
 </p>
 
 # keiailab-commons
@@ -95,7 +95,7 @@ GitHub README shield.io 徽章使用相同的 hex 值。
 > **用于 Kubernetes operator 通用 scaffolding 的 Go 共享库 — finalizer / labels / status / version / security / monitoring partials.**
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-0EA5A8.svg" alt="License"/></a>
   <!-- 其他 shield.io 徽章 -->
 </p>
 

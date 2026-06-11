@@ -26,11 +26,11 @@ named or endorsed here.
 
 | Asset | URL | Usage |
 |---|---|---|
-| Primary logo (SVG) | `https://keiailab.com/assets/logo.svg` | README header, slide decks |
-| Mono mark | `https://keiailab.com/assets/mark.svg` | Favicon, social cards |
-| Wordmark | `https://keiailab.com/assets/wordmark.svg` | Footer, dark backgrounds |
+| Current primary logo | `docs/branding/symbol.png` | README header, slide decks |
+| Current favicon | `https://keiailab.com/favicon.ico` | Favicon, social cards |
+| Planned SVG kit | `https://keiailab.com/assets/{logo,mark,wordmark}.svg` | Future replacement after URLs return 200 |
 
-**Logo placement**: Top-center of README, width 120 px. Always link to
+**Logo placement**: Top-center of README, width 96 px. Always link to
 `https://keiailab.com`.
 
 **Clear space**: Minimum padding around the logo equals 25 % of the logo
@@ -93,7 +93,7 @@ Every README's first block follows this layout:
 
 ```markdown
 <p align="center">
-  <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
+  <img src="docs/branding/symbol.png" alt="keiailab" width="96"/>
 </p>
 
 # keiailab-commons
@@ -101,7 +101,7 @@ Every README's first block follows this layout:
 > **Shared Go library for Kubernetes operator scaffolding — finalizer / labels / status / version / security / monitoring partials.**
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-0EA5A8.svg" alt="License"/></a>
   <!-- additional shield.io badges -->
 </p>
 

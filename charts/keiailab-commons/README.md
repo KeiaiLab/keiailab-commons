@@ -1,7 +1,18 @@
 # keiailab-commons (Helm library chart)
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/KeiaiLab/keiailab-commons/main/docs/branding/symbol.png" alt="Keiailab Commons symbol" width="96"/>
+</p>
+
 `keiailab-commons` 의 *Helm library chart*. downstream operator chart 들이
 공통으로 사용할 partial helper 를 제공합니다.
+
+## Design assets
+
+| Asset | URL | Usage |
+|---|---|---|
+| Centered service symbol | https://raw.githubusercontent.com/KeiaiLab/keiailab-commons/main/docs/branding/symbol.png | Artifact Hub package icon and screenshot |
+| Branding guide | https://github.com/KeiaiLab/keiailab-commons/blob/main/docs/BRANDING.md | GitHub visual usage rules |
 
 ## 사용
 
