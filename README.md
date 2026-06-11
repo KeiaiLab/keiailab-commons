@@ -22,6 +22,14 @@
   <a href="https://github.com/keiailab/keiailab-commons/discussions"><img src="https://img.shields.io/github/discussions/keiailab/keiailab-commons?label=discussions&logo=github" alt="GitHub Discussions"/></a>
 </p>
 
+## Design assets
+
+| Asset | Path | Usage |
+|---|---|---|
+| Centered service symbol | [`docs/branding/symbol.png`](docs/branding/symbol.png) | GitHub README, Artifact Hub icon/screenshot |
+| Keiailab base symbol | [`docs/branding/base-symbol.png`](docs/branding/base-symbol.png) | Source reference for the outer rotating-arrow mark |
+| Branding guide | [`docs/BRANDING.md`](docs/BRANDING.md) | Public visual usage rules |
+
 Operator authors repeatedly re-implement the same scaffolding: restricted
 PodSecurity contexts, supported-version matrices, default-deny NetworkPolicies,
 ServiceMonitor builders, finalizer helpers, status condition catalogs. Each

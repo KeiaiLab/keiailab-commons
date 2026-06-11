@@ -15,6 +15,7 @@ sources:
 maintainers:
   - name: keiailab
     url: https://github.com/keiailab
+icon: https://raw.githubusercontent.com/KeiaiLab/keiailab-commons/main/docs/branding/symbol.png
 keywords:
   - keiailab
   - library
@@ -25,3 +26,13 @@ keywords:
 annotations:
   artifacthub.io/license: MIT
   artifacthub.io/category: integration-delivery
+  artifacthub.io/links: |
+    - name: Documentation
+      url: https://github.com/KeiaiLab/keiailab-commons/blob/main/README.md
+    - name: Source Code
+      url: https://github.com/KeiaiLab/keiailab-commons
+    - name: Design Assets
+      url: https://github.com/KeiaiLab/keiailab-commons/blob/main/docs/BRANDING.md
+  artifacthub.io/screenshots: |
+    - title: Keiailab Commons centered service symbol
+      url: https://raw.githubusercontent.com/KeiaiLab/keiailab-commons/main/docs/branding/symbol.png
