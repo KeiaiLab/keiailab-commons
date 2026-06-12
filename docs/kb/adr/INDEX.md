@@ -19,6 +19,7 @@
 | [0016](0016-pvc-topology-extraction.md) | `pkg/pvc` + `pkg/topology` introduction (downstream dedup) | Accepted | 2026-05-21 |
 | [0017](0017-olm-v1-bundle-package.md) | `pkg/bundle` — OLM v1 bundle metadata helpers | Accepted | 2026-05-26 |
 | [0018](0018-keiailab-commons-rename.md) | `keiailab-commons` repository and module rename | Accepted | 2026-06-11 |
+| [0019](0019-artifacthub-publish-pipeline.md) | ArtifactHub publish pipeline — GHA 2-workflow narrow exception (signed OCI) | Accepted | 2026-06-12 |
 
 ## Conventions
 
