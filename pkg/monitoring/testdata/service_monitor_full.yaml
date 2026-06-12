@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/part-of: downstream-app
+    team: data
+  name: downstream-app-full-metrics
+  namespace: data
+spec:
+  endpoints:
+  - honorLabels: true
+    interval: 15s
+    path: /custom-metrics
+    port: metrics
+    scheme: https
+    scrapeTimeout: 10s
+  namespaceSelector:
+    matchNames:
+    - data
+    - data-staging
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: downstream-app
