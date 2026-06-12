@@ -1,0 +1,62 @@
+name: ArtifactHub verify
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      chart_version:
+        description: "검증 대상 chart version (기본: Chart.yaml SSOT — 예: 0.8.0)"
+        required: false
+  pull_request:
+    paths:
+      - 'charts/**'
+      - 'hack/artifacthub_*.sh'
+      - '.github/workflows/artifacthub-verify.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: artifacthub-verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: ah lint (메타데이터)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - name: Install ah CLI
+        run: |
+          set -euo pipefail
+          AH_VERSION="1.22.0"   # 최신 stable — https://github.com/artifacthub/hub/releases/latest
+          curl -fsSL -o /tmp/ah.tar.gz \
+            "https://github.com/artifacthub/hub/releases/download/v${AH_VERSION}/ah_${AH_VERSION}_linux_amd64.tar.gz"
+          tar -xzf /tmp/ah.tar.gz -C /tmp ah
+          sudo install /tmp/ah /usr/local/bin/ah
+          ah version
+      - name: ah lint
+        run: ah lint --kind helm --path charts/keiailab-commons
+
+  smoke:
+    name: ArtifactHub 인덱싱/서명 smoke
+    runs-on: ubuntu-latest
+    # PR 시점엔 chart 가 아직 publish 전일 수 있어 인덱싱 검증이 false-negative → tag/dispatch 에서만 실행
+    if: github.event_name != 'pull_request'
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: azure/setup-helm@dda3372f752e03dde6b3237bc9431cdc2f7a02a2 # v5
+        with:
+          version: latest
+      - name: Run artifacthub smoke
+        env:
+          AH_API_KEY_ID: ${{ secrets.AH_API_KEY_ID }}
+          AH_API_KEY_SECRET: ${{ secrets.AH_API_KEY_SECRET }}
+          EXPECTED_ARTIFACTHUB_REPOSITORY_URL: oci://ghcr.io/keiailab/charts/keiailab-commons
+          # keiailab-commons 는 repo tag(v* = Go 모듈 semver) ≠ chart version (ADR-0019).
+          # tag 를 chart version 으로 오인하지 않도록 dispatch input 또는 Chart.yaml SSOT 만 사용.
+          EXPECTED_CHART_VERSION: ${{ github.event.inputs.chart_version }}
+          ARTIFACTHUB_SMOKE_ATTEMPTS: "90"
+          ARTIFACTHUB_SMOKE_SLEEP_SECONDS: "30"
+        run: bash hack/artifacthub_smoke.sh

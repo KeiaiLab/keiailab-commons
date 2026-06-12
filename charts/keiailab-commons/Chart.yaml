@@ -25,3 +25,6 @@ keywords:
 annotations:
   artifacthub.io/license: MIT
   artifacthub.io/category: integration-delivery
+  artifacthub.io/signKey: |
+    fingerprint: F1A6893583E632A757FF6767F3CC8C6AEC9CEB08
+    url: https://raw.githubusercontent.com/keiailab/keiailab-commons/main/charts/keiailab-helm-signing-public.asc

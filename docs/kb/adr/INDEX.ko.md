@@ -19,6 +19,7 @@
 | [0016](0016-pvc-topology-extraction.md) | `pkg/pvc` + `pkg/topology` 신규 추출 (downstream 중복 해소) | Accepted | 2026-05-21 |
 | [0017](0017-olm-v1-bundle-package.md) | `pkg/bundle` — OLM v1 번들 메타데이터 헬퍼 | Accepted | 2026-05-26 |
 | [0018](0018-keiailab-commons-rename.md) | `keiailab-commons` repository/module rename | Accepted | 2026-06-11 |
+| [0019](0019-artifacthub-publish-pipeline.md) | ArtifactHub publish 파이프라인 — GHA 2-workflow narrow exception (signed OCI) | Accepted | 2026-06-12 |
 
 ## 작성 규약
 

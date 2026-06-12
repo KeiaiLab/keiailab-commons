@@ -1,0 +1,110 @@
+name: Helm chart publish
+
+# Chart 릴리스를 ghcr.io OCI 로 publish (서명 포함) — ArtifactHub 추적 소스.
+#
+# keiailab-commons 특수성 (ADR-0019):
+#   - repo tag (v*) 는 Go 모듈 semver, chart version 은 charts/keiailab-commons/Chart.yaml SSOT
+#     → mongodb-operator 식 tag↔chart parity check 부적용. 대신 OCI 멱등 skip 으로 중복 무해.
+#   - gh-pages HTTP repo 단계 의도적 생략 — 소비 경로가 OCI 뿐 (operator 3종 dependencies
+#     repository: oci://ghcr.io/keiailab/charts). ArtifactHub 도 OCI 추적.
+#
+# 트리거 3종 — 어느 릴리스 방식이든 작동:
+#   - release: published   → `gh release create vX.Y.Z`
+#   - push:    tags ['v*'] → `git push origin vX.Y.Z`
+#   - workflow_dispatch    → 수동 재실행 / 백필 / 서명 provenance republish
+on:
+  release:
+    types: [published]
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Ref to publish (default: 현재 main — chart version 은 Chart.yaml SSOT)"
+        required: false
+
+permissions:
+  contents: read
+  packages: write   # push helm chart to ghcr.io OCI registry
+
+concurrency:
+  group: helm-publish-${{ github.event.release.tag_name || github.event.inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.release.tag_name || github.event.inputs.tag || github.ref }}
+
+      - uses: azure/setup-helm@dda3372f752e03dde6b3237bc9431cdc2f7a02a2 # v5
+        with:
+          version: latest
+
+      # ghcr.io OCI helm chart publish — ArtifactHub 가 추적하는 유일 소스.
+      # 동일 chart version 이 이미 존재하면 metadata 일치 검증 후 skip (멱등).
+      - name: Push signed chart to ghcr.io OCI registry
+        env:
+          GHCR_USER: ${{ github.actor }}
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HELM_GPG_FINGERPRINT: F1A6893583E632A757FF6767F3CC8C6AEC9CEB08
+          HELM_SIGNING_PRIVATE_KEY: ${{ secrets.HELM_SIGNING_PRIVATE_KEY }}
+          HELM_SIGNING_PASSPHRASE: ${{ secrets.HELM_SIGNING_PASSPHRASE }}
+          WORKFLOW_EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          VERSION=$(grep '^version:' charts/keiailab-commons/Chart.yaml | awk '{print $2}' | tr -d '"')
+          APP_VERSION=$(grep '^appVersion:' charts/keiailab-commons/Chart.yaml | awk '{print $2}' | tr -d '"')
+          CHART_REF="oci://ghcr.io/keiailab/charts/keiailab-commons"
+          if [ -z "${HELM_SIGNING_PRIVATE_KEY:-}" ]; then
+            echo "::error::HELM_SIGNING_PRIVATE_KEY secret is required so Artifact Hub marks OCI charts as signed"
+            exit 1
+          fi
+          echo "$GHCR_TOKEN" | helm registry login ghcr.io -u "$GHCR_USER" --password-stdin
+          cleanup() {
+            helm registry logout ghcr.io || true
+            rm -rf "${SIGNING_GNUPGHOME:-}" out
+          }
+          trap cleanup EXIT
+          if helm show chart "$CHART_REF" --version "$VERSION" > /tmp/existing-chart.yaml 2>/tmp/existing-chart.err; then
+            EXISTING_VERSION=$(awk -F': *' '/^version:/ {gsub(/"/, "", $2); print $2; exit}' /tmp/existing-chart.yaml)
+            EXISTING_APP_VERSION=$(awk -F': *' '/^appVersion:/ {gsub(/"/, "", $2); print $2; exit}' /tmp/existing-chart.yaml)
+            if [ "$EXISTING_VERSION" != "$VERSION" ] || [ "$EXISTING_APP_VERSION" != "$APP_VERSION" ]; then
+              echo "::error::OCI chart ${VERSION} exists with unexpected metadata: version=${EXISTING_VERSION}, appVersion=${EXISTING_APP_VERSION}"
+              exit 1
+            fi
+            if [ "$WORKFLOW_EVENT_NAME" != "workflow_dispatch" ]; then
+              echo "✓ OCI chart ${VERSION} already exists with appVersion ${APP_VERSION}; skipping duplicate ${WORKFLOW_EVENT_NAME} publish"
+              exit 0
+            fi
+            echo "↻ OCI chart ${VERSION} already exists; workflow_dispatch will republish signed provenance"
+          fi
+          SIGNING_GNUPGHOME="$(mktemp -d)"
+          chmod 700 "$SIGNING_GNUPGHOME"
+          printf '%s\n' "$HELM_SIGNING_PRIVATE_KEY" > "$SIGNING_GNUPGHOME/private.asc"
+          gpg --batch --homedir "$SIGNING_GNUPGHOME" --import "$SIGNING_GNUPGHOME/private.asc" >/dev/null
+          KEY_LISTING="$(gpg --batch --homedir "$SIGNING_GNUPGHOME" --with-colons --list-secret-keys --fingerprint "$HELM_GPG_FINGERPRINT")"
+          FOUND_FINGERPRINT="$(awk -F: '$1 == "fpr" { print $10; exit }' <<< "$KEY_LISTING")"
+          SIGNING_KEY_UID="$(awk -F: '$1 == "uid" { print $10; exit }' <<< "$KEY_LISTING")"
+          if [ "$FOUND_FINGERPRINT" != "$HELM_GPG_FINGERPRINT" ] || [ -z "$SIGNING_KEY_UID" ]; then
+            echo "::error::Helm signing key fingerprint mismatch or missing UID"
+            exit 1
+          fi
+          gpg --batch --homedir "$SIGNING_GNUPGHOME" --yes --export-secret-keys "$HELM_GPG_FINGERPRINT" > "$SIGNING_GNUPGHOME/secring.gpg"
+          gpg --batch --homedir "$SIGNING_GNUPGHOME" --yes --export "$HELM_GPG_FINGERPRINT" > "$SIGNING_GNUPGHOME/pubring.gpg"
+          chmod 600 "$SIGNING_GNUPGHOME/secring.gpg" "$SIGNING_GNUPGHOME/pubring.gpg"
+          SIGN_ARGS=(--sign --key "$SIGNING_KEY_UID" --keyring "$SIGNING_GNUPGHOME/secring.gpg")
+          if [ -n "${HELM_SIGNING_PASSPHRASE:-}" ]; then
+            printf '%s' "$HELM_SIGNING_PASSPHRASE" > "$SIGNING_GNUPGHOME/passphrase.txt"
+            SIGN_ARGS+=(--passphrase-file "$SIGNING_GNUPGHOME/passphrase.txt")
+          fi
+          mkdir -p out
+          helm package "${SIGN_ARGS[@]}" charts/keiailab-commons -d out/
+          helm verify "out/keiailab-commons-${VERSION}.tgz" --keyring "$SIGNING_GNUPGHOME/pubring.gpg"
+          test -s "out/keiailab-commons-${VERSION}.tgz.prov"
+          helm push "out/keiailab-commons-${VERSION}.tgz" oci://ghcr.io/keiailab/charts
+          helm show chart "$CHART_REF" --version "$VERSION" >/dev/null
+          echo "✓ pushed signed chart ${VERSION} to ${CHART_REF}"
