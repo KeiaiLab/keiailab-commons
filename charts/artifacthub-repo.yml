@@ -9,7 +9,7 @@
 #
 # signingKey: keiailab 공통 helm 서명키 (2026-06-10 회전본, mongodb/valkey/postgres 와 동일).
 
-repositoryID: 00000000-0000-0000-0000-000000000000   # ArtifactHub 등록 후 교체
+repositoryID: 952a6c30-9a51-4553-bfda-27f57fa6ddac
 
 signingKey:
   fingerprint: "F1A6893583E632A757FF6767F3CC8C6AEC9CEB08"
