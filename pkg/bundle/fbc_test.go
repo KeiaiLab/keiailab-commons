@@ -34,16 +34,16 @@ func TestSchemaConstants(t *testing.T) {
 func TestNewPackage(t *testing.T) {
 	t.Parallel()
 
-	p := NewPackage("my-operator", "stable", "An example operator")
+	p := NewPackage(testPkgName, testChannelStable, "An example operator")
 
 	if p.Schema != SchemaPackage {
 		t.Errorf("Schema = %q, want %q", p.Schema, SchemaPackage)
 	}
-	if p.Name != "my-operator" {
-		t.Errorf("Name = %q, want %q", p.Name, "my-operator")
+	if p.Name != testPkgName {
+		t.Errorf("Name = %q, want %q", p.Name, testPkgName)
 	}
-	if p.DefaultChannel != "stable" {
-		t.Errorf("DefaultChannel = %q, want %q", p.DefaultChannel, "stable")
+	if p.DefaultChannel != testChannelStable {
+		t.Errorf("DefaultChannel = %q, want %q", p.DefaultChannel, testChannelStable)
 	}
 	if p.Description != "An example operator" {
 		t.Errorf("Description = %q, want %q", p.Description, "An example operator")
@@ -60,16 +60,16 @@ func TestNewChannel(t *testing.T) {
 		{Name: "my-operator.v0.1.0"},
 		{Name: "my-operator.v0.2.0", Replaces: "my-operator.v0.1.0"},
 	}
-	ch := NewChannel("my-operator", "stable", entries...)
+	ch := NewChannel(testPkgName, testChannelStable, entries...)
 
 	if ch.Schema != SchemaChannel {
 		t.Errorf("Schema = %q, want %q", ch.Schema, SchemaChannel)
 	}
-	if ch.Package != "my-operator" {
-		t.Errorf("Package = %q, want %q", ch.Package, "my-operator")
+	if ch.Package != testPkgName {
+		t.Errorf("Package = %q, want %q", ch.Package, testPkgName)
 	}
-	if ch.Name != "stable" {
-		t.Errorf("Name = %q, want %q", ch.Name, "stable")
+	if ch.Name != testChannelStable {
+		t.Errorf("Name = %q, want %q", ch.Name, testChannelStable)
 	}
 	if len(ch.Entries) != 2 {
 		t.Fatalf("Entries len = %d, want 2", len(ch.Entries))
@@ -92,13 +92,13 @@ func TestNewChannel_NoEntries(t *testing.T) {
 func TestNewBundle(t *testing.T) {
 	t.Parallel()
 
-	b := NewBundle("my-operator", "my-operator.v0.1.0", "quay.io/example/my-operator-bundle:v0.1.0")
+	b := NewBundle(testPkgName, "my-operator.v0.1.0", "quay.io/example/my-operator-bundle:v0.1.0")
 
 	if b.Schema != SchemaBundle {
 		t.Errorf("Schema = %q, want %q", b.Schema, SchemaBundle)
 	}
-	if b.Package != "my-operator" {
-		t.Errorf("Package = %q, want %q", b.Package, "my-operator")
+	if b.Package != testPkgName {
+		t.Errorf("Package = %q, want %q", b.Package, testPkgName)
 	}
 	if b.Name != "my-operator.v0.1.0" {
 		t.Errorf("Name = %q, want %q", b.Name, "my-operator.v0.1.0")
@@ -119,13 +119,13 @@ func TestNewBundle(t *testing.T) {
 func TestPackage_MarshalJSON(t *testing.T) {
 	t.Parallel()
 
-	p := NewPackage("my-operator", "stable", "desc")
+	p := NewPackage(testPkgName, testChannelStable, "desc")
 	data, err := json.Marshal(p)
 	if err != nil {
 		t.Fatalf("Marshal error: %v", err)
 	}
 
-	var decoded map[string]interface{}
+	var decoded map[string]any
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		t.Fatalf("Unmarshal error: %v", err)
 	}
@@ -133,11 +133,11 @@ func TestPackage_MarshalJSON(t *testing.T) {
 	if decoded["schema"] != SchemaPackage {
 		t.Errorf("schema = %v, want %q", decoded["schema"], SchemaPackage)
 	}
-	if decoded["name"] != "my-operator" {
-		t.Errorf("name = %v, want %q", decoded["name"], "my-operator")
+	if decoded["name"] != testPkgName {
+		t.Errorf("name = %v, want %q", decoded["name"], testPkgName)
 	}
-	if decoded["defaultChannel"] != "stable" {
-		t.Errorf("defaultChannel = %v, want %q", decoded["defaultChannel"], "stable")
+	if decoded["defaultChannel"] != testChannelStable {
+		t.Errorf("defaultChannel = %v, want %q", decoded["defaultChannel"], testChannelStable)
 	}
 }
 
@@ -150,7 +150,7 @@ func TestPackage_MarshalJSON_OmitsEmptyFields(t *testing.T) {
 		t.Fatalf("Marshal error: %v", err)
 	}
 
-	var decoded map[string]interface{}
+	var decoded map[string]any
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		t.Fatalf("Unmarshal error: %v", err)
 	}
@@ -166,7 +166,7 @@ func TestPackage_MarshalJSON_OmitsEmptyFields(t *testing.T) {
 func TestChannel_MarshalJSON(t *testing.T) {
 	t.Parallel()
 
-	ch := NewChannel("pkg", "stable",
+	ch := NewChannel("pkg", testChannelStable,
 		ChannelEntry{Name: "pkg.v1.0.0"},
 		ChannelEntry{Name: "pkg.v1.1.0", Replaces: "pkg.v1.0.0", SkipRange: ">=1.0.0 <1.1.0"},
 	)
@@ -175,7 +175,7 @@ func TestChannel_MarshalJSON(t *testing.T) {
 		t.Fatalf("Marshal error: %v", err)
 	}
 
-	var decoded map[string]interface{}
+	var decoded map[string]any
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		t.Fatalf("Unmarshal error: %v", err)
 	}
@@ -183,7 +183,7 @@ func TestChannel_MarshalJSON(t *testing.T) {
 	if decoded["schema"] != SchemaChannel {
 		t.Errorf("schema = %v, want %q", decoded["schema"], SchemaChannel)
 	}
-	entries, ok := decoded["entries"].([]interface{})
+	entries, ok := decoded["entries"].([]any)
 	if !ok || len(entries) != 2 {
 		t.Fatalf("entries len = %v, want 2", decoded["entries"])
 	}
@@ -205,7 +205,7 @@ func TestBundle_MarshalJSON(t *testing.T) {
 		t.Fatalf("Marshal error: %v", err)
 	}
 
-	var decoded map[string]interface{}
+	var decoded map[string]any
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		t.Fatalf("Unmarshal error: %v", err)
 	}
@@ -217,11 +217,11 @@ func TestBundle_MarshalJSON(t *testing.T) {
 		t.Errorf("image = %v, want %q", decoded["image"], "quay.io/example/pkg:v1.0.0")
 	}
 
-	props, ok := decoded["properties"].([]interface{})
+	props, ok := decoded["properties"].([]any)
 	if !ok || len(props) != 1 {
 		t.Fatalf("properties len = %v, want 1", decoded["properties"])
 	}
-	related, ok := decoded["relatedImages"].([]interface{})
+	related, ok := decoded["relatedImages"].([]any)
 	if !ok || len(related) != 1 {
 		t.Fatalf("relatedImages len = %v, want 1", decoded["relatedImages"])
 	}
@@ -236,7 +236,7 @@ func TestBundle_MarshalJSON_OmitsEmptyCollections(t *testing.T) {
 		t.Fatalf("Marshal error: %v", err)
 	}
 
-	var decoded map[string]interface{}
+	var decoded map[string]any
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		t.Fatalf("Unmarshal error: %v", err)
 	}
@@ -258,7 +258,7 @@ func TestChannelEntry_MarshalJSON_OmitsEmpty(t *testing.T) {
 		t.Fatalf("Marshal error: %v", err)
 	}
 
-	var decoded map[string]interface{}
+	var decoded map[string]any
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		t.Fatalf("Unmarshal error: %v", err)
 	}

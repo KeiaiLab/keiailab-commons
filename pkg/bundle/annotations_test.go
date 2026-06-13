@@ -6,26 +6,31 @@ import (
 	"testing"
 )
 
+const (
+	testPkgName       = "my-operator"
+	testChannelStable = "stable"
+)
+
 func TestNewAnnotations(t *testing.T) {
 	t.Parallel()
 
-	a := NewAnnotations("my-operator", []string{"stable", "candidate"}, "stable")
+	a := NewAnnotations(testPkgName, []string{testChannelStable, "candidate"}, testChannelStable)
 
-	if a.PackageName != "my-operator" {
-		t.Errorf("PackageName = %q, want %q", a.PackageName, "my-operator")
+	if a.PackageName != testPkgName {
+		t.Errorf("PackageName = %q, want %q", a.PackageName, testPkgName)
 	}
-	if len(a.Channels) != 2 || a.Channels[0] != "stable" || a.Channels[1] != "candidate" {
+	if len(a.Channels) != 2 || a.Channels[0] != testChannelStable || a.Channels[1] != "candidate" {
 		t.Errorf("Channels = %v, want [stable candidate]", a.Channels)
 	}
-	if a.DefaultChannel != "stable" {
-		t.Errorf("DefaultChannel = %q, want %q", a.DefaultChannel, "stable")
+	if a.DefaultChannel != testChannelStable {
+		t.Errorf("DefaultChannel = %q, want %q", a.DefaultChannel, testChannelStable)
 	}
 }
 
 func TestAnnotations_Map_AllKeys(t *testing.T) {
 	t.Parallel()
 
-	a := NewAnnotations("my-operator", []string{"stable", "candidate"}, "stable")
+	a := NewAnnotations(testPkgName, []string{testChannelStable, "candidate"}, testChannelStable)
 	m := a.Map()
 
 	requiredKeys := []string{
@@ -51,7 +56,7 @@ func TestAnnotations_Map_AllKeys(t *testing.T) {
 func TestAnnotations_Map_Values(t *testing.T) {
 	t.Parallel()
 
-	a := NewAnnotations("my-operator", []string{"stable", "candidate"}, "stable")
+	a := NewAnnotations(testPkgName, []string{testChannelStable, "candidate"}, testChannelStable)
 	m := a.Map()
 
 	cases := []struct {
@@ -61,9 +66,9 @@ func TestAnnotations_Map_Values(t *testing.T) {
 		{MediaTypeKey, MediaTypeRegistryV1},
 		{ManifestsKey, "manifests/"},
 		{MetadataKey, "metadata/"},
-		{PackageKey, "my-operator"},
+		{PackageKey, testPkgName},
 		{ChannelsKey, "stable,candidate"},
-		{DefaultChannelKey, "stable"},
+		{DefaultChannelKey, testChannelStable},
 	}
 
 	for _, tc := range cases {
@@ -105,7 +110,7 @@ func TestAnnotations_Map_EmptyChannels(t *testing.T) {
 func TestAnnotations_DockerLabels_MatchesMap(t *testing.T) {
 	t.Parallel()
 
-	a := NewAnnotations("my-operator", []string{"stable", "fast"}, "stable")
+	a := NewAnnotations(testPkgName, []string{testChannelStable, "fast"}, testChannelStable)
 	m := a.Map()
 	dl := a.DockerLabels()
 

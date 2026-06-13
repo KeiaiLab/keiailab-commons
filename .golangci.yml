@@ -36,6 +36,8 @@ linters:
     modernize:
       disable:
         - omitzero
+        # newexpr: new(x) 변환 — k8s 생태계 표준 idiom 인 ptr.To(x) 유지 (security/pvc helper).
+        - newexpr
   exclusions:
     generated: lax
     rules:
