@@ -8,13 +8,15 @@ import (
 	corev1 "k8s.io/api/core/v1"
 )
 
+const testRackKey = "rack"
+
 func TestDefaulted_user_provided_preserved(t *testing.T) {
 	user := []corev1.TopologySpreadConstraint{{
 		MaxSkew:     2,
-		TopologyKey: "rack",
+		TopologyKey: testRackKey,
 	}}
 	got := Defaulted(user, 5, map[string]string{"app": "x"})
-	if len(got) != 1 || got[0].TopologyKey != "rack" {
+	if len(got) != 1 || got[0].TopologyKey != testRackKey {
 		t.Errorf("user TSC overridden: %v", got)
 	}
 }
@@ -75,18 +77,18 @@ func TestDefaulted_label_selector_matches(t *testing.T) {
 
 func TestDefaulted_WithTopologyKeys_custom(t *testing.T) {
 	got := Defaulted(nil, 2, map[string]string{"app": "x"},
-		WithTopologyKeys("rack"))
+		WithTopologyKeys(testRackKey))
 	if len(got) != 1 {
 		t.Fatalf("expected 1 TSC, got %d", len(got))
 	}
-	if got[0].TopologyKey != "rack" {
+	if got[0].TopologyKey != testRackKey {
 		t.Errorf("custom key: %q want rack", got[0].TopologyKey)
 	}
 }
 
 func TestDefaulted_WithTopologyKeys_three_axes(t *testing.T) {
 	got := Defaulted(nil, 3, map[string]string{"app": "x"},
-		WithTopologyKeys("rack", TopologyKeyZone, TopologyKeyHostname))
+		WithTopologyKeys(testRackKey, TopologyKeyZone, TopologyKeyHostname))
 	if len(got) != 3 {
 		t.Fatalf("expected 3 TSCs, got %d", len(got))
 	}
@@ -169,7 +171,7 @@ func TestDefaultTopologyKeys_order(t *testing.T) {
 func TestDefaulted_combined_options(t *testing.T) {
 	got := Defaulted(nil, 1, map[string]string{"app": "myapp"},
 		WithMinReplicas(1),
-		WithTopologyKeys("rack", TopologyKeyZone, TopologyKeyHostname),
+		WithTopologyKeys(testRackKey, TopologyKeyZone, TopologyKeyHostname),
 		WithMaxSkew(2),
 		WithWhenUnsatisfiable(corev1.DoNotSchedule),
 	)
@@ -184,7 +186,7 @@ func TestDefaulted_combined_options(t *testing.T) {
 			t.Errorf("TSC[%d] WhenUnsatisfiable: %q", i, c.WhenUnsatisfiable)
 		}
 	}
-	if got[0].TopologyKey != "rack" {
+	if got[0].TopologyKey != testRackKey {
 		t.Errorf("first key: %q want rack", got[0].TopologyKey)
 	}
 }

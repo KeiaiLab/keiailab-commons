@@ -290,7 +290,7 @@ func TestValidateDir_ManifestsUnreadable(t *testing.T) {
 	if err := os.Chmod(manifestsDir, 0o000); err != nil {
 		t.Fatal(err)
 	}
-	t.Cleanup(func() { os.Chmod(manifestsDir, 0o755) })
+	t.Cleanup(func() { _ = os.Chmod(manifestsDir, 0o755) })
 
 	err := ValidateDir(root)
 	if err == nil {
@@ -316,7 +316,7 @@ func TestValidateDir_AnnotationsUnreadable(t *testing.T) {
 	if err := os.Chmod(annotationsPath, 0o000); err != nil {
 		t.Fatal(err)
 	}
-	t.Cleanup(func() { os.Chmod(annotationsPath, 0o644) })
+	t.Cleanup(func() { _ = os.Chmod(annotationsPath, 0o644) })
 
 	err := ValidateDir(root)
 	if err == nil {
