@@ -4,8 +4,9 @@ package reconcile
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+
+	"github.com/keiailab/keiailab-commons/pkg/events"
 )
 
 // Statusable 는 controller 가 CR 의 status conditions / phase 를 추상화하기 위한
@@ -22,12 +23,10 @@ type Statusable interface {
 	SetPhase(phase string)
 }
 
-// EventRecorder 는 k8s.io/client-go/tools/events.EventRecorder 와 구조 호환되는
-// 최소 로컬 interface 다. 호출자가 controller-runtime Manager 에서 받은 신식
-// recorder (mgr.GetEventRecorderFor 가 아닌 events.EventRecorder 구현체) 를 그대로
-// 전달하면 컴파일 타임에 자동 만족 — commons 가 client-go tools 패키지를 직접
-// 의존하지 않기 위한 격리 (doc.go §의존성 정책).
-type EventRecorder interface {
-	Eventf(regarding runtime.Object, related runtime.Object,
-		eventtype, reason, action, note string, args ...any)
-}
+// EventRecorder 는 pkg/events.Recorder 의 별칭이다 — commons 라이브러리의 단일
+// Event 기록 interface (k8s.io/client-go/tools/events.EventRecorder 와 구조 호환).
+// 호출자가 controller-runtime Manager 에서 받은 신식 events.EventRecorder 구현체를
+// 그대로 전달하면 컴파일 타임에 자동 만족한다. pkg/events 가 canonical interface +
+// Reason 상수를 소유(단일 SSOT)하고, 기존 reconcile.EventRecorder 참조는 별칭으로
+// 그대로 컴파일된다 (ApplyErrorCondition 시그니처 불변 = downstream operator 무영향).
+type EventRecorder = events.Recorder

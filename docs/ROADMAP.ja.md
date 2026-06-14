@@ -179,8 +179,9 @@
 
 ### pkg/events (Beta)
 
-- [x] Recorder interface — `client-go` `record.EventRecorder` を
-  import せず互換。
+- [x] Recorder interface — `client-go` `events.EventRecorder`（新 events API,
+  RFC-0023）を import せず互換；`pkg/reconcile.EventRecorder` と単一 interface
+  に統合（Reason SSOT）。
 - [x] 9 個の Reason 定数。
 - [x] Emit / Emitf / EmitWarning / EmitWarningf / WrappedError — 全
   nil-safe。

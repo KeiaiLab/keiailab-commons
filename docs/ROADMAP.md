@@ -181,8 +181,9 @@ the library evolves according to the needs of its downstream consumers.
 
 ### pkg/events (Beta)
 
-- [x] Recorder interface — compatible with `client-go`
-  `record.EventRecorder` without importing it.
+- [x] Recorder interface — matches `client-go` `events.EventRecorder`
+  (modern events API, RFC-0023) without importing it; unified with
+  `pkg/reconcile.EventRecorder` (single interface + Reason SSOT).
 - [x] Nine Reason constants.
 - [x] Emit / Emitf / EmitWarning / EmitWarningf / WrappedError — all
   nil-safe.
