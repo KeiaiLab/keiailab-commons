@@ -3,10 +3,10 @@
 // Package events provides Kubernetes Event recording helpers and standard
 // reconciler event reasons shared across keiailab operators.
 //
-// The Recorder interface is structurally compatible with
-// k8s.io/client-go/tools/record.EventRecorder, so callers may pass their
-// existing recorder without an adapter. The package itself does not depend
-// on client-go.
+// The Recorder interface matches k8s.io/client-go/tools/events.EventRecorder
+// (the modern events API adopted suite-wide in RFC-0023 Phase 2), so callers
+// may pass the recorder they obtain from the controller-runtime manager
+// without an adapter. The package itself does not depend on client-go.
 package events
 
 import (
@@ -41,11 +41,18 @@ const (
 
 // Recorder is the minimal Event recording interface used by this package.
 //
-// Structurally compatible with k8s.io/client-go/tools/record.EventRecorder —
-// callers passing their existing record.EventRecorder need no adapter.
+// It matches k8s.io/client-go/tools/events.EventRecorder (the modern events
+// API): callers pass the recorder obtained from the controller-runtime manager
+// without an adapter. commons does not import client-go tools packages — the
+// interface is declared structurally.
+//
+// The Emit* helpers below map their ergonomic (reason, message) arguments onto
+// Eventf with related=nil and action=reason, matching the suite's established
+// usage. Call sites needing a distinct action or a related object should call
+// Eventf directly.
 type Recorder interface {
-	Event(object runtime.Object, eventtype, reason, message string)
-	Eventf(object runtime.Object, eventtype, reason, messageFmt string, args ...any)
+	Eventf(regarding runtime.Object, related runtime.Object,
+		eventtype, reason, action, note string, args ...any)
 }
 
 // Emit records a Normal event with the given reason and message.
@@ -56,7 +63,7 @@ func Emit(rec Recorder, obj runtime.Object, reason, message string) {
 	if rec == nil {
 		return
 	}
-	rec.Event(obj, TypeNormal, reason, message)
+	rec.Eventf(obj, nil, TypeNormal, reason, reason, "%s", message)
 }
 
 // Emitf is Emit with printf-style formatting.
@@ -66,7 +73,7 @@ func Emitf(rec Recorder, obj runtime.Object, reason, format string, args ...any)
 	if rec == nil {
 		return
 	}
-	rec.Eventf(obj, TypeNormal, reason, format, args...)
+	rec.Eventf(obj, nil, TypeNormal, reason, reason, format, args...)
 }
 
 // EmitWarning records a Warning event using err.Error() as the message.
@@ -77,7 +84,7 @@ func EmitWarning(rec Recorder, obj runtime.Object, reason string, err error) {
 	if rec == nil || err == nil {
 		return
 	}
-	rec.Event(obj, TypeWarning, reason, err.Error())
+	rec.Eventf(obj, nil, TypeWarning, reason, reason, "%s", err.Error())
 }
 
 // EmitWarningf is a Warning event with printf-style formatting.
@@ -87,7 +94,7 @@ func EmitWarningf(rec Recorder, obj runtime.Object, reason, format string, args 
 	if rec == nil {
 		return
 	}
-	rec.Eventf(obj, TypeWarning, reason, format, args...)
+	rec.Eventf(obj, nil, TypeWarning, reason, reason, format, args...)
 }
 
 // WrappedError formats a reason and error into a single status-line string

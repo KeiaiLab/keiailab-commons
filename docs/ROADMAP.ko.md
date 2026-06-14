@@ -159,8 +159,9 @@
 
 ### pkg/events (Beta)
 
-- [x] Recorder interface — client-go `record.EventRecorder` 구조 정합
-  (client-go 의존 회피).
+- [x] Recorder interface — client-go `events.EventRecorder` (신 events API,
+  RFC-0023) 구조 정합 (client-go 의존 회피); `pkg/reconcile.EventRecorder` 와
+  단일 interface 통합 (Reason SSOT).
 - [x] 9 Reason constants (Created / Updated / Deleted / Reconciled /
   ReconcileError / Provisioning / Ready / Degraded / Failed).
 - [x] Emit / Emitf / EmitWarning / EmitWarningf / WrappedError — nil-safe.

@@ -13,7 +13,8 @@ import (
 	"github.com/keiailab/keiailab-commons/pkg/events"
 )
 
-// mockRecorder implements events.Recorder for unit testing.
+// mockRecorder implements events.Recorder (the modern events.EventRecorder
+// shape) for unit testing.
 type mockRecorder struct {
 	events []capturedEvent
 }
@@ -21,15 +22,12 @@ type mockRecorder struct {
 type capturedEvent struct {
 	eventType string
 	reason    string
+	action    string
 	message   string
 }
 
-func (m *mockRecorder) Event(_ runtime.Object, eventtype, reason, message string) {
-	m.events = append(m.events, capturedEvent{eventtype, reason, message})
-}
-
-func (m *mockRecorder) Eventf(_ runtime.Object, eventtype, reason, messageFmt string, args ...any) {
-	m.events = append(m.events, capturedEvent{eventtype, reason, fmt.Sprintf(messageFmt, args...)})
+func (m *mockRecorder) Eventf(_ runtime.Object, _ runtime.Object, eventtype, reason, action, note string, args ...any) {
+	m.events = append(m.events, capturedEvent{eventtype, reason, action, fmt.Sprintf(note, args...)})
 }
 
 func newFakeObject() runtime.Object {
@@ -52,8 +50,25 @@ func TestEmit_normalEvent(t *testing.T) {
 	if e.reason != events.ReasonCreated {
 		t.Errorf("reason: want=%q got=%q", events.ReasonCreated, e.reason)
 	}
+	// Emit maps action=reason (suite's established degenerate usage).
+	if e.action != events.ReasonCreated {
+		t.Errorf("action: want=%q (==reason) got=%q", events.ReasonCreated, e.action)
+	}
 	if e.message != "cluster created" {
 		t.Errorf("message: want=%q got=%q", "cluster created", e.message)
+	}
+}
+
+func TestEmit_messageWithPercentNotFormatInjected(t *testing.T) {
+	t.Parallel()
+
+	// Emit must treat message as data, not a format string — a literal '%'
+	// in the message must survive verbatim (mapped via "%s").
+	rec := &mockRecorder{}
+	events.Emit(rec, newFakeObject(), events.ReasonProvisioning, "disk 95% full")
+
+	if rec.events[0].message != "disk 95% full" {
+		t.Errorf("message with percent: got=%q want=%q", rec.events[0].message, "disk 95% full")
 	}
 }
 
@@ -180,6 +195,6 @@ func TestReasonConstants_uniqueValues(t *testing.T) {
 func TestRecorderInterface_acceptsAnyImpl(t *testing.T) {
 	t.Parallel()
 
-	// Compile-time check: mockRecorder satisfies events.Recorder.
+	// Compile-time check: mockRecorder satisfies events.Recorder (modern API).
 	var _ events.Recorder = (*mockRecorder)(nil)
 }

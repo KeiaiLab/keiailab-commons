@@ -182,8 +182,9 @@ follow-up items*。本项目不维护基于时间的截止日期 —
 
 ### pkg/events (Beta)
 
-- [x] Recorder interface — 不导入即可与 `client-go`
-  `record.EventRecorder` 兼容。
+- [x] Recorder interface — 不导入即可与 `client-go` `events.EventRecorder`
+  （新 events API, RFC-0023）兼容；与 `pkg/reconcile.EventRecorder` 统一为
+  单一 interface（Reason SSOT）。
 - [x] 9 个 Reason 常量。
 - [x] Emit / Emitf / EmitWarning / EmitWarningf / WrappedError — 全部
   nil-safe。
