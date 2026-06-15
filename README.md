@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://keiailab.com">
+    <img src="docs/branding/symbol.png" alt="keiailab" width="96"/>
+  </a>
+</p>
+
 # keiailab-commons
 
 > Shared Go helpers for Kubernetes operator scaffolding — finalizers, recommended labels, status conditions, supported-version allowlists, restricted PodSecurity contexts, NetworkPolicies, ServiceMonitor builders, and a Helm library chart.
@@ -7,6 +13,14 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Go](https://img.shields.io/badge/Go-1.26+-00ADD8?logo=go)](https://golang.org/)
 [![Go Reference](https://pkg.go.dev/badge/github.com/keiailab/keiailab-commons.svg)](https://pkg.go.dev/github.com/keiailab/keiailab-commons)
+
+## Design assets
+
+| Asset | Path | Usage |
+|---|---|---|
+| Centered service symbol | [`docs/branding/symbol.png`](docs/branding/symbol.png) | GitHub README, Artifact Hub icon/screenshot |
+| Keiailab base symbol | [`docs/branding/base-symbol.png`](docs/branding/base-symbol.png) | Source reference for the outer rotating-arrow mark |
+| Branding guide | [`docs/BRANDING.md`](docs/BRANDING.md) | Public visual usage rules |
 
 Operator authors repeatedly re-implement the same scaffolding: restricted
 PodSecurity contexts, supported-version matrices, default-deny NetworkPolicies,
