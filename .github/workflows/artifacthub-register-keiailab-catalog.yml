@@ -1,0 +1,108 @@
+name: ArtifactHub register KeiaiLab catalog
+
+on:
+  workflow_dispatch:
+    inputs:
+      delete_legacy:
+        description: "Delete chart-specific Artifact Hub repositories after the central catalog is visible"
+        required: true
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+permissions:
+  contents: read
+
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Register central Artifact Hub repository
+        env:
+          AH_API_KEY_ID: ${{ secrets.AH_API_KEY_ID }}
+          AH_API_KEY_SECRET: ${{ secrets.AH_API_KEY_SECRET }}
+          DELETE_LEGACY: ${{ inputs.delete_legacy }}
+        run: |
+          set -euo pipefail
+
+          artifacthub_api_url="https://artifacthub.io/api/v1"
+          artifacthub_org="keiailab"
+          repository_name="keiailab"
+          repository_url="https://keiailab.github.io/charts"
+
+          if [[ -z "${AH_API_KEY_ID}" || -z "${AH_API_KEY_SECRET}" ]]; then
+            echo "ERROR: AH_API_KEY_ID and AH_API_KEY_SECRET are required." >&2
+            exit 1
+          fi
+
+          body="$(jq -n \
+            --arg name "${repository_name}" \
+            --arg displayName "KeiaiLab Helm Charts" \
+            --arg url "${repository_url}" \
+            '{kind: 0, name: $name, display_name: $displayName, url: $url}')"
+
+          response_file="$(mktemp)"
+          status="$(curl -sS -o "${response_file}" -w "%{http_code}" \
+            -X POST "${artifacthub_api_url}/repositories/org/${artifacthub_org}" \
+            -H "Content-Type: application/json" \
+            -H "X-API-KEY-ID: ${AH_API_KEY_ID}" \
+            -H "X-API-KEY-SECRET: ${AH_API_KEY_SECRET}" \
+            -d "${body}")"
+
+          if [[ "${status}" == "201" ]]; then
+            echo "Artifact Hub repository created."
+            cat "${response_file}"
+          else
+            echo "Artifact Hub create status: ${status}"
+            cat "${response_file}"
+            if ! curl -fsSL "${artifacthub_api_url}/repositories/search?org=${artifacthub_org}&kind=0&limit=100" \
+              | jq -e --arg name "${repository_name}" --arg url "${repository_url}" \
+                  '.[] | select(.name == $name and (.url | sub("/+$"; "") == $url))' >/dev/null; then
+              echo "ERROR: repository was not created and is not already visible." >&2
+              exit 1
+            fi
+            echo "Artifact Hub repository already visible; continuing."
+          fi
+
+          expected_names='["keiailab-commons","postgres-operator","mongodb-operator","valkey-operator"]'
+          for attempt in $(seq 1 90); do
+            if curl -fsSL "${artifacthub_api_url}/packages/search?ts_query_web=keiailab&sort=relevance&page=1" \
+              | jq -e --arg repo "${repository_name}" --arg url "${repository_url}" --argjson names "${expected_names}" '
+                  [.packages[]
+                    | select(.repository.name == $repo and (.repository.url | sub("/+$"; "") == $url))
+                    | .name] as $found
+                  | ($names - $found) == []' >/dev/null; then
+              echo "Central Artifact Hub catalog visible."
+              break
+            fi
+            if [[ "${attempt}" == "90" ]]; then
+              echo "ERROR: central catalog was not visible after retries." >&2
+              exit 1
+            fi
+            sleep 20
+          done
+
+          if [[ "${DELETE_LEGACY}" != "true" ]]; then
+            echo "Legacy deletion disabled."
+            exit 0
+          fi
+
+          for legacy_repo in \
+            keiailab-commons \
+            keiailab-postgres-operator \
+            keiailab-mongodb-operator \
+            keiailab-valkey-operator; do
+            delete_status="$(curl -sS -o /tmp/delete-response.json -w "%{http_code}" \
+              -X DELETE "${artifacthub_api_url}/repositories/org/${artifacthub_org}/${legacy_repo}" \
+              -H "X-API-KEY-ID: ${AH_API_KEY_ID}" \
+              -H "X-API-KEY-SECRET: ${AH_API_KEY_SECRET}")"
+            if [[ "${delete_status}" == "204" || "${delete_status}" == "404" ]]; then
+              echo "legacy repo removed or absent: ${legacy_repo} (${delete_status})"
+            else
+              echo "ERROR: failed to delete ${legacy_repo}: ${delete_status}" >&2
+              cat /tmp/delete-response.json >&2
+              exit 1
+            fi
+          done
