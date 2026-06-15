@@ -66,6 +66,28 @@ jobs:
             echo "Artifact Hub repository already visible; continuing."
           fi
 
+          update_response_file="$(mktemp)"
+          update_status="$(curl -sS -o "${update_response_file}" -w "%{http_code}" \
+            -X PUT "${artifacthub_api_url}/repositories/org/${artifacthub_org}/${repository_name}" \
+            -H "Content-Type: application/json" \
+            -H "X-API-KEY-ID: ${AH_API_KEY_ID}" \
+            -H "X-API-KEY-SECRET: ${AH_API_KEY_SECRET}" \
+            -d "${body}")"
+          if [[ "${update_status}" == "204" ]]; then
+            echo "Artifact Hub repository settings refreshed."
+          else
+            echo "ERROR: repository update failed: ${update_status}" >&2
+            cat "${update_response_file}" >&2
+            exit 1
+          fi
+
+          curl -fsSL "${artifacthub_api_url}/repositories/search?org=${artifacthub_org}&limit=20" \
+            | jq -r --arg name "${repository_name}" '
+                .[]
+                | select(.name == $name)
+                | ["repository", .repository_id, .verified_publisher, (.last_tracking_ts // "null"), (.last_tracking_errors // "null")]
+                | @tsv'
+
           expected_names='["keiailab-commons","postgres-operator","mongodb-operator","valkey-operator"]'
           for attempt in $(seq 1 90); do
             if curl -fsSL "${artifacthub_api_url}/packages/search?ts_query_web=keiailab&sort=relevance&page=1" \
