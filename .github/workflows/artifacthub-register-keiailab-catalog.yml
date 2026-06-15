@@ -57,7 +57,7 @@ jobs:
           else
             echo "Artifact Hub create status: ${status}"
             cat "${response_file}"
-            if ! curl -fsSL "${artifacthub_api_url}/repositories/search?org=${artifacthub_org}&kind=0&limit=100" \
+            if ! curl -fsSL "${artifacthub_api_url}/repositories/search?org=${artifacthub_org}&limit=20" \
               | jq -e --arg name "${repository_name}" --arg url "${repository_url}" \
                   '.[] | select(.name == $name and (.url | sub("/+$"; "") == $url))' >/dev/null; then
               echo "ERROR: repository was not created and is not already visible." >&2
