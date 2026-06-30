@@ -36,6 +36,12 @@ follow-up items*。本项目不维护基于时间的截止日期 —
 | `pkg/reconcile` | Beta | Downstream reconcile scaffolding live adoption. |
 | `pkg/certmanager` | Beta | Downstream Certificate / Issuer render live adoption. |
 | `pkg/reconcilemetrics` | Beta | Downstream live adoption + Prometheus series-name parity. |
+| `pkg/secrethash` | Beta | secret-hash downstream adoption (valkey TLS/auth + mongo) + 确定性 parity. |
+| `pkg/pdb` | Beta | PDB builder downstream adoption + drain-safety(default-floor) 等价性. |
+| `pkg/hpa` | Beta | HPA builder downstream adoption + scale-target / metric parity. |
+| `pkg/service` | Beta | headless/client Service builder downstream adoption + 等价性. |
+| `pkg/volume` | Beta | TLS-secret mount downstream adoption + 0o400/readonly 不变量. |
+| `pkg/batchjob` | Beta | backup/restore Job envelope downstream adoption + TTL/backoff parity. |
 | `pkg/webhook` | **Experimental** | Multi-downstream adoption + stabilization. |
 | `pkg/probes` | **Experimental** | 2+ downstream adoption → Beta. |
 | `pkg/bundle` | **Experimental** | 2+ downstream adoption → Beta. |

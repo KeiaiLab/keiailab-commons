@@ -34,6 +34,12 @@
 | `pkg/reconcile` | Beta | reconcile 공통 골격 downstream 라이브 적용. |
 | `pkg/certmanager` | Beta | Certificate / Issuer 렌더 downstream 라이브 적용. |
 | `pkg/reconcilemetrics` | Beta | downstream 라이브 적용 + Prometheus 시계열 이름 동등성. |
+| `pkg/secrethash` | Beta | secret-hash downstream 적용 (valkey TLS/auth + mongo) + 결정성 동등성. |
+| `pkg/pdb` | Beta | PDB 빌더 downstream 적용 + drain-safety(default-floor) 동등성. |
+| `pkg/hpa` | Beta | HPA 빌더 downstream 적용 + scale-target / metric 동등성. |
+| `pkg/service` | Beta | headless/client Service 빌더 downstream 적용 + 동등성. |
+| `pkg/volume` | Beta | TLS-secret 마운트 downstream 적용 + 0o400/readonly 불변식. |
+| `pkg/batchjob` | Beta | backup/restore Job 엔벨로프 downstream 적용 + TTL/backoff 동등성. |
 | `pkg/webhook` | **Experimental** | 다중 downstream 사용 후 안정화. |
 | `pkg/probes` | **Experimental** | 2+ downstream 라이브 적용 후 Beta. |
 | `pkg/bundle` | **Experimental** | 2+ downstream 라이브 적용 후 Beta. |
