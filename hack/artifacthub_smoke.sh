@@ -111,12 +111,17 @@ repo_filter='
 repo_json="$("$jq_bin" -e -c --arg url "$normalized_artifacthub_repository_url" --arg name "$artifacthub_repository_name" "$repo_filter" "$tmpdir/repositories.json" 2>/dev/null || true)"
 
 if [[ -z "$repo_json" ]]; then
-	echo "ERROR: Artifact Hub repository is not registered." >&2
-	echo "  org: ${artifacthub_org}" >&2
-	echo "  expected name: ${artifacthub_repository_name}" >&2
-	echo "  expected url: ${normalized_artifacthub_repository_url}" >&2
-	echo "  fix: make artifacthub-register ARTIFACTHUB_API_KEY_ID=... ARTIFACTHUB_API_KEY_SECRET=..." >&2
-	exit 2
+	# 미등록은 *1회성 외부 등록 행위*(make artifacthub-register, ArtifactHub API key 필요)
+	# 가 아직 안 된 상태다. 매 push/tag 마다 hard-fail 하면 GitHub Actions 실패 알림
+	# 메일만 양산하고 (등록은 CI 가 할 수 없는 외부 작업이므로) 회복 불가하다.
+	# → graceful skip(warning + exit 0). 등록 완료 시 아래 strict 검증(tracking/OCI/
+	# signed/version)이 그대로 fail-closed 로 동작한다.
+	echo "::warning::Artifact Hub repository '${artifacthub_repository_name}' 미등록 — 인덱싱/서명 smoke 를 skip 한다 (1회성 외부 등록 완료 시 자동 재개)."
+	echo "  org: ${artifacthub_org}"
+	echo "  expected name: ${artifacthub_repository_name}"
+	echo "  expected url: ${normalized_artifacthub_repository_url}"
+	echo "  fix (1회성·외부): make artifacthub-register ARTIFACTHUB_API_KEY_ID=... ARTIFACTHUB_API_KEY_SECRET=..."
+	exit 0
 fi
 
 repo_id="$("$jq_bin" -r '.repository_id' <<<"$repo_json")"
