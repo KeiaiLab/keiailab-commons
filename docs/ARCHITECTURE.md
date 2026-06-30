@@ -36,6 +36,9 @@
 | `pkg/reconcile` | Beta | Reconcile-loop helpers — `Statusable` interface + `ApplyErrorCondition` + `HandleFinalizerCleanup` + `SecretIfNotExists`. | Yes |
 | `pkg/certmanager` | Beta | `CertParams` + `BuildCertificate` + `BuildSelfSignedIssuer` + `ServiceSANs` (unstructured — zero cert-manager CRD Go dependency). | No |
 | `pkg/reconcilemetrics` | Beta | Reconcile Prometheus metrics — `New(subsystem)` + `IncTotal` / `ObserveReconcile` / `IncError` / `ResultFor`, preserving existing per-operator time-series names. | No (direct `prometheus/client_golang` dependency) |
+| `pkg/secrethash` | Beta | Deterministic Secret-data SHA256 digest (`Hash(data, keys...)`) for rollout-trigger annotations — fixes mongo map-iteration non-determinism. | No |
+| `pkg/pdb` | Beta | PodDisruptionBudget builder (`Build(Params)`) + min/max precedence + `DefaultFloor` drain-safety policy. | No |
+| `pkg/hpa` | Beta | HorizontalPodAutoscaler builder (`Build(Params)`) + `MinFloor` clamp + `CPUUtilization` / `MemoryUtilization` metric helpers. | No |
 | `pkg/probes` | Experimental | `corev1.Probe` fluent builder — HTTP / HTTPS / TCP / Exec, kubelet defaults + clamp. | No |
 | `pkg/webhook` | Experimental | Admission validation helpers — `ValidateAllowedVersion`, `ValidateWithPredicate`, conversion registry. | No |
 | `pkg/bundle` | **Experimental** | OLM v1 bundle metadata — annotations, FBC schema types, directory validation. | No |
