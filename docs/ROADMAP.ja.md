@@ -36,6 +36,12 @@
 | `pkg/reconcile` | Beta | Downstream reconcile 共通スキャフォールド live 採用。 |
 | `pkg/certmanager` | Beta | Downstream Certificate / Issuer レンダー live 採用。 |
 | `pkg/reconcilemetrics` | Beta | Downstream live 採用 + Prometheus 時系列名 parity。 |
+| `pkg/secrethash` | Beta | secret-hash downstream 採用 (valkey TLS/auth + mongo) + 決定性 parity。 |
+| `pkg/pdb` | Beta | PDB builder downstream 採用 + drain-safety(default-floor) 同等性。 |
+| `pkg/hpa` | Beta | HPA builder downstream 採用 + scale-target / metric parity。 |
+| `pkg/service` | Beta | headless/client Service builder downstream 採用 + 同等性。 |
+| `pkg/volume` | Beta | TLS-secret mount downstream 採用 + 0o400/readonly 不変条件。 |
+| `pkg/batchjob` | Beta | backup/restore Job envelope downstream 採用 + TTL/backoff parity。 |
 | `pkg/webhook` | **Experimental** | Multi-downstream 採用 + 安定化。 |
 | `pkg/probes` | **Experimental** | 2+ downstream 採用 → Beta。 |
 | `pkg/bundle` | **Experimental** | 2+ downstream 採用 → Beta。 |
