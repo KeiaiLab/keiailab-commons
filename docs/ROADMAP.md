@@ -37,6 +37,9 @@ the library evolves according to the needs of its downstream consumers.
 | `pkg/secrethash` | Beta | Downstream secret-hash adoption (valkey TLS/auth + mongo) + determinism parity. |
 | `pkg/pdb` | Beta | Downstream PDB builder adoption + drain-safety (default-floor) equivalence. |
 | `pkg/hpa` | Beta | Downstream HPA builder adoption + scale-target / metric parity. |
+| `pkg/service` | Beta | Downstream headless/client Service builder adoption + equivalence. |
+| `pkg/volume` | Beta | Downstream TLS-secret mount adoption + 0o400/readonly 불변식. |
+| `pkg/batchjob` | Beta | Downstream backup/restore Job envelope adoption + TTL/backoff parity. |
 | `pkg/webhook` | **Experimental** | Multi-downstream adoption + stabilization. |
 | `pkg/probes` | **Experimental** | 2+ downstream adoption → Beta. |
 | `pkg/bundle` | **Experimental** | 2+ downstream adoption → Beta. |
