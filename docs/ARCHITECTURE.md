@@ -39,6 +39,9 @@
 | `pkg/secrethash` | Beta | Deterministic Secret-data SHA256 digest (`Hash(data, keys...)`) for rollout-trigger annotations — fixes mongo map-iteration non-determinism. | No |
 | `pkg/pdb` | Beta | PodDisruptionBudget builder (`Build(Params)`) + min/max precedence + `DefaultFloor` drain-safety policy. | No |
 | `pkg/hpa` | Beta | HorizontalPodAutoscaler builder (`Build(Params)`) + `MinFloor` clamp + `CPUUtilization` / `MemoryUtilization` metric helpers. | No |
+| `pkg/service` | Beta | Service 조립 빌더 (`Build(Params)`) — headless(ClusterIP None+PublishNotReady)/client, IPFamilies/type/annotations. | No |
+| `pkg/volume` | Beta | TLS Secret 마운트 빌더 (`TLSSecretMount`) — 0o400 + ReadOnly cert 불변식 SSOT. | No |
+| `pkg/batchjob` | Beta | batch/v1 Job 엔벨로프 빌더 (`Build(Params)`) — BackoffLimit/TTL/RestartPolicy/라벨전파. | No |
 | `pkg/probes` | Experimental | `corev1.Probe` fluent builder — HTTP / HTTPS / TCP / Exec, kubelet defaults + clamp. | No |
 | `pkg/webhook` | Experimental | Admission validation helpers — `ValidateAllowedVersion`, `ValidateWithPredicate`, conversion registry. | No |
 | `pkg/bundle` | **Experimental** | OLM v1 bundle metadata — annotations, FBC schema types, directory validation. | No |
