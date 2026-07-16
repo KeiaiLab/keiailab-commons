@@ -87,7 +87,7 @@ else
   latest_release="${latest_tags[0]}"
   for tag in "${latest_tags[@]}"; do
     version="${tag#v}"
-    release_date="$(git log -1 --format=%ad --date=short "$tag")"
+    release_date="$(git for-each-ref --format='%(creatordate:short)' "refs/tags/$tag")"
     expected_heading="## [$version] — $release_date"
     if ! grep -Fxq "$expected_heading" CHANGELOG.md; then
       report_error "CHANGELOG.md missing exact release heading: $expected_heading"
