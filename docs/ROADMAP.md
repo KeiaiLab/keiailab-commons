@@ -15,7 +15,7 @@ the library evolves according to the needs of its downstream consumers.
 | `[~]` | Partial implementation (helper present, verification still open). |
 | `[ ]` | Not started. |
 
-## API stability tier (current v0.11.0 candidate)
+## API stability tier (current v0.13.0 release)
 
 | Package | Tier | Promotion criterion |
 |---|---|---|

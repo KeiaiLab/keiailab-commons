@@ -4,6 +4,16 @@
 
 # keiailab-commons
 
+## デザインアセット
+
+| アセット | パス | 用途 |
+|---|---|---|
+| 中央サービスシンボル | [`docs/branding/symbol.png`](docs/branding/symbol.png) | GitHub README、Artifact Hub のアイコン／スクリーンショット |
+| Keiailab ベースシンボル | [`docs/branding/base-symbol.png`](docs/branding/base-symbol.png) | 外側の回転矢印マークの元データ |
+| リポジトリワードマーク | [`docs/branding/logo.png`](docs/branding/logo.png) | プロジェクトページとドキュメントカード |
+| ソーシャルカバー | [`docs/branding/cover.png`](docs/branding/cover.png) | ソーシャルカードとリリース記事 |
+| ブランディングガイド | [`docs/BRANDING.md`](docs/BRANDING.md) | 公開ビジュアルの利用規約 |
+
 > **Kubernetes operator 共通 scaffolding のための Go ライブラリ — finalizer / labels / status / version / security / monitoring partials.**
 >
 > [English](README.md) | [한국어](README.ko.md) | **日本語** | [中文](README.zh.md)
@@ -58,6 +68,12 @@ ServiceMonitor ビルダー、finalizer ヘルパー、status condition カタ�
 | `pkg/certmanager` | Beta | cert-manager `Certificate` / self-signed `Issuer` ビルダー — `CertParams`、`BuildCertificate`、`BuildSelfSignedIssuer`、`ServiceSANs` (unstructured — CRD 依存なし)。 |
 | `pkg/reconcile` | Beta | Reconcile ループヘルパー — `Statusable`、`ApplyErrorCondition`、`HandleFinalizerCleanup`、`SecretIfNotExists` (controller-runtime 依存)。 |
 | `pkg/reconcilemetrics` | Beta | Prometheus reconcile メトリクス — `New(subsystem)` (既存の時系列名を保持)、`IncTotal` / `ObserveReconcile` / `IncError`、`ResultFor` (prometheus/client_golang 依存)。 |
+| `pkg/secrethash` | Beta | rollout trigger annotation 向けの決定的な Secret data SHA-256 digest (`Hash(data, keys...)`)。 |
+| `pkg/pdb` | Beta | min/max の優先順位と `DefaultFloor` drain-safety ポリシーを適用する PodDisruptionBudget ビルダー (`Build(Params)`)。 |
+| `pkg/hpa` | Beta | `MinFloor` clamp と `CPUUtilization` / `MemoryUtilization` metric ヘルパーを提供する HorizontalPodAutoscaler ビルダー (`Build(Params)`)。 |
+| `pkg/service` | Beta | type、IP families、annotation を含む headless/client Service を組み立てる Kubernetes Service ビルダー (`Build(Params)`)。 |
+| `pkg/volume` | Beta | mode `0o400` と read-only mount を強制する TLS Secret volume/mount ビルダー (`TLSSecretMount`)。 |
+| `pkg/batchjob` | Beta | backoff、TTL、restart policy、label 伝播を組み立てる `batch/v1` Job envelope ビルダー (`Build(Params)`)。 |
 | `pkg/probes` | Experimental | `corev1.Probe` fluent ビルダー — HTTP / HTTPS / TCP / Exec、kubelet default + clamp。 |
 | `pkg/webhook` | Experimental | Admission validation ヘルパー — `ValidateAllowedVersion`、`ValidateWithPredicate`、conversion registry。 |
 | `pkg/bundle` | Experimental | OLM v1 バンドルメタデータヘルパー — アノテーション、FBCスキーマタイプ、ディレクトリ検証 (ADR-0017)。 |
