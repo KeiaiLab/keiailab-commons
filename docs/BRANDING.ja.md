@@ -23,15 +23,37 @@ Helm library chart (`charts/keiailab-commons`) として公開されています
 標準 Go モジュール import によって downstream operator が利用しますが、
 特定の consumer を指名・推奨することはありません。
 
+### 1.1 ファミリー charter (本ドキュメントが SSOT)
+
+本 Branding Guide は keiailab operator ファミリーが共有するビジュアル文法の
+**単一の真実 (SSOT)** です。カラーパレット (§3)、リンググラマーとグリフ入れ替え
+手順 (§2b)、repo 別グリフレジストリ (§2b)、README ヘッダー / footer テンプレート
+(§6 / §7)、バッジ順序 (§8) は **ここで** 定義し、各ファミリーリポジトリが
+再導出せずコピーします。`keiailab-commons` が charter を所有する理由は、すべての operator が
+既に import する共有依存だからです。
+
+ファミリーは 4 つの sister operator と本共有ライブラリで構成されます:
+
+| Project | Focus | Repository |
+|---|---|---|
+| `mongodb-operator` | MongoDB 8.0+ | https://github.com/keiailab/mongodb-operator |
+| `valkey-operator` | Valkey 8.0+ | https://github.com/keiailab/valkey-operator |
+| `postgres-operator` | PostgreSQL 18+ | https://github.com/keiailab/postgres-operator |
+| `qdrant-operator` | Qdrant vector database | https://github.com/keiailab/qdrant-operator |
+| `keiailab-commons` | Shared Go library | https://github.com/keiailab/keiailab-commons |
+
+本ガイドの翻訳が遅れている場合、ここの英語テキストが canonical のまま維持されます。
+
 ## 2. ロゴとビジュアル資産
 
 | 資産 | URL | 用途 |
 |---|---|---|
-| Primary ロゴ (SVG) | `https://keiailab.com/assets/logo.svg` | README ヘッダー、スライド |
-| Mono mark | `https://keiailab.com/assets/mark.svg` | Favicon、ソーシャルカード |
-| Wordmark | `https://keiailab.com/assets/wordmark.svg` | Footer、ダーク背景 |
+| Primary ロゴ | `docs/branding/symbol.png` | README ヘッダー、スライド |
+| Keiailab base symbol | `docs/branding/base-symbol.png` | 外側の回転矢印マークのソースリファレンス |
+| Favicon | `https://keiailab.com/favicon.ico` | Favicon、ソーシャルカード |
+| 予定 SVG kit | `https://keiailab.com/assets/{logo,mark,wordmark}.svg` | URL が 200 を返した後に置換予定 |
 
-**ロゴ配置**: README 上部中央、width 120 px。常に `https://keiailab.com`
+**ロゴ配置**: README 上部中央、width 96 px。常に `https://keiailab.com`
 にリンク。
 
 **Clear space**: ロゴ周辺の最小 padding はロゴ width の 25 %。
@@ -42,6 +64,36 @@ Helm library chart (`charts/keiailab-commons`) として公開されています
 - drop shadow / filter の追加
 - コントラスト不足な背景への配置
 - keiailab ブランド承認なしで他ロゴと結合
+
+## 2b. リンググラマーとグリフ入れ替え手順
+
+ファミリーは 1 つの外側シンボル — `docs/branding/base-symbol.png` の 3 色回転
+矢印リング (460×460; ダークネイビー → ブルー → グリーンの矢印、中央に球体) —
+を共有します。**すべての** ファミリーリポジトリはこのファイルを byte 単位で
+同一に vendor し、リングは決して再着色・再描画・再生成しません。
+
+各プロジェクトの `docs/branding/symbol.png` は、リングを保持し **中央のグリフ
+のみ** を入れ替えて作成します:
+
+1. 共有 `base-symbol.png` から開始 — リングには触れません。
+2. 製品グリフを中央の clear zone (~185 px 直径) に alpha-composite — リングと
+   重なりません。
+3. ソース解像度で `docs/branding/symbol.png` に export。
+4. README ヘッダーで width 96 px で参照 (§6)、operator は Helm chart `icon`
+   としても参照。
+
+共有リング + グリフ入れ替えが、マークを 1 つのファミリーとして読ませつつ製品ごと
+の識別性を保つ核心です。リングの再着色や新しい外側マークの作図は禁止です。
+
+### グリフレジストリ
+
+| Repository | Center glyph |
+|---|---|
+| `mongodb-operator` | leaf |
+| `valkey-operator` | hexagon + keyhole |
+| `postgres-operator` | elephant |
+| `qdrant-operator` | kNN constellation |
+| `keiailab-commons` | node grid |
 
 ## 3. カラーパレット
 
@@ -93,7 +145,7 @@ consumer。
 
 ```markdown
 <p align="center">
-  <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
+  <img src="docs/branding/symbol.png" alt="keiailab" width="96"/>
 </p>
 
 # keiailab-commons
@@ -101,8 +153,8 @@ consumer。
 > **Kubernetes operator 共通 scaffolding のための Go ライブラリ — finalizer / labels / status / version / security / monitoring partials.**
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
-  <!-- 追加 shield.io バッジ -->
+  <a href="LICENSE"><img src="https://img.shields.io/badge/<license placeholder>-blue.svg" alt="License"/></a>
+  <!-- §8 の順序に従う追加 shield.io バッジ -->
 </p>
 
 <p align="center">
@@ -113,6 +165,13 @@ consumer。
 </p>
 ```
 
+> **テンプレート placeholder**: `<license placeholder>` を、コピー先リポジトリの
+> 実際の SPDX バッジセグメントに置き換えます — 例: MIT リポジトリ (ファミリーの
+> 大半) は `License-MIT`、ライセンスが異なるメンバーは対応する
+> `License-<SPDX-id>`。共有テンプレートにライセンスをハードコードすると、
+> ライセンスが異なるメンバーに誤バッジが再生産されるため、トークンはここでは
+> generic のままにし、リポジトリごとに埋めます。
+
 ## 7. README Footer 標準
 
 すべての README とルートレベル `.md` ファイルは次の単一行 attribution で
@@ -121,25 +180,41 @@ consumer。
 ```markdown
 ---
 
-<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · <license placeholder> · <a href="https://keiailab.com">keiailab.com</a></p>
 ```
+
+> **テンプレート placeholder**: `<license placeholder>` を、コピー先
+> リポジトリの実際のライセンス名に置き換えます — §6 のバッジトークンと
+> 同じリポジトリ別置換ルールです。`keiailab-commons` 自身の実際の値: MIT。
 
 追加の cross-link ブロックは置きません。Footer を最小化して文書を
 self-contained に保ちます。
 
 ## 8. バッジ順序
 
-README の shield.io バッジは次の順序 (左→右):
+バッジは **MUST** (常に表示) と **SHOULD** (バックエンドインフラがライブのときのみ
+表示) に分かれます。ワークフローやレジストリがまだ無いのに 8 個を強制すると
+バッジが常時 red のままになるため、ファミリー標準は正直な 4 + 4 です。
 
-1. License (MIT)
-2. Go Version (1.25+)
-3. Go Reference (pkg.go.dev)
-4. OpenSSF Scorecard
-5. GitHub Discussions
+**MUST (4)** — すべてのファミリーリポジトリ、左→右:
 
-> **Note**: `keiailab-commons` は *ライブラリ* なので、container image、
-> Helm chart、Kubernetes deployment バッジは本ライブラリに付けません —
-> イメージや chart を出荷する downstream operator の README に置きます。
+1. License
+2. Go Version
+3. Product (MongoDB / Valkey / PostgreSQL / Qdrant)
+4. Kubernetes Version
+
+**SHOULD (4)** — バックエンド表面がアクティブなときのみ各々追加:
+
+5. Container image (`ghcr.io/keiailab/<repo>`)
+6. Helm chart (Artifact Hub)
+7. OpenSSF Scorecard
+8. GitHub Discussions
+
+> **ライブラリ例外**: `keiailab-commons` は container image、Helm application
+> chart、Kubernetes ワークロードのいずれも出荷しないため、MUST セットは product と
+> Kubernetes バッジの代わりに License / Go Version / **Go Reference** (pkg.go.dev)、
+> SHOULD セットは OpenSSF Scorecard + GitHub Discussions です。container / Helm /
+> Kubernetes バッジは、イメージや chart を出荷する downstream operator に置きます。
 
 ## 9. Discussions / Issues / PR Template
 

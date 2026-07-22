@@ -22,6 +22,28 @@ The library is published as a Go module at
 implementations via standard Go module import — no specific consumer is
 named or endorsed here.
 
+### 1.1 Family charter (this document is the SSOT)
+
+This Branding Guide is the **single source of truth** for the visual grammar
+shared by the keiailab operator family. The color palette (§3), the ring
+grammar and glyph-swap procedure (§2b), the per-repo glyph registry (§2b), the
+README header and footer templates (§6 / §7), and the badge order (§8) are
+defined **here** and copied — not re-derived — by each family repository.
+`keiailab-commons` owns the charter because it is the shared dependency every
+operator already imports.
+
+The family is four sister operators plus this shared library:
+
+| Project | Focus | Repository |
+|---|---|---|
+| `mongodb-operator` | MongoDB 8.0+ | https://github.com/keiailab/mongodb-operator |
+| `valkey-operator` | Valkey 8.0+ | https://github.com/keiailab/valkey-operator |
+| `postgres-operator` | PostgreSQL 18+ | https://github.com/keiailab/postgres-operator |
+| `qdrant-operator` | Qdrant vector database | https://github.com/keiailab/qdrant-operator |
+| `keiailab-commons` | Shared Go library | https://github.com/keiailab/keiailab-commons |
+
+When a translation of this guide lags, the English text here stays canonical.
+
 ## 2. Logo and visual assets
 
 | Asset | URL | Usage |
@@ -43,6 +65,37 @@ width.
 - Add drop shadows or filters
 - Place the logo on backgrounds with insufficient contrast
 - Combine with other logos without keiailab brand approval
+
+## 2b. Ring grammar & glyph-swap procedure
+
+The family shares one outer symbol — the three-color rotating-arrow ring in
+`docs/branding/base-symbol.png` (460×460; dark-navy → blue → green arrows around
+a center sphere). **Every** family repository vendors this exact file
+byte-for-byte; the ring is never recolored, redrawn, or regenerated.
+
+A project's own `docs/branding/symbol.png` is produced by keeping the ring and
+swapping **only the center glyph**:
+
+1. Start from the shared `base-symbol.png` — do not touch the ring.
+2. Alpha-composite the product glyph into the central clear zone
+   (~185 px diameter); nothing overlaps the ring.
+3. Export to `docs/branding/symbol.png` at the source resolution.
+4. Reference it from the README header at width 96 px (§6) and, for an operator,
+   as the Helm chart `icon`.
+
+Keeping a shared ring and swapping only the glyph is what makes the marks read
+as one family while staying per-product recognizable. Recoloring the ring or
+drawing a new outer mark is prohibited.
+
+### Glyph registry
+
+| Repository | Center glyph |
+|---|---|
+| `mongodb-operator` | leaf |
+| `valkey-operator` | hexagon + keyhole |
+| `postgres-operator` | elephant |
+| `qdrant-operator` | kNN constellation |
+| `keiailab-commons` | node grid |
 
 ## 3. Color palette
 
@@ -102,8 +155,8 @@ Every README's first block follows this layout:
 > **Shared Go library for Kubernetes operator scaffolding — finalizer / labels / status / version / security / monitoring partials.**
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
-  <!-- additional shield.io badges -->
+  <a href="LICENSE"><img src="https://img.shields.io/badge/<license placeholder>-blue.svg" alt="License"/></a>
+  <!-- additional shield.io badges, in the §8 order -->
 </p>
 
 <p align="center">
@@ -114,6 +167,13 @@ Every README's first block follows this layout:
 </p>
 ```
 
+> **Template placeholder**: replace `<license placeholder>` with the copying
+> repository's actual SPDX badge segment — for example `License-MIT` for MIT
+> repositories (most of the family), or the matching `License-<SPDX-id>` for a
+> differently licensed member. A single hardcoded license in this shared
+> template mis-badges any member whose license differs, so the token stays
+> generic here and is filled in per repo.
+
 ## 7. README footer standard
 
 Every README and root-level `.md` file ends with a single attribution line:
@@ -121,25 +181,43 @@ Every README and root-level `.md` file ends with a single attribution line:
 ```markdown
 ---
 
-<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · <license placeholder> · <a href="https://keiailab.com">keiailab.com</a></p>
 ```
+
+> **Template placeholder**: replace `<license placeholder>` with the copying
+> repository's actual license name — the same per-repo substitution rule as
+> the §6 badge token. `keiailab-commons`' own actual value: MIT.
 
 No additional cross-link block. Keep the footer minimal so the document
 remains self-contained.
 
 ## 8. Badge order
 
-The shield.io badges in the README appear in this order (left → right):
+Badges split into **MUST** (always present) and **SHOULD** (present only when
+the backing infrastructure is live). Forcing all eight when a workflow or
+registry does not yet exist leaves a badge perpetually red, so the family
+standard is an honest 4 + 4.
 
-1. License (MIT)
-2. Go Version (1.25+)
-3. Go Reference (pkg.go.dev)
-4. OpenSSF Scorecard
-5. GitHub Discussions
+**MUST (4)** — every family repository, left → right:
 
-> **Note**: `keiailab-commons` is a *library*, so container image, Helm
-> chart, or Kubernetes deployment badges do not belong here — they belong on
-> the README of a downstream operator that ships an image or chart.
+1. License
+2. Go Version
+3. Product (MongoDB / Valkey / PostgreSQL / Qdrant)
+4. Kubernetes Version
+
+**SHOULD (4)** — add each only when its backing surface is active:
+
+5. Container image (`ghcr.io/keiailab/<repo>`)
+6. Helm chart (Artifact Hub)
+7. OpenSSF Scorecard
+8. GitHub Discussions
+
+> **Library exception**: `keiailab-commons` ships neither a container image, a
+> Helm application chart, nor a Kubernetes workload, so its MUST set is
+> License / Go Version / **Go Reference** (pkg.go.dev) in place of the product
+> and Kubernetes badges, and its SHOULD set is OpenSSF Scorecard + GitHub
+> Discussions. The container / Helm / Kubernetes badges belong on a downstream
+> operator that ships an image or chart.
 
 ## 9. Discussions, issues, PR templates
 

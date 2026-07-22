@@ -1,12 +1,34 @@
-# i18n — keiailab-commons multilingual policy
+# i18n — keiailab operator family multilingual policy
 
 > **English** | [한국어](README.ko.md) | [日本語](README.ja.md) | [中文](README.zh.md)
 
-This document defines how `keiailab-commons` documentation is
-maintained in multiple languages. The project keeps an English canonical
-plus Korean / Japanese / Chinese translations.
+This document is the **single source of truth** for how documentation across
+the keiailab operator family (`mongodb-operator`, `valkey-operator`,
+`postgres-operator`, `qdrant-operator`, and this `keiailab-commons` library) is
+maintained in multiple languages. Each repository keeps an English canonical
+plus Korean / Japanese / Chinese translations; `keiailab-commons` owns this
+policy because it is the shared dependency every operator imports.
 
 ## §1 Policy
+
+### 1.0 File-naming standard (family go-forward)
+
+- **Go-forward standard**: the suffix scheme `<name>.<lang>.md` —
+  `README.md` (English canonical) alongside `README.ko.md`, `README.ja.md`,
+  and `README.zh.md` in the same directory. A translation lives next to its
+  source, which keeps per-file coverage visible and the layout simple. Every
+  *new* repository — `postgres-operator`, `qdrant-operator`, and this
+  `keiailab-commons` library already do this — uses the suffix scheme.
+- **Grandfathered**: `mongodb-operator` and `valkey-operator` use the earlier
+  directory scheme (`docs/i18n/<lang>/<name>.md`). Both render correctly on
+  GitHub, so they are **kept as-is and not migrated** — a bulk rename would
+  break inbound links for no consistency gain. Only *new* repositories and
+  *new* translated files adopt the suffix scheme.
+- **Community-health templates**: the canonical source for `.github/`
+  community-health files (CONTRIBUTING / SECURITY / CODE_OF_CONDUCT / SUPPORT /
+  GOVERNANCE / ISSUE_TEMPLATE / PULL_REQUEST_TEMPLATE) is
+  `valkey-operator/.github/`; a new repository copies from there rather than
+  re-authoring, then swaps the product name and Go module path.
 
 ### 1.1 Core principles
 

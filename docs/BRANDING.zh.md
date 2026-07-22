@@ -21,15 +21,36 @@ Go 库。
 (`charts/keiailab-commons`) 形式发布。downstream operator 通过标准 Go module
 import 使用 —— 这里不指名或背书任何具体 consumer。
 
+### 1.1 家族 charter (本文档为 SSOT)
+
+本 Branding Guide 是 keiailab operator 家族共享视觉文法的 **单一事实来源
+(SSOT)**。调色板 (§3)、环形文法与字形替换流程 (§2b)、各 repo 字形注册表 (§2b)、
+README 页眉 / footer 模板 (§6 / §7)、徽章顺序 (§8) 均在 **此处** 定义,由各家族
+仓库复制而非重新推导。`keiailab-commons` 拥有该 charter,因为它是每个 operator
+都已 import 的共享依赖。
+
+家族由 4 个 sister operator 加本共享库组成:
+
+| Project | Focus | Repository |
+|---|---|---|
+| `mongodb-operator` | MongoDB 8.0+ | https://github.com/keiailab/mongodb-operator |
+| `valkey-operator` | Valkey 8.0+ | https://github.com/keiailab/valkey-operator |
+| `postgres-operator` | PostgreSQL 18+ | https://github.com/keiailab/postgres-operator |
+| `qdrant-operator` | Qdrant vector database | https://github.com/keiailab/qdrant-operator |
+| `keiailab-commons` | Shared Go library | https://github.com/keiailab/keiailab-commons |
+
+当本指南的翻译滞后时,此处的英文文本保持 canonical。
+
 ## 2. 标志与视觉资源
 
 | 资源 | URL | 用途 |
 |---|---|---|
-| Primary 标志 (SVG) | `https://keiailab.com/assets/logo.svg` | README header、幻灯片 |
-| Mono mark | `https://keiailab.com/assets/mark.svg` | Favicon、social card |
-| Wordmark | `https://keiailab.com/assets/wordmark.svg` | Footer、深色背景 |
+| Primary 标志 | `docs/branding/symbol.png` | README header、幻灯片 |
+| Keiailab base symbol | `docs/branding/base-symbol.png` | 外圈旋转箭头标记的源参考 |
+| Favicon | `https://keiailab.com/favicon.ico` | Favicon、social card |
+| 计划 SVG kit | `https://keiailab.com/assets/{logo,mark,wordmark}.svg` | URL 返回 200 后替换 |
 
-**标志位置**: README 顶部居中,width 120 px。始终链接到
+**标志位置**: README 顶部居中,width 96 px。始终链接到
 `https://keiailab.com`。
 
 **Clear space**: 标志周围的最小 padding 等于标志 width 的 25 %。
@@ -40,6 +61,33 @@ import 使用 —— 这里不指名或背书任何具体 consumer。
 - 添加 drop shadow / filter
 - 放置在对比度不足的背景上
 - 未经 keiailab 品牌批准与其他标志组合
+
+## 2b. 环形文法与字形替换流程
+
+家族共享一个外圈符号 —— `docs/branding/base-symbol.png` 中的三色旋转箭头环
+(460×460; 深海军蓝 → 蓝 → 绿箭头,中心球体)。**每个** 家族仓库都按 byte 逐一
+vendor 此文件,环永不重新着色、重绘或重新生成。
+
+各项目自己的 `docs/branding/symbol.png` 通过保留环并 **仅替换中心字形** 生成:
+
+1. 从共享 `base-symbol.png` 开始 —— 不要触碰环。
+2. 将产品字形 alpha-composite 到中心 clear zone (~185 px 直径); 不与环重叠。
+3. 以源分辨率 export 到 `docs/branding/symbol.png`。
+4. 在 README 页眉以 width 96 px 引用 (§6),operator 还作为 Helm chart `icon`
+   引用。
+
+保留共享环并仅替换字形,正是让这些标记读起来是一个家族、同时保持各产品可识别的
+关键。重新着色环或绘制新的外圈标记是禁止的。
+
+### 字形注册表
+
+| Repository | Center glyph |
+|---|---|
+| `mongodb-operator` | leaf |
+| `valkey-operator` | hexagon + keyhole |
+| `postgres-operator` | elephant |
+| `qdrant-operator` | kNN constellation |
+| `keiailab-commons` | node grid |
 
 ## 3. 色彩调色板
 
@@ -87,7 +135,7 @@ GitHub README shield.io 徽章使用相同的 hex 值。
 
 ```markdown
 <p align="center">
-  <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
+  <img src="docs/branding/symbol.png" alt="keiailab" width="96"/>
 </p>
 
 # keiailab-commons
@@ -95,8 +143,8 @@ GitHub README shield.io 徽章使用相同的 hex 值。
 > **用于 Kubernetes operator 通用 scaffolding 的 Go 共享库 — finalizer / labels / status / version / security / monitoring partials.**
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
-  <!-- 其他 shield.io 徽章 -->
+  <a href="LICENSE"><img src="https://img.shields.io/badge/<license placeholder>-blue.svg" alt="License"/></a>
+  <!-- 按 §8 顺序的其他 shield.io 徽章 -->
 </p>
 
 <p align="center">
@@ -107,6 +155,11 @@ GitHub README shield.io 徽章使用相同的 hex 值。
 </p>
 ```
 
+> **模板 placeholder**: 将 `<license placeholder>` 替换为复制仓库的实际 SPDX
+> 徽章片段 —— 例如 MIT 仓库 (家族大多数) 用 `License-MIT`,许可证不同的成员用
+> 对应的 `License-<SPDX-id>`。在共享模板中硬编码单一许可证会给许可证不同的成员
+> 再生产错误徽章,因此 token 在此保持 generic,由各仓库填入。
+
 ## 7. README Footer 标准
 
 每个 README 与根级 `.md` 文件以单行 attribution 结尾:
@@ -114,24 +167,40 @@ GitHub README shield.io 徽章使用相同的 hex 值。
 ```markdown
 ---
 
-<p align="center">© 2026 keiailab · MIT · <a href="https://keiailab.com">keiailab.com</a></p>
+<p align="center">© 2026 keiailab · <license placeholder> · <a href="https://keiailab.com">keiailab.com</a></p>
 ```
+
+> **模板 placeholder**: 将 `<license placeholder>` 替换为复制仓库的实际
+> 许可证名称 —— 与 §6 徽章 token 相同的按仓库替换规则。`keiailab-commons`
+> 自身的实际值: MIT。
 
 不添加额外 cross-link 区块。footer 保持最小化,使文档 self-contained。
 
 ## 8. 徽章顺序
 
-README 的 shield.io 徽章按以下顺序 (左→右):
+徽章分为 **MUST** (始终显示) 与 **SHOULD** (仅当后端基础设施上线时显示)。当
+工作流或注册表尚不存在却强制 8 个时,徽章会长期显示 red,因此家族标准是诚实的
+4 + 4。
 
-1. License (MIT)
-2. Go Version (1.25+)
-3. Go Reference (pkg.go.dev)
-4. OpenSSF Scorecard
-5. GitHub Discussions
+**MUST (4)** — 每个家族仓库,左→右:
 
-> **Note**: `keiailab-commons` 是 *库*,因此 container image、Helm chart、
-> Kubernetes deployment 徽章不放在本库 —— 放在出货 image 或 chart 的
-> downstream operator README 上。
+1. License
+2. Go Version
+3. Product (MongoDB / Valkey / PostgreSQL / Qdrant)
+4. Kubernetes Version
+
+**SHOULD (4)** — 仅当其后端表面处于活跃时各自添加:
+
+5. Container image (`ghcr.io/keiailab/<repo>`)
+6. Helm chart (Artifact Hub)
+7. OpenSSF Scorecard
+8. GitHub Discussions
+
+> **库例外**: `keiailab-commons` 既不出货 container image、Helm application
+> chart,也不出货 Kubernetes 工作负载,因此其 MUST 集用 License / Go Version /
+> **Go Reference** (pkg.go.dev) 代替 product 与 Kubernetes 徽章,SHOULD 集为
+> OpenSSF Scorecard + GitHub Discussions。container / Helm / Kubernetes 徽章放在
+> 出货 image 或 chart 的 downstream operator 上。
 
 ## 9. Discussions / Issues / PR Template
 

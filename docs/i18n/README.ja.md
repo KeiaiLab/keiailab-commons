@@ -1,14 +1,38 @@
-# i18n — keiailab-commons 多言語ポリシー
+# i18n — keiailab operator ファミリー多言語ポリシー
 
 > [English](README.md) | [한국어](README.ko.md) | **日本語** | [中文](README.zh.md)
 
 > ⚠️ This translation is AI-generated and pending native review.
 
-本ドキュメントは `keiailab-commons` ドキュメントを複数言語でどのように
-維持するかを定義します。本プロジェクトは英語 canonical に加え、韓国語 /
-日本語 / 中国語の翻訳を保持します。
+本ドキュメントは、keiailab operator ファミリー (`mongodb-operator`、
+`valkey-operator`、`postgres-operator`、`qdrant-operator`、および本
+`keiailab-commons` ライブラリ) 全体でドキュメントを複数言語でどのように
+維持するかを定める **信頼できる唯一の情報源 (single source of truth)** です。
+各リポジトリは英語 canonical に加え、韓国語 / 日本語 / 中国語の翻訳を保持
+します。`keiailab-commons` はすべての operator が import する共有依存関係で
+あるため、本ポリシーを所有します。
 
 ## §1 ポリシー
+
+### 1.0 ファイル命名標準 (ファミリー go-forward)
+
+- **Go-forward 標準**: suffix 方式 `<name>.<lang>.md` — `README.md`
+  (英語 canonical) と同じディレクトリに `README.ko.md`、`README.ja.md`、
+  `README.zh.md` を置きます。翻訳がソースの隣に置かれるため、ファイル単位の
+  カバレッジが見えやすく、レイアウトもシンプルです。`postgres-operator`、
+  `qdrant-operator`、そして本 `keiailab-commons` ライブラリを含む *新規*
+  リポジトリはすべて既にこの suffix 方式を使用しています。
+- **Grandfathered (現行維持)**: `mongodb-operator` と `valkey-operator` は
+  以前のディレクトリ方式 (`docs/i18n/<lang>/<name>.md`) を使用しています。
+  どちらも GitHub 上で正しくレンダリングされるため、**現状維持とし
+  マイグレーションしません** — 一括 rename は一貫性の利得なしに inbound
+  リンクを壊すだけです。*新規* リポジトリと *新規* 翻訳ファイルのみが
+  suffix 方式を採用します。
+- **コミュニティヘルステンプレート**: `.github/` コミュニティヘルスファイル
+  (CONTRIBUTING / SECURITY / CODE_OF_CONDUCT / SUPPORT / GOVERNANCE /
+  ISSUE_TEMPLATE / PULL_REQUEST_TEMPLATE) の canonical source は
+  `valkey-operator/.github/` です。新規リポジトリは再作成せずここから
+  コピーし、製品名と Go module path のみ置き換えます。
 
 ### 1.1 基本原則
 
