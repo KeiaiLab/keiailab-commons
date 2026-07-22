@@ -6,7 +6,7 @@ SHELL = /usr/bin/env bash -o pipefail
 .SHELLFLAGS = -ec
 
 .PHONY: all
-all: lint test ## 기본 타겟 (CI 동등)
+all: lint test verify ## 기본 타겟 (CI 동등)
 
 .PHONY: help
 help: ## 본 Makefile 의 사용 가능 타겟 목록
@@ -35,6 +35,17 @@ test: ## go test (race + coverage profile cover.out)
 cover: test ## test 결과를 HTML 로 변환 (cover.html)
 	go tool cover -html=cover.out -o cover.html
 	@echo "→ cover.html"
+
+.PHONY: verify
+verify: check-readme-sync check-package-catalog-sync ## 결정론 문서 정합성 검사
+
+.PHONY: check-readme-sync
+check-readme-sync: ## README 4개 언어 구조 동기 검사
+	bash scripts/check-readme-sync.sh
+
+.PHONY: check-package-catalog-sync
+check-package-catalog-sync: ## 공개 패키지·릴리스 카탈로그 동기 검사
+	bash scripts/check-package-catalog-sync.sh
 
 ##@ Security / Dependency
 

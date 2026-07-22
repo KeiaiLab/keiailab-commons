@@ -19,20 +19,30 @@ augments any global development conventions.
 ```
 keiailab-commons/
 ├── pkg/
-│   ├── events/         # Kubernetes Event recorder + Reason catalog
-│   ├── finalizer/      # Finalizer helpers (no controller-runtime)
-│   ├── labels/         # Recommended K8s labels + v2 mapping
-│   ├── monitoring/     # ServiceMonitor / PrometheusRule builders
-│   ├── networkpolicy/  # Deny-by-default NetworkPolicy builder
-│   ├── probes/         # corev1.Probe fluent builder
-│   ├── pvc/            # PVC expansion helpers
-│   ├── security/       # PodSecurity restricted SecurityContext
-│   ├── status/         # Condition Type catalog + helpers
-│   ├── storageclass/   # storageClass validator + Normalize
-│   ├── topology/       # PVC topology spread helpers
-│   ├── version/        # Version allowlist + generic Matrix
-│   ├── webhook/        # Admission validation helpers
-│   └── bundle/         # OLM v1 bundle metadata helpers
+│   ├── apply/              # Idempotent Kubernetes object apply helpers
+│   ├── batchjob/           # batch/v1 Job envelope builder
+│   ├── bundle/             # OLM v1 bundle metadata helpers
+│   ├── certmanager/        # Certificate / Issuer builders
+│   ├── events/             # Kubernetes Event recorder + Reason catalog
+│   ├── finalizer/          # Finalizer helpers (no controller-runtime)
+│   ├── hpa/                # HorizontalPodAutoscaler builder
+│   ├── labels/             # Recommended K8s labels + v2 mapping
+│   ├── monitoring/         # ServiceMonitor / PrometheusRule builders
+│   ├── networkpolicy/      # Deny-by-default NetworkPolicy builder
+│   ├── pdb/                # PodDisruptionBudget builder
+│   ├── probes/             # corev1.Probe fluent builder
+│   ├── pvc/                # PVC builders and expansion helpers
+│   ├── reconcile/          # Reconcile-loop helpers
+│   ├── reconcilemetrics/   # Prometheus reconcile metrics
+│   ├── secrethash/         # Deterministic Secret-data digest
+│   ├── security/           # PodSecurity restricted SecurityContext
+│   ├── service/            # Kubernetes Service builder
+│   ├── status/             # Condition Type catalog + helpers
+│   ├── storageclass/       # storageClass validator + Normalize
+│   ├── topology/           # PVC topology spread helpers
+│   ├── version/            # Version allowlist + generic Matrix
+│   ├── volume/             # TLS Secret volume / mount builder
+│   └── webhook/            # Admission validation helpers
 ├── charts/keiailab-commons/   # Helm library chart partials
 ├── templates/observability/   # ServiceMonitor partial
 ├── scripts/                   # Release + i18n drift scripts
@@ -45,7 +55,7 @@ keiailab-commons/
 ```
 
 Root holds only the README family (English + Korean / Japanese / Chinese)
-plus the GitHub OSS hygiene files (LICENSE, NOTICE, CITATION.cff,
+plus the GitHub OSS hygiene files (LICENSE, CITATION.cff,
 CODE_OF_CONDUCT, CONTRIBUTING, SECURITY, CHANGELOG, `.github/`).
 
 ## Before opening a change

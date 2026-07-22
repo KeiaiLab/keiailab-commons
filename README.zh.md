@@ -6,6 +6,16 @@
 
 # keiailab-commons
 
+## 设计资源
+
+| 资源 | 路径 | 用途 |
+|---|---|---|
+| 居中服务标志 | [`docs/branding/symbol.png`](docs/branding/symbol.png) | GitHub README、Artifact Hub 图标/截图 |
+| Keiailab 基础标志 | [`docs/branding/base-symbol.png`](docs/branding/base-symbol.png) | 外层旋转箭头标记的源文件 |
+| 仓库字标 | [`docs/branding/logo.png`](docs/branding/logo.png) | 项目页面与文档卡片 |
+| 社交封面 | [`docs/branding/cover.png`](docs/branding/cover.png) | 社交卡片与发布文章 |
+| 品牌指南 | [`docs/BRANDING.md`](docs/BRANDING.md) | 公共视觉资源使用规范 |
+
 > **用于 Kubernetes operator 通用 scaffolding 的 Go 共享库 — finalizer / labels / status / version / security / monitoring partials.**
 >
 > [English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | **中文**
@@ -57,6 +67,12 @@ Operator 作者反复实现相同的 scaffolding —— restricted PodSecurity c
 | `pkg/certmanager` | Beta | cert-manager `Certificate` / self-signed `Issuer` 构建器 — `CertParams`、`BuildCertificate`、`BuildSelfSignedIssuer`、`ServiceSANs` (unstructured — 无 CRD 依赖)。 |
 | `pkg/reconcile` | Beta | Reconcile 循环帮助函数 — `Statusable`、`ApplyErrorCondition`、`HandleFinalizerCleanup`、`SecretIfNotExists` (controller-runtime 依赖)。 |
 | `pkg/reconcilemetrics` | Beta | Prometheus reconcile 指标 — `New(subsystem)` (保留既有时间序列名称)、`IncTotal` / `ObserveReconcile` / `IncError`、`ResultFor` (prometheus/client_golang 依赖)。 |
+| `pkg/secrethash` | Beta | 用于 rollout trigger annotation 的确定性 Secret data SHA-256 digest (`Hash(data, keys...)`)。 |
+| `pkg/pdb` | Beta | 应用 min/max 优先级与 `DefaultFloor` drain-safety 策略的 PodDisruptionBudget 构建器 (`Build(Params)`)。 |
+| `pkg/hpa` | Beta | 提供 `MinFloor` clamp 与 `CPUUtilization` / `MemoryUtilization` metric 帮助函数的 HorizontalPodAutoscaler 构建器 (`Build(Params)`)。 |
+| `pkg/service` | Beta | 组装 headless/client Service 及 type、IP families、annotation 的 Kubernetes Service 构建器 (`Build(Params)`)。 |
+| `pkg/volume` | Beta | 强制 mode `0o400` 与 read-only mount 的 TLS Secret volume/mount 构建器 (`TLSSecretMount`)。 |
+| `pkg/batchjob` | Beta | 组装 backoff、TTL、restart policy 与 label 传递的 `batch/v1` Job envelope 构建器 (`Build(Params)`)。 |
 | `pkg/probes` | Experimental | `corev1.Probe` fluent 构建器 — HTTP / HTTPS / TCP / Exec,kubelet 默认值 + clamp。 |
 | `pkg/webhook` | Experimental | Admission validation 帮助 — `ValidateAllowedVersion`、`ValidateWithPredicate`、conversion registry。 |
 | `pkg/bundle` | Experimental | OLM v1 捆绑包元数据助手 — 注解、FBC模式类型、目录验证 (ADR-0017)。 |
