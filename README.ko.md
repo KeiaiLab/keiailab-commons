@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="https://keiailab.com/assets/logo.svg" alt="keiailab" width="120"/>
+  <a href="https://keiailab.com">
+    <img src="docs/branding/symbol.png" alt="keiailab" width="96"/>
+  </a>
 </p>
 
 # keiailab-commons
@@ -9,7 +11,7 @@
 > [English](README.md) | **한국어** | [日本語](README.ja.md) | [中文](README.zh.md)
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License"/></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License"/></a>
   <a href="https://golang.org/"><img src="https://img.shields.io/badge/Go-1.26+-00ADD8?logo=go" alt="Go Version"/></a>
   <a href="https://pkg.go.dev/github.com/keiailab/keiailab-commons"><img src="https://pkg.go.dev/badge/github.com/keiailab/keiailab-commons.svg" alt="Go Reference"/></a>
   <a href="https://scorecard.dev/viewer/?uri=github.com/keiailab/keiailab-commons"><img src="https://api.scorecard.dev/projects/github.com/keiailab/keiailab-commons/badge" alt="OpenSSF Scorecard"/></a>

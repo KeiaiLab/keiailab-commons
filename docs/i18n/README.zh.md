@@ -1,14 +1,32 @@
-# i18n — keiailab-commons 多语言政策
+# i18n — keiailab operator 家族多语言政策
 
 > [English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md) | **中文**
 
 > ⚠️ This translation is AI-generated and pending native review.
 
-本文档定义 `keiailab-commons` 文档如何在多种
-语言中维护。本项目保持英文 canonical 加上
-韩文 / 日文 / 中文翻译。
+本文档是关于 keiailab operator 家族 (`mongodb-operator`、`valkey-operator`、
+`postgres-operator`、`qdrant-operator`，以及本 `keiailab-commons` 库) 的文档
+如何在多种语言中维护的 **单一可信来源 (single source of truth)**。每个仓库
+都保持英文 canonical 加上韩文 / 日文 / 中文翻译；`keiailab-commons` 是每个
+operator 都会 import 的共享依赖，因此拥有本政策。
 
 ## §1 政策
+
+### 1.0 文件命名标准（家族 go-forward）
+
+- **Go-forward 标准**：suffix 方案 `<name>.<lang>.md` — `README.md`
+  （英文 canonical）同目录下的 `README.ko.md`、`README.ja.md`、
+  `README.zh.md`。翻译文件位于源文件旁边，使按文件的覆盖率可见，布局也
+  更简单。包括 `postgres-operator`、`qdrant-operator`，以及本
+  `keiailab-commons` 库在内的所有 *新* 仓库均已使用该 suffix 方案。
+- **Grandfathered（历史保留）**：`mongodb-operator` 与 `valkey-operator`
+  使用较早的目录方案 (`docs/i18n/<lang>/<name>.md`)。两者都能在 GitHub 上
+  正确渲染，因此 **保持现状、不迁移** — 批量 rename 只会破坏 inbound
+  链接而没有一致性收益。只有 *新* 仓库与 *新* 翻译文件才采用 suffix 方案。
+- **社区健康文件模板**：`.github/` 社区健康文件 (CONTRIBUTING / SECURITY /
+  CODE_OF_CONDUCT / SUPPORT / GOVERNANCE / ISSUE_TEMPLATE /
+  PULL_REQUEST_TEMPLATE) 的 canonical source 是 `valkey-operator/.github/`；
+  新仓库从那里复制而非重新编写，然后替换产品名和 Go module path。
 
 ### 1.1 核心原则
 

@@ -1,11 +1,34 @@
-# i18n — keiailab-commons 다국어 정책
+# i18n — keiailab operator 패밀리 다국어 정책
 
 > [English](README.md) | **한국어** | [日本語](README.ja.md) | [中文](README.zh.md)
 
-본 문서는 `keiailab-commons` 다국어 문서 운영 정책을 정의합니다. English
-canonical + 한국어 / 日本語 / 中文 의 4-lang 골격을 유지합니다.
+본 문서는 keiailab operator 패밀리 (`mongodb-operator`, `valkey-operator`,
+`postgres-operator`, `qdrant-operator`, 그리고 본 `keiailab-commons`
+라이브러리) 전반의 문서를 여러 언어로 유지하는 방식을 정의하는 **단일 진실
+공급원 (single source of truth)** 입니다. 각 저장소는 English canonical 에
+더해 한국어 / 日本語 / 中文 번역을 유지하며, `keiailab-commons` 가 모든
+operator 가 import 하는 공유 의존성이므로 본 정책을 소유합니다.
 
 ## §1 정책
+
+### 1.0 파일 네이밍 표준 (패밀리 go-forward)
+
+- **Go-forward 표준**: suffix 스킴 `<name>.<lang>.md` — `README.md` (영문
+  canonical) 와 같은 디렉터리에 `README.ko.md`, `README.ja.md`,
+  `README.zh.md` 를 둡니다. 번역이 source 바로 옆에 위치하여 파일별
+  커버리지가 보이고 레이아웃이 단순합니다. `postgres-operator`,
+  `qdrant-operator`, 그리고 본 `keiailab-commons` 라이브러리를 포함한 모든
+  *신규* 저장소가 이미 이 suffix 스킴을 사용합니다.
+- **Grandfathered (구제 유지)**: `mongodb-operator` 와 `valkey-operator` 는
+  이전 디렉터리 스킴 (`docs/i18n/<lang>/<name>.md`) 을 사용합니다. 둘 다
+  GitHub 에서 정상 렌더링되므로 **현행 유지하며 마이그레이션하지 않습니다**
+  — 일괄 rename 은 일관성 이득 없이 inbound 링크만 깨뜨립니다. *신규*
+  저장소와 *신규* 번역 파일만 suffix 스킴을 채택합니다.
+- **커뮤니티 헬스 템플릿**: `.github/` 커뮤니티 헬스 파일 (CONTRIBUTING /
+  SECURITY / CODE_OF_CONDUCT / SUPPORT / GOVERNANCE / ISSUE_TEMPLATE /
+  PULL_REQUEST_TEMPLATE) 의 canonical source 는 `valkey-operator/.github/`
+  입니다. 신규 저장소는 재작성하지 않고 여기서 복사한 뒤 제품명과 Go module
+  path 만 교체합니다.
 
 ### 1.1 기본 원칙
 
