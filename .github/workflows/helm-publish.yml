@@ -33,7 +33,6 @@ on:
 
 permissions:
   contents: read
-  packages: write   # push helm chart to ghcr.io OCI registry
 
 concurrency:
   group: helm-publish-${{ github.event.release.tag_name || github.event.inputs.tag || github.ref_name }}
@@ -42,6 +41,9 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write   # push helm chart to ghcr.io OCI registry
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
