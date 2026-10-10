@@ -6,6 +6,16 @@
 
 # keiailab-commons
 
+## 디자인 자산
+
+| 자산 | 경로 | 용도 |
+|---|---|---|
+| 중앙 서비스 심볼 | [`docs/branding/symbol.png`](docs/branding/symbol.png) | GitHub README, Artifact Hub 아이콘/스크린샷 |
+| Keiailab 기본 심볼 | [`docs/branding/base-symbol.png`](docs/branding/base-symbol.png) | 외곽 회전 화살표 마크의 원본 |
+| 저장소 워드마크 | [`docs/branding/logo.png`](docs/branding/logo.png) | 프로젝트 페이지와 문서 카드 |
+| 소셜 커버 | [`docs/branding/cover.png`](docs/branding/cover.png) | 소셜 카드와 출시 게시물 |
+| 브랜딩 가이드 | [`docs/BRANDING.md`](docs/BRANDING.md) | 공개 시각 자산 사용 규칙 |
+
 > **Kubernetes operator 공통 scaffolding 을 위한 Go 라이브러리 — finalizer / labels / status / version / security / monitoring partials.**
 >
 > [English](README.md) | **한국어** | [日本語](README.ja.md) | [中文](README.zh.md)
@@ -56,6 +66,12 @@ ServiceMonitor 빌더, finalizer 헬퍼, status condition 카탈로그. 이를 �
 | `pkg/certmanager` | Beta | cert-manager `Certificate` / self-signed `Issuer` 빌더 — `CertParams`, `BuildCertificate`, `BuildSelfSignedIssuer`, `ServiceSANs` (unstructured — CRD 의존 없음). |
 | `pkg/reconcile` | Beta | Reconcile 루프 헬퍼 — `Statusable`, `ApplyErrorCondition`, `HandleFinalizerCleanup`, `SecretIfNotExists` (controller-runtime 의존). |
 | `pkg/reconcilemetrics` | Beta | Prometheus reconcile 메트릭 — `New(subsystem)` (기존 시계열 이름 보존), `IncTotal` / `ObserveReconcile` / `IncError`, `ResultFor` (prometheus/client_golang 의존). |
+| `pkg/secrethash` | Beta | rollout trigger annotation을 위한 결정적 Secret data SHA-256 digest (`Hash(data, keys...)`). |
+| `pkg/pdb` | Beta | min/max 우선순위와 `DefaultFloor` drain-safety 정책을 적용하는 PodDisruptionBudget 빌더 (`Build(Params)`). |
+| `pkg/hpa` | Beta | `MinFloor` clamp 및 `CPUUtilization` / `MemoryUtilization` metric 헬퍼를 제공하는 HorizontalPodAutoscaler 빌더 (`Build(Params)`). |
+| `pkg/service` | Beta | type, IP families, annotation을 포함해 headless/client Service를 조립하는 Kubernetes Service 빌더 (`Build(Params)`). |
+| `pkg/volume` | Beta | mode `0o400`과 read-only mount를 강제하는 TLS Secret volume/mount 빌더 (`TLSSecretMount`). |
+| `pkg/batchjob` | Beta | backoff, TTL, restart policy, label 전파를 조립하는 `batch/v1` Job envelope 빌더 (`Build(Params)`). |
 | `pkg/probes` | Experimental | `corev1.Probe` fluent 빌더 — HTTP / HTTPS / TCP / Exec, kubelet default + clamp. |
 | `pkg/webhook` | Experimental | Admission validation 헬퍼 — `ValidateAllowedVersion`, `ValidateWithPredicate`, conversion registry. |
 | `pkg/bundle` | Experimental | OLM v1 번들 메타데이터 헬퍼 — 어노테이션, FBC 스키마 타입, 디렉토리 검증 (ADR-0017). |

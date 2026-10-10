@@ -17,7 +17,7 @@ follow-up items*。本项目不维护基于时间的截止日期 —
 | `[~]` | 部分实现（helper 存在，验证尚未完成）。 |
 | `[ ]` | 尚未开始。 |
 
-## API stability tier (current v0.11.0 candidate)
+## API stability tier（当前 v0.13.0 发布版）
 
 | Package | Tier | Promotion criterion |
 |---|---|---|

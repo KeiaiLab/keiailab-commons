@@ -15,7 +15,7 @@
 | `[~]` | 부분 구현 (helper 존재, 검증 미완). |
 | `[ ]` | 미시작. |
 
-## API Stability Tier (현행 v0.11.0 candidate)
+## API Stability Tier (현행 v0.13.0 릴리스)
 
 | 패키지 | Tier | Tier 격상 조건 |
 |---|---|---|

@@ -107,6 +107,12 @@ Each package ships runnable examples in its `doc.go` — browse them with
 | `pkg/certmanager` | Beta | cert-manager `Certificate` / self-signed `Issuer` builders — `CertParams`, `BuildCertificate`, `BuildSelfSignedIssuer`, `ServiceSANs` (unstructured — no CRD dependency). |
 | `pkg/reconcile` | Beta | Reconcile-loop helpers — `Statusable`, `ApplyErrorCondition`, `HandleFinalizerCleanup`, `SecretIfNotExists` (uses controller-runtime). |
 | `pkg/reconcilemetrics` | Beta | Prometheus reconcile metrics — `New(subsystem)` (preserves existing series names), `IncTotal` / `ObserveReconcile` / `IncError`, `ResultFor` (uses prometheus/client_golang). |
+| `pkg/secrethash` | Beta | Deterministic Secret-data SHA-256 digest (`Hash(data, keys...)`) for rollout-trigger annotations. |
+| `pkg/pdb` | Beta | PodDisruptionBudget builder (`Build(Params)`) with min/max precedence and a `DefaultFloor` drain-safety policy. |
+| `pkg/hpa` | Beta | HorizontalPodAutoscaler builder (`Build(Params)`) with a `MinFloor` clamp and `CPUUtilization` / `MemoryUtilization` metric helpers. |
+| `pkg/service` | Beta | Kubernetes Service builder (`Build(Params)`) for headless and client Services, including type, IP families, and annotations. |
+| `pkg/volume` | Beta | TLS Secret volume and mount builder (`TLSSecretMount`) enforcing mode `0o400` and read-only mounts. |
+| `pkg/batchjob` | Beta | `batch/v1` Job envelope builder (`Build(Params)`) for backoff, TTL, restart policy, and label propagation. |
 | `pkg/probes` | Experimental | `corev1.Probe` fluent builder — HTTP / HTTPS / TCP / Exec with kubelet defaults. |
 | `pkg/webhook` | Experimental | Admission validation helpers — `ValidateAllowedVersion`, `ValidateWithPredicate`, conversion registry. |
 | `pkg/bundle` | Experimental | OLM v1 bundle metadata helpers — annotations, FBC schema types, directory validation. |

@@ -11,6 +11,49 @@ at release-tag time.
 
 ## [Unreleased]
 
+## [0.13.0] — 2026-06-30
+
+### Added
+
+- `pkg/secrethash` (Beta tier) — deterministic Secret-data SHA-256
+  digest for rollout-trigger annotations via `Hash(data, keys...)`.
+- `pkg/pdb` (Beta tier) — PodDisruptionBudget builder with min/max
+  precedence and the `DefaultFloor` drain-safety policy.
+- `pkg/hpa` (Beta tier) — HorizontalPodAutoscaler builder with a
+  `MinFloor` clamp plus CPU and memory utilization metric helpers.
+- `pkg/service` (Beta tier) — headless and client Service assembly via
+  `Build(Params)`.
+- `pkg/volume` (Beta tier) — TLS Secret volume and mount builder enforcing
+  mode `0o400` and read-only mounts.
+- `pkg/batchjob` (Beta tier) — `batch/v1` Job envelope builder for backoff,
+  TTL, restart policy, and label propagation.
+- `pkg/pvc.BuildDataPVC` — data PVC builder with storage-class
+  normalization.
+- keiailab service-symbol assets and ArtifactHub catalog registration
+  bridge.
+
+### Changed
+
+- Helm publication and ArtifactHub verification now use the chart OCI base
+  repository consistently.
+
+## [0.12.0] — 2026-06-14
+
+### Added
+
+- Golden-manifest regression coverage for `pkg/monitoring` ServiceMonitor
+  and PrometheusRule builders.
+- ArtifactHub publication and verification pipeline documented by ADR-0019.
+
+### Changed
+
+- `pkg/events.Recorder` now structurally matches the modern
+  `k8s.io/client-go/tools/events.EventRecorder` API.
+- `pkg/reconcile.EventRecorder` is an alias of `pkg/events.Recorder`, making
+  the event interface and Reason catalog a single source of truth.
+
+## [0.11.0] — 2026-06-11
+
 ### Added
 
 - `pkg/apply` (Beta tier) — idempotent apply helpers for ConfigMap /
